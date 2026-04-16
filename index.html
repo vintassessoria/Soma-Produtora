@@ -115,7 +115,7 @@ nav.stuck{background:rgba(0,0,0,0.88);backdrop-filter:blur(32px) saturate(180%);
 .reel-wrap:hover .reel-bg{transform:scale(1.006)}
 .reel-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5}
 .reel-scan{position:absolute;inset:0;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,0,0,0.02) 3px,rgba(0,0,0,0.02) 4px);pointer-events:none;opacity:.5}
-.reel-bg{display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#0A1C08 0%,#060606 50%,#0C1208 100%)}
+.reel-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#0A1C08 0%,#060606 50%,#0C1208 100%)}
 .reel-vig{position:absolute;inset:0;background:linear-gradient(160deg,#0A1C08 0%,#060606 50%,#0C1208 100%),radial-gradient(ellipse at center,transparent 20%,rgba(0,0,0,0.72) 100%)}
 .reel-center{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:18px}
 .reel-play{width:76px;height:76px;background:var(--G);border-radius:50%;border:none;cursor:none;display:flex;align-items:center;justify-content:center;transition:all .5s var(--Ef);box-shadow:0 0 24px rgba(107,240,25,.08)}
@@ -497,7 +497,10 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
   <div class="reel-wrap rv">
     <div class="reel-ratio">
       <div class="reel-bg" id="reelSection">
-        <video id="reelBg" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Showreel.Mp4.webm" autoplay muted loop playsinline preload="metadata"></video>
+        <video id="reelBg" autoPlay muted loop playsInline preload="auto">
+  <source src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Showreel.Mp4.webm" type="video/webm">
+  <source src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Showreel.Mp4.webm" type="video/mp4">
+</video>
         <div class="reel-scan"></div>
         <div class="reel-vig"></div>
         <div class="reel-center" style="pointer-events:none">
@@ -832,8 +835,30 @@ lb.addEventListener('click',e=>{if(e.target===lb)lbClose()});
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('on'))_closeReel();if(e.key==='Escape'&&lb.classList.contains('on'))lbClose();if(lb.classList.contains('on')){if(e.key==='ArrowLeft')lbGo(-1);if(e.key==='ArrowRight')lbGo(1)}});
 
 var reelBg=document.getElementById('reelBg');
+(function(){
+  if(!reelBg)return;
+  var attemptPlay=function(){
+    reelBg.play().then(function(){
+      reelBg.loop=true;
+    }).catch(function(err){
+      console.log('Autoplay bloqueado:',err);
+    });
+  };
+  var observer=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if(entry.isIntersecting){
+        attemptPlay();
+      } else {
+        reelBg.pause();
+      }
+    });
+  },{threshold:0.5});
+  observer.observe(reelBg);
+  attemptPlay();
+  document.addEventListener('click',attemptPlay,{once:true});
+})();
 var _openReel=function(){
-  var src=reelBg?reelBg.src:'';
+  var src=reelBg?reelBg.currentSrc||reelBg.src:'';
   modalVideoSrc.src=src;
   modalVideo.load();
   modal.classList.add('on');
