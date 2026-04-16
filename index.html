@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="preload" href="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4.mp4" as="fetch" crossorigin="anonymous">
+<link rel="preload" href="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Showreel.Mp4.webm" as="fetch" crossorigin="anonymous">
 <style>
 :root{
   --G:#6BF019;--G1:rgba(107,240,25,0.04);--G2:rgba(107,240,25,0.10);
@@ -496,7 +496,7 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
   <div class="reel-wrap rv">
     <div class="reel-ratio">
       <div class="reel-bg" id="reelSection">
-        <video id="reelBgVideo" class="reel-video" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4.mp4" muted loop playsinline preload="metadata"></video>
+        <video id="reelBgVideo" class="reel-video" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Showreel.Mp4.webm" muted loop playsinline preload="metadata"></video>
 <script>
 (function(){
   var v=document.getElementById('reelBgVideo');
@@ -811,9 +811,9 @@ const modalVideo=document.getElementById('modalVideo');
 const modalVideoSrc=document.getElementById('modalVideoSrc');
 const _reelOpen=(src)=>{modalVideoSrc.src=src;modalVideo.load();modal.classList.add('on');document.body.style.overflow='hidden'};
 const _reelClose=()=>{modal.classList.remove('on');modalVideo.pause();document.body.style.overflow=''};
-document.getElementById('playBtn').addEventListener('click',e=>{e.stopPropagation();_reelOpen('https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4.mp4')});
-document.getElementById('openReel').addEventListener('click',e=>{e.preventDefault();_reelOpen('https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4.mp4')});
-document.getElementById('reelSection').addEventListener('click',e=>{if(e.target.closest('#playBtn'))return;_reelOpen('https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4.mp4')});
+document.getElementById('playBtn').addEventListener('click',e=>{e.stopPropagation();_reelOpen('https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Showreel.Mp4.webm')});
+document.getElementById('openReel').addEventListener('click',e=>{e.preventDefault();_reelOpen('https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Showreel.Mp4.webm')});
+document.getElementById('reelSection').addEventListener('click',e=>{if(e.target.closest('#playBtn'))return;_reelOpen('https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Showreel.Mp4.webm')});
 document.getElementById('mX').addEventListener('click',_reelClose);
 modal.addEventListener('click',e=>{if(e.target===modal)_reelClose()});
 
