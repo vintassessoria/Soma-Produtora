@@ -1,0 +1,175 @@
+╔══════════════════════════════════════════════════════════════════╗
+║           GUIA DE DEPLOY — SOMA PRODUTORA                       ║
+║           Cloudflare R2  →  GitHub  →  Vercel                   ║
+╚══════════════════════════════════════════════════════════════════╝
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ PASSO 1 — CONFIGURAR O CLOUDFLARE R2
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Acesse: https://dash.cloudflare.com
+2. No menu lateral, clique em "R2 Object Storage"
+3. Clique em "Create bucket"
+4. Dê um nome ao bucket (ex: soma-produtora)
+5. Clique em "Create bucket"
+
+── ATIVAR URL PÚBLICA ────────────────────────────────────────────
+
+6. Dentro do bucket criado, vá em "Settings"
+7. Em "Public Access", clique em "Allow Access"
+8. Ative o "R2.dev subdomain"
+9. Anote a URL gerada. Ela será algo como:
+      https://pub-abc123def456789.r2.dev
+   (Guarde essa URL — você vai precisar dela em breve)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ PASSO 2 — FAZER UPLOAD DOS VÍDEOS NO R2
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Dentro do seu bucket, clique em "Upload" e suba os vídeos
+com EXATAMENTE esses nomes (sem espaços):
+
+   Arquivo original                    →  Nome no R2
+   ─────────────────────────────────────────────────────────────
+   Showreel.MOV                        →  showreel.mov
+   AFTERMOVIE DIA 1 - EXPOMIX.MP4     →  aftermovie-expomix-1.mp4
+   AFTERMOVIE DIA 3 - EXPOMIX.MP4     →  aftermovie-expomix-3.mp4
+   VIDEO MARI FERNANDEZ - EXPOMIX.MP4 →  mari-fernandez-expomix.mp4
+
+IMPORTANTE: Renomeie os arquivos ANTES de subir, exatamente
+como está na coluna "Nome no R2" acima.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ PASSO 3 — ATUALIZAR A URL NO INDEX.HTML
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+No arquivo index.html, faça um Localizar & Substituir:
+
+   Localizar:    SEU-BUCKET.r2.dev
+   Substituir:   pub-abc123def456789.r2.dev  ← sua URL real do Passo 1
+
+Você pode fazer isso no VS Code com:
+   Windows/Linux:  Ctrl + H
+   Mac:            Cmd + H
+
+Salve o arquivo.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ PASSO 4 — CRIAR REPOSITÓRIO NO GITHUB
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Acesse: https://github.com/new
+2. Nome do repositório: soma-produtora (ou o que preferir)
+3. Deixe como "Private" se quiser, ou "Public"
+4. NÃO marque "Add a README file"
+5. Clique em "Create repository"
+6. Copie a URL do repositório (ex: https://github.com/seunome/soma-produtora.git)
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ PASSO 5 — ENVIAR OS ARQUIVOS PARA O GITHUB
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Abra o terminal (ou Git Bash) NA PASTA do site e rode:
+
+   git init
+   git add .
+   git commit -m "primeiro commit — soma produtora"
+   git branch -M main
+   git remote add origin https://github.com/seunome/soma-produtora.git
+   git push -u origin main
+
+⚠  Os vídeos NÃO serão enviados (o .gitignore já os exclui).
+   Apenas o index.html, logos e fotos vão para o GitHub.
+
+⚠  IMPORTANTE: rode "git add ." para incluir TODAS as imagens.
+   Se o repositório já existir, rode também:
+   git add -A
+   git commit -m "adiciona imagens renomeadas"
+   git push
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ PASSO 6 — DEPLOY NO VERCEL
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+1. Acesse: https://vercel.com
+2. Clique em "Add New Project"
+3. Clique em "Import" no seu repositório soma-produtora
+4. Em "Framework Preset", selecione "Other" (é um site estático)
+5. Clique em "Deploy"
+6. Pronto! Em menos de 1 minuto o site estará no ar.
+
+O Vercel vai gerar uma URL como:
+   https://soma-produtora.vercel.app
+
+Para usar um domínio próprio (ex: somaprodutora.com.br):
+   → No painel do Vercel, vá em Settings → Domains → Add Domain
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ PASSO 7 — ATUALIZAÇÕES FUTURAS (deploy automático)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+A partir de agora, toda vez que você atualizar o site:
+
+   git add .
+   git commit -m "descrição da mudança"
+   git push
+
+O Vercel detecta automaticamente e faz o deploy em segundos.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ RESUMO DOS ARQUIVOS
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   VÃO para o GitHub (repo):
+   ✓ index.html
+   ✓ logomarca.png
+   ✓ logotipo.png
+   ✓ logo-arenabrb.png
+   ✓ logo-cbf.png
+   ✓ logo-expomix.png
+   ✓ logo-napraia.png
+   ✓ logos-parceiros.png        ← (renomeado, sem espaço)
+   ✓ hero-poster.jpg
+   ✓ foto-01.jpeg  até  foto-20.jpeg   ← (fotos renomeadas, sem espaço)
+   ✓ .gitignore
+   ✓ GUIA-DEPLOY.txt
+
+   FICAM só no R2 (não vão ao GitHub):
+   ✗ Showreel.MOV               → showreel.mov
+   ✗ AFTERMOVIE DIA 1 - *.MP4  → aftermovie-expomix-1.mp4
+   ✗ AFTERMOVIE DIA 3 - *.MP4  → aftermovie-expomix-3.mp4
+   ✗ VIDEO MARI FERNANDEZ *.MP4 → mari-fernandez-expomix.mp4
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ POR QUE AS IMAGENS NÃO APARECIAM NO VERCEL?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+Os arquivos tinham espaços nos nomes (ex: "WhatsApp Image 2026...jpeg")
+e o Git às vezes tem dificuldade em commitar arquivos com espaços,
+o que fazia com que eles não chegassem ao Vercel.
+
+Todos os arquivos foram renomeados para nomes simples (foto-01.jpeg
+até foto-20.jpeg) e as referências no HTML foram atualizadas.
+
+Agora basta fazer um novo commit e push para o Vercel corrigir
+automaticamente.
+
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ DÚVIDAS?
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+   Cloudflare R2 docs: https://developers.cloudflare.com/r2/
+   Vercel docs:        https://vercel.com/docs
+   GitHub docs:        https://docs.github.com
+
+

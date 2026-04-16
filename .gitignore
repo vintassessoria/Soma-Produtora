@@ -1,0 +1,36 @@
+# ── Vídeos (hospedados no Cloudflare R2) ──────────────────────────────────────
+# Esses arquivos são grandes demais para o GitHub.
+# Suba-os manualmente no seu bucket R2.
+*.mp4
+*.MP4
+*.mov
+*.MOV
+*.avi
+*.mkv
+*.webm
+
+# ── Arquivos compactados ───────────────────────────────────────────────────────
+*.zip
+*.rar
+*.tar.gz
+deploy.zip
+deploy/
+
+# ── Sistema operacional ────────────────────────────────────────────────────────
+.DS_Store
+.DS_Store?
+._*
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# ── Editores ───────────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# ── Node (caso use no futuro) ──────────────────────────────────────────────────
+node_modules/
+.env
+.env.local
