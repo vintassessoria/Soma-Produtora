@@ -314,6 +314,57 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
 @media(hover:none),(pointer:coarse){#cur{display:none}body,.btn,.nav-cta,.reel-wrap,.reel-play,.pf-tab,.pf-card,a,button{cursor:auto}.btn-g,.btn,.nav-cta,.reel-play,.pf-tab,.pf-pi,button{cursor:pointer}}
 
+/* ===================== INTERNACIONAL ===================== */
+#internacional{padding:104px 60px;background:var(--B)}
+.int-head{margin-bottom:56px}
+.int-h2{font-family:var(--FC);font-size:clamp(22px,2.8vw,34px);font-weight:800;letter-spacing:-.5px;line-height:1.06;margin-top:14px}
+.int-grid{display:grid;grid-template-columns:320px 1fr;gap:64px;align-items:center}
+.int-left{display:flex;flex-direction:column}
+.int-ceo-ph{position:relative;width:100%;aspect-ratio:4/5;background:linear-gradient(150deg,var(--D2) 0%,var(--D3) 100%);border:1px solid rgba(89,248,0,.12);border-radius:18px;display:flex;align-items:center;justify-content:center;margin-bottom:26px;overflow:hidden;color:var(--Gr);box-shadow:0 24px 56px rgba(0,0,0,.45),inset 0 0 80px rgba(89,248,0,.03)}
+.int-ceo-ph::after{content:'';position:absolute;inset:0;border-radius:18px;background:radial-gradient(ellipse at 50% 15%,rgba(89,248,0,.08),transparent 60%);pointer-events:none;z-index:2}
+.int-ceo-ph::before{content:'';position:absolute;left:0;right:0;bottom:0;height:55%;background:linear-gradient(to top,rgba(0,0,0,.55) 0%,rgba(0,0,0,0) 100%);z-index:1;pointer-events:none}
+.int-ceo-ph img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.int-ceo-ph svg{width:52px;height:52px;opacity:.45;position:relative;z-index:1}
+.int-ceo-name{font-family:var(--FC);font-size:28px;font-weight:700;color:var(--W);letter-spacing:-.4px;line-height:1.05}
+.int-ceo-role{font-family:var(--FM);font-size:9px;color:#59f800;letter-spacing:2.4px;text-transform:uppercase;margin:8px 0 18px;display:inline-flex;align-items:center;gap:8px}
+.int-ceo-role::before{content:'';width:5px;height:5px;border-radius:50%;background:#59f800;box-shadow:0 0 10px rgba(89,248,0,.6)}
+.int-ceo-bio{font-family:var(--FB);font-size:13.5px;color:var(--GrL);line-height:1.75;font-weight:300;max-width:280px}
+.int-right{display:flex;flex-direction:column;gap:32px;min-width:0}
+.int-countries{position:relative;display:flex;align-items:flex-start;justify-content:space-between;padding:36px 0 6px;--int-progress:0}
+.int-countries::before,.int-countries::after{content:'';position:absolute;top:44px;height:2px;left:calc(100%/12);border-radius:2px;pointer-events:none}
+.int-countries::before{right:calc(100%/12);background:rgba(255,255,255,.08)}
+.int-countries::after{width:calc((100% - 100%/6) * var(--int-progress));background:#59f800;box-shadow:0 0 12px rgba(89,248,0,.45);transition:width .45s cubic-bezier(.4,0,.2,1)}
+.int-c{position:relative;flex:1;display:flex;flex-direction:column;align-items:center;gap:18px;padding:0 4px;background:transparent;border:none;cursor:pointer;font-family:var(--FM);font-size:11px;letter-spacing:1.1px;text-transform:uppercase;color:var(--GrL);opacity:.55;transition:opacity .2s ease,color .2s ease,transform .2s ease,font-weight .2s ease;z-index:2;white-space:nowrap;text-align:center}
+.int-c::before{content:'';display:block;width:12px;height:12px;border-radius:50%;background:rgba(255,255,255,.22);border:2px solid var(--B);box-shadow:0 0 0 0 rgba(89,248,0,0);transition:transform .25s ease,background .25s ease,box-shadow .3s ease}
+.int-text{display:inline-flex;align-items:center;gap:10px;line-height:1}
+.int-flag{display:inline-block;width:22px;height:15px;flex-shrink:0;border-radius:1px;overflow:hidden;position:relative;box-shadow:inset 0 0 0 1px rgba(255,255,255,.10);filter:saturate(.55) brightness(.78);transition:filter .28s ease,box-shadow .28s ease}
+.int-flag svg{display:block;width:100%;height:100%}
+.int-c:hover .int-flag{filter:saturate(.85) brightness(.95)}
+.int-c.active .int-flag{filter:saturate(1) brightness(1);box-shadow:inset 0 0 0 1px rgba(255,255,255,.22)}
+.int-c:hover{opacity:1;color:var(--W);transform:translateY(-2px) scale(1.05)}
+.int-c.active{opacity:1;color:var(--W);font-weight:600;letter-spacing:1.3px}
+.int-c.active::before{background:#59f800;transform:scale(1.55);box-shadow:0 0 0 5px rgba(89,248,0,.14),0 0 22px rgba(89,248,0,.55)}
+.int-player{position:relative;border-radius:16px;overflow:hidden;background:var(--D2);aspect-ratio:16/9;box-shadow:0 20px 50px rgba(0,0,0,.5)}
+.int-player::after{content:'';position:absolute;inset:0;border-radius:16px;border:1px solid rgba(255,255,255,.04);pointer-events:none;z-index:2}
+.int-player video{width:100%;height:100%;object-fit:cover;display:block;transition:opacity .28s ease}
+.int-player.swap video{opacity:0}
+@media(max-width:1100px){
+  #internacional{padding:84px 32px}
+  .int-grid{grid-template-columns:1fr;gap:44px}
+  .int-ceo-ph{max-width:280px}
+  .int-ceo-bio{max-width:none}
+}
+@media(max-width:768px){
+  #internacional{padding:64px 20px}
+  .int-countries{padding:30px 0 4px;gap:4px}
+  .int-countries::before,.int-countries::after{top:38px}
+  .int-c{font-size:9px;letter-spacing:.6px;gap:14px}
+  .int-c::before{width:10px;height:10px}
+  .int-text{flex-direction:column;gap:6px}
+  .int-flag{width:20px;height:14px}
+  .int-ceo-name{font-size:24px}
+}
+
 /* ===================== RESPONSIVO ===================== */
 @media(max-width:1200px){#depo .dp-grid{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:1100px){
@@ -711,6 +762,48 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
   </div>
 </section>
 
+<section id="internacional">
+  <div class="int-head rv">
+    <div class="tag"><div class="tag-ln"></div><span class="tag-sp">Internacional</span></div>
+    <h2 class="int-h2">Da capital do Brasil<br>para o mundo.</h2>
+  </div>
+  <div class="int-grid">
+    <div class="int-left rv">
+      <div class="int-ceo-ph" id="ceoPh">
+        <img src="davi.png" alt="Davi Bispo — CEO">
+      </div>
+      <div class="int-ceo-name">Davi Bispo</div>
+      <div class="int-ceo-role">CEO</div>
+      <p class="int-ceo-bio">Produções audiovisuais entre Brasília e o mundo &mdash; presença em 6 países.</p>
+    </div>
+    <div class="int-right rv d1">
+      <div class="int-countries" role="tablist">
+        <button class="int-c active" data-c="brasilia" role="tab">
+          <span class="int-text"><span class="int-flag" aria-hidden="true"><svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#009b3a"/><polygon points="10,2 18,7 10,12 2,7" fill="#ffdf00"/><circle cx="10" cy="7" r="2.4" fill="#002776"/></svg></span>Brasília</span>
+        </button>
+        <button class="int-c" data-c="londres" role="tab">
+          <span class="int-text"><span class="int-flag" aria-hidden="true"><svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#012169"/><path d="M0,0 L20,14 M20,0 L0,14" stroke="#fff" stroke-width="2.6"/><path d="M0,0 L20,14 M20,0 L0,14" stroke="#c8102e" stroke-width="1"/><path d="M10,0 V14 M0,7 H20" stroke="#fff" stroke-width="3.2"/><path d="M10,0 V14 M0,7 H20" stroke="#c8102e" stroke-width="1.8"/></svg></span>Londres</span>
+        </button>
+        <button class="int-c" data-c="gales" role="tab">
+          <span class="int-text"><span class="int-flag" aria-hidden="true"><svg viewBox="0 0 20 14"><rect width="20" height="7" fill="#fff"/><rect y="7" width="20" height="7" fill="#00824a"/><path d="M6 3.5 Q8 2.7 10.5 3.3 L13 2.6 L12 4.5 L13.5 5.5 L11.5 5.6 L10.5 7 L8.5 7 L7.5 5.8 L6 5.5 Z" fill="#d30731"/></svg></span>País de Gales</span>
+        </button>
+        <button class="int-c" data-c="escocia" role="tab">
+          <span class="int-text"><span class="int-flag" aria-hidden="true"><svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#0065bd"/><path d="M0,0 L20,14 M20,0 L0,14" stroke="#fff" stroke-width="2.4"/></svg></span>Escócia</span>
+        </button>
+        <button class="int-c" data-c="paris" role="tab">
+          <span class="int-text"><span class="int-flag" aria-hidden="true"><svg viewBox="0 0 20 14"><rect width="6.67" height="14" fill="#0055a4"/><rect x="6.67" width="6.67" height="14" fill="#fff"/><rect x="13.34" width="6.66" height="14" fill="#ef4135"/></svg></span>Paris</span>
+        </button>
+        <button class="int-c" data-c="eua" role="tab">
+          <span class="int-text"><span class="int-flag" aria-hidden="true"><svg viewBox="0 0 20 14"><rect width="20" height="14" fill="#fff"/><g fill="#b22234"><rect y="0" width="20" height="1.08"/><rect y="2.15" width="20" height="1.08"/><rect y="4.31" width="20" height="1.08"/><rect y="6.46" width="20" height="1.08"/><rect y="8.62" width="20" height="1.08"/><rect y="10.77" width="20" height="1.08"/><rect y="12.92" width="20" height="1.08"/></g><rect width="8" height="7.54" fill="#3c3b6e"/></svg></span>Estados Unidos</span>
+        </button>
+      </div>
+      <div class="int-player">
+        <video id="intVid" autoplay muted loop playsinline webkit-playsinline preload="metadata" src="/videos/brasilia.mp4"></video>
+      </div>
+    </div>
+  </div>
+</section>
+
 <section id="clients" class="rv">
   <div class="cl-lab">Marcas e projetos que confiam na SOMA</div>
   <div class="cl-track-wrap">
@@ -917,6 +1010,70 @@ var _closeReel=function(){
 document.getElementById('playBtn').addEventListener('click',function(e){e.stopPropagation();_openReel();});
 document.getElementById('openReel').addEventListener('click',function(e){e.preventDefault();_openReel();});
 document.getElementById('reelSection').addEventListener('click',function(e){if(e.target.closest('#playBtn'))return;_openReel();});
+
+(function(){
+  const videos={
+    brasilia:"/videos/brasilia.mp4",
+    londres:"/videos/londres.mp4",
+    gales:"/videos/gales.mp4",
+    escocia:"/videos/escocia.mp4",
+    paris:"/videos/paris.mp4",
+    eua:"/videos/eua.mp4"
+  };
+  const order=Object.keys(videos);
+  let active='brasilia';
+  const vid=document.getElementById('intVid');
+  const btns=document.querySelectorAll('.int-c');
+  const countries=document.querySelector('.int-countries');
+  const player=document.querySelector('.int-player');
+  if(!vid||!btns.length||!countries)return;
+  // iOS Safari: reforça flags no elemento (além dos atributos HTML)
+  vid.muted=true;
+  vid.defaultMuted=true;
+  vid.playsInline=true;
+  vid.setAttribute('playsinline','');
+  vid.setAttribute('webkit-playsinline','');
+  vid.setAttribute('muted','');
+  const safePlay=()=>{
+    try{
+      const p=vid.play();
+      if(p&&typeof p.catch==='function')p.catch(function(){});
+    }catch(e){}
+  };
+  const swapVideo=(src)=>{
+    try{
+      vid.pause();
+      vid.muted=true;
+      vid.src=src;
+      vid.load();
+      safePlay();
+    }catch(e){}
+  };
+  // tenta retomar no primeiro toque (iOS exige gesto em alguns casos)
+  const firstTouch=()=>{safePlay();document.removeEventListener('touchstart',firstTouch);document.removeEventListener('click',firstTouch);};
+  document.addEventListener('touchstart',firstTouch,{passive:true,once:true});
+  document.addEventListener('click',firstTouch,{once:true});
+  const setProgress=(k)=>{
+    const idx=order.indexOf(k);
+    if(idx<0)return;
+    countries.style.setProperty('--int-progress',idx/(order.length-1));
+  };
+  setProgress(active);
+  btns.forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const k=btn.dataset.c;
+      if(k===active)return;
+      active=k;
+      btns.forEach(b=>b.classList.toggle('active',b.dataset.c===k));
+      setProgress(k);
+      player&&player.classList.add('swap');
+      setTimeout(()=>{
+        swapVideo(videos[k]);
+        player&&player.classList.remove('swap');
+      },150);
+    });
+  });
+})();
 
 (function(){
   var burger=document.getElementById('navBurger');
