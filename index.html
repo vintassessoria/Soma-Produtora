@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-<link rel="preload" href="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Showreel.Mp4.webm" as="fetch" crossorigin="anonymous">
+
 <style>
 :root{
   --G:#6BF019;--G1:rgba(107,240,25,0.04);--G2:rgba(107,240,25,0.10);
@@ -113,8 +113,9 @@ nav.stuck{background:rgba(0,0,0,0.88);backdrop-filter:blur(32px) saturate(180%);
 .reel-ratio{padding-bottom:56.25%;position:relative}
 .reel-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:transform .7s var(--E)}
 .reel-wrap:hover .reel-bg{transform:scale(1.006)}
-.reel-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5;display:block}
+.reel-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5}
 .reel-scan{position:absolute;inset:0;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,0,0,0.02) 3px,rgba(0,0,0,0.02) 4px);pointer-events:none;opacity:.5}
+.reel-bg{display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#0A1C08 0%,#060606 50%,#0C1208 100%)}
 .reel-vig{position:absolute;inset:0;background:linear-gradient(160deg,#0A1C08 0%,#060606 50%,#0C1208 100%),radial-gradient(ellipse at center,transparent 20%,rgba(0,0,0,0.72) 100%)}
 .reel-center{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:18px}
 .reel-play{width:76px;height:76px;background:var(--G);border-radius:50%;border:none;cursor:none;display:flex;align-items:center;justify-content:center;transition:all .5s var(--Ef);box-shadow:0 0 24px rgba(107,240,25,.08)}
@@ -496,29 +497,9 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
   <div class="reel-wrap rv">
     <div class="reel-ratio">
       <div class="reel-bg" id="reelSection">
-        <video id="reelBgVideo" class="reel-video" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Showreel.Mp4.webm" muted loop playsinline preload="metadata"></video>
-<script>
-(function(){
-  var v=document.getElementById('reelBgVideo');
-  if(!v)return;
-  v.muted=true;
-  function start(){
-    v.play().then(function(){v.loop=true}).catch(function(){});
-  }
-  v.addEventListener('loadedmetadata',function(){
-    v.currentTime=Math.random()*v.duration;
-    start();
-  });
-  if(v.readyState>=1)start();
-  document.addEventListener('click',start);
-  document.addEventListener('touchstart',start);
-  setTimeout(start,100);
-  setTimeout(start,500);
-  setTimeout(start,1500);
-})();
-</script>
-        <div class="reel-vig"></div>
+        <video id="reelBg" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Showreel.Mp4.webm" autoplay muted loop playsinline preload="metadata"></video>
         <div class="reel-scan"></div>
+        <div class="reel-vig"></div>
         <div class="reel-center" style="pointer-events:none">
           <button class="reel-play" id="playBtn" style="pointer-events:all"><svg width="28" height="28" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></button>
           <div class="reel-lbl">PLAY SHOWREEL</div>
@@ -811,11 +792,8 @@ const modalVideo=document.getElementById('modalVideo');
 const modalVideoSrc=document.getElementById('modalVideoSrc');
 const _reelOpen=(src)=>{modalVideoSrc.src=src;modalVideo.load();modal.classList.add('on');document.body.style.overflow='hidden'};
 const _reelClose=()=>{modal.classList.remove('on');modalVideo.pause();document.body.style.overflow=''};
-document.getElementById('playBtn').addEventListener('click',e=>{e.stopPropagation();_reelOpen('https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Showreel.Mp4.webm')});
-document.getElementById('openReel').addEventListener('click',e=>{e.preventDefault();_reelOpen('https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Showreel.Mp4.webm')});
-document.getElementById('reelSection').addEventListener('click',e=>{if(e.target.closest('#playBtn'))return;_reelOpen('https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Showreel.Mp4.webm')});
-document.getElementById('mX').addEventListener('click',_reelClose);
-modal.addEventListener('click',e=>{if(e.target===modal)_reelClose()});
+document.getElementById('mX').addEventListener('click',_closeReel);
+modal.addEventListener('click',e=>{if(e.target===modal)_closeReel()});
 
 document.querySelectorAll('.pf-card').forEach(card=>{
   card.addEventListener('click',()=>{
@@ -851,7 +829,26 @@ document.getElementById('lb-prev').addEventListener('click',()=>lbGo(-1));
 document.getElementById('lb-next').addEventListener('click',()=>lbGo(1));
 lb.addEventListener('click',e=>{if(e.target===lb)lbClose()});
 
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('on'))_reelClose();if(e.key==='Escape'&&lb.classList.contains('on'))lbClose();if(lb.classList.contains('on')){if(e.key==='ArrowLeft')lbGo(-1);if(e.key==='ArrowRight')lbGo(1)}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('on'))_closeReel();if(e.key==='Escape'&&lb.classList.contains('on'))lbClose();if(lb.classList.contains('on')){if(e.key==='ArrowLeft')lbGo(-1);if(e.key==='ArrowRight')lbGo(1)}});
+
+var reelBg=document.getElementById('reelBg');
+var _openReel=function(){
+  var src=reelBg?reelBg.src:'';
+  modalVideoSrc.src=src;
+  modalVideo.load();
+  modal.classList.add('on');
+  document.body.style.overflow='hidden';
+  if(reelBg)reelBg.pause();
+};
+var _closeReel=function(){
+  modal.classList.remove('on');
+  modalVideo.pause();
+  document.body.style.overflow='';
+  if(reelBg)reelBg.play().catch(function(){});
+};
+document.getElementById('playBtn').addEventListener('click',function(e){e.stopPropagation();_openReel();});
+document.getElementById('openReel').addEventListener('click',function(e){e.preventDefault();_openReel();});
+document.getElementById('reelSection').addEventListener('click',function(e){if(e.target.closest('#playBtn'))return;_openReel();});
 </script>
 </body>
 </html>
