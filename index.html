@@ -499,7 +499,6 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
       <div class="reel-bg" id="reelSection">
         <video id="reelBg" autoPlay muted loop playsInline preload="auto">
   <source src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Showreel.Mp4.webm" type="video/webm">
-  <source src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Showreel.Mp4.webm" type="video/mp4">
 </video>
         <div class="reel-scan"></div>
         <div class="reel-vig"></div>
@@ -837,25 +836,33 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.con
 var reelBg=document.getElementById('reelBg');
 (function(){
   if(!reelBg)return;
-  var attemptPlay=function(){
+  reelBg.muted=true;
+  reelBg.defaultMuted=true;
+  var playVideo=function(){
     reelBg.play().then(function(){
       reelBg.loop=true;
     }).catch(function(err){
-      console.log('Autoplay bloqueado:',err);
+      console.log('Autoplay falhou:',err);
     });
   };
+  if(reelBg.readyState>=3){
+    playVideo();
+  } else {
+    reelBg.addEventListener('canplay',playVideo);
+  }
   var observer=new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
       if(entry.isIntersecting){
-        attemptPlay();
+        playVideo();
       } else {
         reelBg.pause();
       }
     });
-  },{threshold:0.5});
+  },{threshold:0.3});
   observer.observe(reelBg);
-  attemptPlay();
-  document.addEventListener('click',attemptPlay,{once:true});
+  setTimeout(playVideo,500);
+  setTimeout(playVideo,1500);
+  setTimeout(playVideo,3000);
 })();
 var _openReel=function(){
   var src=reelBg?reelBg.currentSrc||reelBg.src:'';
