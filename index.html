@@ -495,7 +495,7 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
   <div class="reel-wrap rv">
     <div class="reel-ratio">
       <div class="reel-bg" id="reelSection">
-        <video class="reel-video" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4" autoplay muted loop playsinline preload="metadata"></video>
+        <video class="reel-video" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4.MOV" autoplay="autoplay" muted="muted" loop="loop" playsinline="playsinline" preload="metadata"></video>
         <div class="reel-vig"></div>
         <div class="reel-scan"></div>
         <div class="reel-center" style="pointer-events:none">
@@ -537,10 +537,10 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
   </div>
 
   <div class="pf-row" id="pfRow" data-panel="videos">
-    <div class="pf-card rv" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.mp4" data-title="EXPOMIX — Aftermovie Dia 1">
+    <div class="pf-card rv" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.mp4.MP4" data-title="EXPOMIX — Aftermovie Dia 1">
       <div class="pf-media">
         <div class="pf-vid-wrap">
-          <video class="pf-vid" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.mp4" muted loop playsinline preload="metadata"></video>
+          <video class="pf-vid" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.mp4.MP4" muted loop playsinline preload="metadata"></video>
           <div class="pf-vid-overlay"></div>
         </div>
         <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
@@ -554,10 +554,10 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
       </div>
     </div>
 
-    <div class="pf-card rv d1" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-3.mp4" data-title="EXPOMIX — Aftermovie Dia 3">
+    <div class="pf-card rv d1" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-3.mp4.MP4" data-title="EXPOMIX — Aftermovie Dia 3">
       <div class="pf-media">
         <div class="pf-vid-wrap">
-          <video class="pf-vid" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-3.mp4" muted loop playsinline preload="metadata"></video>
+          <video class="pf-vid" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-3.mp4.MP4" muted loop playsinline preload="metadata"></video>
           <div class="pf-vid-overlay"></div>
         </div>
         <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
@@ -571,10 +571,10 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
       </div>
     </div>
 
-    <div class="pf-card rv d2" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.mp4" data-title="Mari Fernandez — Palco Principal">
+    <div class="pf-card rv d2" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.mp4.MP4" data-title="Mari Fernandez — Palco Principal">
       <div class="pf-media">
         <div class="pf-vid-wrap">
-          <video class="pf-vid" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.mp4" muted loop playsinline preload="metadata"></video>
+          <video class="pf-vid" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.mp4.MP4" muted loop playsinline preload="metadata"></video>
           <div class="pf-vid-overlay"></div>
         </div>
         <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
@@ -764,8 +764,9 @@ const modalVideo=document.getElementById('modalVideo');
 const modalVideoSrc=document.getElementById('modalVideoSrc');
 const _reelOpen=(src)=>{modalVideoSrc.src=src;modalVideo.load();modal.classList.add('on');document.body.style.overflow='hidden'};
 const _reelClose=()=>{modal.classList.remove('on');modalVideo.pause();document.body.style.overflow=''};
-document.getElementById('playBtn').addEventListener('click',e=>{e.stopPropagation();_reelOpen('https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4')});
-document.getElementById('openReel').addEventListener('click',e=>{e.preventDefault();_reelOpen('https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4')});
+document.getElementById('playBtn').addEventListener('click',e=>{e.stopPropagation();_reelOpen('https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4.MOV')});
+document.getElementById('openReel').addEventListener('click',e=>{e.preventDefault();_reelOpen('https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4.MOV')});
+document.getElementById('reelSection').addEventListener('click',e=>{if(e.target.closest('#playBtn'))return;_reelOpen('https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4.MOV')});
 document.getElementById('mX').addEventListener('click',_reelClose);
 modal.addEventListener('click',e=>{if(e.target===modal)_reelClose()});
 
