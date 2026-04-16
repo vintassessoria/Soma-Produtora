@@ -755,15 +755,7 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
 
 (function(){const hero=document.getElementById('hero'),ov=document.createElement('div');ov.style.cssText='position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:4;will-change:opacity';hero.appendChild(ov);window.addEventListener('scroll',()=>{const prog=Math.min(window.scrollY/(hero.offsetHeight*.65),1);ov.style.opacity=prog*.88},{passive:true})})();
 setTimeout(()=>document.getElementById('intro').classList.add('done'),3000);
-document.addEventListener('DOMContentLoaded',()=>{
-  const reelVid=document.querySelector('.reel-video');
-  if(reelVid){
-    reelVid.play().then(()=>{reelVid.loop=true}).catch(()=>{
-      const tryPlay=()=>{reelVid.play().then(()=>{reelVid.loop=true}).catch(()=>{});document.removeEventListener('click',tryPlay);};
-      document.addEventListener('click',tryPlay,{once:true});
-    });
-  }
-});
+(function(){const reelVid=document.querySelector('.reel-video');if(reelVid){const initPlay=()=>{reelVid.play().then(()=>{reelVid.loop=true}).catch(()=>{})};initPlay();document.addEventListener('click',initPlay,{once:true})}})();
 const nav=document.getElementById('nav');window.addEventListener('scroll',()=>nav.classList.toggle('stuck',window.scrollY>80),{passive:true});
 (function(){const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.08,rootMargin:'0px 0px -32px 0px'});document.querySelectorAll('.rv').forEach(el=>obs.observe(el))})();
 (function(){const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(!e.isIntersecting)return;const t=+e.target.dataset.t,start=null;const dur=1400;const ease=t=>(t<.5?2*t*t:(4-2*t)*t-1);const tick=ts=>{if(!start)start=ts;const prog=Math.min((ts-start)/dur,1);e.target.textContent=Math.floor(ease(prog)*t);if(prog<1)requestAnimationFrame(tick);else e.target.textContent=t};requestAnimationFrame(tick);obs.unobserve(e.target)})},{threshold:.5});document.querySelectorAll('.cnt').forEach(el=>obs.observe(el))})();
