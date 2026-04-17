@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SOMA Produtora — Não é só vídeo. É impacto.</title>
 <meta name="description" content="Produtora audiovisual de Brasília. Da estratégia ao pixel — criamos conteúdo que transforma a percepção da sua marca permanentemente.">
+<link rel="icon" type="image/png" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
@@ -142,7 +143,7 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .reel-ratio{padding-bottom:56.25%;position:relative}
 .reel-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:transform .7s var(--E)}
 .reel-wrap:hover .reel-bg{transform:scale(1.006)}
-.reel-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.5}
+.reel-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.2}
 .reel-scan{position:absolute;inset:0;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,0,0,0.02) 3px,rgba(0,0,0,0.02) 4px);pointer-events:none;opacity:.5}
 .reel-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#000}
 .reel-placeholder{position:absolute;inset:0;background:linear-gradient(125deg,#0a1a06 0%,#0d1f07 20%,#0a1206 40%,#0d1a08 60%,#0a1606 80%,#0c1a07 100%);background-size:400% 400%;animation:reelGradient 15s ease infinite;z-index:1;transition:opacity 1s ease}
@@ -150,7 +151,7 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .reel-bg video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:2;opacity:0;transition:opacity 1s ease}
 .reel-bg video.playing{opacity:1}
 @keyframes reelGradient{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-.reel-vig{position:absolute;inset:0;background:linear-gradient(160deg,#0A1C08 0%,#060606 50%,#0C1208 100%),radial-gradient(ellipse at center,transparent 20%,rgba(0,0,0,0.72) 100%)}
+.reel-vig{position:absolute;inset:0;background:linear-gradient(160deg,#0A1C08 0%,#060606 50%,#0C1208 100%),radial-gradient(ellipse at center,transparent 10%,rgba(0,0,0,0.92) 100%)}
 .reel-center{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:18px}
 .reel-play{width:76px;height:76px;background:var(--G);border-radius:50%;border:none;cursor:none;display:flex;align-items:center;justify-content:center;transition:all .5s var(--Ef);box-shadow:0 0 24px rgba(107,240,25,.08)}
 .reel-play:hover{transform:scale(1.05);background:var(--W);box-shadow:0 0 36px rgba(107,240,25,.12)}
@@ -457,15 +458,17 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
 
 /* CARROSSEL LOGOS — maior, mais respiro, GPU-accelerated */
 #clients{padding:88px 0;text-align:center;overflow:hidden}
-.cl-lab{font-family:var(--FM);font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.14);text-transform:uppercase;margin-bottom:52px;padding:0 60px}
+.cl-lab{font-family:var(--FM);font-size:10px;letter-spacing:2px;color:var(--W);text-transform:uppercase;margin-bottom:52px;padding:0 60px}
 .cl-track-wrap{position:relative;width:100%;overflow:hidden}
 .cl-track-wrap::before,.cl-track-wrap::after{content:'';position:absolute;top:0;bottom:0;width:160px;z-index:2;pointer-events:none}
 .cl-track-wrap::before{left:0;background:linear-gradient(to right,var(--B),transparent)}
 .cl-track-wrap::after{right:0;background:linear-gradient(to left,var(--B),transparent)}
-.cl-track{display:flex;align-items:center;gap:0;width:max-content;animation:clScroll 40s linear infinite}
+.cl-track{display:flex;align-items:center;gap:40px;width:max-content;animation:clScroll 40s linear infinite}
 .cl-track:hover{animation-play-state:paused}
-.cl-item{display:flex;align-items:center;justify-content:center;padding:0 60px;flex-shrink:0;height:140px;width:200px}
-.cl-item img{max-height:120px;max-width:180px;width:auto;height:auto;object-fit:contain;vertical-align:middle;opacity:.9;transition:opacity .4s var(--Ef)}
+.cl-item{display:flex;align-items:center;justify-content:center;padding:0 60px;flex-shrink:0;height:120px;width:180px}
+.cl-item img{height:85px;width:auto;object-fit:contain;vertical-align:middle;opacity:.9;transition:opacity .4s var(--Ef)}
+.cl-item img.cl-sm{height:65px}
+.cl-item img.cl-lg{height:95px}
 .cl-track .cl-item:hover img{opacity:1}
 @keyframes clScroll{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 @media(max-width:768px){
@@ -1153,7 +1156,7 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
         </button>
       </div>
       <div class="int-player">
-        <video id="intVid" autoplay muted loop playsinline webkit-playsinline preload="metadata" src="/videos/brasilia.mp4"></video>
+        <video id="intVid" autoplay muted loop playsinline webkit-playsinline preload="metadata" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/video-internacional.MOV"></video>
       </div>
     </div>
   </div>
@@ -1163,20 +1166,20 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
   <div class="cl-lab">Marcas e projetos que confiam na SOMA</div>
   <div class="cl-track-wrap">
     <div class="cl-track">
-      <div class="cl-item"><img src="logo-expomix.png" alt="Expomix Brasil"></div>
+      <div class="cl-item"><img src="logo-expomix.png" alt="Expomix Brasil" class="cl-sm"></div>
       <div class="cl-item"><img src="logo-bb.png" alt="Banco do Brasil"></div>
-      <div class="cl-item"><img src="logo-record.png" alt="Record"></div>
+      <div class="cl-item"><img src="logo-record.png" alt="Record" class="cl-lg"></div>
       <div class="cl-item"><img src="logo-r2.png" alt="R2"></div>
       <div class="cl-item"><img src="logo-cbf.png" alt="CBF"></div>
       <div class="cl-item"><img src="logo-napraia.png" alt="Na Praia"></div>
-      <div class="cl-item"><img src="logo-arenabrb.png" alt="Arena BRB"></div>
-      <div class="cl-item"><img src="logo-expomix.png" alt="Expomix Brasil"></div>
+      <div class="cl-item"><img src="logo-arenabrb.png" alt="Arena BRB" class="cl-sm"></div>
+      <div class="cl-item"><img src="logo-expomix.png" alt="Expomix Brasil" class="cl-sm"></div>
       <div class="cl-item"><img src="logo-bb.png" alt="Banco do Brasil"></div>
-      <div class="cl-item"><img src="logo-record.png" alt="Record"></div>
+      <div class="cl-item"><img src="logo-record.png" alt="Record" class="cl-lg"></div>
       <div class="cl-item"><img src="logo-r2.png" alt="R2"></div>
       <div class="cl-item"><img src="logo-cbf.png" alt="CBF"></div>
       <div class="cl-item"><img src="logo-napraia.png" alt="Na Praia"></div>
-      <div class="cl-item"><img src="logo-arenabrb.png" alt="Arena BRB"></div>
+      <div class="cl-item"><img src="logo-arenabrb.png" alt="Arena BRB" class="cl-sm"></div>
     </div>
   </div>
 </section>
@@ -1490,16 +1493,11 @@ document.getElementById('reelSection').addEventListener('click',function(e){if(e
     setProgress(k);
     if(intRight){intRight.classList.remove('pop-active');void intRight.offsetWidth;intRight.classList.add('pop-active')}
     if(player){player.classList.remove('pop-active');void player.offsetWidth;player.classList.add('pop-active')}
-    player&&player.classList.add('swap');
-    setTimeout(()=>{
-      swapVideo(videos[k]);
-      player&&player.classList.remove('swap');
-    },150);
   };
 
   // AUTO-ROTATION: loop infinito, pausa quando off-screen / tab oculta / após clique manual
-  const INTERVAL_MS=5000;
-  const MANUAL_PAUSE_MS=12000;
+  const INTERVAL_MS=3000;
+  const MANUAL_PAUSE_MS=8000;
   let timer=null;
   let visible=false;
   let tabActive=!document.hidden;
