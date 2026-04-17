@@ -9,6 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev" crossorigin>
+<link rel="dns-prefetch" href="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev">
 
 <style>
 :root{
@@ -132,7 +134,7 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .p-ring{width:44px;height:44px;border:1px solid rgba(255,255,255,0.18);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .35s}
 .btn-wh:hover .p-ring{border-color:var(--G);background:var(--G1)}
 .ticker{border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);padding:17px 0;overflow:hidden;background:var(--D1)}
-.t-track{display:flex;white-space:nowrap;animation:ticker 44s linear infinite}
+.t-track{display:flex;white-space:nowrap;animation:ticker 44s linear infinite;will-change:transform;transform:translateZ(0)}
 .t-item{display:inline-flex;align-items:center;gap:28px;padding:0 28px;font-family:var(--FM);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--Gr);flex-shrink:0}
 .t-item .star{color:var(--G);font-size:10px;line-height:1;opacity:.5}
 @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
@@ -151,14 +153,14 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .reel-bg video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:2;opacity:0;transition:opacity 1s ease}
 .reel-bg video.playing{opacity:1}
 @keyframes reelGradient{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-.reel-vig{position:absolute;inset:0;background:linear-gradient(160deg,#0A1C08 0%,#060606 50%,#0C1208 100%),radial-gradient(ellipse at center,transparent 10%,rgba(0,0,0,0.92) 100%)}
-.reel-center{position:relative;z-index:2;display:flex;flex-direction:column;align-items:center;gap:18px}
+.reel-vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 52%,rgba(0,0,0,0.55) 100%);pointer-events:none;z-index:3}
+.reel-center{position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px}
 .reel-play{width:76px;height:76px;background:var(--G);border-radius:50%;border:none;cursor:none;display:flex;align-items:center;justify-content:center;transition:all .5s var(--Ef);box-shadow:0 0 24px rgba(107,240,25,.08)}
 .reel-play:hover{transform:scale(1.05);background:var(--W);box-shadow:0 0 36px rgba(107,240,25,.12)}
 .reel-play svg{fill:var(--B);margin-left:6px}
 .reel-lbl{font-family:var(--FM);font-size:9px;letter-spacing:2px;color:rgba(255,255,255,.5);text-transform:uppercase}
-.reel-tl{position:absolute;top:24px;left:28px;z-index:11;font-family:var(--FM);font-size:9px;color:rgba(255,255,255,.6);letter-spacing:2px;display:flex;flex-direction:column;gap:3px}
-.reel-br2{position:absolute;bottom:28px;right:28px;z-index:11;text-align:right;font-family:var(--FM);font-size:9px;color:rgba(255,255,255,.6);letter-spacing:2px;display:flex;flex-direction:column;gap:3px;align-items:flex-end}
+.reel-tl{position:absolute;top:24px;left:28px;z-index:5;font-family:var(--FM);font-size:9px;color:rgba(255,255,255,.6);letter-spacing:2px;display:flex;flex-direction:column;gap:3px}
+.reel-br2{position:absolute;bottom:28px;right:28px;z-index:5;text-align:right;font-family:var(--FM);font-size:9px;color:rgba(255,255,255,.6);letter-spacing:2px;display:flex;flex-direction:column;gap:3px;align-items:flex-end}
 .reel-ttl{position:absolute;bottom:32px;left:36px;z-index:4;font-family:var(--FC);font-size:clamp(13px,1.2vw,16px);font-weight:600;color:var(--W);letter-spacing:.3px}
 .rcb{position:absolute;z-index:4;width:14px;height:14px;border-color:rgba(107,240,25,.14);border-style:solid}
 .rcb-tl{top:14px;left:14px;border-width:1px 0 0 1px}
@@ -169,7 +171,7 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 #stats::before,#stats::after{content:'';position:absolute;left:0;right:0;height:120px;pointer-events:none;z-index:2}
 #stats::before{top:0;background:linear-gradient(to bottom,rgba(8,8,8,1) 0%,transparent 100%)}
 #stats::after{bottom:0;background:linear-gradient(to top,rgba(8,8,8,1) 0%,transparent 100%)}
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,0.05)}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,0.05);position:relative;z-index:3}
 .stat{padding:40px 36px;position:relative;border-right:1px solid rgba(255,255,255,0.05);overflow:hidden;transition:background .4s}
 .stat:last-child{border-right:none}
 .stat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--G);transform:scaleX(0);transform-origin:left;transition:transform .6s var(--E)}
@@ -191,7 +193,7 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .pf-card{flex-shrink:0;width:320px;border-radius:14px;overflow:hidden;background:var(--D2);transition:transform .6s var(--Ef),box-shadow .6s var(--Ef)}
 .pf-card:hover{transform:translateY(-4px);box-shadow:0 20px 56px rgba(0,0,0,.55),0 0 0 1px rgba(107,240,25,.06)}
 .pf-media{padding-bottom:133%;position:relative;overflow:hidden}
-.pf-vid-wrap{position:absolute;inset:0;overflow:hidden}
+.pf-vid-wrap{position:absolute;inset:0;overflow:hidden;background:linear-gradient(150deg,#0d1f09 0%,#0e0e0e 42%,#0c1508 75%,#0e0e0e 100%)}
 .pf-vid{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
 .pf-vid-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(0,0,0,.75) 0%,rgba(0,0,0,.1) 40%,transparent 70%)}
 .pf-strip{position:absolute;top:0;left:0;right:0;height:20px;z-index:2;background:rgba(0,0,0,.6);display:flex;align-items:center;padding:0 8px;gap:5px}
@@ -217,7 +219,7 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .eq-head{margin-bottom:48px;position:relative;z-index:2}
 .eq-h2{font-family:var(--FC);font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing:-1px;line-height:1.1;margin-top:16px}
 .eq-slider{position:relative;width:100%;overflow:hidden;mask-image:linear-gradient(to right,transparent 0%,black 10%,black 90%,transparent 100%);-webkit-mask-image:linear-gradient(to right,transparent 0%,black 10%,black 90%,transparent 100%)}
-.eq-track{display:flex;gap:16px;animation:eqSlide 25s linear infinite}
+.eq-track{display:flex;gap:16px;animation:eqSlide 25s linear infinite;will-change:transform;transform:translateZ(0)}
 .eq-track img{width:280px;height:380px;object-fit:cover;border-radius:16px;flex-shrink:0}
 @keyframes eqSlide{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 .mf-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
@@ -463,7 +465,7 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
 .cl-track-wrap::before,.cl-track-wrap::after{content:'';position:absolute;top:0;bottom:0;width:160px;z-index:2;pointer-events:none}
 .cl-track-wrap::before{left:0;background:linear-gradient(to right,var(--B),transparent)}
 .cl-track-wrap::after{right:0;background:linear-gradient(to left,var(--B),transparent)}
-.cl-track{display:flex;align-items:center;gap:40px;width:max-content;animation:clScroll 40s linear infinite}
+.cl-track{display:flex;align-items:center;gap:40px;width:max-content;animation:clScroll 40s linear infinite;will-change:transform;transform:translateZ(0)}
 .cl-track:hover{animation-play-state:paused}
 .cl-item{display:flex;align-items:center;justify-content:center;padding:0 60px;flex-shrink:0;height:120px;width:180px}
 .cl-item img{height:85px;width:auto;object-fit:contain;vertical-align:middle;opacity:.9;transition:opacity .4s var(--Ef)}
@@ -538,9 +540,15 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
   .hero-sub-p{font-size:14px;max-width:340px}
   .hero-scroll{display:none}
   #reel{padding:0 20px 60px}
+  /* No mobile, o ::before (z-index:10) usava top:80px cobrindo o vídeo — resetar */
+  #reel::before{top:0;bottom:0;background:linear-gradient(to bottom,var(--B) 0%,transparent 6%,transparent 94%,var(--B) 100%)}
   .reel-wrap{border-radius:12px}
   .reel-ratio{padding-bottom:56.25%}
-  .reel-bg video,.reel-placeholder{object-fit:contain;background:#000;width:100%;height:100%}
+  .reel-bg video{object-fit:cover;width:100%;height:100%}
+  .reel-placeholder{width:100%;height:100%}
+  /* Scan lines & vignette muito pesados no mobile — suavizar */
+  .reel-scan{display:none}
+  .reel-vig{background:radial-gradient(ellipse at center,transparent 60%,rgba(0,0,0,0.42) 100%)}
   .reel-play{width:60px;height:60px}
   .reel-ttl,.reel-tl,.reel-br2{display:none}
   .stats-row{grid-template-columns:1fr 1fr}
@@ -618,11 +626,64 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
 }
 @media(max-width:768px){
   #hero-wave{
-    height:35%;
-    bottom:15%;
-    -webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.35) 10%,rgba(0,0,0,.8) 35%,black 60%,transparent 100%);
-    mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.35) 10%,rgba(0,0,0,.8) 35%,black 60%,transparent 100%);
+    height:30%;
+    bottom:0;
+    -webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.4) 20%,rgba(0,0,0,.85) 55%,black 75%,transparent 100%);
+    mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.4) 20%,rgba(0,0,0,.85) 55%,black 75%,transparent 100%);
   }
+}
+
+/* ============================================================
+   MOBILE OPTIMIZATION — iOS + Android
+   ============================================================ */
+
+/* 1. Prevent horizontal overflow on all screens */
+html{overflow-x:hidden}
+
+/* 2. Portfolio play overlay: always visible on touch (no :hover available) */
+@media(hover:none),(pointer:coarse){
+  .pf-hover{opacity:1;background:rgba(0,0,0,.22)}
+  .pf-pi{transform:scale(1)}
+  .ph-card .ph-hover-icon{opacity:1;background:rgba(0,0,0,.28)}
+}
+
+/* 3. Portfolio row — scroll snap for clean swipe on mobile */
+@media(max-width:768px){
+  .pf-row{scroll-snap-type:x mandatory;padding-right:20px}
+  .pf-card{scroll-snap-align:start}
+}
+
+/* 4. Modal — fill screen width on mobile */
+@media(max-width:768px){
+  #modal{padding:10px}
+  .m-box{width:100%;max-width:100%}
+  .m-x{position:fixed;top:14px;right:14px}
+}
+
+/* 5. Extra-small screens (iPhone SE, older Androids) */
+@media(max-width:380px){
+  #hero .hero-inner{padding:0 16px}
+  #hero .hero-h1{font-size:clamp(28px,9.5vw,40px)}
+  #hero .hero-sub-p{font-size:13px;max-width:100%}
+  .eq-track img{width:160px;height:215px}
+  .cta-h{font-size:clamp(20px,7vw,28px)}
+  .stat-n{font-size:clamp(22px,7.5vw,32px)}
+  .pf-card{width:240px}
+}
+
+/* 6. Safe-area insets — notched iPhones (iPhone X and later) */
+@supports(padding:env(safe-area-inset-bottom)){
+  nav{padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
+  nav.stuck{padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
+  .nav-mobile{padding-bottom:max(20px,env(safe-area-inset-bottom))}
+  footer{padding-bottom:max(32px,env(safe-area-inset-bottom))}
+}
+
+/* 7. Web-services modal scroll on mobile */
+@media(max-width:480px){
+  .web-modal{padding:0;align-items:flex-end}
+  .web-modal-content{border-radius:20px 20px 0 0;max-height:88svh;overflow-y:auto;padding:28px 18px 40px;transform:translateY(30px)}
+  .web-modal.on .web-modal-content{transform:none}
 }
 </style>
 </head>
@@ -753,7 +814,8 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
     <div class="reel-ratio">
       <div class="reel-bg" id="reelSection">
         <div class="reel-placeholder"></div>
-        <video id="reelBg" autoPlay muted loop playsInline preload="auto">
+        <video id="reelBg" autoplay muted loop playsinline preload="auto">
+          <source src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4" type="video/mp4">
           <source src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Showreel.Mp4.webm" type="video/webm">
         </video>
         <div class="reel-scan"></div>
@@ -1102,20 +1164,20 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
   </div>
   <div class="eq-slider">
     <div class="eq-track">
-      <img src="equipe-01.jpeg" alt="Equipe SOMA">
-      <img src="equipe-02.jpeg" alt="Equipe SOMA">
-      <img src="equipe-03.jpeg" alt="Equipe SOMA">
-      <img src="equipe-04.jpeg" alt="Equipe SOMA">
-      <img src="equipe-05.jpeg" alt="Equipe SOMA">
-      <img src="equipe-06.jpeg" alt="Equipe SOMA">
-      <img src="equipe-07.jpeg" alt="Equipe SOMA">
-      <img src="equipe-01.jpeg" alt="Equipe SOMA">
-      <img src="equipe-02.jpeg" alt="Equipe SOMA">
-      <img src="equipe-03.jpeg" alt="Equipe SOMA">
-      <img src="equipe-04.jpeg" alt="Equipe SOMA">
-      <img src="equipe-05.jpeg" alt="Equipe SOMA">
-      <img src="equipe-06.jpeg" alt="Equipe SOMA">
-      <img src="equipe-07.jpeg" alt="Equipe SOMA">
+      <img src="equipe-01.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
+      <img src="equipe-02.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
+      <img src="equipe-03.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
+      <img src="equipe-04.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
+      <img src="equipe-05.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
+      <img src="equipe-06.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
+      <img src="equipe-07.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
+      <img src="equipe-01.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
+      <img src="equipe-02.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
+      <img src="equipe-03.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
+      <img src="equipe-04.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
+      <img src="equipe-05.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
+      <img src="equipe-06.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
+      <img src="equipe-07.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
     </div>
   </div>
 </section>
@@ -1128,7 +1190,7 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
   <div class="int-grid">
     <div class="int-left rv">
       <div class="int-ceo-ph" id="ceoPh">
-        <img src="davi.png" alt="Davi Bispo — CEO">
+        <img src="davi.png" alt="Davi Bispo — CEO" loading="lazy" decoding="async">
       </div>
       <div class="int-ceo-name">Davi Bispo</div>
       <div class="int-ceo-role">CEO</div>
@@ -1268,6 +1330,8 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
 
 <script>
 (function(){
+  /* Skip cursor animation entirely on touch / mobile — saves CPU */
+  if('ontouchstart' in window||navigator.maxTouchPoints>0)return;
   const canvas=document.getElementById('cur'),ctx=canvas.getContext('2d');
   let W=window.innerWidth,H=window.innerHeight;
   canvas.width=W;canvas.height=H;
@@ -1343,6 +1407,8 @@ document.querySelectorAll('.pf-card').forEach(card=>{
   if(vid){
     card.addEventListener('mouseenter',()=>vid.play().catch(()=>{}));
     card.addEventListener('mouseleave',()=>vid.pause());
+    /* Touch: start video preview on touchstart so it's visible before tap-to-open */
+    card.addEventListener('touchstart',()=>vid.play().catch(()=>{}),{passive:true});
   }
 });
 
@@ -1367,6 +1433,8 @@ document.getElementById('lb-close').addEventListener('click',lbClose);
 document.getElementById('lb-prev').addEventListener('click',()=>lbGo(-1));
 document.getElementById('lb-next').addEventListener('click',()=>lbGo(1));
 lb.addEventListener('click',e=>{if(e.target===lb)lbClose()});
+/* Touch swipe to navigate lightbox */
+(function(){var sx=0,sy=0;lb.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});lb.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>44)lbGo(dx<0?1:-1)},{passive:true})})();
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('on'))_closeReel();if(e.key==='Escape'&&lb.classList.contains('on'))lbClose();if(lb.classList.contains('on')){if(e.key==='ArrowLeft')lbGo(-1);if(e.key==='ArrowRight')lbGo(1)}});
 
@@ -1381,9 +1449,8 @@ var reelPlaceholder=document.querySelector('.reel-placeholder');
       reelBg.loop=true;
       reelBg.classList.add('playing');
       if(reelPlaceholder)reelPlaceholder.classList.add('hidden');
-    }).catch(function(err){
-      reelBg.classList.add('playing');
-      if(reelPlaceholder)reelPlaceholder.classList.add('hidden');
+    }).catch(function(){
+      /* autoplay bloqueado (iOS/política do browser) — mantém placeholder visível */
     });
   };
   if(reelBg.readyState>=3){
@@ -1394,12 +1461,19 @@ var reelPlaceholder=document.querySelector('.reel-placeholder');
   var observer=new IntersectionObserver(function(entries){
     entries.forEach(function(entry){
       if(entry.isIntersecting){
+        /* Se o browser descarregou o vídeo enquanto estava fora de view,
+           mostra o placeholder durante o recarregamento */
+        if(reelBg.readyState < 2){
+          reelBg.classList.remove('playing');
+          if(reelPlaceholder) reelPlaceholder.classList.remove('hidden');
+          reelBg.load();
+        }
         playVideo();
       } else {
         reelBg.pause();
       }
     });
-  },{threshold:0.3});
+  },{threshold:0.1});
   observer.observe(reelBg);
   setTimeout(playVideo,1000);
   setTimeout(playVideo,2000);
@@ -1417,7 +1491,7 @@ var _closeReel=function(){
   modal.classList.remove('on');
   modalVideo.pause();
   document.body.style.overflow='';
-  if(reelBg)reelBg.play().catch(function(){});
+  if(reelBg){reelBg.play().then(function(){reelBg.classList.add('playing');if(reelPlaceholder)reelPlaceholder.classList.add('hidden')}).catch(function(){})}
 };
 document.getElementById('playBtn').addEventListener('click',function(e){e.stopPropagation();_openReel();});
 document.getElementById('openReel').addEventListener('click',function(e){e.preventDefault();_openReel();});
@@ -1708,6 +1782,21 @@ document.getElementById('reelSection').addEventListener('click',function(e){if(e
     clearTimeout(rTimer);
     rTimer = setTimeout(function(){ resize(); t0 = null; }, 200);
   });
+
+  /* ---- pausar canvas quando hero sair da viewport (libera CPU) ---- */
+  var heroSection = document.getElementById('hero');
+  if(heroSection && 'IntersectionObserver' in window){
+    var heroIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(entry){
+        if(entry.isIntersecting){
+          if(!raf){ t0 = null; raf = requestAnimationFrame(tick); }
+        } else {
+          if(raf){ cancelAnimationFrame(raf); raf = null; }
+        }
+      });
+    }, { threshold: 0, rootMargin: '120px 0px 120px 0px' });
+    heroIO.observe(heroSection);
+  }
 
   /* ---- iniciar ---- */
   resize();
