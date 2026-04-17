@@ -14,6 +14,20 @@
 <link rel="dns-prefetch" href="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev">
 <link rel="preload" href="logomarca.png" as="image" fetchpriority="high">
 <link rel="preload" href="logotipo.png" as="image" fetchpriority="high">
+<meta name="theme-color" content="#000000">
+<meta name="robots" content="index, follow">
+<link rel="apple-touch-icon" href="logomarca.png">
+<link rel="canonical" href="https://somaprodutora.com.br">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://somaprodutora.com.br">
+<meta property="og:title" content="SOMA Produtora — Não é só vídeo. É impacto.">
+<meta property="og:description" content="Agência de marketing audiovisual de Brasília. Da estratégia ao pixel — criamos conteúdo que transforma a percepção da sua marca permanentemente.">
+<meta property="og:image" content="https://somaprodutora.com.br/logotipo.png">
+<meta property="og:locale" content="pt_BR">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="SOMA Produtora — Não é só vídeo. É impacto.">
+<meta name="twitter:description" content="Agência de marketing audiovisual de Brasília. Da estratégia ao pixel — criamos conteúdo que transforma a percepção da sua marca.">
+<meta name="twitter:image" content="https://somaprodutora.com.br/logotipo.png">
 
 <style>
 :root{
@@ -118,7 +132,7 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .hero-h1 .ln:nth-child(1) span{animation:su .85s var(--Ef) 1.30s forwards}
 .hero-h1 .ln:nth-child(2) span{animation:su .85s var(--Ef) 1.46s forwards}
 .hero-h1 .g{color:var(--G);font-style:normal;text-shadow:0 0 60px rgba(89,248,0,.3),0 0 120px rgba(89,248,0,.15)}
-.hero-h1::after{content:'Marketing audiovisual premium';display:block;font-family:var(--FB);font-size:clamp(14px,1.5vw,18px);font-weight:300;color:rgba(255,255,255,.4);letter-spacing:0;line-height:1.5;margin-top:24px;opacity:0;animation:fadeIn .8s var(--Ef) 1.6s forwards}
+.hero-h1::after{display:none}
 .hero-sub-p{font-family:var(--FB);font-size:clamp(15px,1.4vw,18px);color:rgba(255,255,255,.55);line-height:1.75;font-weight:300;max-width:520px;margin-bottom:40px;opacity:0;animation:fadeIn .8s var(--Ef) 1.88s forwards;text-align:left}
 .hero-sub-p strong{color:var(--W);font-weight:400}
 .hero-acts{display:flex;align-items:center;justify-content:center;gap:16px;opacity:0;animation:fadeIn .8s var(--Ef) 2.08s forwards;flex-shrink:0}
@@ -142,8 +156,8 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .t-item .star{color:var(--G);font-size:10px;line-height:1;opacity:.5}
 @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 #reel{padding:0 60px 80px;position:relative}
-#reel::before{content:'';position:absolute;left:0;right:0;top:80px;bottom:80px;pointer-events:none;z-index:10;background:linear-gradient(to bottom,var(--B) 0%,transparent 8%,transparent 92%,var(--B) 100%)}
-.reel-wrap{position:relative;border-radius:16px;overflow:hidden;cursor:none;background:var(--D2)}
+#reel::before{content:'';position:absolute;left:0;right:0;top:80px;bottom:80px;pointer-events:none;z-index:1;background:linear-gradient(to bottom,var(--B) 0%,transparent 8%,transparent 92%,var(--B) 100%)}
+.reel-wrap{position:relative;border-radius:16px;overflow:hidden;cursor:none;background:var(--D2);z-index:2}
 .reel-wrap::after{content:'';position:absolute;inset:0;border-radius:16px;border:1px solid rgba(255,255,255,0.04);pointer-events:none;z-index:5}
 .reel-ratio{padding-bottom:56.25%;position:relative}
 .reel-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:transform .7s var(--E)}
@@ -154,9 +168,9 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .reel-placeholder{position:absolute;inset:0;background:linear-gradient(125deg,#0a1a06 0%,#0d1f07 20%,#0a1206 40%,#0d1a08 60%,#0a1606 80%,#0c1a07 100%);background-size:400% 400%;animation:reelGradient 15s ease infinite;z-index:1;transition:opacity 1s ease}
 .reel-placeholder.hidden{opacity:0;pointer-events:none}
 .reel-bg video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:2;opacity:0;transition:opacity 1s ease}
-.reel-bg video.playing{opacity:1}
+.reel-bg video.playing{opacity:.72}
 @keyframes reelGradient{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-.reel-vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,transparent 52%,rgba(0,0,0,0.55) 100%);pointer-events:none;z-index:3}
+.reel-vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,0,0,0.35) 0%,rgba(0,0,0,0.72) 100%);pointer-events:none;z-index:3}
 .reel-center{position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px}
 .reel-play{width:76px;height:76px;background:var(--G);border-radius:50%;border:none;cursor:none;display:flex;align-items:center;justify-content:center;transition:all .5s var(--Ef);box-shadow:0 0 24px rgba(107,240,25,.08)}
 .reel-play:hover{transform:scale(1.05);background:var(--W);box-shadow:0 0 36px rgba(107,240,25,.12)}
@@ -188,7 +202,7 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 #portfolio::before{left:0;background:linear-gradient(to right,var(--B),transparent)}
 #portfolio::after{right:0;background:linear-gradient(to left,var(--B),transparent)}
 .pf-head{padding:0 60px;display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px}
-.pf-h2{font-family:var(--FC);font-size:clamp(22px,2.8vw,34px);font-weight:800;letter-spacing:-.5px;line-height:1.06}
+.pf-h2{font-family:var(--FC);font-size:clamp(24px,2.8vw,36px);font-weight:800;letter-spacing:-.5px;line-height:1.06}
 .pf-side{max-width:280px;color:var(--Gr);font-size:14px;line-height:1.7;font-family:var(--FB)}
 .pf-row{display:flex;gap:18px;padding:0 60px;overflow-x:auto;scrollbar-width:none;cursor:grab;-webkit-overflow-scrolling:touch}
 .pf-row::-webkit-scrollbar{display:none}
@@ -220,7 +234,7 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 #manifesto::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(107,240,25,.15),transparent)}
 #equipe{background:var(--D1);padding:100px 60px;text-align:center;overflow:hidden}
 .eq-head{margin-bottom:48px;position:relative;z-index:2}
-.eq-h2{font-family:var(--FC);font-size:clamp(28px,3.5vw,44px);font-weight:800;letter-spacing:-1px;line-height:1.1;margin-top:16px}
+.eq-h2{font-family:var(--FC);font-size:clamp(26px,3.2vw,38px);font-weight:800;letter-spacing:-1px;line-height:1.1;margin-top:16px}
 .eq-slider{position:relative;width:100%;overflow:hidden;mask-image:linear-gradient(to right,transparent 0%,black 10%,black 90%,transparent 100%);-webkit-mask-image:linear-gradient(to right,transparent 0%,black 10%,black 90%,transparent 100%)}
 .eq-track{display:flex;gap:16px;animation:eqSlide 25s linear infinite;will-change:transform;transform:translateZ(0)}
 .eq-track img{width:280px;height:380px;object-fit:cover;border-radius:16px;flex-shrink:0}
@@ -235,7 +249,7 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .mf-badge-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:36px;height:36px;display:flex;align-items:center;justify-content:center}
 .mf-badge-center img{width:26px;height:auto;opacity:.55;filter:drop-shadow(0 0 4px rgba(107,240,25,.2));animation:badgeSpin 22s linear infinite reverse}
 @keyframes badgeSpin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
-.mf-big{font-family:var(--FC);font-size:clamp(19px,2.3vw,30px);font-weight:700;line-height:1.35;letter-spacing:-.5px;color:var(--W)}
+.mf-big{font-family:var(--FC);font-size:clamp(22px,2.7vw,38px);font-weight:700;line-height:1.35;letter-spacing:-.5px;color:var(--W)}
 .mf-big .g{color:var(--G)}
 .mf-big .d{color:var(--Gr);font-weight:400}
 .mf-rule{width:32px;height:2px;background:var(--G);margin:40px 0}
@@ -250,7 +264,7 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .mc-hero{background:radial-gradient(ellipse at 0% 50%,rgba(55,150,8,.24) 0%,rgba(107,240,25,.08) 42%,rgba(107,240,25,.02) 72%);border-color:rgba(107,240,25,.13)}
 #processo{padding:96px 60px}
 .pr-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px}
-.pr-h2{font-family:var(--FC);font-size:clamp(22px,2.8vw,34px);font-weight:800;letter-spacing:-.5px;line-height:1.06;max-width:480px}
+.pr-h2{font-family:var(--FC);font-size:clamp(24px,2.8vw,36px);font-weight:800;letter-spacing:-.5px;line-height:1.06;max-width:480px}
 .pr-sub{max-width:260px;color:var(--Gr);font-size:14px;line-height:1.7;font-family:var(--FB)}
 .pr-line{display:flex;border-top:1px solid rgba(255,255,255,0.05)}
 .pr-step{flex:1;padding:44px 32px;position:relative;border-right:1px solid rgba(255,255,255,0.05);transition:background .5s var(--Es)}
@@ -264,7 +278,7 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .pr-d{font-family:var(--FB);font-size:13px;color:var(--Gr);line-height:1.8}
 #depo{background:var(--D1);padding:100px 60px}
 .dp-head{margin-bottom:40px}
-.dp-h2{font-family:var(--FC);font-size:clamp(22px,2.8vw,34px);font-weight:800;letter-spacing:-.5px;line-height:1.06}
+.dp-h2{font-family:var(--FC);font-size:clamp(24px,2.8vw,36px);font-weight:800;letter-spacing:-.5px;line-height:1.06}
 .dp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .dc{background:var(--D2);border:1px solid rgba(255,255,255,0.05);border-radius:12px;padding:28px;transition:all .5s var(--Ef)}
 .dc:hover{border-color:rgba(107,240,25,.10);transform:translateY(-2px);background:var(--D3)}
@@ -323,7 +337,7 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
 .f-copy{font-family:var(--FM);font-size:10px;color:rgba(255,255,255,.22);letter-spacing:.5px}
 .rv{opacity:0;transform:translateY(20px);transition:opacity .9s var(--Ef),transform .9s var(--Ef)}
 .rv.in{opacity:1;transform:none}
-.rv.d1{transition-delay:.12s}.rv.d2{transition-delay:.22s}.rv.d3{transition-delay:.34s}.rv.d4{transition-delay:.46s}
+.rv.d1{transition-delay:.12s}.rv.d2{transition-delay:.22s}.rv.d3{transition-delay:.34s}.rv.d4{transition-delay:.46s}.rv.d5{transition-delay:.58s}
 #modal{position:fixed;inset:0;background:rgba(0,0,0,.97);z-index:11000;display:flex;align-items:center;justify-content:center;opacity:0;visibility:hidden;transition:all .45s var(--E)}
 #modal.on{opacity:1;visibility:visible}
 .m-box{width:86%;max-width:1080px;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;position:relative;z-index:1}
@@ -361,7 +375,7 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
 /* ===================== INTERNACIONAL ===================== */
 #internacional{padding:104px 60px;background:var(--B)}
 .int-head{margin-bottom:56px}
-.int-h2{font-family:var(--FC);font-size:clamp(22px,2.8vw,34px);font-weight:800;letter-spacing:-.5px;line-height:1.06;margin-top:14px}
+.int-h2{font-family:var(--FC);font-size:clamp(24px,2.8vw,36px);font-weight:800;letter-spacing:-.5px;line-height:1.06;margin-top:14px}
 .int-grid{display:grid;grid-template-columns:320px 1fr;gap:64px;align-items:center}
 .int-left{display:flex;flex-direction:column}
 .int-ceo-ph{position:relative;width:100%;aspect-ratio:4/5;background:linear-gradient(150deg,var(--D2) 0%,var(--D3) 100%);border:1px solid rgba(89,248,0,.12);border-radius:18px;display:flex;align-items:center;justify-content:center;margin-bottom:26px;overflow:hidden;color:var(--Gr);box-shadow:0 24px 56px rgba(0,0,0,.45),inset 0 0 80px rgba(89,248,0,.03)}
@@ -439,7 +453,7 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
 #hero .hero-eye::before,#hero .hero-eye::after{background:rgba(255,255,255,.14);width:20px}
 #hero .hero-h1{font-size:clamp(54px,11vw,142px);letter-spacing:-4px;line-height:.92;margin-bottom:34px;font-weight:800}
 #hero .hero-inner{align-items:flex-start}
-#hero .hero-sub-p{color:rgba(255,255,255,.5);font-weight:300;font-size:clamp(15px,1.4vw,18px);line-height:1.72;max-width:540px;margin-bottom:54px;text-align:left}
+#hero .hero-sub-p{color:rgba(255,255,255,.5);font-weight:300;font-size:clamp(15px,1.4vw,18px);line-height:1.72;max-width:540px;margin-bottom:48px;text-align:left}
 #hero .hero-acts{gap:24px}
 #hero .hero-scroll{bottom:44px}
 #hero .hero-scroll-line{background:linear-gradient(to bottom,rgba(255,255,255,.35),transparent)}
@@ -485,7 +499,7 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
 /* SERVIÇOS */
 #servicos{padding:104px 60px;background:var(--D1);border-top:1px solid rgba(255,255,255,.04)}
 .sv-head{max-width:720px;margin-bottom:52px}
-.sv-h2{font-family:var(--FC);font-size:clamp(22px,2.8vw,34px);font-weight:800;letter-spacing:-.5px;line-height:1.06;margin-top:14px}
+.sv-h2{font-family:var(--FC);font-size:clamp(24px,2.8vw,36px);font-weight:800;letter-spacing:-.5px;line-height:1.06;margin-top:14px}
 .sv-sub{margin-top:16px;color:var(--Gr);font-family:var(--FB);font-size:14.5px;line-height:1.75;max-width:520px;font-weight:300}
 .sv-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
 .sv-card{position:relative;background:var(--D2);border:1px solid rgba(255,255,255,.05);border-radius:14px;padding:30px 28px;transition:transform .4s var(--Ef),background .4s var(--Ef),border-color .4s var(--Ef);will-change:transform}
@@ -543,7 +557,6 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
   .hero-sub-p{font-size:14px;max-width:340px}
   .hero-scroll{display:none}
   #reel{padding:0 20px 60px}
-  /* No mobile, o ::before (z-index:10) usava top:80px cobrindo o vídeo — resetar */
   #reel::before{top:0;bottom:0;background:linear-gradient(to bottom,var(--B) 0%,transparent 6%,transparent 94%,var(--B) 100%)}
   .reel-wrap{border-radius:12px}
   .reel-ratio{padding-bottom:56.25%}
@@ -551,7 +564,7 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
   .reel-placeholder{width:100%;height:100%}
   /* Scan lines & vignette muito pesados no mobile — suavizar */
   .reel-scan{display:none}
-  .reel-vig{background:radial-gradient(ellipse at center,transparent 60%,rgba(0,0,0,0.42) 100%)}
+  .reel-vig{background:radial-gradient(ellipse at center,rgba(0,0,0,0.32) 0%,rgba(0,0,0,0.68) 100%)}
   .reel-play{width:60px;height:60px}
   .reel-ttl,.reel-tl,.reel-br2{display:none}
   .stats-row{grid-template-columns:1fr 1fr}
@@ -568,7 +581,7 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
   @keyframes eqSlide{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
   .mf-badge{margin:0 auto 30px;display:block}
   .tag{justify-content:center}
-  .mf-big{font-size:clamp(18px,5vw,24px)}
+  .mf-big{font-size:clamp(20px,5.5vw,28px)}
   #processo{padding:60px 20px}
   .pr-step{padding:28px 20px}
   #depo{padding:60px 20px}
@@ -580,7 +593,7 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
   .cl-track-wrap::before,.cl-track-wrap::after{width:40px}
   #cta{padding:40px 20px}
   .cta-card{padding:32px 20px;border-radius:16px}
-  .cta-h{font-size:clamp(24px,6vw,36px)}
+  .cta-h{font-size:clamp(26px,6vw,40px)}
   .btn-g{padding:12px 24px;font-size:12px}
   .btn-wh{font-size:13px}
   .cta-card-r{gap:12px}
@@ -688,10 +701,16 @@ html{overflow-x:hidden}
   .web-modal-content{border-radius:20px 20px 0 0;max-height:88svh;overflow-y:auto;padding:28px 18px 40px;transform:translateY(30px)}
   .web-modal.on .web-modal-content{transform:none}
 }
+/* ── content-visibility: skip rendering off-screen sections (big perf win) ── */
+#manifesto,#servicos,#processo,#equipe,#internacional,#clients,#cta,footer{
+  content-visibility:auto;
+  contain-intrinsic-size:0 600px;
+}
+
 </style>
 </head>
 <body>
-<canvas id="cur"></canvas>
+<canvas id="cur" aria-hidden="true"></canvas>
 
 <div id="modal">
   <div class="m-box">
@@ -819,7 +838,7 @@ html{overflow-x:hidden}
         <div class="reel-placeholder"></div>
         <video id="reelBg" autoplay muted loop playsinline preload="none">
           <source src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4" type="video/mp4">
-          <source src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Showreel.Mp4.webm" type="video/webm">
+          <source src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Showreel.webm" type="video/webm">
         </video>
         <div class="reel-scan"></div>
         <div class="reel-vig"></div>
@@ -862,10 +881,10 @@ html{overflow-x:hidden}
   </div>
 
   <div class="pf-row" id="pfRow" data-panel="videos">
-    <div class="pf-card rv" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.mp4.MP4" data-title="EXPOMIX — Aftermovie Dia 1">
+    <div class="pf-card rv" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.MP4" data-title="EXPOMIX — Aftermovie Dia 1">
       <div class="pf-media">
         <div class="pf-vid-wrap">
-          <video class="pf-vid" preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.mp4.MP4" muted loop playsinline preload="none"></video>
+          <video class="pf-vid" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.MP4" muted loop playsinline preload="none"></video>
           <div class="pf-vid-overlay"></div>
         </div>
         <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
@@ -879,10 +898,10 @@ html{overflow-x:hidden}
       </div>
     </div>
 
-    <div class="pf-card rv d1" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-3.mp4.MP4" data-title="EXPOMIX — Aftermovie Dia 3">
+    <div class="pf-card rv d1" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-3.MP4" data-title="EXPOMIX — Aftermovie Dia 3">
       <div class="pf-media">
         <div class="pf-vid-wrap">
-          <video class="pf-vid" preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-3.mp4.MP4" muted loop playsinline preload="none"></video>
+          <video class="pf-vid" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-3.MP4" muted loop playsinline preload="none"></video>
           <div class="pf-vid-overlay"></div>
         </div>
         <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
@@ -896,10 +915,10 @@ html{overflow-x:hidden}
       </div>
     </div>
 
-    <div class="pf-card rv d2" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.mp4.MP4" data-title="Mari Fernandez — Palco Principal">
+    <div class="pf-card rv d2" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.MP4" data-title="Mari Fernandez — Palco Principal">
       <div class="pf-media">
         <div class="pf-vid-wrap">
-          <video class="pf-vid" preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.mp4.MP4" muted loop playsinline preload="none"></video>
+          <video class="pf-vid" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.MP4" muted loop playsinline preload="none"></video>
           <div class="pf-vid-overlay"></div>
         </div>
         <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
@@ -916,7 +935,7 @@ html{overflow-x:hidden}
     <div class="pf-card rv" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%2016x9%20.MOV" data-title="Bora de Bike — 16x9">
       <div class="pf-media">
         <div class="pf-vid-wrap">
-          <video class="pf-vid" preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%2016x9%20.MOV" muted loop playsinline preload="none"></video>
+          <video class="pf-vid" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%2016x9%20.MOV" muted loop playsinline preload="none"></video>
           <div class="pf-vid-overlay"></div>
         </div>
         <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
@@ -933,7 +952,7 @@ html{overflow-x:hidden}
     <div class="pf-card rv d1" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20After%20Movie%20Final%20Maio%20.MOV" data-title="Bora de Bike — Aftermovie">
       <div class="pf-media">
         <div class="pf-vid-wrap">
-          <video class="pf-vid" preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20After%20Movie%20Final%20Maio%20.MOV" muted loop playsinline preload="none"></video>
+          <video class="pf-vid" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20After%20Movie%20Final%20Maio%20.MOV" muted loop playsinline preload="none"></video>
           <div class="pf-vid-overlay"></div>
         </div>
         <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
@@ -947,10 +966,10 @@ html{overflow-x:hidden}
       </div>
     </div>
 
-    <div class="pf-card rv d2" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/FOME DE MÚSICA - VERÃO R2 _v3.mp4" data-title="Fome de Música — Verão">
+    <div class="pf-card rv d2" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/FOME%20DE%20M%C3%9ASICA%20-%20VER%C3%83O%20R2%20_v3.mp4" data-title="Fome de Música — Verão">
       <div class="pf-media">
         <div class="pf-vid-wrap">
-          <video class="pf-vid" preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/FOME DE MÚSICA - VERÃO R2 _v3.mp4" muted loop playsinline preload="none"></video>
+          <video class="pf-vid" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/FOME%20DE%20M%C3%9ASICA%20-%20VER%C3%83O%20R2%20_v3.mp4" muted loop playsinline preload="none"></video>
           <div class="pf-vid-overlay"></div>
         </div>
         <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
@@ -964,10 +983,10 @@ html{overflow-x:hidden}
       </div>
     </div>
 
-    <div class="pf-card rv d3" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/ACESSIBILIDADE - VERÃO R2 _v3.mp4" data-title="Acessibilidade — Verão">
+    <div class="pf-card rv d3" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/ACESSIBILIDADE%20-%20VER%C3%83O%20R2%20_v3.mp4" data-title="Acessibilidade — Verão">
       <div class="pf-media">
         <div class="pf-vid-wrap">
-          <video class="pf-vid" preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/ACESSIBILIDADE - VERÃO R2 _v3.mp4" muted loop playsinline preload="none"></video>
+          <video class="pf-vid" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/ACESSIBILIDADE%20-%20VER%C3%83O%20R2%20_v3.mp4" muted loop playsinline preload="none"></video>
           <div class="pf-vid-overlay"></div>
         </div>
         <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
@@ -981,10 +1000,10 @@ html{overflow-x:hidden}
       </div>
     </div>
 
-    <div class="pf-card rv" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/MULHERES - VERÃO R2 _v3 (1).mp4" data-title="Mulheres — Verão">
+    <div class="pf-card rv" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/MULHERES%20-%20VER%C3%83O%20R2%20_v3%20%281%29.mp4" data-title="Mulheres — Verão">
       <div class="pf-media">
         <div class="pf-vid-wrap">
-          <video class="pf-vid" preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/MULHERES - VERÃO R2 _v3 (1).mp4" muted loop playsinline preload="none"></video>
+          <video class="pf-vid" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/MULHERES%20-%20VER%C3%83O%20R2%20_v3%20%281%29.mp4" muted loop playsinline preload="none"></video>
           <div class="pf-vid-overlay"></div>
         </div>
         <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
@@ -1001,7 +1020,7 @@ html{overflow-x:hidden}
     <div class="pf-card rv d1" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Acessibilidade%20-%20Tel%C3%A3o%202025%20Na%20Praia.MOV" data-title="Acessibilidade — Na Praia Telão">
       <div class="pf-media">
         <div class="pf-vid-wrap">
-          <video class="pf-vid" preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Acessibilidade%20-%20Tel%C3%A3o%202025%20Na%20Praia.MOV" muted loop playsinline preload="none"></video>
+          <video class="pf-vid" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Acessibilidade%20-%20Tel%C3%A3o%202025%20Na%20Praia.MOV" muted loop playsinline preload="none"></video>
           <div class="pf-vid-overlay"></div>
         </div>
         <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
@@ -1018,7 +1037,7 @@ html{overflow-x:hidden}
     <div class="pf-card rv d2" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20Final%20.MOV" data-title="Bora de Bike — Final">
       <div class="pf-media">
         <div class="pf-vid-wrap">
-          <video class="pf-vid" preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20Final%20.MOV" muted loop playsinline preload="none"></video>
+          <video class="pf-vid" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20Final%20.MOV" muted loop playsinline preload="none"></video>
           <div class="pf-vid-overlay"></div>
         </div>
         <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
@@ -1057,7 +1076,7 @@ html{overflow-x:hidden}
   </div>
 
   <div class="pf-foot rv">
-    <a href="https://wa.me/5561985011819?text=Olá%2C%20vim%20pelo%20site%20e%20gostaria%20de%20solicitar%20uma%20proposta." target="_blank" class="btn btn-g">Solicitar proposta<span class="ai"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+    <a href="https://wa.me/5561985011819?text=Olá%2C%20vim%20pelo%20site%20e%20gostaria%20de%20solicitar%20uma%20proposta." target="_blank" rel="noopener noreferrer" class="btn btn-g">Solicitar proposta<span class="ai"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
   </div>
 </section>
 
@@ -1264,7 +1283,7 @@ html{overflow-x:hidden}
         </div>
         <h2 class="web-modal-h">Do conteúdo<br>ao digital.<br><span class="g">Experiências que<br>geram resultado.</span></h2>
         <p class="web-modal-sub">Sites e landing pages construídos com a mesma obsessão criativa dos nossos vídeos.</p>
-        <a href="https://wa.me/5561985011819?text=Olá%2C%20tenho%20interesse%20em%20criar%20um%20site." target="_blank" class="btn btn-g">Fale conosco<span class="ai"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+        <a href="https://wa.me/5561985011819?text=Olá%2C%20tenho%20interesse%20em%20criar%20um%20site." target="_blank" rel="noopener noreferrer" class="btn btn-g">Fale conosco<span class="ai"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
       </div>
       <div class="web-modal-right">
         <div class="web-modal-card">
@@ -1306,8 +1325,8 @@ html{overflow-x:hidden}
       <h2 class="cta-h"><span class="bl">Vamos criar</span><span class="bl out">algo que</span><span class="bl gc">fica.</span></h2>
     </div>
     <div class="cta-card-r">
-      <a href="https://wa.me/5561985011819?text=Olá%2C%20vim%20pelo%20site%20e%20gostaria%20de%20solicitar%20uma%20proposta." target="_blank" class="btn btn-g btn-xl">Começar uma conversa<span class="ai"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-      <a href="https://www.instagram.com/soma.produtora/" target="_blank" class="btn btn-wh"><div class="p-ring"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>@soma.produtora</a>
+      <a href="https://wa.me/5561985011819?text=Olá%2C%20vim%20pelo%20site%20e%20gostaria%20de%20solicitar%20uma%20proposta." target="_blank" rel="noopener noreferrer" class="btn btn-g btn-xl">Começar uma conversa<span class="ai"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
+      <a href="https://www.instagram.com/soma.produtora/" target="_blank" rel="noopener noreferrer" class="btn btn-wh"><div class="p-ring"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg></div>@soma.produtora</a>
     </div>
   </div>
 </section>
@@ -1317,7 +1336,7 @@ html{overflow-x:hidden}
   <div class="f-links">
     <a href="#portfolio">Portfólio</a><a href="#manifesto">Sobre</a>
     <a href="#processo">Processo</a><a href="#clients">Clientes</a>
-    <a href="https://www.instagram.com/soma.produtora/" target="_blank">Instagram</a>
+    <a href="https://www.instagram.com/soma.produtora/" target="_blank" rel="noopener noreferrer">Instagram</a>
     <a href="mailto:contato@somaprodutora.com">Contato</a>
   </div>
   <div class="f-copy">&#169; 2025 SOMA PRODUTORA &mdash; BSB</div>
@@ -1479,7 +1498,7 @@ var reelPlaceholder=document.querySelector('.reel-placeholder');
       if(entry.isIntersecting){
         /* Se o browser descarregou o vídeo enquanto estava fora de view,
            mostra o placeholder durante o recarregamento */
-        if(reelBg.readyState < 2){
+        if(reelBg.readyState < 3){
           reelBg.classList.remove('playing');
           if(reelPlaceholder) reelPlaceholder.classList.remove('hidden');
           reelBg.load();
@@ -1497,6 +1516,25 @@ var reelPlaceholder=document.querySelector('.reel-placeholder');
 })();
 var _openReel=function(){
   var src=reelBg?reelBg.currentSrc||reelBg.src:'';
+  var isiOS=/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream;
+  if(isiOS&&src.indexOf('.webm')>-1){
+    /* fallback: iOS sem MP4 disponível */
+    modal.classList.add('on');
+    document.body.style.overflow='hidden';
+    if(!document.getElementById('ios-msg')){
+      var msg=document.createElement('div');
+      msg.id='ios-msg';
+      msg.style.cssText='color:#fff;font-family:var(--FB);text-align:center;padding:20px;font-size:14px;line-height:1.6;opacity:.7';
+      msg.innerHTML='Showreel disponível em breve.<br><small>Acesse pelo computador para assistir.</small>';
+      document.querySelector('.m-box').appendChild(msg);
+    }
+    document.getElementById('ios-msg').style.display='block';
+    modalVideo.style.display='none';
+    if(reelBg)reelBg.pause();
+    return;
+  }
+  if(document.getElementById('ios-msg'))document.getElementById('ios-msg').style.display='none';
+  modalVideo.style.display='';
   modalVideoSrc.src=src;
   modalVideo.load();
   modal.classList.add('on');
@@ -1514,15 +1552,7 @@ document.getElementById('openReel').addEventListener('click',function(e){e.preve
 document.getElementById('reelSection').addEventListener('click',function(e){if(e.target.closest('#playBtn'))return;_openReel();});
 
 (function(){
-  const videos={
-    brasilia:"/videos/brasilia.mp4",
-    londres:"/videos/londres.mp4",
-    gales:"/videos/gales.mp4",
-    escocia:"/videos/escocia.mp4",
-    paris:"/videos/paris.mp4",
-    eua:"/videos/eua.mp4"
-  };
-  const order=Object.keys(videos);
+  const order=['brasilia','londres','gales','escocia','paris','eua'];
   let active='brasilia';
   const vid=document.getElementById('intVid');
   const btns=document.querySelectorAll('.int-c');
@@ -1552,15 +1582,6 @@ document.getElementById('reelSection').addEventListener('click',function(e){if(e
     try{
       const p=vid.play();
       if(p&&typeof p.catch==='function')p.catch(function(){});
-    }catch(e){}
-  };
-  const swapVideo=(src)=>{
-    try{
-      vid.pause();
-      vid.muted=true;
-      vid.src=src;
-      vid.load();
-      safePlay();
     }catch(e){}
   };
   const firstTouch=()=>{safePlay();document.removeEventListener('touchstart',firstTouch);document.removeEventListener('click',firstTouch);};
@@ -1821,3 +1842,4 @@ document.getElementById('reelSection').addEventListener('click',function(e){if(e
 </script>
 </body>
 </html>
+                            
