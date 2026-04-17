@@ -8,9 +8,12 @@
 <link rel="icon" type="image/png" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,300;1,400&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,700;0,800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet" media="print" onload="this.media='all'">
+<noscript><link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,700;0,800&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet"></noscript>
 <link rel="preconnect" href="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev" crossorigin>
 <link rel="dns-prefetch" href="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev">
+<link rel="preload" href="logomarca.png" as="image" fetchpriority="high">
+<link rel="preload" href="logotipo.png" as="image" fetchpriority="high">
 
 <style>
 :root{
@@ -814,7 +817,7 @@ html{overflow-x:hidden}
     <div class="reel-ratio">
       <div class="reel-bg" id="reelSection">
         <div class="reel-placeholder"></div>
-        <video id="reelBg" autoplay muted loop playsinline preload="auto">
+        <video id="reelBg" autoplay muted loop playsinline preload="none">
           <source src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4" type="video/mp4">
           <source src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Showreel.Mp4.webm" type="video/webm">
         </video>
@@ -862,7 +865,7 @@ html{overflow-x:hidden}
     <div class="pf-card rv" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.mp4.MP4" data-title="EXPOMIX — Aftermovie Dia 1">
       <div class="pf-media">
         <div class="pf-vid-wrap">
-          <video class="pf-vid" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.mp4.MP4" muted loop playsinline preload="metadata"></video>
+          <video class="pf-vid" preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.mp4.MP4" muted loop playsinline preload="none"></video>
           <div class="pf-vid-overlay"></div>
         </div>
         <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
@@ -879,7 +882,7 @@ html{overflow-x:hidden}
     <div class="pf-card rv d1" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-3.mp4.MP4" data-title="EXPOMIX — Aftermovie Dia 3">
       <div class="pf-media">
         <div class="pf-vid-wrap">
-          <video class="pf-vid" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-3.mp4.MP4" muted loop playsinline preload="metadata"></video>
+          <video class="pf-vid" preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-3.mp4.MP4" muted loop playsinline preload="none"></video>
           <div class="pf-vid-overlay"></div>
         </div>
         <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
@@ -896,7 +899,7 @@ html{overflow-x:hidden}
     <div class="pf-card rv d2" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.mp4.MP4" data-title="Mari Fernandez — Palco Principal">
       <div class="pf-media">
         <div class="pf-vid-wrap">
-          <video class="pf-vid" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.mp4.MP4" muted loop playsinline preload="metadata"></video>
+          <video class="pf-vid" preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.mp4.MP4" muted loop playsinline preload="none"></video>
           <div class="pf-vid-overlay"></div>
         </div>
         <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
@@ -913,7 +916,7 @@ html{overflow-x:hidden}
     <div class="pf-card rv" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%2016x9%20.MOV" data-title="Bora de Bike — 16x9">
       <div class="pf-media">
         <div class="pf-vid-wrap">
-          <video class="pf-vid" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%2016x9%20.MOV" muted loop playsinline preload="metadata"></video>
+          <video class="pf-vid" preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%2016x9%20.MOV" muted loop playsinline preload="none"></video>
           <div class="pf-vid-overlay"></div>
         </div>
         <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
@@ -930,7 +933,7 @@ html{overflow-x:hidden}
     <div class="pf-card rv d1" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20After%20Movie%20Final%20Maio%20.MOV" data-title="Bora de Bike — Aftermovie">
       <div class="pf-media">
         <div class="pf-vid-wrap">
-          <video class="pf-vid" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20After%20Movie%20Final%20Maio%20.MOV" muted loop playsinline preload="metadata"></video>
+          <video class="pf-vid" preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20After%20Movie%20Final%20Maio%20.MOV" muted loop playsinline preload="none"></video>
           <div class="pf-vid-overlay"></div>
         </div>
         <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
@@ -947,7 +950,7 @@ html{overflow-x:hidden}
     <div class="pf-card rv d2" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/FOME DE MÚSICA - VERÃO R2 _v3.mp4" data-title="Fome de Música — Verão">
       <div class="pf-media">
         <div class="pf-vid-wrap">
-          <video class="pf-vid" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/FOME DE MÚSICA - VERÃO R2 _v3.mp4" muted loop playsinline preload="metadata"></video>
+          <video class="pf-vid" preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/FOME DE MÚSICA - VERÃO R2 _v3.mp4" muted loop playsinline preload="none"></video>
           <div class="pf-vid-overlay"></div>
         </div>
         <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
@@ -964,7 +967,7 @@ html{overflow-x:hidden}
     <div class="pf-card rv d3" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/ACESSIBILIDADE - VERÃO R2 _v3.mp4" data-title="Acessibilidade — Verão">
       <div class="pf-media">
         <div class="pf-vid-wrap">
-          <video class="pf-vid" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/ACESSIBILIDADE - VERÃO R2 _v3.mp4" muted loop playsinline preload="metadata"></video>
+          <video class="pf-vid" preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/ACESSIBILIDADE - VERÃO R2 _v3.mp4" muted loop playsinline preload="none"></video>
           <div class="pf-vid-overlay"></div>
         </div>
         <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
@@ -981,7 +984,7 @@ html{overflow-x:hidden}
     <div class="pf-card rv" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/MULHERES - VERÃO R2 _v3 (1).mp4" data-title="Mulheres — Verão">
       <div class="pf-media">
         <div class="pf-vid-wrap">
-          <video class="pf-vid" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/MULHERES - VERÃO R2 _v3 (1).mp4" muted loop playsinline preload="metadata"></video>
+          <video class="pf-vid" preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/MULHERES - VERÃO R2 _v3 (1).mp4" muted loop playsinline preload="none"></video>
           <div class="pf-vid-overlay"></div>
         </div>
         <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
@@ -998,7 +1001,7 @@ html{overflow-x:hidden}
     <div class="pf-card rv d1" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Acessibilidade%20-%20Tel%C3%A3o%202025%20Na%20Praia.MOV" data-title="Acessibilidade — Na Praia Telão">
       <div class="pf-media">
         <div class="pf-vid-wrap">
-          <video class="pf-vid" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Acessibilidade%20-%20Tel%C3%A3o%202025%20Na%20Praia.MOV" muted loop playsinline preload="metadata"></video>
+          <video class="pf-vid" preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Acessibilidade%20-%20Tel%C3%A3o%202025%20Na%20Praia.MOV" muted loop playsinline preload="none"></video>
           <div class="pf-vid-overlay"></div>
         </div>
         <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
@@ -1015,7 +1018,7 @@ html{overflow-x:hidden}
     <div class="pf-card rv d2" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20Final%20.MOV" data-title="Bora de Bike — Final">
       <div class="pf-media">
         <div class="pf-vid-wrap">
-          <video class="pf-vid" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20Final%20.MOV" muted loop playsinline preload="metadata"></video>
+          <video class="pf-vid" preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20Final%20.MOV" muted loop playsinline preload="none"></video>
           <div class="pf-vid-overlay"></div>
         </div>
         <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
@@ -1218,7 +1221,7 @@ html{overflow-x:hidden}
         </button>
       </div>
       <div class="int-player">
-        <video id="intVid" autoplay muted loop playsinline webkit-playsinline preload="metadata" src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/video-internacional.MOV"></video>
+        <video id="intVid" autoplay muted loop playsinline webkit-playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/video-internacional.MOV"></video>
       </div>
     </div>
   </div>
@@ -1437,6 +1440,19 @@ lb.addEventListener('click',e=>{if(e.target===lb)lbClose()});
 (function(){var sx=0,sy=0;lb.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});lb.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>44)lbGo(dx<0?1:-1)},{passive:true})})();
 
 document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('on'))_closeReel();if(e.key==='Escape'&&lb.classList.contains('on'))lbClose();if(lb.classList.contains('on')){if(e.key==='ArrowLeft')lbGo(-1);if(e.key==='ArrowRight')lbGo(1)}});
+
+/* ── Lazy-load portfolio + internacional videos ── */
+(function(){
+  var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(!e.isIntersecting)return;
+      var v=e.target,s=v.dataset.src;
+      if(s){v.src=s;delete v.dataset.src;v.load()}
+      io.unobserve(v);
+    });
+  },{rootMargin:'300px'});
+  document.querySelectorAll('video[data-src]').forEach(function(v){io.observe(v)});
+})();
 
 var reelBg=document.getElementById('reelBg');
 var reelPlaceholder=document.querySelector('.reel-placeholder');
