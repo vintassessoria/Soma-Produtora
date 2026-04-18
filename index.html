@@ -646,32 +646,7 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
   .btn-xl{padding:14px 24px !important;font-size:14px !important}
 }
 
-/* ================== HERO WAVE 3D ================== */
-#hero-wave{
-  position:absolute;
-  bottom:0;left:0;
-  width:100%;height:52%;
-  pointer-events:none;
-  z-index:1;
-  opacity:1;
-  transform:translateZ(0);
-  -webkit-transform:translateZ(0);
-  backface-visibility:hidden;
-  -webkit-backface-visibility:hidden;
-  -webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.25) 15%,rgba(0,0,0,.8) 40%,black 65%,black 85%,transparent 100%);
-  mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.25) 15%,rgba(0,0,0,.8) 40%,black 65%,black 85%,transparent 100%);
-}
-@media(max-width:768px){
-  #hero-wave{
-    height:30%;
-    bottom:0;
-    -webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.4) 20%,rgba(0,0,0,.85) 55%,black 75%,transparent 100%);
-    mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.4) 20%,rgba(0,0,0,.85) 55%,black 75%,transparent 100%);
-    /* glow GPU-composited (mais barato que ctx.shadowBlur) */
-    filter:drop-shadow(0 0 5px rgba(107,240,25,.45)) drop-shadow(0 0 14px rgba(107,240,25,.18));
-    -webkit-filter:drop-shadow(0 0 5px rgba(107,240,25,.45)) drop-shadow(0 0 14px rgba(107,240,25,.18));
-  }
-}
+
 
 /* ============================================================
    MOBILE OPTIMIZATION — iOS + Android
@@ -731,6 +706,42 @@ html{overflow-x:hidden}
   contain-intrinsic-size:0 600px;
 }
 
+/* ──────────── PARALLAX / 3D POLISH (sutil, não quebra identidade) ──────────── */
+
+/* (B) Hero: suave fade+translate conforme rola pra próxima seção */
+.hero-inner{
+  will-change:transform,opacity;
+  transition:opacity .2s linear;
+}
+
+/* (C) Portfolio: cards ganham 3D tilt ao hover (só desktop) */
+.pf-track{perspective:1400px}
+.pf-card{
+  transform-style:preserve-3d;
+  transition:transform .55s var(--Ef),box-shadow .55s var(--Ef);
+}
+.pf-card .pf-thumb,
+.pf-card .pf-meta,
+.pf-card > *{transform:translateZ(0)}
+.pf-card.pf-tilt{
+  transition:transform .15s linear,box-shadow .4s var(--Ef);
+}
+.pf-card.pf-tilt .pf-inner-3d{transform:translateZ(30px)}
+@media(hover:none){.pf-card.pf-tilt{transform:none!important}}
+@media(max-width:900px){.pf-card.pf-tilt{transform:none!important}}
+
+/* (E) CTA: escala suave de entrada + glow pulsante leve */
+.cta-h{
+  transform:scale(.94);opacity:.7;
+  transition:transform 1.1s var(--Ef),opacity 1.1s var(--Ef);
+  transform-origin:50% 50%;will-change:transform,opacity;
+}
+.cta-h.cta-in{transform:scale(1);opacity:1}
+
+@media (prefers-reduced-motion:reduce){
+  .hero-inner,.pf-card,.cta-h{transition:none!important;transform:none!important;opacity:1!important}
+}
+
 </style>
 </head>
 <body>
@@ -753,13 +764,13 @@ html{overflow-x:hidden}
   </div>
   <div class="in-acao">ação</div>
   <div class="in-logo">
-    <picture><source srcset="logotipo.webp" type="image/webp"><img src="logotipo.png" alt="SOMA Produtora" fetchpriority="high" decoding="async"></picture>
+    <img src="logotipo.png" alt="SOMA Produtora" fetchpriority="high" decoding="async">
   </div>
 </div>
 
 <nav id="nav">
   <a href="#" class="nav-logo">
-    <picture><source srcset="logotipo.webp" type="image/webp"><img class="nav-sym" src="logotipo.png" alt="SOMA Produtora" fetchpriority="high" decoding="async"></picture>
+    <img class="nav-sym" src="logotipo.png" alt="SOMA Produtora" fetchpriority="high" decoding="async">
   </a>
   <div class="nav-r">
     <ul class="nav-links">
@@ -788,7 +799,7 @@ html{overflow-x:hidden}
   <div class="hero-orb-bl"></div>
   <div class="hero-orb-tr"></div>
   <div class="hero-glow"></div>
-  <canvas id="hero-wave" aria-hidden="true"></canvas>
+  
   <div class="h-cb h-cb-tl"></div>
   <div class="h-cb h-cb-tr"></div>
   <div class="h-cb h-cb-bl"></div>
@@ -807,7 +818,7 @@ html{overflow-x:hidden}
       <div class="hero-dot"></div>
       <div class="hero-dot"></div>
     </div>
-    <picture><source srcset="logomarca.webp" type="image/webp"><img class="hero-mark" src="logomarca.png" alt="SOMA" width="240" height="240" fetchpriority="high" decoding="async"></picture>
+    <img class="hero-mark" src="logomarca.png" alt="SOMA" width="240" height="240" fetchpriority="high" decoding="async">
     <div class="hero-eye">Produtora Audiovisual &nbsp;&middot;&nbsp; Brasília, Brasil</div>
     <h1 class="hero-h1">
       <div class="ln"><span>Não é só vídeo.</span></div>
@@ -1117,7 +1128,7 @@ html{overflow-x:hidden}
           <defs><path id="badgePath" d="M55,55 m-42,0 a42,42 0 1,1 84,0 a42,42 0 1,1 -84,0"/></defs>
           <text font-family="'Space Mono',monospace" font-size="8.5" fill="rgba(107,240,25,0.5)" letter-spacing="3.2"><textPath href="#badgePath">SOMA · PRODUTORA · EST. 2019 · BSB · </textPath></text>
         </svg>
-        <div class="mf-badge-center"><picture><source srcset="logomarca.webp" type="image/webp"><img src="logomarca.png" alt=""></picture></div>
+        <div class="mf-badge-center"><img src="logomarca.png" alt=""></div>
       </div>
       <div class="tag"><div class="tag-ln"></div><span class="tag-sp">Manifesto</span></div>
       <p class="mf-big">Não somos a produtora<br>que você <span class="g">contrata</span>.<br>Somos o parceiro criativo<br><span class="d">que sua marca precisava<br>ter encontrado antes.</span></p>
@@ -1215,20 +1226,20 @@ html{overflow-x:hidden}
   </div>
   <div class="eq-slider">
     <div class="eq-track">
-      <picture><source srcset="equipe-01.webp" type="image/webp"><img src="equipe-01.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async"></picture>
-      <picture><source srcset="equipe-02.webp" type="image/webp"><img src="equipe-02.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async"></picture>
-      <picture><source srcset="equipe-03.webp" type="image/webp"><img src="equipe-03.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async"></picture>
-      <picture><source srcset="equipe-04.webp" type="image/webp"><img src="equipe-04.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async"></picture>
-      <picture><source srcset="equipe-05.webp" type="image/webp"><img src="equipe-05.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async"></picture>
-      <picture><source srcset="equipe-06.webp" type="image/webp"><img src="equipe-06.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async"></picture>
-      <picture><source srcset="equipe-07.webp" type="image/webp"><img src="equipe-07.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async"></picture>
-      <picture><source srcset="equipe-01.webp" type="image/webp"><img src="equipe-01.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async"></picture>
-      <picture><source srcset="equipe-02.webp" type="image/webp"><img src="equipe-02.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async"></picture>
-      <picture><source srcset="equipe-03.webp" type="image/webp"><img src="equipe-03.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async"></picture>
-      <picture><source srcset="equipe-04.webp" type="image/webp"><img src="equipe-04.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async"></picture>
-      <picture><source srcset="equipe-05.webp" type="image/webp"><img src="equipe-05.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async"></picture>
-      <picture><source srcset="equipe-06.webp" type="image/webp"><img src="equipe-06.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async"></picture>
-      <picture><source srcset="equipe-07.webp" type="image/webp"><img src="equipe-07.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async"></picture>
+      <img src="equipe-01.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
+      <img src="equipe-02.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
+      <img src="equipe-03.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
+      <img src="equipe-04.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
+      <img src="equipe-05.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
+      <img src="equipe-06.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
+      <img src="equipe-07.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
+      <img src="equipe-01.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
+      <img src="equipe-02.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
+      <img src="equipe-03.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
+      <img src="equipe-04.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
+      <img src="equipe-05.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
+      <img src="equipe-06.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
+      <img src="equipe-07.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
     </div>
   </div>
 </section>
@@ -1241,7 +1252,7 @@ html{overflow-x:hidden}
   <div class="int-grid">
     <div class="int-left rv">
       <div class="int-ceo-ph" id="ceoPh">
-        <picture><source srcset="davi.webp" type="image/webp"><img src="davi.png" alt="Davi Bispo — CEO" width="396" height="700" loading="lazy" decoding="async"></picture>
+        <img src="davi.png" alt="Davi Bispo — CEO" width="396" height="700" loading="lazy" decoding="async">
       </div>
       <div class="int-ceo-name">Davi Bispo</div>
       <div class="int-ceo-role">CEO</div>
@@ -1279,20 +1290,20 @@ html{overflow-x:hidden}
   <div class="cl-lab">Marcas e projetos que confiam na SOMA</div>
   <div class="cl-track-wrap">
     <div class="cl-track">
-      <div class="cl-item"><picture><source srcset="logo-expomix.webp" type="image/webp"><img src="logo-expomix.png" alt="Expomix Brasil" class="cl-sm" loading="lazy" decoding="async"></picture></div>
-      <div class="cl-item"><picture><source srcset="logo-bb.webp" type="image/webp"><img src="logo-bb.png" alt="Banco do Brasil" loading="lazy" decoding="async"></picture></div>
-      <div class="cl-item"><picture><source srcset="logo-record.webp" type="image/webp"><img src="logo-record.png" alt="Record" class="cl-lg" loading="lazy" decoding="async"></picture></div>
-      <div class="cl-item"><picture><source srcset="logo-r2.webp" type="image/webp"><img src="logo-r2.png" alt="R2" loading="lazy" decoding="async"></picture></div>
-      <div class="cl-item"><picture><source srcset="logo-cbf.webp" type="image/webp"><img src="logo-cbf.png" alt="CBF" loading="lazy" decoding="async"></picture></div>
-      <div class="cl-item"><picture><source srcset="logo-napraia.webp" type="image/webp"><img src="logo-napraia.png" alt="Na Praia" loading="lazy" decoding="async"></picture></div>
-      <div class="cl-item"><picture><source srcset="logo-arenabrb.webp" type="image/webp"><img src="logo-arenabrb.png" alt="Arena BRB" class="cl-sm" loading="lazy" decoding="async"></picture></div>
-      <div class="cl-item"><picture><source srcset="logo-expomix.webp" type="image/webp"><img src="logo-expomix.png" alt="Expomix Brasil" class="cl-sm" loading="lazy" decoding="async"></picture></div>
-      <div class="cl-item"><picture><source srcset="logo-bb.webp" type="image/webp"><img src="logo-bb.png" alt="Banco do Brasil" loading="lazy" decoding="async"></picture></div>
-      <div class="cl-item"><picture><source srcset="logo-record.webp" type="image/webp"><img src="logo-record.png" alt="Record" class="cl-lg" loading="lazy" decoding="async"></picture></div>
-      <div class="cl-item"><picture><source srcset="logo-r2.webp" type="image/webp"><img src="logo-r2.png" alt="R2" loading="lazy" decoding="async"></picture></div>
-      <div class="cl-item"><picture><source srcset="logo-cbf.webp" type="image/webp"><img src="logo-cbf.png" alt="CBF" loading="lazy" decoding="async"></picture></div>
-      <div class="cl-item"><picture><source srcset="logo-napraia.webp" type="image/webp"><img src="logo-napraia.png" alt="Na Praia" loading="lazy" decoding="async"></picture></div>
-      <div class="cl-item"><picture><source srcset="logo-arenabrb.webp" type="image/webp"><img src="logo-arenabrb.png" alt="Arena BRB" class="cl-sm" loading="lazy" decoding="async"></picture></div>
+      <div class="cl-item"><img src="logo-expomix.png" alt="Expomix Brasil" class="cl-sm" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-bb.png" alt="Banco do Brasil" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-record.png" alt="Record" class="cl-lg" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-r2.png" alt="R2" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-cbf.png" alt="CBF" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-napraia.png" alt="Na Praia" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-arenabrb.png" alt="Arena BRB" class="cl-sm" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-expomix.png" alt="Expomix Brasil" class="cl-sm" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-bb.png" alt="Banco do Brasil" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-record.png" alt="Record" class="cl-lg" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-r2.png" alt="R2" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-cbf.png" alt="CBF" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-napraia.png" alt="Na Praia" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-arenabrb.png" alt="Arena BRB" class="cl-sm" loading="lazy" decoding="async"></div>
     </div>
   </div>
 </section>
@@ -1361,7 +1372,7 @@ html{overflow-x:hidden}
 </section>
 
 <footer>
-  <div class="f-logo"><picture><source srcset="logotipo.webp" type="image/webp"><img class="f-sym" src="logotipo.png" alt="SOMA Produtora"></picture></div>
+  <div class="f-logo"><img class="f-sym" src="logotipo.png" alt="SOMA Produtora"></div>
   <div class="f-links">
     <a href="#portfolio">Portfólio</a><a href="#manifesto">Sobre</a>
     <a href="#processo">Processo</a><a href="#clients">Clientes</a>
@@ -1403,6 +1414,93 @@ function _unlockScroll(){document.body.style.overflow=''}
 setTimeout(()=>document.getElementById('intro').classList.add('done'),3000);
 const nav=document.getElementById('nav');window.addEventListener('scroll',()=>nav.classList.toggle('stuck',window.scrollY>80),{passive:true});
 (function(){const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.08,rootMargin:'0px 0px -32px 0px'});document.querySelectorAll('.rv').forEach(el=>obs.observe(el))})();
+
+/* ──────────── PARALLAX 3D SUTIL ──────────── */
+/* Respeita prefers-reduced-motion e touch/mobile (sem tilt) */
+(function(){
+  'use strict';
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(reduced) return;
+
+  var isCoarse = window.matchMedia && window.matchMedia('(pointer:coarse)').matches;
+  var isMobile = window.innerWidth < 900;
+
+  /* ── (B) HERO: fade+translate conforme sai da viewport ── */
+  var heroInner = document.querySelector('#hero .hero-inner');
+  var heroSec   = document.getElementById('hero');
+  if(heroInner && heroSec){
+    var heroTicking = false;
+    var heroVisible = true;
+    /* só atualiza quando hero está visível (performance) */
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(entries){
+        heroVisible = entries[0].isIntersecting;
+      },{threshold:0}).observe(heroSec);
+    }
+    function heroTick(){
+      heroTicking = false;
+      if(!heroVisible) return;
+      var y = window.scrollY;
+      var h = window.innerHeight;
+      var p = Math.min(1, Math.max(0, y / (h * 0.9))); /* 0..1 */
+      /* intensidade baixa: move 60px e reduz opacidade pra .35 no limite */
+      var ty = p * 60;
+      var op = 1 - p * 0.65;
+      heroInner.style.transform = 'translate3d(0,' + ty + 'px,0)';
+      heroInner.style.opacity = op.toFixed(3);
+    }
+    window.addEventListener('scroll', function(){
+      if(!heroTicking){ heroTicking = true; requestAnimationFrame(heroTick); }
+    }, { passive: true });
+    heroTick();
+  }
+
+  /* ── (C) PORTFOLIO: 3D tilt em hover (desktop only) ── */
+  if(!isCoarse && !isMobile){
+    var pfCards = document.querySelectorAll('.pf-card');
+    pfCards.forEach(function(card){
+      var raf = null;
+      var rx = 0, ry = 0;
+      function onMove(e){
+        var rect = card.getBoundingClientRect();
+        var cx = rect.left + rect.width / 2;
+        var cy = rect.top  + rect.height / 2;
+        var dx = (e.clientX - cx) / (rect.width  / 2);
+        var dy = (e.clientY - cy) / (rect.height / 2);
+        /* amplitude pequena: ±6deg, bem sutil */
+        ry =  dx * 6;
+        rx = -dy * 5;
+        if(!raf) raf = requestAnimationFrame(applyTilt);
+      }
+      function applyTilt(){
+        raf = null;
+        card.style.transform = 'perspective(900px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg) translateY(-4px) translateZ(0)';
+      }
+      function onLeave(){
+        if(raf){ cancelAnimationFrame(raf); raf = null; }
+        card.classList.remove('pf-tilt');
+        card.style.transform = '';
+      }
+      function onEnter(){
+        card.classList.add('pf-tilt');
+      }
+      card.addEventListener('mouseenter', onEnter, { passive: true });
+      card.addEventListener('mousemove',  onMove,  { passive: true });
+      card.addEventListener('mouseleave', onLeave, { passive: true });
+    });
+  }
+
+  /* ── (E) CTA: scale-in na entrada (IntersectionObserver) ── */
+  var ctaH = document.querySelector('#cta .cta-h');
+  if(ctaH && 'IntersectionObserver' in window){
+    new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting) ctaH.classList.add('cta-in');
+      });
+    },{ threshold: 0.25 }).observe(ctaH);
+  }
+})();
+
 /* Pausa carrosseis animados quando off-screen — economiza GPU e bateria */
 (function(){
   var tracks=document.querySelectorAll('.eq-track,.cl-track,.t-track');
@@ -1779,117 +1877,8 @@ document.getElementById('reelSection').addEventListener('click',function(e){if(e
 })();
 </script>
 
-<!-- ========== HERO WAVE 3D ========== -->
-<script>
-(function(){
-  'use strict';
-  var canvas = document.getElementById('hero-wave');
-  if(!canvas) return;
-  var ctx = canvas.getContext('2d');
 
-  /* Brand green: rgb(107,240,25) */
-  var GR = 107, GG = 240, GB = 25;
-  var W = 0, H = 0, cols = 0, rows = 0;
-  var raf = null;
-  var t0 = null; /* timestamp do primeiro frame */
+</script>
 
-  var TILT = 0.68;
-  var cosT = Math.cos(TILT), sinT = Math.sin(TILT);
-
-  /* ---- dimensionar canvas ---- */
-  var mobile = false;
-  function resize(){
-    mobile = window.innerWidth < 768;
-    cols = mobile ? 20 : 46;
-    rows = mobile ? 11 : 24;
-    W = canvas.offsetWidth  || window.innerWidth;
-    H = canvas.offsetHeight || Math.round(window.innerHeight * (mobile ? 0.38 : 0.52));
-    /* DPR mais baixo no mobile → menos pixels pra renderizar cada frame */
-    var dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1.25 : 2);
-    canvas.width  = Math.round(W * dpr);
-    canvas.height = Math.round(H * dpr);
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-    /* cap de framerate no mobile (40fps = 25ms/frame) */
-    FRAME_CAP_MS = mobile ? 24 : 0;
-  }
-
-  /* ---- altura da onda em cada vértice da grade (terreno estilo wireframe) ---- */
-  function waveH(gx, gz, t){
-    var nx = (gx / cols) * 2 - 1;  /* -1 … +1 */
-    var nz =  gz / rows;            /*  0 … +1 */
-    var h =
-      Math.sin(nx * Math.PI * 1.7  + t * 0.55) * 0.55 +
-      Math.sin(nz * Math.PI * 2.2  - t * 0.42) * 0.42 +
-      Math.sin((nx * 1.2 + nz * 1.4) * Math.PI * 2.2 + t * 0.78) * 0.34 +
-      Math.sin(nx * Math.PI * 4.0  - t * 0.95) * 0.18 +
-      Math.sin(nz * Math.PI * 3.6  + t * 0.65) * 0.14 +
-      Math.sin((nx + nz) * Math.PI * 3.2 + t * 1.05) * 0.10 +
-      Math.sin((nx - nz) * Math.PI * 2.0 + t * 0.35) * 0.08;
-    /* afia os picos pra virar montanhas */
-    return h * (0.85 + Math.abs(h) * 0.35);
-  }
-
-  /* ---- projeção perspectiva 3D → 2D ---- */
-  function project(x3, y3, z3){
-    var ry = y3 * cosT - z3 * sinT;
-    var rz = y3 * sinT + z3 * cosT;
-    var fov = W * 1.05;
-    var d   = fov + rz;
-    return {
-      px: W * 0.5  + x3 * fov / d,
-      py: H * 0.76 - ry  * fov / d
-    };
-  }
-
-  /* ---- renderizar um frame ---- */
-  function draw(t){
-    ctx.clearRect(0, 0, W, H);
-
-    var amp = H * (mobile ? 0.26 : 0.38);   /* amplitude máxima dos picos em px */
-    var gW  = W * (mobile ? 1.05 : 1.22);  /* largura da grade no espaço 3D    */
-    var gD  = H * (mobile ? 1.2 : 1.48);   /* profundidade da grade             */
-
-    /* pré-calcular todos os pontos projetados */
-    var pts = [], iz, ix, p;
-    for(iz = 0; iz <= rows; iz++){
-      pts[iz] = [];
-      for(ix = 0; ix <= cols; ix++){
-        pts[iz][ix] = project(
-          (ix / cols - 0.5) * gW,
-          waveH(ix, iz, t) * amp,
-          (iz / rows) * gD
-        );
-      }
-    }
-
-    ctx.save();
-
-    /* — linhas horizontais (ao longo de X, para cada Z) —
-       no mobile: sem shadowBlur (derruba o FPS); compensa com opacidade maior */
-    if(mobile){
-      ctx.shadowBlur = 0;
-    } else {
-      ctx.shadowColor = 'rgba(' + GR + ',' + GG + ',' + GB + ',0.85)';
-      ctx.shadowBlur  = 16;
-    }
-    for(iz = 0; iz <= rows; iz++){
-      var dFade = 1 - (iz / rows) * 0.68;
-      var pulse = 1 + Math.sin(t * 2 + iz * 0.3) * 0.10;
-      ctx.beginPath();
-      ctx.strokeStyle = 'rgba(' + GR + ',' + GG + ',' + GB + ',' + ((mobile?0.28:0.18) + dFade * (mobile?0.55:0.55)).toFixed(3) + ')';
-      ctx.lineWidth   = (mobile ? 0.7 : 0.85) + dFade * (mobile ? 0.5 : 0.8) * pulse;
-      for(ix = 0; ix <= cols; ix++){
-        p = pts[iz][ix];
-        ix === 0 ? ctx.moveTo(p.px, p.py) : ctx.lineTo(p.px, p.py);
-      }
-      ctx.stroke();
-    }
-
-    /* — linhas verticais (ao longo de Z, para cada X) — */
-    if(!mobile) ctx.shadowBlur = 7;
-    for(ix = 0; ix <= cols; ix++){
-      var xFade = 1 - Math.abs((ix / cols) * 2 - 1) * 0.6;
-      var xPulse = 1 + Math.sin(t * 1.5 + ix * 0.2) * 0.08;
-      ctx.beginPath();
-      ctx.strokeStyle = 'rgba(' + GR + ',' + GG + ',' + GB + ',' + ((mobile?0.16:0.10) + xFade * (mobile?0.30:0.26)).toFixed(3) + ')';
-      ctx.lineWidth   = mobile ? 0.5 : 0.7 * xPuls
+</body>
+</html>
