@@ -1799,18 +1799,20 @@ document.getElementById('reelSection').addEventListener('click',function(e){if(e
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   }
 
-  /* ---- altura da onda em cada vértice da grade ---- */
+  /* ---- altura da onda em cada vértice da grade (terreno estilo wireframe) ---- */
   function waveH(gx, gz, t){
     var nx = (gx / cols) * 2 - 1;  /* -1 … +1 */
     var nz =  gz / rows;            /*  0 … +1 */
-    return (
-      Math.sin(nx * Math.PI * 2.2  + t * 0.70) * 0.38 +
-      Math.sin(nz * Math.PI * 3.0  - t * 0.55) * 0.30 +
-      Math.sin((nx * 1.4 + nz) * Math.PI * 2.8 + t * 0.95) * 0.22 +
-      Math.sin(nx * Math.PI * 5.0  - t * 1.20) * 0.12 +
-      Math.sin(nz * Math.PI * 4.5  + t * 0.45) * 0.08 +
-      Math.sin((nx - nz) * Math.PI * 1.8 + t * 0.60) * 0.06
-    );
+    var h =
+      Math.sin(nx * Math.PI * 1.7  + t * 0.55) * 0.55 +
+      Math.sin(nz * Math.PI * 2.2  - t * 0.42) * 0.42 +
+      Math.sin((nx * 1.2 + nz * 1.4) * Math.PI * 2.2 + t * 0.78) * 0.34 +
+      Math.sin(nx * Math.PI * 4.0  - t * 0.95) * 0.18 +
+      Math.sin(nz * Math.PI * 3.6  + t * 0.65) * 0.14 +
+      Math.sin((nx + nz) * Math.PI * 3.2 + t * 1.05) * 0.10 +
+      Math.sin((nx - nz) * Math.PI * 2.0 + t * 0.35) * 0.08;
+    /* afia os picos pra virar montanhas */
+    return h * (0.85 + Math.abs(h) * 0.35);
   }
 
   /* ---- projeção perspectiva 3D → 2D ---- */
@@ -1829,9 +1831,9 @@ document.getElementById('reelSection').addEventListener('click',function(e){if(e
   function draw(t){
     ctx.clearRect(0, 0, W, H);
 
-    var amp = H * (mobile ? 0.18 : 0.24);   /* amplitude máxima dos picos em px */
-    var gW  = W * (mobile ? 1.0 : 1.14);   /* largura da grade no espaço 3D    */
-    var gD  = H * (mobile ? 1.1 : 1.32);   /* profundidade da grade             */
+    var amp = H * (mobile ? 0.26 : 0.38);   /* amplitude máxima dos picos em px */
+    var gW  = W * (mobile ? 1.05 : 1.22);  /* largura da grade no espaço 3D    */
+    var gD  = H * (mobile ? 1.2 : 1.48);   /* profundidade da grade             */
 
     /* pré-calcular todos os pontos projetados */
     var pts = [], iz, ix, p;
@@ -1849,14 +1851,14 @@ document.getElementById('reelSection').addEventListener('click',function(e){if(e
     ctx.save();
 
     /* — linhas horizontais (ao longo de X, para cada Z) — */
-    ctx.shadowColor = 'rgba(' + GR + ',' + GG + ',' + GB + ',0.7)';
-    ctx.shadowBlur  = mobile ? 6 : 12;
+    ctx.shadowColor = 'rgba(' + GR + ',' + GG + ',' + GB + ',0.85)';
+    ctx.shadowBlur  = mobile ? 8 : 16;
     for(iz = 0; iz <= rows; iz++){
-      var dFade = 1 - (iz / rows) * 0.72;
-      var pulse = 1 + Math.sin(t * 2 + iz * 0.3) * 0.12;
+      var dFade = 1 - (iz / rows) * 0.68;
+      var pulse = 1 + Math.sin(t * 2 + iz * 0.3) * 0.10;
       ctx.beginPath();
-      ctx.strokeStyle = 'rgba(' + GR + ',' + GG + ',' + GB + ',' + (0.10 + dFade * 0.35).toFixed(3) + ')';
-      ctx.lineWidth   = (mobile ? 0.5 : 0.7) + dFade * (mobile ? 0.4 : 0.7) * pulse;
+      ctx.strokeStyle = 'rgba(' + GR + ',' + GG + ',' + GB + ',' + (0.18 + dFade * 0.55).toFixed(3) + ')';
+      ctx.lineWidth   = (mobile ? 0.6 : 0.85) + dFade * (mobile ? 0.45 : 0.8) * pulse;
       for(ix = 0; ix <= cols; ix++){
         p = pts[iz][ix];
         ix === 0 ? ctx.moveTo(p.px, p.py) : ctx.lineTo(p.px, p.py);
@@ -1865,13 +1867,13 @@ document.getElementById('reelSection').addEventListener('click',function(e){if(e
     }
 
     /* — linhas verticais (ao longo de Z, para cada X) — */
-    ctx.shadowBlur = mobile ? 3 : 5;
+    ctx.shadowBlur = mobile ? 4 : 7;
     for(ix = 0; ix <= cols; ix++){
-      var xFade = 1 - Math.abs((ix / cols) * 2 - 1) * 0.65;
+      var xFade = 1 - Math.abs((ix / cols) * 2 - 1) * 0.6;
       var xPulse = 1 + Math.sin(t * 1.5 + ix * 0.2) * 0.08;
       ctx.beginPath();
-      ctx.strokeStyle = 'rgba(' + GR + ',' + GG + ',' + GB + ',' + (0.06 + xFade * 0.16).toFixed(3) + ')';
-      ctx.lineWidth   = mobile ? 0.4 : 0.6 * xPulse;
+      ctx.strokeStyle = 'rgba(' + GR + ',' + GG + ',' + GB + ',' + (0.10 + xFade * 0.26).toFixed(3) + ')';
+      ctx.lineWidth   = mobile ? 0.45 : 0.7 * xPulse;
       for(iz = 0; iz <= rows; iz++){
         p = pts[iz][ix];
         iz === 0 ? ctx.moveTo(p.px, p.py) : ctx.lineTo(p.px, p.py);
@@ -1881,16 +1883,16 @@ document.getElementById('reelSection').addEventListener('click',function(e){if(e
 
     /* — pontos de brilho nos picos das ondas — */
     if(!mobile){
-      ctx.shadowBlur = 15;
+      ctx.shadowBlur = 18;
       for(iz = 0; iz <= rows; iz += 2){
         for(ix = 0; ix <= cols; ix += 2){
-          var bf = (1 - iz / rows) * (1 - Math.abs((ix / cols) * 2 - 1) * 0.5);
-          if(bf > 0.4){
+          var bf = (1 - iz / rows) * (1 - Math.abs((ix / cols) * 2 - 1) * 0.45);
+          if(bf > 0.35){
             p = pts[iz][ix];
             var bp = 0.5 + Math.sin(t * 3 + ix * iz * 0.1) * 0.5;
             ctx.beginPath();
-            ctx.fillStyle = 'rgba(' + GR + ',' + GG + ',' + GB + ',' + (bf * 0.4 * bp).toFixed(3) + ')';
-            ctx.arc(p.px, p.py, 1.5 + bf * 1.5, 0, Math.PI * 2);
+            ctx.fillStyle = 'rgba(' + GR + ',' + GG + ',' + GB + ',' + (bf * 0.55 * bp).toFixed(3) + ')';
+            ctx.arc(p.px, p.py, 1.7 + bf * 1.8, 0, Math.PI * 2);
             ctx.fill();
           }
         }
@@ -1920,7 +1922,7 @@ document.getElementById('reelSection').addEventListener('click',function(e){if(e
     var heroIO = new IntersectionObserver(function(entries){
       entries.forEach(function(entry){
         if(entry.isIntersecting){
-          if(\!raf){ t0 = null; raf = requestAnimationFrame(tick); }
+          if(!raf){ t0 = null; raf = requestAnimationFrame(tick); }
         } else {
           if(raf){ cancelAnimationFrame(raf); raf = null; }
         }
