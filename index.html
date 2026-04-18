@@ -650,6 +650,10 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
   pointer-events:none;
   z-index:1;
   opacity:1;
+  transform:translateZ(0);
+  -webkit-transform:translateZ(0);
+  backface-visibility:hidden;
+  -webkit-backface-visibility:hidden;
   -webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.25) 15%,rgba(0,0,0,.8) 40%,black 65%,black 85%,transparent 100%);
   mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.25) 15%,rgba(0,0,0,.8) 40%,black 65%,black 85%,transparent 100%);
 }
@@ -659,6 +663,9 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
     bottom:0;
     -webkit-mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.4) 20%,rgba(0,0,0,.85) 55%,black 75%,transparent 100%);
     mask-image:linear-gradient(to bottom,transparent 0%,rgba(0,0,0,.4) 20%,rgba(0,0,0,.85) 55%,black 75%,transparent 100%);
+    /* glow GPU-composited (mais barato que ctx.shadowBlur) */
+    filter:drop-shadow(0 0 5px rgba(107,240,25,.45)) drop-shadow(0 0 14px rgba(107,240,25,.18));
+    -webkit-filter:drop-shadow(0 0 5px rgba(107,240,25,.45)) drop-shadow(0 0 14px rgba(107,240,25,.18));
   }
 }
 
@@ -1789,14 +1796,17 @@ document.getElementById('reelSection').addEventListener('click',function(e){if(e
   var mobile = false;
   function resize(){
     mobile = window.innerWidth < 768;
-    cols = mobile ? 18 : 46;
-    rows = mobile ? 10 : 24;
+    cols = mobile ? 20 : 46;
+    rows = mobile ? 11 : 24;
     W = canvas.offsetWidth  || window.innerWidth;
     H = canvas.offsetHeight || Math.round(window.innerHeight * (mobile ? 0.38 : 0.52));
-    var dpr = Math.min(window.devicePixelRatio || 1, 2);
+    /* DPR mais baixo no mobile → menos pixels pra renderizar cada frame */
+    var dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1.25 : 2);
     canvas.width  = Math.round(W * dpr);
     canvas.height = Math.round(H * dpr);
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    /* cap de framerate no mobile (40fps = 25ms/frame) */
+    FRAME_CAP_MS = mobile ? 24 : 0;
   }
 
   /* ---- altura da onda em cada vértice da grade (terreno estilo wireframe) ---- */
@@ -1850,15 +1860,20 @@ document.getElementById('reelSection').addEventListener('click',function(e){if(e
 
     ctx.save();
 
-    /* — linhas horizontais (ao longo de X, para cada Z) — */
-    ctx.shadowColor = 'rgba(' + GR + ',' + GG + ',' + GB + ',0.85)';
-    ctx.shadowBlur  = mobile ? 8 : 16;
+    /* — linhas horizontais (ao longo de X, para cada Z) —
+       no mobile: sem shadowBlur (derruba o FPS); compensa com opacidade maior */
+    if(mobile){
+      ctx.shadowBlur = 0;
+    } else {
+      ctx.shadowColor = 'rgba(' + GR + ',' + GG + ',' + GB + ',0.85)';
+      ctx.shadowBlur  = 16;
+    }
     for(iz = 0; iz <= rows; iz++){
       var dFade = 1 - (iz / rows) * 0.68;
       var pulse = 1 + Math.sin(t * 2 + iz * 0.3) * 0.10;
       ctx.beginPath();
-      ctx.strokeStyle = 'rgba(' + GR + ',' + GG + ',' + GB + ',' + (0.18 + dFade * 0.55).toFixed(3) + ')';
-      ctx.lineWidth   = (mobile ? 0.6 : 0.85) + dFade * (mobile ? 0.45 : 0.8) * pulse;
+      ctx.strokeStyle = 'rgba(' + GR + ',' + GG + ',' + GB + ',' + ((mobile?0.28:0.18) + dFade * (mobile?0.55:0.55)).toFixed(3) + ')';
+      ctx.lineWidth   = (mobile ? 0.7 : 0.85) + dFade * (mobile ? 0.5 : 0.8) * pulse;
       for(ix = 0; ix <= cols; ix++){
         p = pts[iz][ix];
         ix === 0 ? ctx.moveTo(p.px, p.py) : ctx.lineTo(p.px, p.py);
@@ -1867,13 +1882,13 @@ document.getElementById('reelSection').addEventListener('click',function(e){if(e
     }
 
     /* — linhas verticais (ao longo de Z, para cada X) — */
-    ctx.shadowBlur = mobile ? 4 : 7;
+    if(!mobile) ctx.shadowBlur = 7;
     for(ix = 0; ix <= cols; ix++){
       var xFade = 1 - Math.abs((ix / cols) * 2 - 1) * 0.6;
       var xPulse = 1 + Math.sin(t * 1.5 + ix * 0.2) * 0.08;
       ctx.beginPath();
-      ctx.strokeStyle = 'rgba(' + GR + ',' + GG + ',' + GB + ',' + (0.10 + xFade * 0.26).toFixed(3) + ')';
-      ctx.lineWidth   = mobile ? 0.45 : 0.7 * xPulse;
+      ctx.strokeStyle = 'rgba(' + GR + ',' + GG + ',' + GB + ',' + ((mobile?0.16:0.10) + xFade * (mobile?0.30:0.26)).toFixed(3) + ')';
+      ctx.lineWidth   = mobile ? 0.5 : 0.7 * xPulse;
       for(iz = 0; iz <= rows; iz++){
         p = pts[iz][ix];
         iz === 0 ? ctx.moveTo(p.px, p.py) : ctx.lineTo(p.px, p.py);
@@ -1902,9 +1917,17 @@ document.getElementById('reelSection').addEventListener('click',function(e){if(e
     ctx.restore();
   }
 
-  /* ---- loop principal — usa timestamp do rAF (segundos) ---- */
+  /* ---- loop principal — usa timestamp do rAF (segundos)
+     no mobile: cap a ~40fps pra ficar suave e constante mesmo em device fraco */
+  var lastDraw = 0;
+  var FRAME_CAP_MS = 0;   /* 0 = sem cap; preenchido no resize */
   function tick(now){
-    if(t0 === null) t0 = now;
+    if(t0 === null){ t0 = now; lastDraw = now; }
+    if(FRAME_CAP_MS > 0 && (now - lastDraw) < FRAME_CAP_MS){
+      raf = requestAnimationFrame(tick);
+      return;
+    }
+    lastDraw = now;
     draw((now - t0) * 0.001); /* t em segundos reais */
     raf = requestAnimationFrame(tick);
   }
