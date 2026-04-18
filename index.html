@@ -406,6 +406,10 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
 .int-text{display:flex;flex-direction:column;align-items:center;gap:14px}
 .int-marker{width:18px;height:18px;opacity:.4;transition:opacity .25s ease,filter .25s ease}
 .int-marker svg{width:100%;height:100%;stroke:var(--W);transition:stroke .25s ease}
+.int-flag{display:block;width:38px;height:26px;border-radius:3px;overflow:hidden;box-shadow:0 4px 12px rgba(0,0,0,.5),inset 0 0 0 1px rgba(255,255,255,.08);opacity:.55;transition:opacity .28s ease,transform .28s ease,filter .28s ease;flex-shrink:0;background:#222}
+.int-flag svg{display:block;width:100%;height:100%}
+.int-c:hover .int-flag{opacity:.9;transform:scale(1.06)}
+.int-c.active .int-flag{opacity:1;transform:scale(1.2);filter:drop-shadow(0 0 12px var(--country-color))}
 .int-text{display:inline-flex;align-items:center;gap:10px;line-height:1}
 .int-right{position:relative;--country-color:#00FF7F;--country-glow:rgba(0,255,127,.6);--country-bg:rgba(0,255,127,.3)}
 .int-right::before{content:'';position:absolute;inset:-20px;border-radius:30px;background:radial-gradient(ellipse at 50% 50%,var(--country-bg) 0%,transparent 60%);opacity:0;pointer-events:none;z-index:0}
@@ -443,7 +447,7 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
   .int-c.active::before{transform:scale(1.45);box-shadow:0 0 0 4px var(--country-bg),0 0 20px var(--country-color),0 0 35px var(--country-glow);animation:dotPulseMobile 2s ease-in-out infinite}
 @keyframes dotPulseMobile{0%,100%{box-shadow:0 0 0 4px var(--country-bg),0 0 20px var(--country-color),0 0 35px var(--country-glow)}50%{box-shadow:0 0 0 6px var(--country-bg),0 0 28px var(--country-color),0 0 50px var(--country-glow)}}
   .int-text{flex-direction:column;gap:7px}
-  .int-flag{width:18px;height:12px}
+  .int-flag{width:32px;height:22px;border-radius:2px}
   .int-full{display:none}
   .int-short{display:inline}
   .int-ceo-name{font-size:24px}
@@ -451,7 +455,7 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
 }
 @media(max-width:380px){
   .int-c{font-size:9px}
-  .int-flag{width:16px;height:11px}
+  .int-flag{width:28px;height:19px}
 }
 
 /* ===================== PREMIUM OVERRIDES ===================== */
@@ -1245,23 +1249,23 @@ html{overflow-x:hidden}
     </div>
     <div class="int-right rv d1">
       <div class="int-countries" role="tablist">
-        <button class="int-c active" data-c="brasilia" role="tab">
-          <span class="int-text"><span class="int-marker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></span><span class="int-full">Brasil</span></span>
+        <button class="int-c active" data-c="brasilia" role="tab" aria-label="Brasil" title="Brasil">
+          <span class="int-flag" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#009c3b"/><polygon points="15,3.5 26.5,10 15,16.5 3.5,10" fill="#ffdf00"/><circle cx="15" cy="10" r="3.5" fill="#002776"/></svg></span>
         </button>
-        <button class="int-c" data-c="londres" role="tab">
-          <span class="int-text"><span class="int-marker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></span><span class="int-full">Londres</span></span>
+        <button class="int-c" data-c="londres" role="tab" aria-label="Londres" title="Londres">
+          <span class="int-flag" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#012169"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.8"/><path d="M15 0V20M0 10H30" stroke="#fff" stroke-width="5.5"/><path d="M15 0V20M0 10H30" stroke="#C8102E" stroke-width="3"/></svg></span>
         </button>
-        <button class="int-c" data-c="gales" role="tab">
-          <span class="int-text"><span class="int-marker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></span><span class="int-full">Gales</span></span>
+        <button class="int-c" data-c="gales" role="tab" aria-label="Gales" title="Gales">
+          <span class="int-flag" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="10" fill="#fff"/><rect y="10" width="30" height="10" fill="#00703C"/><path d="M9 10.5C9 9.5 10.2 8 12 8L13.8 7L15 8L16.5 8.5L18 7.8L19.5 8.2C20.8 8.5 21.5 9.3 21.5 10.2L21 11.3L19.2 11.8L17 12.2L15 13L13 12.2L11 11.9L9.6 11.5Z" fill="#D30731"/></svg></span>
         </button>
-        <button class="int-c" data-c="escocia" role="tab">
-          <span class="int-text"><span class="int-marker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></span><span class="int-full">Escócia</span></span>
+        <button class="int-c" data-c="escocia" role="tab" aria-label="Escócia" title="Escócia">
+          <span class="int-flag" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#0065BD"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="3.5"/></svg></span>
         </button>
-        <button class="int-c" data-c="paris" role="tab">
-          <span class="int-text"><span class="int-marker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></span><span class="int-full">Paris</span></span>
+        <button class="int-c" data-c="paris" role="tab" aria-label="Paris" title="Paris">
+          <span class="int-flag" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="10" height="20" fill="#002395"/><rect x="10" width="10" height="20" fill="#fff"/><rect x="20" width="10" height="20" fill="#ED2939"/></svg></span>
         </button>
-        <button class="int-c" data-c="eua" role="tab">
-          <span class="int-text"><span class="int-marker"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7z"/><circle cx="12" cy="9" r="2.5"/></svg></span><span class="int-full">EUA</span></span>
+        <button class="int-c" data-c="eua" role="tab" aria-label="EUA" title="EUA">
+          <span class="int-flag" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#BF0A30"/><g fill="#fff"><rect y="1.54" width="30" height="1.54"/><rect y="4.62" width="30" height="1.54"/><rect y="7.69" width="30" height="1.54"/><rect y="10.77" width="30" height="1.54"/><rect y="13.85" width="30" height="1.54"/><rect y="16.92" width="30" height="1.54"/></g><rect width="12" height="10.77" fill="#002868"/></svg></span>
         </button>
       </div>
       <div class="int-player">
