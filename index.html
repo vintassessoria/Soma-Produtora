@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>SOMA Produtora — Não é só vídeo. É impacto.</title>
 <meta name="description" content="Agência de marketing audiovisual de Brasília. Da estratégia ao pixel — criamos conteúdo que transforma a percepção da sua marca permanentemente.">
 <link rel="icon" type="image/png" href="favicon.png">
@@ -43,12 +43,13 @@
   --Es:cubic-bezier(0.4,0,0.2,1);
   --Ef:cubic-bezier(0.16,1,0.3,1);
 }
-*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--G) var(--D1)}
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--G) var(--D1);-webkit-text-size-adjust:100%;text-size-adjust:100%}
 ::-webkit-scrollbar{width:2px}
 ::-webkit-scrollbar-track{background:var(--D1)}
 ::-webkit-scrollbar-thumb{background:var(--G)}
-body{font-family:var(--FB);background:var(--B);color:var(--W);overflow-x:hidden;cursor:none}
+body{font-family:var(--FB);background:var(--B);color:var(--W);overflow-x:hidden;cursor:none;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
+a,button,.btn,.nav-burger,.m-x,.web-modal-close,.lb-btn,.reel-play,.pf-tab{touch-action:manipulation}
 #cur{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:99999}
 #intro{position:fixed;inset:0;background:var(--B);z-index:20000;display:flex;align-items:center;justify-content:center;transition:opacity .9s var(--E),visibility .9s;will-change:opacity}
 #intro.done{opacity:0;visibility:hidden;pointer-events:none}
@@ -87,7 +88,7 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .nav-mobile.open{opacity:1;visibility:visible}
 .nav-mobile a{font-family:var(--FC);font-size:22px;font-weight:600;color:var(--W);text-decoration:none;letter-spacing:.4px}
 .nav-mobile a.nav-mobile-cta{background:var(--G);color:var(--B);padding:14px 32px;border-radius:100px;font-size:14px;margin-top:14px;font-weight:700}
-#hero{min-height:100svh;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;position:relative;overflow:hidden;padding-top:80px}
+#hero{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;position:relative;overflow:hidden;padding-top:80px}
 .hero-bg{position:absolute;inset:0;background:var(--B)}
 .hero-glow{position:absolute;width:900px;height:900px;border-radius:50%;background:radial-gradient(circle,rgba(89,248,0,.013) 0%,transparent 60%);top:50%;left:50%;transform:translate(-50%,-50%);animation:heroGlow 10s ease-in-out infinite;pointer-events:none;will-change:transform,opacity}
 @keyframes heroGlow{0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.14)}}
@@ -463,7 +464,7 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
   #hero .hero-badge{right:20px;bottom:80px}
 }
 @media(max-width:768px){
-  #hero{min-height:100svh;padding-top:100px;align-items:flex-start}
+  #hero{min-height:100vh;min-height:100svh;padding-top:100px;align-items:flex-start}
   #hero .hero-h1{font-size:clamp(38px,11vw,64px);letter-spacing:-2px;margin-bottom:24px;text-align:left}
   #hero .hero-h1::after{font-size:13px;margin-top:16px}
   #hero .hero-mark{height:24px;margin-bottom:24px}
@@ -1250,20 +1251,20 @@ html{overflow-x:hidden}
   <div class="cl-lab">Marcas e projetos que confiam na SOMA</div>
   <div class="cl-track-wrap">
     <div class="cl-track">
-      <div class="cl-item"><img src="logo-expomix.png" alt="Expomix Brasil" class="cl-sm"></div>
-      <div class="cl-item"><img src="logo-bb.png" alt="Banco do Brasil"></div>
-      <div class="cl-item"><img src="logo-record.png" alt="Record" class="cl-lg"></div>
-      <div class="cl-item"><img src="logo-r2.png" alt="R2"></div>
-      <div class="cl-item"><img src="logo-cbf.png" alt="CBF"></div>
-      <div class="cl-item"><img src="logo-napraia.png" alt="Na Praia"></div>
-      <div class="cl-item"><img src="logo-arenabrb.png" alt="Arena BRB" class="cl-sm"></div>
-      <div class="cl-item"><img src="logo-expomix.png" alt="Expomix Brasil" class="cl-sm"></div>
-      <div class="cl-item"><img src="logo-bb.png" alt="Banco do Brasil"></div>
-      <div class="cl-item"><img src="logo-record.png" alt="Record" class="cl-lg"></div>
-      <div class="cl-item"><img src="logo-r2.png" alt="R2"></div>
-      <div class="cl-item"><img src="logo-cbf.png" alt="CBF"></div>
-      <div class="cl-item"><img src="logo-napraia.png" alt="Na Praia"></div>
-      <div class="cl-item"><img src="logo-arenabrb.png" alt="Arena BRB" class="cl-sm"></div>
+      <div class="cl-item"><img src="logo-expomix.png" alt="Expomix Brasil" class="cl-sm" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-bb.png" alt="Banco do Brasil" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-record.png" alt="Record" class="cl-lg" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-r2.png" alt="R2" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-cbf.png" alt="CBF" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-napraia.png" alt="Na Praia" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-arenabrb.png" alt="Arena BRB" class="cl-sm" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-expomix.png" alt="Expomix Brasil" class="cl-sm" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-bb.png" alt="Banco do Brasil" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-record.png" alt="Record" class="cl-lg" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-r2.png" alt="R2" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-cbf.png" alt="CBF" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-napraia.png" alt="Na Praia" loading="lazy" decoding="async"></div>
+      <div class="cl-item"><img src="logo-arenabrb.png" alt="Arena BRB" class="cl-sm" loading="lazy" decoding="async"></div>
     </div>
   </div>
 </section>
@@ -1351,6 +1352,9 @@ html{overflow-x:hidden}
 </div>
 
 <script>
+/* Scroll lock simples (volta ao comportamento original pra evitar travar scroll) */
+function _lockScroll(){document.body.style.overflow='hidden'}
+function _unlockScroll(){document.body.style.overflow=''}
 (function(){
   /* Skip cursor animation entirely on touch / mobile — saves CPU */
   if('ontouchstart' in window||navigator.maxTouchPoints>0)return;
@@ -1367,7 +1371,7 @@ html{overflow-x:hidden}
   function draw(x,y,size,alpha){if(!img.complete||!img.naturalWidth)return;ctx.save();ctx.translate(x,y);ctx.globalAlpha=alpha;ctx.shadowColor='#6BF019';ctx.shadowBlur=isHov?8:4;ctx.drawImage(img,-size/2,-size/2,size,size);ctx.restore()}
   function frame(){ctx.clearRect(0,0,W,H);px+=(mx-px)*0.12;py+=(my-py)*0.12;sc+=(tsc-sc)*0.1;trail.push({x:px,y:py});if(trail.length>TLEN)trail.shift();trail.forEach((p,i)=>{const t=i/TLEN;draw(p.x,p.y,13*t*sc,t*0.12*(isHov?1.1:1))});draw(px,py,20*sc,.82);if(isHov){ctx.save();ctx.translate(px,py);ctx.strokeStyle='rgba(107,240,25,0.08)';ctx.lineWidth=1;ctx.shadowColor='#6BF019';ctx.shadowBlur=4;ctx.beginPath();ctx.arc(0,0,40*sc,0,Math.PI*2);ctx.stroke();ctx.restore()}requestAnimationFrame(frame)}frame()})();
 
-(function(){const hero=document.getElementById('hero'),ov=document.createElement('div');ov.style.cssText='position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:4;will-change:opacity';hero.appendChild(ov);window.addEventListener('scroll',()=>{const prog=Math.min(window.scrollY/(hero.offsetHeight*.65),1);ov.style.opacity=prog*.88},{passive:true})})();
+(function(){const hero=document.getElementById('hero');if(!hero)return;const ov=document.createElement('div');ov.style.cssText='position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:4;will-change:opacity';hero.appendChild(ov);window.addEventListener('scroll',()=>{const h=hero.offsetHeight;if(!h)return;const prog=Math.min(window.scrollY/(h*.65),1);ov.style.opacity=prog*.88},{passive:true})})();
 setTimeout(()=>document.getElementById('intro').classList.add('done'),3000);
 const nav=document.getElementById('nav');window.addEventListener('scroll',()=>nav.classList.toggle('stuck',window.scrollY>80),{passive:true});
 (function(){const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.08,rootMargin:'0px 0px -32px 0px'});document.querySelectorAll('.rv').forEach(el=>obs.observe(el))})();
@@ -1377,8 +1381,8 @@ const nav=document.getElementById('nav');window.addEventListener('scroll',()=>na
   var closeBtn=document.getElementById('closeWebModal');
   var closeBtn2=document.getElementById('closeWebModal2');
   if(!webModal||!openBtn)return;
-  function openModal(){webModal.classList.add('on');document.body.style.overflow='hidden'}
-  function closeModal(){webModal.classList.remove('on');document.body.style.overflow=''}
+  function openModal(){webModal.classList.add('on');_lockScroll()}
+  function closeModal(){webModal.classList.remove('on');_unlockScroll()}
   openBtn.addEventListener('click',openModal);
   if(closeBtn)closeBtn.addEventListener('click',closeModal);
   if(closeBtn2)closeBtn2.addEventListener('click',closeModal);
@@ -1416,7 +1420,7 @@ const nav=document.getElementById('nav');window.addEventListener('scroll',()=>na
 const modal=document.getElementById('modal');
 const modalVideo=document.getElementById('modalVideo');
 const modalVideoSrc=document.getElementById('modalVideoSrc');
-const _reelOpen=(src)=>{modalVideoSrc.src=src;modalVideo.load();modal.classList.add('on');document.body.style.overflow='hidden'};
+const _reelOpen=(src)=>{modalVideoSrc.src=src;modalVideo.load();modal.classList.add('on');_lockScroll()};
 document.getElementById('mX').addEventListener('click',function(){_closeReel()});
 modal.addEventListener('click',e=>{if(e.target===modal)_closeReel()});
 
@@ -1429,26 +1433,26 @@ document.querySelectorAll('.pf-card').forEach(card=>{
   if(vid){
     card.addEventListener('mouseenter',()=>vid.play().catch(()=>{}));
     card.addEventListener('mouseleave',()=>vid.pause());
-    /* Touch: start video preview on touchstart so it's visible before tap-to-open */
     card.addEventListener('touchstart',()=>vid.play().catch(()=>{}),{passive:true});
   }
 });
 
-const pf=document.getElementById('pfRow');let dn=false,sx,sl,dragged=false;
+(function(){const pf=document.getElementById('pfRow');if(!pf)return;let dn=false,sx,sl,dragged=false;
 pf.addEventListener('mousedown',e=>{dn=true;dragged=false;sx=e.pageX-pf.offsetLeft;sl=pf.scrollLeft});
 pf.addEventListener('mouseleave',()=>{dn=false});
 pf.addEventListener('mouseup',()=>{dn=false});
 pf.addEventListener('mousemove',e=>{if(!dn)return;const dx=Math.abs(e.pageX-pf.offsetLeft-sx);if(dx>5){dragged=true;e.preventDefault();pf.scrollLeft=sl-(e.pageX-pf.offsetLeft-sx)*1.8}});
-pf.addEventListener('click',e=>{if(dragged){e.stopPropagation();dragged=false}},true);
+pf.addEventListener('click',e=>{if(dragged){e.stopPropagation();dragged=false}},true);})();
 
 document.querySelectorAll('.btn-g,.btn-wh,.nav-cta').forEach(btn=>{btn.addEventListener('mousemove',e=>{const r=btn.getBoundingClientRect();btn.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.06}px,${(e.clientY-r.top-r.height/2)*.06}px)`});btn.addEventListener('mouseleave',()=>btn.style.transform='')});
 document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}})});
 document.querySelectorAll('.pf-tab').forEach(tab=>{tab.addEventListener('click',()=>{const target=tab.dataset.tab;document.querySelectorAll('.pf-tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');document.querySelectorAll('[data-panel]').forEach(p=>{p.style.display=p.dataset.panel===target?(target==='fotos'?'grid':'flex'):'none'});if(target==='fotos'){document.querySelectorAll('.ph-card').forEach(c=>c.classList.add('in'))}document.querySelectorAll('.pf-vid').forEach(v=>{v.pause()})})});
 
 const lb=document.getElementById('lb'),lbImg=document.getElementById('lb-img'),lbCounter=document.getElementById('lb-counter');let lbPhotos=[],lbIdx=0;
-function lbOpen(idx){lbIdx=idx;lbImg.style.opacity=0;lb.classList.add('on');setTimeout(()=>{lbImg.src=lbPhotos[idx];lbImg.onload=()=>lbImg.style.opacity=1},20);lbCounter.textContent=(idx+1)+' / '+lbPhotos.length;document.body.style.overflow='hidden'}
-function lbClose(){lb.classList.remove('on');document.body.style.overflow=''}
-function lbGo(dir){lbIdx=(lbIdx+dir+lbPhotos.length)%lbPhotos.length;lbImg.style.opacity=0;setTimeout(()=>{lbImg.src=lbPhotos[lbIdx];lbImg.onload=()=>lbImg.style.opacity=1},150);lbCounter.textContent=(lbIdx+1)+' / '+lbPhotos.length}
+function lbOpen(idx){lbIdx=idx;lbImg.style.opacity=0;lb.classList.add('on');setTimeout(()=>{lbImg.src=lbPhotos[idx];lbImg.onload=()=>lbImg.style.opacity=1},20);lbCounter.textContent=(idx+1)+' / '+lbPhotos.length;_lockScroll()}
+function lbClose(){lb.classList.remove('on');_unlockScroll()}
+function lbPreload(idx){var img=new Image();img.src=lbPhotos[((idx%lbPhotos.length)+lbPhotos.length)%lbPhotos.length]}
+function lbGo(dir){lbIdx=(lbIdx+dir+lbPhotos.length)%lbPhotos.length;lbImg.style.opacity=0;setTimeout(()=>{lbImg.src=lbPhotos[lbIdx];lbImg.onload=()=>lbImg.style.opacity=1;lbPreload(lbIdx+1);lbPreload(lbIdx-1);},150);lbCounter.textContent=(lbIdx+1)+' / '+lbPhotos.length}
 lbPhotos=Array.from(document.querySelectorAll('[data-lightbox-photo]')).map(el=>el.dataset.lightboxPhoto);
 document.querySelectorAll('[data-lightbox-photo]').forEach((card,i)=>{card.addEventListener('click',()=>lbOpen(i))});
 document.getElementById('lb-close').addEventListener('click',lbClose);
@@ -1458,7 +1462,7 @@ lb.addEventListener('click',e=>{if(e.target===lb)lbClose()});
 /* Touch swipe to navigate lightbox */
 (function(){var sx=0,sy=0;lb.addEventListener('touchstart',function(e){sx=e.touches[0].clientX;sy=e.touches[0].clientY},{passive:true});lb.addEventListener('touchend',function(e){var dx=e.changedTouches[0].clientX-sx,dy=e.changedTouches[0].clientY-sy;if(Math.abs(dx)>Math.abs(dy)&&Math.abs(dx)>44)lbGo(dx<0?1:-1)},{passive:true})})();
 
-document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('on'))_closeReel();if(e.key==='Escape'&&lb.classList.contains('on'))lbClose();if(lb.classList.contains('on')){if(e.key==='ArrowLeft')lbGo(-1);if(e.key==='ArrowRight')lbGo(1)}});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.contains('on'))_closeReel();if(e.key==='Escape'&&lb.classList.contains('on'))lbClose();if(lb.classList.contains('on')){if(e.key==='ArrowLeft'){e.preventDefault();lbGo(-1)}if(e.key==='ArrowRight'){e.preventDefault();lbGo(1)}}});
 
 /* ── Lazy-load portfolio + internacional videos ── */
 (function(){
@@ -1516,11 +1520,11 @@ var reelPlaceholder=document.querySelector('.reel-placeholder');
 })();
 var _openReel=function(){
   var src=reelBg?reelBg.currentSrc||reelBg.src:'';
-  var isiOS=/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream;
+  var isiOS=(/iPad|iPhone|iPod/.test(navigator.userAgent)&&!window.MSStream)||(navigator.platform==='MacIntel'&&navigator.maxTouchPoints>1);
   if(isiOS&&src.indexOf('.webm')>-1){
     /* fallback: iOS sem MP4 disponível */
     modal.classList.add('on');
-    document.body.style.overflow='hidden';
+    _lockScroll();
     if(!document.getElementById('ios-msg')){
       var msg=document.createElement('div');
       msg.id='ios-msg';
@@ -1538,13 +1542,13 @@ var _openReel=function(){
   modalVideoSrc.src=src;
   modalVideo.load();
   modal.classList.add('on');
-  document.body.style.overflow='hidden';
+  _lockScroll();
   if(reelBg)reelBg.pause();
 };
 var _closeReel=function(){
   modal.classList.remove('on');
   modalVideo.pause();
-  document.body.style.overflow='';
+  _unlockScroll();
   if(reelBg){reelBg.play().then(function(){reelBg.classList.add('playing');if(reelPlaceholder)reelPlaceholder.classList.add('hidden')}).catch(function(){})}
 };
 document.getElementById('playBtn').addEventListener('click',function(e){e.stopPropagation();_openReel();});
@@ -1653,17 +1657,19 @@ document.getElementById('reelSection').addEventListener('click',function(e){if(e
   var burger=document.getElementById('navBurger');
   var navMobile=document.getElementById('navMobile');
   if(!burger||!navMobile)return;
+  var menuOpen=false;
   var closeMenu=function(){
     nav.classList.remove('open');
     navMobile.classList.remove('open');
     burger.setAttribute('aria-expanded','false');
-    document.body.style.overflow='';
+    if(menuOpen){_unlockScroll();menuOpen=false}
   };
   burger.addEventListener('click',function(){
     var isOpen=nav.classList.toggle('open');
     navMobile.classList.toggle('open',isOpen);
     burger.setAttribute('aria-expanded',isOpen?'true':'false');
-    document.body.style.overflow=isOpen?'hidden':'';
+    if(isOpen&&!menuOpen){_lockScroll();menuOpen=true}
+    else if(!isOpen&&menuOpen){_unlockScroll();menuOpen=false}
   });
   navMobile.querySelectorAll('a').forEach(function(a){
     a.addEventListener('click',closeMenu);
@@ -1842,4 +1848,3 @@ document.getElementById('reelSection').addEventListener('click',function(e){if(e
 </script>
 </body>
 </html>
-                            
