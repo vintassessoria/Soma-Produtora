@@ -231,6 +231,12 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .pf-strip,.pf-hover,.pf-chip,.pf-vig{pointer-events:none}
 .pf-card{cursor:pointer}
 .ph-hover-icon{pointer-events:none}
+.pf-row-wrap{position:relative}
+.pf-hint{position:absolute;right:24px;top:50%;transform:translate(0,-50%);width:46px;height:46px;border-radius:50%;background:rgba(107,240,25,.16);border:1px solid rgba(107,240,25,.42);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);display:flex;align-items:center;justify-content:center;z-index:6;opacity:0;pointer-events:none;transition:opacity .5s var(--Ef);box-shadow:0 8px 26px rgba(107,240,25,.18),0 0 0 1px rgba(107,240,25,.05);cursor:pointer;padding:0}
+.pf-hint svg{stroke:var(--G);width:18px;height:18px;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;display:block}
+.pf-hint.show{opacity:1;pointer-events:auto;animation:pfHintBounce 1.7s ease-in-out infinite}
+.pf-hint.hide{opacity:0;pointer-events:none;transform:translate(16px,-50%)}
+@keyframes pfHintBounce{0%,100%{transform:translate(0,-50%)}50%{transform:translate(8px,-50%)}}
 #manifesto{background:var(--D1);padding:112px 60px;position:relative}
 #manifesto::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(107,240,25,.15),transparent)}
 #manifesto::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(107,240,25,.15),transparent)}
@@ -578,6 +584,8 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
   .pf-side{max-width:100%}
   .pf-row{padding:0 20px;gap:14px}
   .pf-card{width:280px}
+  .pf-hint{right:12px;width:40px;height:40px}
+  .pf-hint svg{width:15px;height:15px}
   .pf-foot{padding:40px 20px 0}
   #manifesto{padding:60px 20px}
   #equipe{padding:60px 20px}
@@ -885,6 +893,7 @@ html{overflow-x:hidden}
     </div>
   </div>
 
+  <div class="pf-row-wrap">
   <div class="pf-row" id="pfRow" data-panel="videos">
     <div class="pf-card rv" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.MP4" data-title="EXPOMIX — Aftermovie Dia 1">
       <div class="pf-media">
@@ -1055,6 +1064,10 @@ html{overflow-x:hidden}
         <div class="pf-cl">Produção SOMA</div>
       </div>
     </div>
+  </div>
+  <button class="pf-hint" id="pfHint" type="button" aria-label="Deslize para ver mais vídeos">
+    <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
+  </button>
   </div>
 
   <div class="ph-grid" id="phGrid" data-panel="fotos" style="display:none;">
@@ -1460,6 +1473,64 @@ pf.addEventListener('mouseleave',()=>{dn=false});
 pf.addEventListener('mouseup',()=>{dn=false});
 pf.addEventListener('mousemove',e=>{if(!dn)return;const dx=Math.abs(e.pageX-pf.offsetLeft-sx);if(dx>5){dragged=true;e.preventDefault();pf.scrollLeft=sl-(e.pageX-pf.offsetLeft-sx)*1.8}});
 pf.addEventListener('click',e=>{if(dragged){e.stopPropagation();dragged=false}},true);})();
+
+/* ---- Portfolio scroll-hint arrow ---- */
+(function(){
+  var row=document.getElementById('pfRow'),hint=document.getElementById('pfHint');
+  if(!row||!hint)return;
+  var dismissed=false,shown=false;
+  function canScroll(){return row.scrollWidth-row.clientWidth>24}
+  function isVideosTab(){return row.dataset.panel==='videos'&&row.style.display!=='none'}
+  function update(){
+    if(dismissed||!canScroll()||!isVideosTab()){
+      hint.classList.remove('show');
+      return;
+    }
+    if(row.scrollLeft>40){
+      dismissForever();
+      return;
+    }
+    if(!shown){hint.classList.add('show');shown=true}
+  }
+  function dismissForever(){
+    if(dismissed)return;
+    dismissed=true;
+    hint.classList.remove('show');
+    hint.classList.add('hide');
+  }
+  row.addEventListener('scroll',function(){if(row.scrollLeft>40)dismissForever()},{passive:true});
+  hint.addEventListener('click',function(e){
+    e.preventDefault();
+    row.scrollBy({left:Math.round(row.clientWidth*0.75),behavior:'smooth'});
+    dismissForever();
+  });
+  /* reset when switching back to videos tab */
+  document.querySelectorAll('.pf-tab').forEach(function(t){
+    t.addEventListener('click',function(){
+      setTimeout(function(){
+        if(t.dataset.tab==='videos'){
+          dismissed=false;shown=false;
+          hint.classList.remove('hide');
+          update();
+        }else{
+          hint.classList.remove('show');
+        }
+      },80);
+    });
+  });
+  window.addEventListener('resize',update);
+  /* reveal after initial layout */
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){setTimeout(update,350);io.unobserve(e.target)}
+      });
+    },{rootMargin:'0px 0px -10% 0px'});
+    io.observe(row);
+  }else{
+    setTimeout(update,600);
+  }
+})();
 
 document.querySelectorAll('.btn-g,.btn-wh,.nav-cta').forEach(btn=>{btn.addEventListener('mousemove',e=>{const r=btn.getBoundingClientRect();btn.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.06}px,${(e.clientY-r.top-r.height/2)*.06}px)`});btn.addEventListener('mouseleave',()=>btn.style.transform='')});
 document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}})});
