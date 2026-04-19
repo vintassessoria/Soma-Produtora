@@ -94,9 +94,9 @@ a,button,.btn,.nav-burger,.m-x,.web-modal-close,.lb-btn,.reel-play,.pf-tab{touch
 .in-n:nth-child(1){animation:inNin .40s var(--E) .06s forwards,inNout .32s ease-in 1.10s forwards;color:var(--W)}
 .in-n:nth-child(2){animation:inNin .40s var(--E) .30s forwards,inNout .32s ease-in 1.18s forwards;color:var(--W)}
 .in-n:nth-child(3){animation:inNin .40s var(--E) .54s forwards,inNout .32s ease-in 1.26s forwards;color:var(--G)}
-.in-acao{position:absolute;top:calc(50% + clamp(46px,7.8vw,92px));left:50%;transform:translateX(-50%) translateY(6px);font-family:var(--FM);font-weight:400;font-size:clamp(11px,1.1vw,15px);letter-spacing:clamp(5px,1vw,9px);text-transform:uppercase;color:rgba(107,240,25,.55);opacity:0;white-space:nowrap;animation:inAcao .35s var(--E) 1.00s forwards,outAcao .26s ease-in 1.52s forwards;will-change:opacity,transform}
-@keyframes inAcao{to{opacity:1;transform:translateX(-50%) translateY(0)}}
-@keyframes outAcao{to{opacity:0}}
+.in-acao{position:absolute;top:calc(50% + clamp(46px,7.8vw,92px));left:50%;transform:translateX(-50%) translateY(8px);font-family:var(--FC);font-weight:300;font-style:italic;font-size:clamp(22px,2.6vw,36px);letter-spacing:4px;color:rgba(107,240,25,.9);text-shadow:0 0 18px rgba(107,240,25,.7),0 0 50px rgba(107,240,25,.25);opacity:0;filter:blur(12px);white-space:nowrap;animation:inAcao .65s var(--Ef) 1.00s forwards,outAcao .30s ease-in 1.55s forwards;will-change:opacity,transform,filter}
+@keyframes inAcao{to{opacity:1;transform:translateX(-50%) translateY(0);filter:blur(0)}}
+@keyframes outAcao{to{opacity:0;filter:blur(8px)}}
 .in-logo{position:absolute;opacity:0;will-change:opacity,filter,transform;animation:inLogo .60s var(--E) 1.72s forwards}
 .in-logo img{height:clamp(36px,4.5vw,58px);width:auto;object-fit:contain;filter:brightness(1)}
 @keyframes inNin{from{opacity:0;filter:blur(16px);transform:scale(.86)}to{opacity:1;filter:blur(0);transform:scale(1)}}
@@ -277,14 +277,18 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 #manifesto{background:var(--D1);padding:112px 60px;position:relative}
 #manifesto::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(107,240,25,.15),transparent)}
 #manifesto::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(107,240,25,.15),transparent)}
-#equipe{background:var(--D1);padding:100px 60px;text-align:center;overflow:hidden}
+#equipe{background:var(--D1);padding:100px 0;text-align:center;overflow:hidden}
+.eq-head{padding:0 60px}
 .eq-head{margin-bottom:48px;position:relative;z-index:2}
 .eq-h2{font-family:var(--FC);font-size:clamp(26px,3.2vw,38px);font-weight:800;letter-spacing:-1px;line-height:1.1;margin-top:16px}
-.eq-slider{position:relative;width:100%;overflow:hidden;mask-image:linear-gradient(to right,transparent 0%,black 10%,black 90%,transparent 100%);-webkit-mask-image:linear-gradient(to right,transparent 0%,black 10%,black 90%,transparent 100%)}
-.eq-track{display:flex;gap:16px;animation:eqSlide 40s linear infinite;transform:translateZ(0);backface-visibility:hidden;-webkit-backface-visibility:hidden}
+.eq-slider{position:relative;overflow:hidden;contain:layout style}
+.eq-slider::before,.eq-slider::after{content:'';position:absolute;top:0;bottom:0;width:120px;z-index:2;pointer-events:none}
+.eq-slider::before{left:0;background:linear-gradient(to right,var(--D1) 0%,transparent 100%)}
+.eq-slider::after{right:0;background:linear-gradient(to left,var(--D1) 0%,transparent 100%)}
+.eq-track{display:flex;gap:12px;width:max-content;animation:eqScroll 28s linear infinite;will-change:transform}
 .eq-track.paused{animation-play-state:paused}
-.eq-track img{width:280px;height:380px;object-fit:cover;border-radius:16px;flex-shrink:0;pointer-events:none;user-select:none;-webkit-user-drag:none}
-@keyframes eqSlide{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+.eq-track img{width:220px;height:300px;object-fit:cover;border-radius:12px;display:block;flex-shrink:0}
+@keyframes eqScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 .mf-grid{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:start}
 .mf-left{position:sticky;top:120px}
 .tag{display:flex;align-items:center;gap:14px;margin-bottom:44px}
@@ -633,10 +637,11 @@ a,button,.btn,.btn-g,.nav-cta,.reel-play,.pf-tab,.pf-pi,.pf-card,.ph-card,.sv-ca
   .pf-hint svg{width:15px;height:15px}
   .pf-foot{padding:40px 20px 0}
   #manifesto{padding:60px 20px}
-  #equipe{padding:60px 20px}
-  .eq-track{animation-duration:50s}
-  .eq-track img{width:200px;height:280px;filter:none}
-  @keyframes eqSlide{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+  #equipe{padding:60px 0}
+  .eq-head{padding:0 20px}
+  .eq-slider::before,.eq-slider::after{width:50px}
+  .eq-track img{width:130px;height:180px}
+  .eq-track{animation-duration:22s}
   .mf-badge{margin:0 auto 30px;display:block}
   .tag{justify-content:center}
   .mf-big{font-size:clamp(20px,5.5vw,28px)}
@@ -668,7 +673,7 @@ a,button,.btn,.btn-g,.nav-cta,.reel-play,.pf-tab,.pf-pi,.pf-card,.ph-card,.sv-ca
   .hero-h1{font-size:clamp(32px,9vw,48px);letter-spacing:-1.5px}
   .hero-mark{height:28px}
   .in-n{font-size:clamp(48px,15vw,80px)}
-  .in-acao{font-size:10px}
+  .in-acao{font-size:clamp(18px,5vw,24px);letter-spacing:2px}
   .pf-card{width:260px}
   .pf-info{padding:14px 16px 18px}
   .pf-name{font-size:13px}
@@ -696,6 +701,12 @@ a,button,.btn,.btn-g,.nav-cta,.reel-play,.pf-tab,.pf-pi,.pf-card,.ph-card,.sv-ca
 /* 1. Prevent horizontal overflow on all screens */
 html{overflow-x:hidden}
 
+/* 2a. Intro blur — desativa em mobile para não pesar em Android antigo */
+@media(hover:none),(pointer:coarse){
+  .in-acao{filter:none!important;animation:inAcaoM .5s var(--Ef) 1.00s forwards,outAcao .30s ease-in 1.55s forwards}
+}
+@keyframes inAcaoM{to{opacity:1;transform:translateX(-50%) translateY(0)}}
+
 /* 2. Portfolio play overlay: always visible on touch (no :hover available) */
 @media(hover:none),(pointer:coarse){
   .pf-hover{opacity:1;background:rgba(0,0,0,.22)}
@@ -721,7 +732,7 @@ html{overflow-x:hidden}
   #hero .hero-inner{padding:0 16px}
   #hero .hero-h1{font-size:clamp(28px,9.5vw,40px)}
   #hero .hero-sub-p{font-size:13px;max-width:100%}
-  .eq-track img{width:160px;height:215px}
+  .eq-track img{width:110px;height:155px}
   .cta-h{font-size:clamp(20px,7vw,28px)}
   .stat-n{font-size:clamp(22px,7.5vw,32px)}
   .pf-card{width:240px}
@@ -1297,22 +1308,22 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
     <div class="tag"><div class="tag-ln"></div><span class="tag-sp">Equipe</span></div>
     <h2 class="eq-h2">O time por trás<br>de cada frame.</h2>
   </div>
-  <div class="eq-slider">
+  <div class="eq-slider rv">
     <div class="eq-track">
-      <img src="equipe-01.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
-      <img src="equipe-02.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
-      <img src="equipe-03.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
-      <img src="equipe-04.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
-      <img src="equipe-05.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
-      <img src="equipe-06.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
-      <img src="equipe-07.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
-      <img src="equipe-01.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
-      <img src="equipe-02.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
-      <img src="equipe-03.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
-      <img src="equipe-04.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
-      <img src="equipe-05.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
-      <img src="equipe-06.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
-      <img src="equipe-07.jpeg" alt="Equipe SOMA" width="533" height="800" loading="lazy" decoding="async">
+      <img src="equipe-01.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
+      <img src="equipe-02.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
+      <img src="equipe-03.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
+      <img src="equipe-04.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
+      <img src="equipe-05.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
+      <img src="equipe-06.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
+      <img src="equipe-07.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
+      <img src="equipe-01.jpeg" alt="" loading="lazy" decoding="async" aria-hidden="true">
+      <img src="equipe-02.jpeg" alt="" loading="lazy" decoding="async" aria-hidden="true">
+      <img src="equipe-03.jpeg" alt="" loading="lazy" decoding="async" aria-hidden="true">
+      <img src="equipe-04.jpeg" alt="" loading="lazy" decoding="async" aria-hidden="true">
+      <img src="equipe-05.jpeg" alt="" loading="lazy" decoding="async" aria-hidden="true">
+      <img src="equipe-06.jpeg" alt="" loading="lazy" decoding="async" aria-hidden="true">
+      <img src="equipe-07.jpeg" alt="" loading="lazy" decoding="async" aria-hidden="true">
     </div>
   </div>
 </section>
@@ -1527,8 +1538,19 @@ const nav=document.getElementById('nav');window.addEventListener('scroll',()=>na
 
 /* Pausa carrosseis animados quando off-screen — economiza GPU e bateria */
 (function(){
-  var tracks=document.querySelectorAll('.eq-track,.cl-track,.t-track');
-  if(!tracks.length||!('IntersectionObserver' in window))return;
+  var tracks=document.querySelectorAll('.cl-track,.t-track');
+  var eqTrack=document.querySelector('.eq-track');
+  var eqSlider=document.querySelector('.eq-slider');
+  if(!('IntersectionObserver' in window))return;
+  /* eq-track: pausa/retoma baseado na visibilidade do slider pai */
+  if(eqTrack&&eqSlider){
+    eqTrack.classList.add('paused');
+    new IntersectionObserver(function(entries){
+      if(entries[0].isIntersecting)eqTrack.classList.remove('paused');
+      else eqTrack.classList.add('paused');
+    },{rootMargin:'100px 0px 100px 0px'}).observe(eqSlider);
+  }
+  if(!tracks.length)return;
   tracks.forEach(function(t){t.classList.add('paused')});
   var io=new IntersectionObserver(function(entries){
     entries.forEach(function(e){
@@ -1814,7 +1836,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.con
 
   function autoTag(){
     document.querySelectorAll(selectors.join(',')).forEach(function(el){
-      if(el.closest('#modal, .cl-track, .eq-track, .t-track, #intro')) return;
+      if(el.closest('#modal, .cl-track, .t-track, #intro')) return;
       if(el.classList.contains('rv')) return;
       el.classList.add('rv');
     });
@@ -1866,7 +1888,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.con
 
   function observeAll(){
     document.querySelectorAll('.rv').forEach(function(el){
-      if(el.closest('#modal, .cl-track, .eq-track, .t-track, #intro')) return;
+      if(el.closest('#modal, .cl-track, .t-track, #intro')) return;
       if(revealed.has(el)) return;
       io.observe(el);
     });
