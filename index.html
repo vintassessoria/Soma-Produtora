@@ -1482,6 +1482,22 @@ function _unlockScroll(){document.body.style.overflow=''}
 
 (function(){const hero=document.getElementById('hero');if(!hero)return;const ov=document.createElement('div');ov.style.cssText='position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:4;will-change:opacity';hero.appendChild(ov);window.addEventListener('scroll',()=>{const h=hero.offsetHeight;if(!h)return;const prog=Math.min(window.scrollY/(h*.65),1);ov.style.opacity=prog*.88},{passive:true})})();
 setTimeout(()=>document.getElementById('intro').classList.add('done'),3000);
+
+/* Pré-carrega fotos da aba quando portfólio entra no viewport */
+(function(){
+  var done=false;
+  function preload(){
+    if(done)return;done=true;
+    document.querySelectorAll('.ph-card .ph-thumb').forEach(function(el){
+      var m=el.style.backgroundImage.match(/url\(['"]?([^'"]+)['"]?\)/);
+      if(m){var i=new Image();i.src=m[1];}
+    });
+  }
+  var pf=document.getElementById('portfolio');
+  if(pf&&'IntersectionObserver' in window){
+    new IntersectionObserver(function(e){if(e[0].isIntersecting)preload()},{rootMargin:'300px 0px 300px 0px'}).observe(pf);
+  }else{setTimeout(preload,2500);}
+})();
 const nav=document.getElementById('nav');window.addEventListener('scroll',()=>nav.classList.toggle('stuck',window.scrollY>80),{passive:true});
 (function(){const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.08,rootMargin:'0px 0px -32px 0px'});document.querySelectorAll('.rv').forEach(el=>obs.observe(el))})();
 
