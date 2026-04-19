@@ -1176,7 +1176,7 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
   </button>
   </div>
 
-  <div class="ph-grid" id="phGrid" data-panel="fotos" style="display:none;">
+  <div class="ph-grid" id="phGrid" data-panel="fotos" style="position:absolute;visibility:hidden;pointer-events:none;left:-9999px;top:0;width:1px;height:1px;overflow:hidden;">
     <div class="ph-card rv" data-lightbox-photo="foto-01.jpeg"><div class="ph-thumb" style="background-image:url('foto-01.webp')"></div><div class="ph-hover-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
     <div class="ph-card rv d1" data-lightbox-photo="foto-02.jpeg"><div class="ph-thumb" style="background-image:url('foto-02.webp')"></div><div class="ph-hover-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
     <div class="ph-card rv d2" data-lightbox-photo="foto-03.jpeg"><div class="ph-thumb" style="background-image:url('foto-03.webp')"></div><div class="ph-hover-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
@@ -1483,21 +1483,13 @@ function _unlockScroll(){document.body.style.overflow=''}
 (function(){const hero=document.getElementById('hero');if(!hero)return;const ov=document.createElement('div');ov.style.cssText='position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:4;will-change:opacity';hero.appendChild(ov);window.addEventListener('scroll',()=>{const h=hero.offsetHeight;if(!h)return;const prog=Math.min(window.scrollY/(h*.65),1);ov.style.opacity=prog*.88},{passive:true})})();
 setTimeout(()=>document.getElementById('intro').classList.add('done'),3000);
 
-/* Pré-carrega fotos da aba quando portfólio entra no viewport */
-(function(){
-  var done=false;
-  function preload(){
-    if(done)return;done=true;
-    document.querySelectorAll('.ph-card .ph-thumb').forEach(function(el){
-      var m=el.style.backgroundImage.match(/url\(['"]?([^'"]+)['"]?\)/);
-      if(m){var i=new Image();i.src=m[1];}
-    });
-  }
-  var pf=document.getElementById('portfolio');
-  if(pf&&'IntersectionObserver' in window){
-    new IntersectionObserver(function(e){if(e[0].isIntersecting)preload()},{rootMargin:'300px 0px 300px 0px'}).observe(pf);
-  }else{setTimeout(preload,2500);}
-})();
+/* Pré-carrega fotos da aba assim que a página termina de carregar */
+window.addEventListener('load',function(){
+  document.querySelectorAll('.ph-card .ph-thumb').forEach(function(el){
+    var m=el.style.backgroundImage.match(/url\(['"]?([^'"]+)['"]?\)/);
+    if(m){var img=new Image();img.src=m[1];}
+  });
+});
 const nav=document.getElementById('nav');window.addEventListener('scroll',()=>nav.classList.toggle('stuck',window.scrollY>80),{passive:true});
 (function(){const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.08,rootMargin:'0px 0px -32px 0px'});document.querySelectorAll('.rv').forEach(el=>obs.observe(el))})();
 
@@ -1711,7 +1703,7 @@ pf.addEventListener('click',e=>{if(dragged){e.stopPropagation();dragged=false}},
 
 document.querySelectorAll('.btn-g,.btn-wh,.nav-cta').forEach(btn=>{btn.addEventListener('mousemove',e=>{const r=btn.getBoundingClientRect();btn.style.transform=`translate(${(e.clientX-r.left-r.width/2)*.06}px,${(e.clientY-r.top-r.height/2)*.06}px)`});btn.addEventListener('mouseleave',()=>btn.style.transform='')});
 document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}})});
-document.querySelectorAll('.pf-tab').forEach(tab=>{tab.addEventListener('click',()=>{const target=tab.dataset.tab;document.querySelectorAll('.pf-tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');document.querySelectorAll('[data-panel]').forEach(p=>{p.style.display=p.dataset.panel===target?(target==='fotos'?'grid':'flex'):'none'});if(target==='fotos'){document.querySelectorAll('.ph-card').forEach(c=>c.classList.add('in'))}document.querySelectorAll('.pf-vid').forEach(v=>{v.pause()})})});
+document.querySelectorAll('.pf-tab').forEach(tab=>{tab.addEventListener('click',()=>{const target=tab.dataset.tab;document.querySelectorAll('.pf-tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');const pfRow=document.getElementById('pfRow');const phGrid=document.getElementById('phGrid');if(target==='fotos'){pfRow.style.display='none';phGrid.style.cssText='';document.querySelectorAll('.ph-card').forEach(c=>c.classList.add('in'));}else{phGrid.style.cssText='position:absolute;visibility:hidden;pointer-events:none;left:-9999px;top:0;width:1px;height:1px;overflow:hidden;';pfRow.style.display='';}document.querySelectorAll('.pf-vid').forEach(v=>{v.pause()})})});
 
 const lb=document.getElementById('lb'),lbImg=document.getElementById('lb-img'),lbCounter=document.getElementById('lb-counter');let lbPhotos=[],lbIdx=0;
 function lbOpen(idx){lbIdx=idx;lbImg.style.opacity=0;lb.classList.add('on');setTimeout(()=>{lbImg.src=lbPhotos[idx];lbImg.onload=()=>lbImg.style.opacity=1},20);lbCounter.textContent=(idx+1)+' / '+lbPhotos.length;_lockScroll()}
