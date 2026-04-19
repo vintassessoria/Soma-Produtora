@@ -44,12 +44,14 @@
   --Ef:cubic-bezier(0.16,1,0.3,1);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--G) var(--D1);-webkit-text-size-adjust:100%;text-size-adjust:100%}
+html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--G) var(--D1);-webkit-text-size-adjust:100%;text-size-adjust:100%;cursor:none}
+::-webkit-scrollbar{width:2px}
 ::-webkit-scrollbar{width:2px}
 ::-webkit-scrollbar-track{background:var(--D1)}
 ::-webkit-scrollbar-thumb{background:var(--G)}
 body{font-family:var(--FB);background:var(--B);color:var(--W);overflow-x:hidden;cursor:none;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale}
-a,button,.btn,.nav-burger,.m-x,.web-modal-close,.lb-btn,.reel-play,.pf-tab{touch-action:manipulation}
+body{font-family:var(--FB);background:var(--B);color:var(--W);overflow-x:hidden}
+a,button,.btn,.nav-burger,.m-x,.web-modal-close,.lb-btn,.reel-play,.pf-tab{touch-action:manipulation;cursor:pointer}
 #cur{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:99999}
 #intro{position:fixed;inset:0;background:var(--B);z-index:20000;display:flex;align-items:center;justify-content:center;transition:opacity .9s var(--E),visibility .9s;will-change:opacity}
 #intro.done{opacity:0;visibility:hidden;pointer-events:none}
@@ -90,6 +92,7 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .nav-mobile a.nav-mobile-cta{background:var(--G);color:var(--B);padding:14px 32px;border-radius:100px;font-size:14px;margin-top:14px;font-weight:700}
 #hero{min-height:100vh;min-height:100svh;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;position:relative;overflow:hidden;padding-top:80px}
 .hero-bg{position:absolute;inset:0;background:var(--B)}
+.hero-gif{position:absolute;top:-2%;left:-2%;width:104%;height:104%;object-fit:cover;opacity:0.45;z-index:0;pointer-events:none}
 .hero-glow{position:absolute;width:900px;height:900px;border-radius:50%;background:radial-gradient(circle,rgba(89,248,0,.013) 0%,transparent 60%);top:50%;left:50%;transform:translate(-50%,-50%);animation:heroGlow 10s ease-in-out infinite;pointer-events:none;will-change:transform,opacity}
 @keyframes heroGlow{0%,100%{opacity:.6;transform:translate(-50%,-50%) scale(1)}50%{opacity:1;transform:translate(-50%,-50%) scale(1.14)}}
 .hero-orb-bl{position:absolute;width:560px;height:560px;border-radius:50%;background:radial-gradient(circle,rgba(89,248,0,.022) 0%,transparent 65%);bottom:-80px;left:-60px;pointer-events:none;animation:heroGlow 14s ease-in-out 3s infinite}
@@ -794,6 +797,7 @@ html{overflow-x:hidden}
 
 <section id="hero">
   <div class="hero-bg"></div>
+  <video class="hero-gif" autoplay muted loop playsinline src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/0418.mp4"></video>
   <div class="hero-scan"></div>
   <div class="hero-streak"></div>
   <div class="hero-orb-bl"></div>
