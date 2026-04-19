@@ -87,7 +87,6 @@ html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--G) var(--
 ::-webkit-scrollbar-thumb{background:var(--G)}
 body{font-family:var(--FB);background:var(--B);color:var(--W);overflow-x:hidden}
 a,button,.btn,.nav-burger,.m-x,.web-modal-close,.lb-btn,.reel-play,.pf-tab{touch-action:manipulation;cursor:pointer}
-#cur{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:99999}
 #intro{position:fixed;inset:0;background:var(--B);z-index:20000;display:flex;align-items:center;justify-content:center;transition:opacity .9s var(--E),visibility .9s;will-change:opacity}
 #intro.done{opacity:0;visibility:hidden;pointer-events:none}
 .in-nums{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;gap:clamp(8px,2vw,24px)}
@@ -420,10 +419,8 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
 #lb-counter{position:absolute;bottom:24px;left:50%;transform:translateX(-50%);font-family:var(--FM);font-size:10px;color:rgba(255,255,255,.4);letter-spacing:2px}
 @keyframes su{to{opacity:1;transform:none}}
 @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
-/* Desktop com mouse: força cursor none em TUDO via * */
-@media(hover:hover) and (pointer:fine){*,*::before,*::after{cursor:none !important}}
-/* Touch: restaura cursors padrão e esconde canvas */
-@media(hover:none),(pointer:coarse){#cur{display:none}*,*::before,*::after{cursor:auto !important}a,button,.btn,.btn-g,.nav-cta,.reel-play,.pf-tab,.pf-pi,.pf-card,.ph-card,.sv-card,.int-c,.web-modal-close,.m-x,.lb-btn{cursor:pointer !important}}
+/* Elementos clicáveis com cursor pointer explícito */
+a,button,.btn,.btn-g,.nav-cta,.reel-play,.pf-tab,.pf-pi,.pf-card,.ph-card,.sv-card,.int-c,.web-modal-close,.m-x,.lb-btn{cursor:pointer}
 
 /* ===================== INTERNACIONAL ===================== */
 #internacional{padding:104px 60px;background:var(--B)}
@@ -823,7 +820,6 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
 </head>
 <body>
 <a href="#main" class="skip-link">Pular para o conteudo</a>
-<canvas id="cur" aria-hidden="true"></canvas>
 
 <div id="modal" role="dialog" aria-modal="true" aria-label="Showreel SOMA Produtora" aria-hidden="true">
   <div class="m-box">
@@ -1472,46 +1468,6 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
 /* Scroll lock simples (volta ao comportamento original pra evitar travar scroll) */
 function _lockScroll(){document.body.style.overflow='hidden'}
 function _unlockScroll(){document.body.style.overflow=''}
-(function(){
-  /* Cursor = logomarca SOMA. Skip on touch/mobile. */
-  if('ontouchstart' in window||navigator.maxTouchPoints>0)return;
-  const canvas=document.getElementById('cur'),ctx=canvas.getContext('2d');
-  let W=window.innerWidth,H=window.innerHeight;
-  const dpr=Math.min(window.devicePixelRatio||1,2);
-  canvas.width=W*dpr;canvas.height=H*dpr;
-  ctx.scale(dpr,dpr);
-  const img=new Image();
-  img.src='logomarca.png';
-  let mx=-300,my=-300,px=-300,py=-300,sc=1,tsc=1,isHov=false;
-  window.addEventListener('resize',()=>{
-    W=window.innerWidth;H=window.innerHeight;
-    canvas.width=W*dpr;canvas.height=H*dpr;
-    ctx.scale(dpr,dpr);
-  });
-  document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY},{passive:true});
-  function bindHov(){document.querySelectorAll('a,button,.pf-card,.stat,.dc,.mc,.pr-step,.sv-card,.ph-card').forEach(el=>{
-    el.addEventListener('mouseenter',()=>{isHov=true;tsc=1.4});
-    el.addEventListener('mouseleave',()=>{isHov=false;tsc=1});
-  })}
-  setTimeout(bindHov,2800);
-  function frame(){
-    ctx.clearRect(0,0,W,H);
-    px+=(mx-px)*0.15;
-    py+=(my-py)*0.15;
-    sc+=(tsc-sc)*0.12;
-    if(!img.complete||!img.naturalWidth){requestAnimationFrame(frame);return;}
-    const size=36*sc;
-    ctx.save();
-    ctx.translate(px,py);
-    ctx.globalAlpha=0.90;
-    if(isHov){ctx.shadowColor='#6BF019';ctx.shadowBlur=18;}
-    else{ctx.shadowColor='rgba(107,240,25,0.4)';ctx.shadowBlur=6;}
-    ctx.drawImage(img,-size/2,-size/2,size,size);
-    ctx.restore();
-    requestAnimationFrame(frame);
-  }
-  frame();
-})();
 
 (function(){const hero=document.getElementById('hero');if(!hero)return;const ov=document.createElement('div');ov.style.cssText='position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:4;will-change:opacity';hero.appendChild(ov);window.addEventListener('scroll',()=>{const h=hero.offsetHeight;if(!h)return;const prog=Math.min(window.scrollY/(h*.65),1);ov.style.opacity=prog*.88},{passive:true})})();
 setTimeout(()=>document.getElementById('intro').classList.add('done'),3000);
@@ -1557,40 +1513,6 @@ const nav=document.getElementById('nav');window.addEventListener('scroll',()=>na
     heroTick();
   }
 
-  /* ── (C) PORTFOLIO: 3D tilt em hover (desktop only) ── */
-  if(!isCoarse && !isMobile){
-    var pfCards = document.querySelectorAll('.pf-card');
-    pfCards.forEach(function(card){
-      var raf = null;
-      var rx = 0, ry = 0;
-      function onMove(e){
-        var rect = card.getBoundingClientRect();
-        var cx = rect.left + rect.width / 2;
-        var cy = rect.top  + rect.height / 2;
-        var dx = (e.clientX - cx) / (rect.width  / 2);
-        var dy = (e.clientY - cy) / (rect.height / 2);
-        /* amplitude pequena: ±6deg, bem sutil */
-        ry =  dx * 6;
-        rx = -dy * 5;
-        if(!raf) raf = requestAnimationFrame(applyTilt);
-      }
-      function applyTilt(){
-        raf = null;
-        card.style.transform = 'perspective(900px) rotateX(' + rx.toFixed(2) + 'deg) rotateY(' + ry.toFixed(2) + 'deg) translateY(-4px) translateZ(0)';
-      }
-      function onLeave(){
-        if(raf){ cancelAnimationFrame(raf); raf = null; }
-        card.classList.remove('pf-tilt');
-        card.style.transform = '';
-      }
-      function onEnter(){
-        card.classList.add('pf-tilt');
-      }
-      card.addEventListener('mouseenter', onEnter, { passive: true });
-      card.addEventListener('mousemove',  onMove,  { passive: true });
-      card.addEventListener('mouseleave', onLeave, { passive: true });
-    });
-  }
 
   /* ── (E) CTA: scale-in na entrada (IntersectionObserver) ── */
   var ctaH = document.querySelector('#cta .cta-h');
@@ -1672,8 +1594,14 @@ document.querySelectorAll('.pf-card').forEach(card=>{
   });
   const vid=card.querySelector('video');
   if(vid){
-    card.addEventListener('mouseenter',()=>vid.play().catch(()=>{}));
-    card.addEventListener('mouseleave',()=>vid.pause());
+    let hoverTimer=null;
+    card.addEventListener('mouseenter',()=>{
+      hoverTimer=setTimeout(()=>vid.play().catch(()=>{}),180);
+    });
+    card.addEventListener('mouseleave',()=>{
+      clearTimeout(hoverTimer);
+      vid.pause();
+    });
     card.addEventListener('touchstart',()=>vid.play().catch(()=>{}),{passive:true});
   }
 });
