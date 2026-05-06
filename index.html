@@ -1460,7 +1460,7 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
         </button>
       </div>
       <div class="int-player">
-        <video id="intVid" muted loop playsinline webkit-playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/video-internacional.MOV"></video>
+        <video id="intVid" muted loop playsinline webkit-playsinline preload="metadata" data-src="./video-internacional.mp4" data-src-fallback="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/video-internacional.MOV"></video>
       </div>
     </div>
   </div>
@@ -1905,19 +1905,30 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.con
     });
   }
 
-  /* ── Internacional: lazy via IO (carrega quando aproxima) ── */
+  /* ── Internacional: lazy via IO (carrega bem antes p/ ter pronto na hora) ── */
   var intVid = document.getElementById('intVid');
-  if(intVid && 'IntersectionObserver' in window){
-    var intIO = new IntersectionObserver(function(entries){
-      entries.forEach(function(e){
-        if(e.isIntersecting){
-          ensureLoaded(intVid);
-        } else {
-          try{ intVid.pause() }catch(err){}
-        }
-      });
-    }, { threshold: 0.25, rootMargin: '0px 0px 100px 0px' });
-    intIO.observe(intVid);
+  if(intVid){
+    /* fallback automatico: se o MP4 local falhar, tenta o MOV no R2 */
+    intVid.addEventListener('error', function(){
+      var fb = intVid.getAttribute('data-src-fallback');
+      if(fb && intVid.src.indexOf(fb) === -1){
+        try{ intVid.src = fb; intVid.load(); var p = intVid.play(); if(p&&p.catch) p.catch(function(){}); }catch(err){}
+      }
+    });
+    if('IntersectionObserver' in window){
+      var intIO = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting){
+            ensureLoaded(intVid);
+          } else {
+            try{ intVid.pause() }catch(err){}
+          }
+        });
+      }, { threshold: 0, rootMargin: '600px 0px 800px 0px' });
+      intIO.observe(intVid);
+    } else {
+      ensureLoaded(intVid);
+    }
   }
 
   })();
