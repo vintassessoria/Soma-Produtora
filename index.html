@@ -137,7 +137,7 @@ html{scroll-behavior:smooth;scrollbar-width:thin;scrollbar-color:var(--G) var(--
 ::-webkit-scrollbar{width:2px}
 ::-webkit-scrollbar-track{background:var(--D1)}
 ::-webkit-scrollbar-thumb{background:var(--G)}
-body{font-family:var(--FB);background:var(--B);color:var(--W);overflow-x:hidden}
+body{font-family:var(--FB);background:var(--B);color:var(--W);overflow-x:clip}
 a,button,.btn,.nav-burger,.m-x,.web-modal-close,.lb-btn,.reel-play,.pf-tab{touch-action:manipulation;cursor:pointer}
 #intro{position:fixed;inset:0;background:var(--B);z-index:20000;display:flex;align-items:center;justify-content:center;transition:opacity .9s var(--E),visibility .9s;will-change:opacity}
 #intro.done{opacity:0;visibility:hidden;pointer-events:none}
@@ -358,6 +358,106 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .pf-hint svg{stroke:var(--G);width:18px;height:18px;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;display:block}
 .pf-hint.show{opacity:1;pointer-events:auto;animation:pfHintBounce 1.7s ease-in-out infinite}
 .pf-hint.hide{opacity:0;pointer-events:none;transform:translate(16px,-50%)}
+
+/* ══════ HEROI SIENA: carrossel vertical de projetos ══════
+   O card do projeto empurra pra cima e o proximo entra por baixo, como rolo
+   de filme. O texto NAO viaja junto com a imagem: entra escalonado depois. */
+/* trilho: a altura extra e o "combustivel" de scroll que troca os slides.
+   1 tela para o heroi + 0.6 tela por slide seguinte (altura vem do JS). */
+.sn-pin{position:relative;background:var(--B)}
+#hero.sn{position:sticky;top:0;height:100svh;min-height:560px;padding:0;overflow:hidden;background:var(--B);display:block}
+.sn-stack{position:absolute;top:clamp(72px,9vh,104px);left:var(--gut);right:var(--gut);bottom:clamp(72px,9vh,96px);
+  border-radius:20px;overflow:hidden;background:#080808;transform:translateZ(0)}
+.sn-slide{position:absolute;inset:0;overflow:hidden;background:#080808;
+  transform:translate3d(0,100%,0);will-change:transform;
+  transition:transform .92s cubic-bezier(.76,0,.24,1)}
+.sn-slide.is-on{transform:translate3d(0,0,0);z-index:2}
+.sn-slide.is-prev{transform:translate3d(0,-100%,0);z-index:1}
+.sn-media{position:absolute;inset:0;overflow:hidden}
+.sn-vid{width:100%;height:100%;object-fit:cover;display:block}
+.sn-shade{position:absolute;inset:0;pointer-events:none;
+  background:linear-gradient(to top,rgba(0,0,0,.86) 0%,rgba(0,0,0,.30) 40%,transparent 66%),
+             linear-gradient(to right,rgba(0,0,0,.52) 0%,transparent 42%)}
+
+/* entrada escalonada do texto */
+.sn-el{opacity:0;transform:translateY(24px);
+  transition:opacity .72s var(--Ef),transform .72s var(--Ef)}
+.sn-slide.is-on .sn-el{opacity:1;transform:none}
+.sn-slide.is-on .sn-el.d1{transition-delay:.30s}
+.sn-slide.is-on .sn-el.d2{transition-delay:.40s}
+.sn-slide.is-on .sn-el.d3{transition-delay:.50s}
+.sn-slide.is-on .sn-el.d4{transition-delay:.60s}
+
+.sn-corner{position:absolute;top:clamp(20px,2.4vw,34px);left:clamp(20px,2.4vw,36px);z-index:4;
+  display:flex;flex-direction:column;gap:5px;font-family:var(--FM);font-size:9px;letter-spacing:2.2px;
+  text-transform:uppercase;color:rgba(255,255,255,.62)}
+.sn-corner span:first-child{font-size:13px;color:var(--W);letter-spacing:1px}
+
+.sn-side{position:absolute;top:clamp(20px,2.4vw,34px);right:clamp(20px,2.4vw,36px);z-index:4;
+  display:flex;flex-direction:column;gap:16px;text-align:right;max-width:210px}
+.sn-side-i{display:flex;flex-direction:column;gap:3px}
+.sn-side-i em{font-family:var(--FM);font-size:8px;letter-spacing:2.2px;text-transform:uppercase;
+  color:var(--G);font-style:normal;opacity:.85}
+.sn-side-i b{font-family:var(--FC);font-size:12px;font-weight:600;color:rgba(255,255,255,.9);letter-spacing:.2px}
+
+.sn-foot{position:absolute;left:clamp(20px,2.4vw,44px);bottom:clamp(24px,3vw,46px);z-index:4;max-width:min(60ch,64%)}
+.sn-kicker{font-family:var(--FM);font-size:9px;letter-spacing:2.6px;text-transform:uppercase;
+  color:var(--G);margin-bottom:14px}
+.sn-title{font-family:var(--FC);font-weight:800;letter-spacing:-1.4px;line-height:.94;color:var(--W);
+  font-size:clamp(30px,5.4vw,76px);margin:0 0 18px}
+.sn-title i{font-style:normal;opacity:.42;font-weight:400}
+.sn-meta{display:flex;gap:34px;flex-wrap:wrap}
+.sn-meta span{display:flex;flex-direction:column;gap:3px;font-family:var(--FC);font-size:12px;
+  font-weight:600;color:rgba(255,255,255,.88);border-top:1px solid rgba(255,255,255,.18);padding-top:7px;min-width:96px}
+.sn-meta em{font-family:var(--FM);font-size:8px;letter-spacing:2px;text-transform:uppercase;
+  color:rgba(255,255,255,.42);font-style:normal}
+
+.sn-explore{position:absolute;right:clamp(20px,2.4vw,44px);bottom:clamp(24px,3vw,46px);z-index:5;
+  display:inline-flex;align-items:center;gap:11px;cursor:pointer;
+  font-family:var(--FM);font-size:9px;letter-spacing:2.4px;text-transform:uppercase;
+  color:var(--W);background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.24);
+  border-radius:100px;padding:13px 22px;backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);
+  transition:background .4s var(--E),border-color .4s var(--E),color .4s var(--E)}
+.sn-explore:hover{background:var(--G);border-color:var(--G);color:var(--B)}
+.sn-ar{transition:transform .4s var(--Ef)}
+.sn-explore:hover .sn-ar{transform:translateX(4px)}
+
+/* barra de controle embaixo */
+.sn-hud{position:absolute;left:var(--gut);right:var(--gut);bottom:clamp(24px,3.4vh,34px);z-index:6;
+  display:flex;align-items:center;gap:26px;pointer-events:none}
+.sn-hud>*{pointer-events:auto}
+.sn-count{display:flex;align-items:center;gap:9px;font-family:var(--FM);font-size:10px;letter-spacing:2px;color:rgba(255,255,255,.4)}
+.sn-count b{color:var(--W);font-weight:400}
+.sn-count i{width:22px;height:1px;background:rgba(255,255,255,.24)}
+.sn-rail{flex:1;display:flex;gap:6px;align-items:center}
+.sn-tick{flex:1;height:2px;background:rgba(255,255,255,.14);border:none;padding:0;cursor:pointer;
+  border-radius:2px;overflow:hidden;position:relative;transition:background .3s var(--E)}
+.sn-tick:hover{background:rgba(255,255,255,.3)}
+.sn-tick i{position:absolute;inset:0;transform-origin:left;transform:scaleX(0);background:var(--G);display:block}
+.sn-tick.done i{transform:scaleX(1)!important}
+.sn-arrows{display:flex;gap:8px}
+.sn-arr{width:40px;height:40px;border-radius:50%;padding:0;cursor:pointer;
+  background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.18);
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  transition:background .35s var(--E),border-color .35s var(--E)}
+.sn-arr:hover{background:var(--G);border-color:var(--G)}
+.sn-arr:hover svg{stroke:var(--B)}
+.sn-arr svg{width:16px;height:16px;fill:none;stroke:var(--W);stroke-width:2;stroke-linecap:round;stroke-linejoin:round;display:block}
+
+@media(max-width:900px){
+  .sn-side{display:none}
+  .sn-foot{max-width:82%}
+  .sn-hud{gap:14px}
+  .sn-count{display:none}
+}
+@media(max-width:640px){
+  .sn-stack{border-radius:14px;top:66px;bottom:74px}
+  .sn-explore{padding:11px 16px;font-size:8px}
+  .sn-arr{width:34px;height:34px}
+}
+
+
 
 /* ── PORTFOLIO: coverflow 3D (classe aplicada via JS) ─────────────────── */
 .pf-stage{display:block;position:relative;padding:0;overflow:hidden;cursor:grab;
@@ -840,7 +940,7 @@ a,button,.btn,.btn-g,.nav-cta,.reel-play,.pf-tab,.pf-pi,.pf-card,.ph-card,.sv-ca
    ============================================================ */
 
 /* 1. Prevent horizontal overflow on all screens */
-html{overflow-x:hidden}
+html{overflow-x:clip}   /* hidden viraria scroll-container e mataria o sticky do heroi */
 
 /* 2a. Intro blur — desativa em mobile para não pesar em Android antigo */
 @media(hover:none),(pointer:coarse){
@@ -966,9 +1066,57 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
 @media (max-width:768px){
   nav{padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
   footer{padding-bottom:max(32px,env(safe-area-inset-bottom))}
-  body{overflow-x:hidden}
+  body{overflow-x:clip}
 }
 
+
+/* ══════ FAIXAS CREME (linguagem SIENA) ══════
+   O site alterna faixas escuras (aurora, assinatura SOMA) com momentos em
+   papel creme: showreel, servicos e rodape. */
+.crm-head{position:relative;text-align:center;padding:0 var(--gut);margin-bottom:52px;color:#0C0C0C}
+.crm-rule{height:1px;background:rgba(12,12,12,.26)}
+.crm-kick{font-family:var(--FM);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(12,12,12,.58);padding:20px 0 12px}
+.crm-big{font-family:var(--FC);font-weight:800;font-size:clamp(46px,8.5vw,118px);line-height:.9;letter-spacing:-2.5px;text-transform:uppercase;color:#0C0C0C;margin:0 0 26px;display:inline-flex;align-items:flex-start;gap:12px}
+.crm-dot{font-size:.15em;line-height:1;margin-top:.62em;color:var(--G)}
+
+/* showreel: player recuado sobre papel */
+#reel{background:#EFEDE6;padding:104px 0 96px}
+#reel::before{display:none}
+#reel .reel-wrap{margin:0 var(--gut)}
+
+/* servicos: tabela de creditos (faixas pretas e vazadas alternadas) */
+#servicos{background:#EFEDE6;border-top:none}
+#servicos .tag-sp{color:#0C0C0C}
+#servicos .tag-ln{background:#0C0C0C}
+#servicos .sv-h2{color:#0C0C0C}
+#servicos .sv-sub{color:rgba(12,12,12,.62)}
+#servicos .sv-grid{grid-template-columns:1fr 1fr;gap:10px}
+#servicos .sv-card{background:#0C0C0C;border:1px solid #0C0C0C;border-radius:0;padding:26px 30px;transition:transform .4s var(--Ef)}
+#servicos .sv-card:hover{transform:translateY(-3px);background:#0C0C0C}
+#servicos .sv-card .sv-t{color:#fff;text-transform:uppercase;letter-spacing:.6px}
+#servicos .sv-card .sv-d{color:rgba(255,255,255,.55)}
+#servicos .sv-card:nth-child(even){background:transparent}
+#servicos .sv-card:nth-child(even):hover{background:transparent}
+#servicos .sv-card:nth-child(even) .sv-t{color:#0C0C0C}
+#servicos .sv-card:nth-child(even) .sv-d{color:rgba(12,12,12,.62)}
+#servicos .sv-card:nth-child(even) .sv-more{color:#0C0C0C}
+#servicos .sv-ico{display:none}
+
+/* rodape: tipografia gigante cortada por linhas, sobre papel */
+footer.f-sn{background:#EFEDE6;border-top:none;display:block;padding:88px 0 0;text-align:center}
+footer.f-sn .f-logo{margin-bottom:34px}
+.f-giant span{display:block;font-family:var(--FC);font-weight:800;text-transform:uppercase;font-size:clamp(42px,8.6vw,126px);line-height:1.06;letter-spacing:-2px;color:#0C0C0C;border-top:1px solid rgba(12,12,12,.3);padding:4px var(--gut)}
+.f-giant span:last-child{border-bottom:1px solid rgba(12,12,12,.3)}
+.f-base{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;padding:32px var(--gut) 40px}
+footer.f-sn .f-links{display:flex;flex-wrap:wrap;gap:20px}
+footer.f-sn .f-links a{color:rgba(12,12,12,.72)}
+footer.f-sn .f-links a:hover{color:#0C0C0C}
+footer.f-sn .f-copy{color:rgba(12,12,12,.5)}
+.f-mail a{font-family:var(--FM);font-size:11px;letter-spacing:1.5px;color:#0C0C0C;text-underline-offset:3px}
+@media(max-width:768px){
+  #servicos .sv-grid{grid-template-columns:1fr}
+  .f-base{flex-direction:column;text-align:center}
+}
 </style>
 </head>
 <body>
@@ -1021,77 +1169,147 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
 </div>
 
 <main id="main" role="main">
-<section id="hero" class="has-art">
-  <div class="hero-bg">
-    <div class="hero-art"></div>
-    <div class="hero-orb-pulse"></div>
-    <div class="hero-flare"></div>
-    <div class="hero-wave" aria-hidden="true"></div>
-    <div class="hero-grid-fade"></div>
-    <div class="hero-noise"></div>
-  </div>
-  <div class="hero-scan"></div>
-  <div class="hero-streak"></div>
-  <div class="hero-orb-bl"></div>
-  <div class="hero-orb-tr"></div>
-  <div class="hero-glow"></div>
-  
-  <div class="h-cb h-cb-tl"></div>
-  <div class="h-cb h-cb-tr"></div>
-  <div class="h-cb h-cb-bl"></div>
-  <div class="h-cb h-cb-br"></div>
-  <div class="hud hud-bl">&#169; 2025 SOMA PRODUTORA</div>
-  <div class="hud hud-br">EST. 2019 &middot; BSB</div>
-
-  <div class="hero-inner">
-    <div class="hero-lines">
-      <div class="hero-line"></div>
-      <div class="hero-line"></div>
-      <div class="hero-line"></div>
-      <div class="hero-line"></div>
-      <div class="hero-dot"></div>
-      <div class="hero-dot"></div>
-      <div class="hero-dot"></div>
-      <div class="hero-dot"></div>
-    </div>
-    <img class="hero-mark" src="logomarca.png" alt="SOMA" width="240" height="240" fetchpriority="high" decoding="async">
-    <div class="hero-eye">Produtora de Conteúdo e Marketing Digital &nbsp;&middot;&nbsp; Brasília, Brasil</div>
-    <h1 class="hero-h1">
-      <div class="ln"><span>A grande virada</span></div>
-      <div class="ln"><span><em class="g">começa aqui.</em></span></div>
-    </h1>
-    <p class="hero-sub-p">Marketing, estratégias, audiovisual e presença para transformar a forma como sua marca é <strong>vista, lembrada e desejada.</strong></p>
-    <div class="hero-acts">
-      <a href="#portfolio" class="btn btn-g">Ver portfólio<span class="ai"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
-      <a href="#" id="openReel" class="btn btn-wh"><div class="p-ring"><svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M5 3l14 9-14 9V3z"/></svg></div>Ver showreel</a>
-    </div>
-    <div class="hero-trust" aria-label="Marcas que confiam na SOMA">
-      <span class="hero-trust-lbl">Confiam na SOMA</span>
-      <div class="hero-trust-row">
-        <img src="logo-bb.png" alt="Banco do Brasil" loading="lazy" decoding="async" width="64" height="24">
-        <img src="logo-cbf.png" alt="CBF" loading="lazy" decoding="async" width="48" height="24">
-        <img src="logo-record.png" alt="Record" loading="lazy" decoding="async" width="80" height="24">
-        <img src="logo-arenabrb.png" alt="Arena BRB" loading="lazy" decoding="async" width="64" height="24">
-        <img src="logo-napraia.png" alt="Na Praia" loading="lazy" decoding="async" width="64" height="24">
+<div class="sn-pin" id="snPin">
+<section id="hero" class="sn">
+  <div class="sn-stack" id="snStack">
+    <article class="sn-slide is-on" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.MP4" aria-roledescription="slide" aria-label="EXPOMIX &mdash; Aftermovie Dia 1">
+      <div class="sn-media">
+        <video class="sn-vid" muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.MP4" aria-hidden="true"></video>
       </div>
-    </div>
+      <div class="sn-shade"></div>
+      <div class="sn-corner sn-tl sn-el d1"><span>2025</span><span>SOMA PRODUTORA</span></div>
+      <div class="sn-side sn-el d3">
+        <div class="sn-side-i"><em>Cliente</em><b>SOMA</b></div>
+        <div class="sn-side-i"><em>Entrega</em><b>Aftermovie &middot; Evento</b></div>
+        <div class="sn-side-i"><em>Formato</em><b>4K &middot; LOG3</b></div>
+      </div>
+      <div class="sn-foot">
+        <div class="sn-kicker sn-el d1">Aftermovie &middot; Evento</div>
+        <h2 class="sn-title sn-el d2">EXPOMIX <i>&mdash;</i> Aftermovie Dia 1</h2>
+        <div class="sn-meta sn-el d3">
+          <span><em>Direção</em>SOMA</span>
+          <span><em>Categoria</em>Aftermovie &middot; Evento</span>
+        </div>
+      </div>
+      <button class="sn-explore sn-el d4" type="button">Assistir<span class="sn-ar">&#8594;</span></button>
+    </article>
+    <article class="sn-slide" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.MP4" aria-roledescription="slide" aria-label="Mari Fernandez &mdash; Palco Principal">
+      <div class="sn-media">
+        <video class="sn-vid" muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.MP4" aria-hidden="true"></video>
+      </div>
+      <div class="sn-shade"></div>
+      <div class="sn-corner sn-tl sn-el d1"><span>2024</span><span>SOMA PRODUTORA</span></div>
+      <div class="sn-side sn-el d3">
+        <div class="sn-side-i"><em>Cliente</em><b>SOMA</b></div>
+        <div class="sn-side-i"><em>Entrega</em><b>Videoclipe &middot; Show</b></div>
+        <div class="sn-side-i"><em>Formato</em><b>4K &middot; LOG3</b></div>
+      </div>
+      <div class="sn-foot">
+        <div class="sn-kicker sn-el d1">Videoclipe &middot; Show</div>
+        <h2 class="sn-title sn-el d2">Mari Fernandez <i>&mdash;</i> Palco Principal</h2>
+        <div class="sn-meta sn-el d3">
+          <span><em>Direção</em>SOMA</span>
+          <span><em>Categoria</em>Videoclipe &middot; Show</span>
+        </div>
+      </div>
+      <button class="sn-explore sn-el d4" type="button">Assistir<span class="sn-ar">&#8594;</span></button>
+    </article>
+    <article class="sn-slide" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20After%20Movie%20Final%20Maio%20.MOV" aria-roledescription="slide" aria-label="Bora de Bike &mdash; Aftermovie Final">
+      <div class="sn-media">
+        <video class="sn-vid" muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20After%20Movie%20Final%20Maio%20.MOV" aria-hidden="true"></video>
+      </div>
+      <div class="sn-shade"></div>
+      <div class="sn-corner sn-tl sn-el d1"><span>2025</span><span>SOMA PRODUTORA</span></div>
+      <div class="sn-side sn-el d3">
+        <div class="sn-side-i"><em>Cliente</em><b>SOMA</b></div>
+        <div class="sn-side-i"><em>Entrega</em><b>Aftermovie &middot; Evento</b></div>
+        <div class="sn-side-i"><em>Formato</em><b>4K &middot; LOG3</b></div>
+      </div>
+      <div class="sn-foot">
+        <div class="sn-kicker sn-el d1">Aftermovie &middot; Evento</div>
+        <h2 class="sn-title sn-el d2">Bora de Bike <i>&mdash;</i> Aftermovie Final</h2>
+        <div class="sn-meta sn-el d3">
+          <span><em>Direção</em>SOMA</span>
+          <span><em>Categoria</em>Aftermovie &middot; Evento</span>
+        </div>
+      </div>
+      <button class="sn-explore sn-el d4" type="button">Assistir<span class="sn-ar">&#8594;</span></button>
+    </article>
+    <article class="sn-slide" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/FOME%20DE%20M%C3%9ASICA%20-%20VER%C3%83O%20R2%20_v3.mp4" aria-roledescription="slide" aria-label="Fome de Música &mdash; Verão">
+      <div class="sn-media">
+        <video class="sn-vid" muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/FOME%20DE%20M%C3%9ASICA%20-%20VER%C3%83O%20R2%20_v3.mp4" aria-hidden="true"></video>
+      </div>
+      <div class="sn-shade"></div>
+      <div class="sn-corner sn-tl sn-el d1"><span>2024</span><span>SOMA PRODUTORA</span></div>
+      <div class="sn-side sn-el d3">
+        <div class="sn-side-i"><em>Cliente</em><b>SOMA</b></div>
+        <div class="sn-side-i"><em>Entrega</em><b>Brand Content &middot; Campanha</b></div>
+        <div class="sn-side-i"><em>Formato</em><b>4K &middot; LOG3</b></div>
+      </div>
+      <div class="sn-foot">
+        <div class="sn-kicker sn-el d1">Brand Content &middot; Campanha</div>
+        <h2 class="sn-title sn-el d2">Fome de Música <i>&mdash;</i> Verão</h2>
+        <div class="sn-meta sn-el d3">
+          <span><em>Direção</em>SOMA</span>
+          <span><em>Categoria</em>Brand Content &middot; Campanha</span>
+        </div>
+      </div>
+      <button class="sn-explore sn-el d4" type="button">Assistir<span class="sn-ar">&#8594;</span></button>
+    </article>
+    <article class="sn-slide" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Acessibilidade%20-%20Tel%C3%A3o%202025%20Na%20Praia.MOV" aria-roledescription="slide" aria-label="Acessibilidade &mdash; Na Praia Telão">
+      <div class="sn-media">
+        <video class="sn-vid" muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Acessibilidade%20-%20Tel%C3%A3o%202025%20Na%20Praia.MOV" aria-hidden="true"></video>
+      </div>
+      <div class="sn-shade"></div>
+      <div class="sn-corner sn-tl sn-el d1"><span>2025</span><span>SOMA PRODUTORA</span></div>
+      <div class="sn-side sn-el d3">
+        <div class="sn-side-i"><em>Cliente</em><b>SOMA</b></div>
+        <div class="sn-side-i"><em>Entrega</em><b>Evento &middot; Festival</b></div>
+        <div class="sn-side-i"><em>Formato</em><b>4K &middot; LOG3</b></div>
+      </div>
+      <div class="sn-foot">
+        <div class="sn-kicker sn-el d1">Evento &middot; Festival</div>
+        <h2 class="sn-title sn-el d2">Acessibilidade <i>&mdash;</i> Na Praia Telão</h2>
+        <div class="sn-meta sn-el d3">
+          <span><em>Direção</em>SOMA</span>
+          <span><em>Categoria</em>Evento &middot; Festival</span>
+        </div>
+      </div>
+      <button class="sn-explore sn-el d4" type="button">Assistir<span class="sn-ar">&#8594;</span></button>
+    </article>
+    <article class="sn-slide" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20Final%20.MOV" aria-roledescription="slide" aria-label="Bora de Bike &mdash; Final">
+      <div class="sn-media">
+        <video class="sn-vid" muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20Final%20.MOV" aria-hidden="true"></video>
+      </div>
+      <div class="sn-shade"></div>
+      <div class="sn-corner sn-tl sn-el d1"><span>2024</span><span>SOMA PRODUTORA</span></div>
+      <div class="sn-side sn-el d3">
+        <div class="sn-side-i"><em>Cliente</em><b>SOMA</b></div>
+        <div class="sn-side-i"><em>Entrega</em><b>Aftermovie &middot; Evento</b></div>
+        <div class="sn-side-i"><em>Formato</em><b>4K &middot; LOG3</b></div>
+      </div>
+      <div class="sn-foot">
+        <div class="sn-kicker sn-el d1">Aftermovie &middot; Evento</div>
+        <h2 class="sn-title sn-el d2">Bora de Bike <i>&mdash;</i> Final</h2>
+        <div class="sn-meta sn-el d3">
+          <span><em>Direção</em>SOMA</span>
+          <span><em>Categoria</em>Aftermovie &middot; Evento</span>
+        </div>
+      </div>
+      <button class="sn-explore sn-el d4" type="button">Assistir<span class="sn-ar">&#8594;</span></button>
+    </article>
   </div>
 
-  <div class="hero-scroll">
-    <div class="hero-scroll-line"></div>
-    <span class="hero-scroll-txt">scroll</span>
-  </div>
-  <div class="hero-badge">
-    <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-    <div>
-      <div class="hero-badge-t">Top 10 Produtoras</div>
-      <div class="hero-geo">
-        <span class="hero-badge-s">Brasil 2024</span>
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M2 12h20M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
-      </div>
+  <div class="sn-hud">
+    <div class="sn-count"><b id="snNow">01</b><i></i><span id="snAll">06</span></div>
+    <div class="sn-rail" id="snRail" role="tablist" aria-label="Projetos em destaque"></div>
+    <div class="sn-arrows">
+      <button class="sn-arr" id="snUp" type="button" aria-label="Projeto anterior"><svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg></button>
+      <button class="sn-arr" id="snDown" type="button" aria-label="Próximo projeto"><svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg></button>
     </div>
   </div>
 </section>
+</div>
 
 <div class="ticker"><div class="t-track">
   <div class="t-item">Direção Criativa <span class="star">&#10022;</span></div>
@@ -1113,6 +1331,12 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
 </div></div>
 
 <div id="reel">
+  <div class="crm-head">
+    <div class="crm-rule"></div>
+    <div class="crm-kick">Soma Produtora &middot; 2025</div>
+    <h2 class="crm-big">Showreel<span class="crm-dot" aria-hidden="true">&#9679;</span></h2>
+    <div class="crm-rule"></div>
+  </div>
   <div class="reel-wrap" id="reelScrub">
     <div class="reel-ratio">
       <div class="reel-bg" id="reelSection">
@@ -1121,7 +1345,6 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
         <div class="reel-scan"></div>
         <div class="reel-vig"></div>
       </div>
-      <div class="reel-tl"><span>SOMA PRODUTORA</span><span>SHOWREEL 2025</span></div>
       <div class="reel-br2"><span>4K &middot; LOG3</span><span>24fps</span></div>
       <div class="reel-ttl">Um minuto e quarenta segundos de argumento.</div>
       <div class="rcb rcb-tl"></div><div class="rcb rcb-tr"></div>
@@ -1143,7 +1366,7 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
   <div class="pf-head rv">
     <div>
       <div class="tag" style="margin-bottom:20px"><div class="tag-ln"></div><span class="tag-sp">Portfólio</span></div>
-      <h2 class="pf-h2">O que fazemos<br>fala mais alto.</h2>
+      <h2 class="pf-h2">O acervo completo.<br>Vídeo e fotografia.</h2>
     </div>
     <div>
       <p class="pf-side">Do palco ao pixel — cada projeto entregue com intenção criativa e obsessão por resultado.</p>
@@ -1615,15 +1838,22 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
 </section>
 
 </main>
-<footer role="contentinfo">
+<footer role="contentinfo" class="f-sn">
   <div class="f-logo"><img class="f-sym" src="logotipo.png" alt="SOMA Produtora"></div>
-  <div class="f-links">
-    <a href="#portfolio">Portfólio</a><a href="#manifesto">Sobre</a>
-    <a href="#processo">Processo</a><a href="#clients">Clientes</a>
-    <a href="https://www.instagram.com/soma.produtora/" target="_blank" rel="noopener noreferrer me" aria-label="Instagram da SOMA Produtora (abre em nova aba)">Instagram</a>
-    <a href="mailto:contato@somaprodutora.com" aria-label="Enviar email para contato@somaprodutora.com">Contato</a>
+  <div class="f-giant" aria-hidden="true">
+    <span>Produtora</span>
+    <span>Audiovisual</span>
+    <span>Filme &middot; TV</span>
   </div>
-  <div class="f-copy">&#169; 2025 SOMA PRODUTORA &mdash; BSB</div>
+  <div class="f-base">
+    <div class="f-links">
+      <a href="#portfolio">Portfólio</a><a href="#manifesto">Sobre</a>
+      <a href="#processo">Processo</a><a href="#clients">Clientes</a>
+      <a href="https://www.instagram.com/soma.produtora/" target="_blank" rel="noopener noreferrer me" aria-label="Instagram da SOMA Produtora (abre em nova aba)">Instagram</a>
+    </div>
+    <div class="f-mail"><a href="mailto:contato@somaprodutora.com">contato@somaprodutora.com</a></div>
+    <div class="f-copy">&#169; 2025 SOMA PRODUTORA &mdash; BSB</div>
+  </div>
 </footer>
 
 <div id="lb">
@@ -1639,7 +1869,8 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
 function _lockScroll(){document.body.style.overflow='hidden'}
 function _unlockScroll(){document.body.style.overflow=''}
 
-(function(){const hero=document.getElementById('hero');if(!hero)return;const ov=document.createElement('div');ov.style.cssText='position:absolute;inset:0;background:#000;opacity:0;pointer-events:none;z-index:4;will-change:opacity';hero.appendChild(ov);window.addEventListener('scroll',()=>{const h=hero.offsetHeight;if(!h)return;const prog=Math.min(window.scrollY/(h*.65),1);ov.style.opacity=prog*.88},{passive:true})})();
+/* (removido) fade-para-preto do heroi antigo: com o heroi preso no scroll,
+   o overlay escurecia os slides ja na segunda faixa */
 setTimeout(()=>document.getElementById('intro').classList.add('done'),3000);
 
 const nav=document.getElementById('nav');window.addEventListener('scroll',()=>nav.classList.toggle('stuck',window.scrollY>80),{passive:true});
@@ -1666,7 +1897,7 @@ const nav=document.getElementById('nav');window.addEventListener('scroll',()=>na
     if(Math.abs(p-last)<.0015)return;last=p;   /* nada mudou: nao escreve no DOM */
     const e=p*p*(3-2*p);   /* smoothstep: distribui o efeito por todo o scroll */
     const sc=.88+.12*e, ty=26*(1-e), tilt=(sm?3:5)*(1-e);
-    const r0=sm?18:24, r1=0;   /* termina sem arredondamento: quadro sangra ate a borda */
+    const r0=sm?18:24, r1=16;   /* termina recuado e arredondado sobre o papel creme */
     el.style.transform='perspective(1600px) translate3d(0,'+ty.toFixed(2)+'px,0) rotateX('+tilt.toFixed(2)+'deg) scale('+sc.toFixed(4)+')';
     el.style.setProperty('--rr',(r0-(r0-r1)*e).toFixed(1)+'px');
     el.style.opacity=Math.min(1,.85+p*2).toFixed(3);
@@ -1907,6 +2138,114 @@ document.querySelectorAll('.btn-g,.btn-wh,.nav-cta').forEach(btn=>{btn.addEventL
 (function(){var el=document.querySelector('#hero .hero-eye');if(!el)return;if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var raw=el.textContent;if(!raw)return;var chars=Array.from(raw);el.textContent='';el.classList.add('type-on');var startDelay=1.6,perChar=0.022;chars.forEach(function(ch,i){var s=document.createElement('span');s.className='tch';s.textContent=(ch===' '?' ':ch);s.style.animationDelay=(startDelay+i*perChar).toFixed(3)+'s';el.appendChild(s)});var caret=document.createElement('span');caret.className='tch tcaret';caret.setAttribute('aria-hidden','true');el.appendChild(caret)})();
 document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}})});
 document.querySelectorAll('.pf-tab').forEach(tab=>{tab.addEventListener('click',()=>{const target=tab.dataset.tab;document.querySelectorAll('.pf-tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');document.querySelectorAll('[data-panel]').forEach(p=>{p.style.display=p.dataset.panel===target?(target==='fotos'?'grid':'block'):'none'});if(target==='fotos'){document.querySelectorAll('.ph-card').forEach(c=>c.classList.add('in'))}document.querySelectorAll('.pf-vid').forEach(v=>{v.pause()})})});
+
+/* ──────────── HEROI: carrossel vertical de projetos (modelo SIENA) ────────────
+   Empurra o slide atual pra cima e traz o proximo por baixo. O texto entra
+   escalonado depois da imagem (classes .d1-.d4 no CSS), que e o que da a
+   sensacao de riqueza. Avanca sozinho a cada 6s e pausa no hover. */
+(function(){
+  const stack=document.getElementById('snStack');if(!stack)return;
+  const slides=[].slice.call(stack.querySelectorAll('.sn-slide'));
+  if(!slides.length)return;
+  const rail=document.getElementById('snRail'),agora=document.getElementById('snNow');
+  const pin=document.getElementById('snPin');
+  const POR_SLIDE=.62;          /* fracao de tela rolada por slide */
+  let atual=-1;
+
+  const ticks=slides.map((s,i)=>{
+    const b=document.createElement('button');b.type='button';b.className='sn-tick';
+    b.setAttribute('role','tab');b.setAttribute('aria-label','Projeto '+(i+1));
+    b.innerHTML='<i></i>';b.addEventListener('click',()=>rolaAte(i));
+    rail&&rail.appendChild(b);return b;
+  });
+
+  /* altura do trilho: 1 tela + 0.62 por slide adicional */
+  function mede(){
+    if(pin)pin.style.height=(100+(slides.length-1)*POR_SLIDE*100)+'svh';
+  }
+  /* leva o scroll ao meio da faixa do slide n (arrows/ticks nao mudam o
+     indice direto: quem manda e a posicao da pagina) */
+  function trilho(){return pin?Math.max(1,pin.offsetHeight-innerHeight):1}
+  function rolaAte(n){
+    if(!pin)return;
+    const n2=Math.max(0,Math.min(slides.length-1,n));
+    scrollTo({top:Math.round(pin.offsetTop+(n2/slides.length)*trilho())+6,behavior:'smooth'});
+  }
+
+  function video(){
+    slides.forEach((s,i)=>{
+      const v=s.querySelector('.sn-vid');if(!v)return;
+      if(i===atual){
+        if(!v.getAttribute('src')&&v.dataset.src){v.src=v.dataset.src;try{v.load()}catch(e){}}
+        const p=v.play();if(p&&p.catch)p.catch(function(){});
+      }else{try{v.pause()}catch(e){}}
+    });
+  }
+  function pinta(){
+    slides.forEach((s,i)=>{
+      s.classList.toggle('is-on',i===atual);
+      /* sem ciclo agora: quem ficou pra tras sobe, quem vem depois espera embaixo */
+      s.classList.toggle('is-prev',i<atual);
+      s.setAttribute('aria-hidden',i===atual?'false':'true');
+    });
+    ticks.forEach((t,i)=>t.classList.toggle('done',i<atual));
+    if(agora)agora.textContent=String(atual+1).padStart(2,'0');
+    video();
+  }
+  function ir(n){
+    const novo=Math.max(0,Math.min(slides.length-1,n));
+    if(novo===atual)return;
+    atual=novo;pinta();
+  }
+
+  const up=document.getElementById('snUp'),down=document.getElementById('snDown');
+  up&&up.addEventListener('click',()=>rolaAte(atual-1));
+  down&&down.addEventListener('click',()=>rolaAte(atual+1));
+
+  /* o botao Assistir abre o video do slide no modal ja existente */
+  slides.forEach(s=>{
+    const b=s.querySelector('.sn-explore');
+    b&&b.addEventListener('click',(e)=>{e.stopPropagation();
+      const src=s.dataset.video;
+      if(src&&typeof _reelOpen==='function')_reelOpen(src);
+    });
+  });
+
+  /* O scroll comanda: cada slide ocupa uma faixa igual do trilho. Laco de
+     frame em vez de evento de scroll — o elemento tambem se move quando o
+     layout muda sem a pagina rolar (imagem acima terminando de carregar). */
+  let ultimaAltura=-1,ultimoPreenchimento=-1;
+  function acompanha(){
+    if(pin){
+      if(innerHeight!==ultimaAltura){ultimaAltura=innerHeight;mede()}
+      const t=trilho();
+      const y=Math.min(Math.max(-pin.getBoundingClientRect().top,0),t);
+      const bruto=(y/t)*slides.length;                 /* 0 .. n */
+      const idx=Math.min(slides.length-1,Math.floor(bruto));
+      ir(idx);
+      /* a barrinha ativa enche conforme voce atravessa a faixa dela */
+      const cheio=Math.min(1,Math.max(0,bruto-idx));
+      if(Math.abs(cheio-ultimoPreenchimento)>.004){
+        ultimoPreenchimento=cheio;
+        const barra=ticks[idx]&&ticks[idx].firstChild;
+        if(barra)barra.style.transform='scaleX('+cheio.toFixed(3)+')';
+        ticks.forEach((tk,i)=>{if(i!==idx&&tk.firstChild)tk.firstChild.style.transform='';});
+      }
+    }
+    requestAnimationFrame(acompanha);
+  }
+
+  addEventListener('keydown',e=>{
+    if(!pin)return;
+    const r=pin.getBoundingClientRect();
+    if(r.top>0||r.bottom<innerHeight)return;      /* so enquanto o heroi esta preso */
+    if(e.key==='ArrowUp'){e.preventDefault();rolaAte(atual-1)}
+    else if(e.key==='ArrowDown'){e.preventDefault();rolaAte(atual+1)}
+  });
+
+  mede();ir(0);
+  requestAnimationFrame(acompanha);
+})();
 
 /* ──────────── PORTFOLIO: coverflow 3D de cards ────────────
    Os cards saem da fileira com rolagem e passam a ficar empilhados em
