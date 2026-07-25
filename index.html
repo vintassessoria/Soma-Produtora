@@ -118,7 +118,7 @@
 </script>
 
 <style>
-:root{
+:root{--gut:clamp(20px,6.5vw,128px);   /* respiro lateral no desktop */
   --G:#6BF019;--G1:rgba(107,240,25,0.04);--G2:rgba(107,240,25,0.10);
   --G3:rgba(107,240,25,0.20);--Glow:rgba(107,240,25,0.22);
   --B:#000;--W:#F5F5F5;
@@ -154,8 +154,8 @@ a,button,.btn,.nav-burger,.m-x,.web-modal-close,.lb-btn,.reel-play,.pf-tab{touch
 @keyframes inNin{from{opacity:0;filter:blur(16px);transform:scale(.86)}to{opacity:1;filter:blur(0);transform:scale(1)}}
 @keyframes inNout{from{opacity:1;filter:blur(0);transform:scale(1)}to{opacity:0;filter:blur(10px);transform:scale(1.07)}}
 @keyframes inLogo{from{opacity:0;filter:blur(8px);transform:translateY(10px) scale(.95)}to{opacity:1;filter:blur(0);transform:translateY(0) scale(1)}}
-nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:26px 60px;display:flex;align-items:center;justify-content:space-between;transition:background .6s var(--Es),padding .5s var(--Es),border-color .6s var(--Es);border-bottom:1px solid transparent}
-nav.stuck{background:rgba(0,0,0,0.88);backdrop-filter:blur(32px) saturate(180%);padding:14px 60px;border-color:rgba(255,255,255,0.05)}
+nav{position:fixed;top:0;left:0;right:0;z-index:1000;padding:26px var(--gut);display:flex;align-items:center;justify-content:space-between;transition:background .6s var(--Es),padding .5s var(--Es),border-color .6s var(--Es);border-bottom:1px solid transparent}
+nav.stuck{background:rgba(0,0,0,0.88);backdrop-filter:blur(32px) saturate(180%);padding:14px var(--gut);border-color:rgba(255,255,255,0.05)}
 .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none}
 .nav-sym{height:28px;width:auto;max-width:160px;object-fit:contain;display:block}
 .nav-txt{font-family:var(--FC);font-size:15px;font-weight:800;letter-spacing:.5px;color:var(--W);line-height:1}
@@ -277,22 +277,22 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .t-item{display:inline-flex;align-items:center;gap:28px;padding:0 28px;font-family:var(--FM);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--Gr);flex-shrink:0}
 .t-item .star{color:var(--G);font-size:10px;line-height:1;opacity:.5}
 @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-#reel{padding:0 60px 80px;position:relative}
-#reel::before{content:'';position:absolute;left:0;right:0;top:80px;bottom:80px;pointer-events:none;z-index:1;background:linear-gradient(to bottom,var(--B) 0%,transparent 8%,transparent 92%,var(--B) 100%)}
+#reel{padding:0 0 80px;position:relative}
+#reel::before{content:'';position:absolute;left:0;right:0;top:80px;bottom:80px;pointer-events:none;z-index:1;background:linear-gradient(to bottom,var(--B) 0%,transparent 4%,transparent 96%,var(--B) 100%)}
 .reel-wrap{position:relative;border-radius:var(--rr,16px);overflow:hidden;cursor:pointer;background:var(--D2);z-index:2}
 .reel-wrap::after{content:'';position:absolute;inset:0;border-radius:var(--rr,16px);border:1px solid rgba(255,255,255,0.04);pointer-events:none;z-index:5}
-.reel-ratio{padding-bottom:56.25%;position:relative}
+.reel-ratio{height:min(56.25vw,86vh);position:relative}
 .reel-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;transition:transform .7s var(--E)}
 .reel-wrap:hover .reel-bg{transform:scale(1.006)}
 .reel-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.2}
-.reel-scan{position:absolute;inset:0;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,0,0,0.02) 3px,rgba(0,0,0,0.02) 4px);pointer-events:none;opacity:.5}
+.reel-scan{position:absolute;inset:0;background:repeating-linear-gradient(to bottom,transparent 0px,transparent 3px,rgba(0,0,0,0.02) 3px,rgba(0,0,0,0.02) 4px);pointer-events:none;opacity:.22}
 .reel-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:#000}
 .reel-placeholder{position:absolute;inset:0;background:linear-gradient(125deg,#0a1a06 0%,#0d1f07 20%,#0a1206 40%,#0d1a08 60%,#0a1606 80%,#0c1a07 100%);background-size:400% 400%;animation:reelGradient 15s ease infinite;z-index:1;transition:opacity 1s ease}
 .reel-placeholder.hidden{opacity:0;pointer-events:none}
 .reel-bg video{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:2;opacity:0;transition:opacity 1s ease}
-.reel-bg video.playing{opacity:.72}
+.reel-bg video.playing{opacity:1}
 @keyframes reelGradient{0%{background-position:0% 50%}50%{background-position:100% 50%}100%{background-position:0% 50%}}
-.reel-vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,0,0,0.35) 0%,rgba(0,0,0,0.72) 100%);pointer-events:none;z-index:3}
+.reel-vig{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,0,0,0.04) 0%,rgba(0,0,0,0.38) 100%);pointer-events:none;z-index:3}
 .reel-center{position:absolute;inset:0;z-index:4;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:18px}
 .reel-play{width:76px;height:76px;background:var(--G);border-radius:50%;border:none;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .5s var(--Ef);box-shadow:0 0 24px rgba(107,240,25,.08)}
 .reel-play:hover{transform:scale(1.05);background:var(--W);box-shadow:0 0 36px rgba(107,240,25,.12)}
@@ -307,12 +307,12 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .rcb-bl{bottom:14px;left:14px;border-width:0 0 1px 1px}
 .rcb-br{bottom:14px;right:14px;border-width:0 1px 1px 0}
 /* Showreel — abertura cinematografica ligada ao scroll (classe aplicada via JS) */
-.reel-wrap.scrub-on{opacity:.6;transform:perspective(1600px) translate3d(0,56px,0) rotateX(9deg) scale(.80);transform-origin:50% 50%;will-change:transform,opacity;backface-visibility:hidden}
+.reel-wrap.scrub-on{opacity:.85;transform:perspective(1600px) translate3d(0,26px,0) rotateX(5deg) scale(.88);transform-origin:50% 50%;will-change:transform,opacity;backface-visibility:hidden}
 #stats{background:var(--D1);position:relative}
 #stats::before,#stats::after{content:'';position:absolute;left:0;right:0;height:120px;pointer-events:none;z-index:2}
 #stats::before{top:0;background:linear-gradient(to bottom,rgba(8,8,8,1) 0%,transparent 100%)}
 #stats::after{bottom:0;background:linear-gradient(to top,rgba(8,8,8,1) 0%,transparent 100%)}
-.stats-row{display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid rgba(255,255,255,0.05);position:relative;z-index:3}
+.stats-row{display:grid;grid-template-columns:repeat(4,1fr);padding:0 var(--gut);border-top:1px solid rgba(255,255,255,0.05);position:relative;z-index:3}
 .stat{padding:40px 36px;position:relative;border-right:1px solid rgba(255,255,255,0.05);overflow:hidden;transition:background .4s}
 .stat:last-child{border-right:none}
 .stat::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:var(--G);transform:scaleX(0);transform-origin:left;transition:transform .6s var(--E)}
@@ -325,13 +325,13 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 #portfolio::before,#portfolio::after{content:'';position:absolute;top:0;bottom:0;width:80px;pointer-events:none;z-index:5}
 #portfolio::before{left:0;background:linear-gradient(to right,var(--B),transparent)}
 #portfolio::after{right:0;background:linear-gradient(to left,var(--B),transparent)}
-.pf-head{padding:0 60px;display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px}
+.pf-head{padding:0 var(--gut);display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px}
 .pf-h2{font-family:var(--FC);font-size:clamp(24px,2.8vw,36px);font-weight:800;letter-spacing:-.5px;line-height:1.06}
 .pf-side{max-width:280px;color:var(--Gr);font-size:14px;line-height:1.7;font-family:var(--FB)}
-.pf-row{display:flex;gap:18px;padding:0 60px;overflow-x:auto;scrollbar-width:none;cursor:grab;-webkit-overflow-scrolling:touch}
+.pf-row{display:flex;gap:18px;padding:0 var(--gut);overflow-x:auto;scrollbar-width:none;cursor:grab;-webkit-overflow-scrolling:touch}
 .pf-row::-webkit-scrollbar{display:none}
 .pf-row:active{cursor:grabbing}
-.pf-card{flex-shrink:0;width:320px;border-radius:14px;overflow:hidden;background:var(--D2);transition:transform .6s var(--Ef),box-shadow .6s var(--Ef)}
+.pf-card{flex-shrink:0;width:clamp(260px,24vw,420px);border-radius:14px;overflow:hidden;background:var(--D2);transition:transform .6s var(--Ef),box-shadow .6s var(--Ef)}
 .pf-card:hover{transform:translateY(-4px);box-shadow:0 20px 56px rgba(0,0,0,.55),0 0 0 1px rgba(107,240,25,.06)}
 .pf-media{padding-bottom:133%;position:relative;overflow:hidden}
 .pf-vid-wrap{position:absolute;inset:0;overflow:hidden;background:linear-gradient(150deg,#0d1f09 0%,#0e0e0e 42%,#0c1508 75%,#0e0e0e 100%)}
@@ -349,7 +349,7 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .pf-cat{font-family:var(--FM);font-size:9px;color:var(--G);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px;opacity:.75}
 .pf-name{font-family:var(--FC);font-size:14px;font-weight:600;color:var(--W);letter-spacing:0;margin-bottom:4px}
 .pf-cl{font-family:var(--FB);font-size:12px;color:var(--Gr)}
-.pf-foot{padding:52px 60px 0;display:flex;justify-content:center}
+.pf-foot{padding:52px var(--gut) 0;display:flex;justify-content:center}
 .pf-strip,.pf-hover,.pf-chip,.pf-vig{pointer-events:none}
 .pf-card{cursor:pointer}
 .ph-hover-icon{pointer-events:none}
@@ -358,12 +358,41 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .pf-hint svg{stroke:var(--G);width:18px;height:18px;fill:none;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;display:block}
 .pf-hint.show{opacity:1;pointer-events:auto;animation:pfHintBounce 1.7s ease-in-out infinite}
 .pf-hint.hide{opacity:0;pointer-events:none;transform:translate(16px,-50%)}
+
+/* ── PORTFOLIO: coverflow 3D (classe aplicada via JS) ─────────────────── */
+.pf-stage{display:block;position:relative;padding:0;overflow:hidden;cursor:grab;
+  perspective:1500px;perspective-origin:50% 44%;touch-action:pan-y;min-height:400px;outline:none}
+.pf-stage:active{cursor:grabbing}
+.pf-stage .pf-card{position:absolute;top:0;left:50%;margin-left:-160px;
+  transform-origin:50% 50%;backface-visibility:hidden;will-change:transform,opacity;
+  transition:transform .62s cubic-bezier(.22,1,.36,1),opacity .5s var(--Ef),filter .5s var(--Ef)}
+/* o hover de elevacao brigaria com o transform do carrossel */
+.pf-stage .pf-card:hover{transform:none;box-shadow:none}
+.pf-stage .pf-card.is-active{box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 0 1px rgba(107,240,25,.10)}
+.pf-stage .pf-card:not(.is-active) .pf-hover{opacity:0}
+.pf-stage-wrap .pf-hint{display:none}
+.pf-nav{position:absolute;top:50%;z-index:40;width:46px;height:46px;border-radius:50%;padding:0;
+  background:rgba(0,0,0,.45);border:1px solid rgba(255,255,255,.14);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  display:flex;align-items:center;justify-content:center;cursor:pointer;
+  transform:translateY(-50%);transition:background .3s var(--E),border-color .3s var(--E),opacity .3s var(--E)}
+.pf-nav:hover{background:rgba(107,240,25,.92);border-color:var(--G)}
+.pf-nav:hover svg{stroke:var(--B)}
+.pf-nav svg{width:18px;height:18px;fill:none;stroke:var(--W);stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;display:block}
+.pf-nav.prev{left:26px}
+.pf-nav.next{right:26px}
+.pf-nav[disabled]{opacity:.22;pointer-events:none}
+.pf-dots{display:flex;justify-content:center;align-items:center;gap:7px;margin-top:28px;flex-wrap:wrap;padding:0 20px}
+.pf-dot{width:7px;height:7px;border-radius:50%;background:rgba(255,255,255,.18);border:none;padding:0;cursor:pointer;transition:all .35s var(--E)}
+.pf-dot:hover{background:rgba(255,255,255,.42)}
+.pf-dot.on{background:var(--G);width:22px;border-radius:4px}
+@media(max-width:768px){.pf-nav{width:38px;height:38px}.pf-nav.prev{left:8px}.pf-nav.next{right:8px}}
 @keyframes pfHintBounce{0%,100%{transform:translate(0,-50%)}50%{transform:translate(8px,-50%)}}
-#manifesto{background:var(--D1);padding:112px 60px;position:relative}
+#manifesto{background:var(--D1);padding:112px var(--gut);position:relative}
 #manifesto::before{content:'';position:absolute;top:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(107,240,25,.15),transparent)}
 #manifesto::after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:linear-gradient(to right,transparent,rgba(107,240,25,.15),transparent)}
 #equipe{background:var(--D1);padding:100px 0;text-align:center;overflow:hidden}
-.eq-head{padding:0 60px}
+.eq-head{padding:0 var(--gut)}
 .eq-head{margin-bottom:48px;position:relative;z-index:2}
 .eq-h2{font-family:var(--FC);font-size:clamp(26px,3.2vw,38px);font-weight:800;letter-spacing:-1px;line-height:1.1;margin-top:16px}
 .eq-slider{position:relative;overflow:hidden;contain:layout style}
@@ -397,7 +426,7 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .mc-t{font-family:var(--FC);font-size:14px;font-weight:700;color:var(--W);margin-bottom:6px;letter-spacing:.1px}
 .mc-d{font-family:var(--FB);font-size:13px;color:var(--Gr);line-height:1.65}
 .mc-hero{background:radial-gradient(ellipse at 0% 50%,rgba(55,150,8,.24) 0%,rgba(107,240,25,.08) 42%,rgba(107,240,25,.02) 72%);border-color:rgba(107,240,25,.13)}
-#processo{padding:96px 60px}
+#processo{padding:96px var(--gut)}
 .pr-head{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px}
 .pr-h2{font-family:var(--FC);font-size:clamp(24px,2.8vw,36px);font-weight:800;letter-spacing:-.5px;line-height:1.06;max-width:480px}
 .pr-sub{max-width:260px;color:var(--Gr);font-size:14px;line-height:1.7;font-family:var(--FB)}
@@ -411,7 +440,7 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .pr-ico{width:28px;height:28px;margin-bottom:14px;flex-shrink:0}
 .pr-t{font-family:var(--FC);font-size:16px;font-weight:700;color:var(--W);letter-spacing:0;margin-bottom:12px}
 .pr-d{font-family:var(--FB);font-size:13px;color:var(--Gr);line-height:1.8}
-#depo{background:var(--D1);padding:100px 60px}
+#depo{background:var(--D1);padding:100px var(--gut)}
 .dp-head{margin-bottom:40px}
 .dp-h2{font-family:var(--FC);font-size:clamp(24px,2.8vw,36px);font-weight:800;letter-spacing:-.5px;line-height:1.06}
 .dp-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
@@ -450,7 +479,7 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
   .web-modal-content{padding:32px 20px;border-radius:16px}
   .web-modal-h{font-size:26px}
 }
-#cta{padding:60px;position:relative;overflow:hidden}
+#cta{padding:60px var(--gut);position:relative;overflow:hidden}
 #cta::before{content:'';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(107,240,25,.04) 0%,transparent 70%);pointer-events:none}
 /* ── FUNDO VIVO: aurora verde fluida (seções alternadas) ── */
 #processo,#internacional{position:relative}
@@ -474,7 +503,7 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .cta-card::after{content:'';position:absolute;inset:0;border-radius:24px;background:rgba(0,0,0,.18);pointer-events:none}
 .cta-card-l{position:relative;z-index:1}
 .cta-card-r{position:relative;z-index:1;flex-shrink:0;display:flex;flex-direction:column;align-items:flex-end;gap:16px}
-footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:var(--D1);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px}
+footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px var(--gut);background:var(--D1);display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:24px}
 .f-logo{display:flex;align-items:center;gap:10px}
 .f-sym{height:22px;width:auto;max-width:140px;object-fit:contain;display:block}
 .f-txt{font-family:var(--FC);font-size:16px;font-weight:800;letter-spacing:.5px;color:var(--W)}
@@ -501,7 +530,7 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
 .pf-tab{font-family:var(--FM);font-size:10px;letter-spacing:1.5px;text-transform:uppercase;color:var(--Gr);background:transparent;border:1px solid rgba(255,255,255,.08);border-radius:100px;padding:8px 18px;cursor:pointer;transition:all .35s var(--E)}
 .pf-tab:hover{color:var(--W);border-color:rgba(255,255,255,.2)}
 .pf-tab.active{color:var(--B);background:var(--G);border-color:var(--G)}
-.ph-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 60px;margin-top:0}
+.ph-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;padding:0 var(--gut);margin-top:0}
 .ph-card{position:relative;border-radius:8px;overflow:hidden;aspect-ratio:4/3;cursor:pointer;background:var(--D2);transition:opacity .35s var(--Es)}
 .ph-thumb{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .65s var(--Ef)}
 .ph-card:hover .ph-thumb{transform:scale(1.05)}
@@ -524,7 +553,7 @@ footer{border-top:1px solid rgba(255,255,255,0.05);padding:48px 60px;background:
 a,button,.btn,.btn-g,.nav-cta,.reel-play,.pf-tab,.pf-pi,.pf-card,.ph-card,.sv-card,.int-c,.web-modal-close,.m-x,.lb-btn{cursor:pointer}
 
 /* ===================== INTERNACIONAL ===================== */
-#internacional{padding:104px 60px;background:var(--B)}
+#internacional{padding:104px var(--gut);background:var(--B)}
 .int-head{margin-bottom:56px}
 .int-h2{font-family:var(--FC);font-size:clamp(24px,2.8vw,36px);font-weight:800;letter-spacing:-.5px;line-height:1.06;margin-top:14px}
 .int-grid{display:grid;grid-template-columns:320px 1fr;gap:64px;align-items:center}
@@ -647,7 +676,7 @@ a,button,.btn,.btn-g,.nav-cta,.reel-play,.pf-tab,.pf-pi,.pf-card,.ph-card,.sv-ca
 
 /* CARROSSEL LOGOS — maior, mais respiro, GPU-accelerated */
 #clients{padding:88px 0;text-align:center;overflow:hidden}
-.cl-lab{font-family:var(--FM);font-size:10px;letter-spacing:2px;color:var(--W);text-transform:uppercase;margin-bottom:52px;padding:0 60px}
+.cl-lab{font-family:var(--FM);font-size:10px;letter-spacing:2px;color:var(--W);text-transform:uppercase;margin-bottom:52px;padding:0 var(--gut)}
 .cl-track-wrap{position:relative;width:100%;overflow:hidden}
 .cl-track-wrap::before,.cl-track-wrap::after{content:'';position:absolute;top:0;bottom:0;width:160px;z-index:2;pointer-events:none}
 .cl-track-wrap::before{left:0;background:linear-gradient(to right,var(--B),transparent)}
@@ -668,7 +697,7 @@ a,button,.btn,.btn-g,.nav-cta,.reel-play,.pf-tab,.pf-pi,.pf-card,.ph-card,.sv-ca
 }
 
 /* SERVIÇOS */
-#servicos{padding:104px 60px;background:var(--D1);border-top:1px solid rgba(255,255,255,.04)}
+#servicos{padding:104px var(--gut);background:var(--D1);border-top:1px solid rgba(255,255,255,.04)}
 .sv-head{max-width:720px;margin-bottom:52px}
 .sv-h2{font-family:var(--FC);font-size:clamp(24px,2.8vw,36px);font-weight:800;letter-spacing:-.5px;line-height:1.06;margin-top:14px}
 .sv-sub{margin-top:16px;color:var(--Gr);font-family:var(--FB);font-size:14.5px;line-height:1.75;max-width:520px;font-weight:300}
@@ -697,7 +726,7 @@ a,button,.btn,.btn-g,.nav-cta,.reel-play,.pf-tab,.pf-pi,.pf-card,.ph-card,.sv-ca
   nav{padding:20px 32px}.nav-links{gap:24px}nav.stuck{padding:14px 32px}
   .hero-inner{padding:0 32px}.hero-h1{font-size:clamp(44px,10vw,80px)}
   .hud{display:none}
-  #reel{padding:0 32px 92px}
+  #reel{padding:0 0 92px}
   .stats-row{grid-template-columns:repeat(2,1fr)}
   .stat{border-bottom:1px solid rgba(255,255,255,.05)}
   .stat:last-child{border-right:none}
@@ -727,15 +756,15 @@ a,button,.btn,.btn-g,.nav-cta,.reel-play,.pf-tab,.pf-pi,.pf-card,.ph-card,.sv-ca
   .hero-acts{flex-direction:column;align-items:center;gap:12px}
   .hero-sub-p{font-size:14px;max-width:340px}
   .hero-scroll{display:none}
-  #reel{padding:0 20px 60px}
-  #reel::before{top:0;bottom:0;background:linear-gradient(to bottom,var(--B) 0%,transparent 6%,transparent 94%,var(--B) 100%)}
+  #reel{padding:0 0 60px}
+  #reel::before{top:0;bottom:0;background:linear-gradient(to bottom,var(--B) 0%,transparent 3%,transparent 97%,var(--B) 100%)}
   .reel-wrap{border-radius:12px}
-  .reel-ratio{padding-bottom:56.25%}
+  .reel-ratio{height:min(56.25vw,86vh)}
   .reel-bg video{object-fit:cover;width:100%;height:100%}
   .reel-placeholder{width:100%;height:100%}
   /* Scan lines & vignette muito pesados no mobile — suavizar */
   .reel-scan{display:none}
-  .reel-vig{background:radial-gradient(ellipse at center,rgba(0,0,0,0.32) 0%,rgba(0,0,0,0.68) 100%)}
+  .reel-vig{background:radial-gradient(ellipse at center,rgba(0,0,0,0.03) 0%,rgba(0,0,0,0.34) 100%)}
   .reel-play{width:60px;height:60px}
   .reel-ttl,.reel-tl,.reel-br2{display:none}
   .stats-row{grid-template-columns:1fr 1fr}
@@ -852,8 +881,9 @@ html{overflow-x:hidden}
 
 /* 6. Safe-area insets — notched iPhones (iPhone X and later) */
 @supports(padding:env(safe-area-inset-bottom)){
-  nav{padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
-  nav.stuck{padding-left:max(20px,env(safe-area-inset-left));padding-right:max(20px,env(safe-area-inset-right))}
+  /* usa a regua do site como piso; o env() so entra se o notch pedir mais */
+  nav{padding-left:max(var(--gut),env(safe-area-inset-left));padding-right:max(var(--gut),env(safe-area-inset-right))}
+  nav.stuck{padding-left:max(var(--gut),env(safe-area-inset-left));padding-right:max(var(--gut),env(safe-area-inset-right))}
   .nav-mobile{padding-bottom:max(20px,env(safe-area-inset-bottom))}
   footer{padding-bottom:max(32px,env(safe-area-inset-bottom))}
 }
@@ -1090,10 +1120,6 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
         <video id="reelBg" muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4" data-src-webm="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Showreel.webm"></video>
         <div class="reel-scan"></div>
         <div class="reel-vig"></div>
-        <div class="reel-center" style="pointer-events:none">
-          <button class="reel-play" id="playBtn" style="pointer-events:all"><svg width="28" height="28" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></button>
-          <div class="reel-lbl">PLAY SHOWREEL</div>
-        </div>
       </div>
       <div class="reel-tl"><span>SOMA PRODUTORA</span><span>SHOWREEL 2025</span></div>
       <div class="reel-br2"><span>4K &middot; LOG3</span><span>24fps</span></div>
@@ -1626,9 +1652,8 @@ const nav=document.getElementById('nav');window.addEventListener('scroll',()=>na
 (function(){
   const el=document.getElementById('reelScrub');if(!el)return;
   el.classList.add('scrub-on');
-  let visible=false,ticking=false;
+  let last=-1;
   const update=()=>{
-    ticking=false;
     const r=el.getBoundingClientRect();
     const vh=innerHeight||document.documentElement.clientHeight||0;
     const vw=innerWidth||document.documentElement.clientWidth||0;
@@ -1636,20 +1661,23 @@ const nav=document.getElementById('nav');window.addEventListener('scroll',()=>na
     if(!vh){el.style.transform='none';el.style.opacity='1';el.style.removeProperty('--rr');return}
     const sm=vw>0&&vw<760;
     /* p=0 quando o topo do quadro esta no pe da tela; p=1 quando sobe ao terco superior */
-    const a=vh*1.0,b=vh*.25;
+    const a=vh*.95,b=vh*.05;   /* termina quando o quadro fica centralizado na tela */
     let p=(a-r.top)/(a-b);p=p<0?0:p>1?1:p;
+    if(Math.abs(p-last)<.0015)return;last=p;   /* nada mudou: nao escreve no DOM */
     const e=p*p*(3-2*p);   /* smoothstep: distribui o efeito por todo o scroll */
-    const sc=.80+.20*e, ty=56*(1-e), tilt=(sm?5:9)*(1-e);
-    const r0=sm?28:40, r1=sm?12:16;
+    const sc=.88+.12*e, ty=26*(1-e), tilt=(sm?3:5)*(1-e);
+    const r0=sm?18:24, r1=0;   /* termina sem arredondamento: quadro sangra ate a borda */
     el.style.transform='perspective(1600px) translate3d(0,'+ty.toFixed(2)+'px,0) rotateX('+tilt.toFixed(2)+'deg) scale('+sc.toFixed(4)+')';
     el.style.setProperty('--rr',(r0-(r0-r1)*e).toFixed(1)+'px');
-    el.style.opacity=Math.min(1,.6+p*3).toFixed(3);
+    el.style.opacity=Math.min(1,.85+p*2).toFixed(3);
   };
-  const onScroll=()=>{if(!ticking){ticking=true;requestAnimationFrame(update)}};
-  new IntersectionObserver(es=>{visible=es[0].isIntersecting;if(visible)onScroll()},{rootMargin:'25% 0px 25% 0px'}).observe(el);
-  addEventListener('scroll',()=>{if(visible)onScroll()},{passive:true});
-  addEventListener('resize',onScroll,{passive:true});
+  /* Sem depender de evento de scroll nem de IntersectionObserver: os dois ja
+     falharam aqui (lote do observer travando a animacao no meio; scroll
+     programatico que nao emite evento). Um laco de frame le a posicao e so
+     escreve no DOM quando ela muda de fato, entao fica barato quando parado. */
+  const loop=()=>{update();requestAnimationFrame(loop)};
   update();
+  requestAnimationFrame(loop);
 })();
 
 /* ──────────── PARALLAX 3D SUTIL ──────────── */
@@ -1788,6 +1816,8 @@ modal.addEventListener('click',e=>{if(e.target===modal)_closeReel()});
 
 document.querySelectorAll('.pf-card').forEach(card=>{
   card.addEventListener('click',()=>{
+    /* no coverflow, card lateral so vem pro meio — quem abre e o do centro */
+    if(card.closest('.pf-stage')&&!card.classList.contains('is-active'))return;
     const src=card.dataset.video;
     if(src){_reelOpen(src)}
   });
@@ -1805,7 +1835,9 @@ document.querySelectorAll('.pf-card').forEach(card=>{
   }
 });
 
-(function(){const pf=document.getElementById('pfRow');if(!pf)return;let dn=false,sx,sl,dragged=false;
+(function(){const pf=document.getElementById('pfRow');if(!pf)return;
+if(pf.classList.contains('pf-stage'))return;   /* o coverflow tem o proprio arrasto */
+let dn=false,sx,sl,dragged=false;
 pf.addEventListener('mousedown',e=>{dn=true;dragged=false;sx=e.pageX-pf.offsetLeft;sl=pf.scrollLeft});
 pf.addEventListener('mouseleave',()=>{dn=false});
 pf.addEventListener('mouseup',()=>{dn=false});
@@ -1874,7 +1906,102 @@ document.querySelectorAll('.btn-g,.btn-wh,.nav-cta').forEach(btn=>{btn.addEventL
 (()=>{const hero=document.getElementById('hero'),art=hero&&hero.querySelector('.hero-art'),orb=hero&&hero.querySelector('.hero-orb-pulse');if(!art)return;let tx=0,ty=0,cx=0,cy=0,raf=0;const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;if(reduced)return;function tick(){cx+=(tx-cx)*.06;cy+=(ty-cy)*.06;art.style.setProperty('--hmx',cx.toFixed(2)+'px');art.style.setProperty('--hmy',cy.toFixed(2)+'px');if(orb)orb.style.transform=`translate(calc(-50% + ${(cx*1.6).toFixed(2)}px),calc(-50% + ${(cy*1.6).toFixed(2)}px)) scale(var(--orbS,1))`;if(Math.abs(tx-cx)>.05||Math.abs(ty-cy)>.05){raf=requestAnimationFrame(tick)}else{raf=0}}hero.addEventListener('mousemove',e=>{const r=hero.getBoundingClientRect();const px=(e.clientX-r.left)/r.width-.5;const py=(e.clientY-r.top)/r.height-.5;tx=px*-22;ty=py*-14;if(!raf)raf=requestAnimationFrame(tick)},{passive:true});hero.addEventListener('mouseleave',()=>{tx=0;ty=0;if(!raf)raf=requestAnimationFrame(tick)});})();
 (function(){var el=document.querySelector('#hero .hero-eye');if(!el)return;if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var raw=el.textContent;if(!raw)return;var chars=Array.from(raw);el.textContent='';el.classList.add('type-on');var startDelay=1.6,perChar=0.022;chars.forEach(function(ch,i){var s=document.createElement('span');s.className='tch';s.textContent=(ch===' '?' ':ch);s.style.animationDelay=(startDelay+i*perChar).toFixed(3)+'s';el.appendChild(s)});var caret=document.createElement('span');caret.className='tch tcaret';caret.setAttribute('aria-hidden','true');el.appendChild(caret)})();
 document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}})});
-document.querySelectorAll('.pf-tab').forEach(tab=>{tab.addEventListener('click',()=>{const target=tab.dataset.tab;document.querySelectorAll('.pf-tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');document.querySelectorAll('[data-panel]').forEach(p=>{p.style.display=p.dataset.panel===target?(target==='fotos'?'grid':'flex'):'none'});if(target==='fotos'){document.querySelectorAll('.ph-card').forEach(c=>c.classList.add('in'))}document.querySelectorAll('.pf-vid').forEach(v=>{v.pause()})})});
+document.querySelectorAll('.pf-tab').forEach(tab=>{tab.addEventListener('click',()=>{const target=tab.dataset.tab;document.querySelectorAll('.pf-tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');document.querySelectorAll('[data-panel]').forEach(p=>{p.style.display=p.dataset.panel===target?(target==='fotos'?'grid':'block'):'none'});if(target==='fotos'){document.querySelectorAll('.ph-card').forEach(c=>c.classList.add('in'))}document.querySelectorAll('.pf-vid').forEach(v=>{v.pause()})})});
+
+/* ──────────── PORTFOLIO: coverflow 3D de cards ────────────
+   Os cards saem da fileira com rolagem e passam a ficar empilhados em
+   profundidade: o do meio fica de frente e os laterais recuam girando.
+   O carrossel assume o controle do video (so o card ativo toca) — no
+   empilhamento todos ficam "visiveis" ao mesmo tempo e o autoplay por
+   visibilidade dispararia os 10 de uma vez. */
+(function(){
+  const row=document.getElementById('pfRow');if(!row)return;
+  const cards=[].slice.call(row.querySelectorAll('.pf-card'));
+  if(cards.length<2)return;
+  const wrap=row.parentElement;
+  row.classList.add('pf-stage');wrap.classList.add('pf-stage-wrap');
+  row.setAttribute('tabindex','0');
+  row.setAttribute('aria-roledescription','carrossel');
+
+  const seta=(dir,passo)=>{
+    const b=document.createElement('button');b.type='button';b.className='pf-nav '+dir;
+    b.setAttribute('aria-label',dir==='prev'?'Projeto anterior':'Proximo projeto');
+    b.innerHTML='<svg viewBox="0 0 24 24"><polyline points="'+(dir==='prev'?'15 18 9 12 15 6':'9 18 15 12 9 6')+'"/></svg>';
+    b.addEventListener('click',()=>ir(ativo+passo));return b;
+  };
+  const btPrev=seta('prev',-1),btProx=seta('next',1);
+  wrap.appendChild(btPrev);wrap.appendChild(btProx);
+  const pontos=document.createElement('div');pontos.className='pf-dots';
+  cards.forEach((c,i)=>{const d=document.createElement('button');d.type='button';d.className='pf-dot';
+    d.setAttribute('aria-label','Ir para o projeto '+(i+1));
+    d.addEventListener('click',()=>ir(i));pontos.appendChild(d)});
+  wrap.appendChild(pontos);
+
+  /* comeca pelo card do meio: o leque abre para os dois lados */
+  let ativo=Math.floor((cards.length-1)/2);
+  const CFG={passo:.78,fundo:140,giro:28,encolhe:.09,vizinhos:4};
+
+  function videos(){
+    cards.forEach((c,i)=>{
+      const v=c.querySelector('.pf-vid');if(!v)return;
+      const d=Math.abs(i-ativo);
+      /* vizinhos ate 2 carregam parados so pra mostrar o primeiro quadro
+         (sem capa, o card lateral fica um retangulo cinza) */
+      if(d<=2&&!v.getAttribute('src')&&v.dataset.src){v.src=v.dataset.src;try{v.load()}catch(e){}}
+      if(i===ativo){const p=v.play();if(p&&p.catch)p.catch(function(){});}
+      else{try{v.pause()}catch(e){}}
+    });
+  }
+  function posicionar(){
+    const lg=cards[0].offsetWidth||320;
+    cards.forEach((c,i)=>{
+      const d=i-ativo,ad=Math.abs(d),meio=ad===0;
+      c.style.marginLeft=(-lg/2)+'px';
+      if(ad>CFG.vizinhos){
+        c.style.opacity='0';c.style.pointerEvents='none';c.style.zIndex='0';
+        c.style.transform='translateX('+((d>0?1:-1)*lg*CFG.passo*CFG.vizinhos)+'px) translateZ(-700px)';
+        return;
+      }
+      c.style.transform='translateX('+(d*lg*CFG.passo).toFixed(1)+'px) translateZ('+(-ad*CFG.fundo).toFixed(0)+'px) rotateY('+(-d*CFG.giro).toFixed(1)+'deg) scale('+(1-ad*CFG.encolhe).toFixed(3)+')';
+      c.style.zIndex=String(50-ad);
+      c.style.opacity=meio?'1':String(Math.max(.5,1-ad*.11));
+      c.style.filter=meio?'none':'brightness('+Math.max(.58,1-ad*.10).toFixed(2)+')';
+      c.style.pointerEvents='auto';
+      c.classList.toggle('is-active',meio);
+      c.setAttribute('aria-hidden',meio?'false':'true');
+    });
+    btPrev.disabled=ativo<=0;btProx.disabled=ativo>=cards.length-1;
+    [].forEach.call(pontos.children,(d,i)=>d.classList.toggle('on',i===ativo));
+    row.style.height=cards[0].offsetHeight+'px';
+    videos();
+  }
+  function ir(n){const novo=Math.max(0,Math.min(cards.length-1,n));if(novo===ativo)return;ativo=novo;posicionar()}
+
+  /* clique num card lateral traz ele pro meio (o do meio abre o video) */
+  cards.forEach((c,i)=>c.addEventListener('click',()=>{if(i!==ativo)ir(i)}));
+
+  /* arrastar com mouse ou dedo */
+  let x0=null,arrastou=false;
+  row.addEventListener('pointerdown',e=>{x0=e.clientX;arrastou=false});
+  row.addEventListener('pointermove',e=>{
+    if(x0===null)return;const d=e.clientX-x0;
+    if(Math.abs(d)>60){ir(ativo+(d<0?1:-1));x0=e.clientX;arrastou=true}
+  });
+  addEventListener('pointerup',()=>{x0=null},{passive:true});
+  addEventListener('pointercancel',()=>{x0=null},{passive:true});
+  /* engole o clique que fecha um arrasto, senao abriria o video sem querer */
+  row.addEventListener('click',e=>{if(arrastou){e.stopPropagation();arrastou=false}},true);
+
+  row.addEventListener('keydown',e=>{
+    if(e.key==='ArrowLeft'){e.preventDefault();ir(ativo-1)}
+    else if(e.key==='ArrowRight'){e.preventDefault();ir(ativo+1)}
+  });
+
+  addEventListener('resize',posicionar,{passive:true});
+  posicionar();
+  /* as fontes/imagens podem mudar a altura do card depois da 1a medida */
+  setTimeout(posicionar,600);
+})();
 
 const lb=document.getElementById('lb'),lbImg=document.getElementById('lb-img'),lbCounter=document.getElementById('lb-counter');let lbPhotos=[],lbIdx=0;
 function lbOpen(idx){lbIdx=idx;lbImg.style.opacity=0;lb.classList.add('on');setTimeout(()=>{lbImg.src=lbPhotos[idx];lbImg.onload=()=>lbImg.style.opacity=1},20);lbCounter.textContent=(idx+1)+' / '+lbPhotos.length;_lockScroll()}
@@ -1966,6 +2093,9 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.con
       });
     }, { threshold: [0, 0.5, 1], rootMargin: '0px 0px -10% 0px' });
     document.querySelectorAll('.pf-vid').forEach(function(v){
+      /* No coverflow todos os cards ficam visiveis ao mesmo tempo: carregar por
+         visibilidade dispararia os 10 videos juntos. Quem manda la e o carrossel. */
+      if(v.closest('.pf-stage')) return;
       pfIO.observe(v);
       /* Permite pausar manualmente em desktop (hover off = pausa, hover on = play) */
       var card = v.closest('.pf-card') || v.parentElement;
@@ -2182,9 +2312,9 @@ var _closeReel=function(){
   try{ modalVideo.removeAttribute('src'); modalVideoSrc.src=''; modalVideo.load(); }catch(e){}
   _unlockScroll();
 };
-document.getElementById('playBtn').addEventListener('click',function(e){e.stopPropagation();_openReel();});
 document.getElementById('openReel').addEventListener('click',function(e){e.preventDefault();_openReel();});
-document.getElementById('reelSection').addEventListener('click',function(e){if(e.target.closest('#playBtn'))return;_openReel();});
+/* Sem botao de play: o quadro inteiro abre o showreel */
+document.getElementById('reelSection').addEventListener('click',function(){_openReel();});
 
 (function(){
   const order=['brasilia','londres','gales','escocia','paris','eua'];
