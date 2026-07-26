@@ -276,6 +276,72 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 
 
 
+/* ══════════════════════════════════════════════════════════════
+   ANIMACOES PROPRIAS DE CADA SECAO (da metade de baixo do site)
+   Cada uma tem uma mecanica distinta, nao o mesmo fade-up de sempre.
+   ══════════════════════════════════════════════════════════════ */
+
+/* 1 · SERVICOS — abertura de persiana: o cartao nasce como um fio
+      horizontal e se abre de dentro para fora; o texto entra depois. */
+#servicos .sv-card{
+  clip-path:inset(calc(50% - 1px) 0 calc(50% - 1px) 0);
+  transition:clip-path .8s cubic-bezier(.76,0,.24,1),border-color .4s var(--E),transform .4s var(--Ef)}
+#servicos .sv-card>*{opacity:0;transform:translateY(8px);
+  transition:opacity .5s var(--E),transform .5s var(--E)}
+#servicos.abre .sv-card{clip-path:inset(0 0 0 0)}
+#servicos.abre .sv-card>*{opacity:1;transform:none}
+#servicos.abre .sv-card:nth-child(1){transition-delay:0s}
+#servicos.abre .sv-card:nth-child(2){transition-delay:.09s}
+#servicos.abre .sv-card:nth-child(3){transition-delay:.18s}
+#servicos.abre .sv-card:nth-child(4){transition-delay:.27s}
+#servicos.abre .sv-card:nth-child(5){transition-delay:.36s}
+#servicos.abre .sv-card:nth-child(6){transition-delay:.45s}
+#servicos.abre .sv-card:nth-child(1)>*{transition-delay:.34s}
+#servicos.abre .sv-card:nth-child(2)>*{transition-delay:.43s}
+#servicos.abre .sv-card:nth-child(3)>*{transition-delay:.52s}
+#servicos.abre .sv-card:nth-child(4)>*{transition-delay:.61s}
+#servicos.abre .sv-card:nth-child(5)>*{transition-delay:.70s}
+#servicos.abre .sv-card:nth-child(6)>*{transition-delay:.79s}
+
+/* 2 · PROCESSO — a linha percorre as etapas e cada uma acende na passagem */
+.pr-line{position:relative}
+.pr-line::after{content:'';position:absolute;left:0;right:0;top:-1px;height:2px;
+  background:var(--G);transform-origin:left;transform:scaleX(var(--av,0));z-index:2;
+  box-shadow:0 0 14px rgba(107,240,25,.5)}
+.pr-step{opacity:.34;transition:opacity .55s var(--E),background .5s var(--Es)}
+.pr-step .pr-n{transition:color .5s var(--E),opacity .5s var(--E)}
+.pr-step .pr-ico{transform:scale(.86);opacity:.5;
+  transition:transform .6s var(--Ef),opacity .6s var(--E)}
+.pr-step.acesa{opacity:1;background:rgba(107,240,25,.028)}
+.pr-step.acesa .pr-n{opacity:1}
+.pr-step.acesa .pr-ico{transform:scale(1);opacity:1}
+@media(max-width:1100px){
+  .pr-line::after{left:0;right:auto;top:0;bottom:0;width:2px;height:auto;
+    transform-origin:top;transform:scaleY(var(--av,0))}
+}
+
+/* 3 · INTERNACIONAL — as bandeiras aterrissam como painel de aeroporto */
+.int-c{transform:translateY(-14px) rotateX(72deg);transform-origin:50% 0;
+  opacity:0;transition:transform .6s cubic-bezier(.34,1.4,.5,1),opacity .4s var(--E)}
+#internacional.pousa .int-c{transform:none;opacity:1}
+#internacional.pousa .int-c:nth-child(1){transition-delay:.00s}
+#internacional.pousa .int-c:nth-child(2){transition-delay:.11s}
+#internacional.pousa .int-c:nth-child(3){transition-delay:.22s}
+#internacional.pousa .int-c:nth-child(4){transition-delay:.33s}
+#internacional.pousa .int-c:nth-child(5){transition-delay:.44s}
+#internacional.pousa .int-c:nth-child(6){transition-delay:.55s}
+.int-countries{perspective:700px}
+
+/* 4 · CLIENTES — as marcas entram desfocadas e "puxam foco" ate a nitidez */
+.cl-item img{filter:blur(9px) grayscale(1) brightness(.4);opacity:0;
+  transition:filter 1s var(--E),opacity .7s var(--E)}
+#clients.foca .cl-item img{filter:blur(0) grayscale(1) brightness(.85);opacity:1}
+#clients.foca .cl-item:hover img{filter:blur(0) grayscale(0) brightness(1)}
+
+/* 5 · CTA — o cartao segue o cursor de leve (paralaxe magnetica) */
+.cta-card{transition:transform .5s var(--Ef)}
+.cta-card .btn-g{transition:transform .35s var(--Ef),background .4s var(--E)}
+
 /* ══════ SHOWREEL 3D: a tela chega de lado e se vira para voce ══════
    Sem titulo-bloco: o rotulo vira duas reglettes verticais nas laterais e o
    quadro e o protagonista. O giro vem do scroll; ja parado, o cursor
@@ -1782,6 +1848,84 @@ setTimeout(()=>document.getElementById('intro').classList.add('done'),3000);
 
 const nav=document.getElementById('nav');window.addEventListener('scroll',()=>nav.classList.toggle('stuck',window.scrollY>80),{passive:true});
 (function(){const obs=new IntersectionObserver(entries=>{entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in')})},{threshold:.08,rootMargin:'0px 0px -32px 0px'});document.querySelectorAll('.rv').forEach(el=>obs.observe(el))})();
+
+/* ══════════════════════════════════════════════════════════════
+   ANIMACOES PROPRIAS DE CADA SECAO — cinco mecanicas distintas
+   ══════════════════════════════════════════════════════════════ */
+
+/* helper: dispara uma classe quando a secao entra na tela (uma vez so) */
+function _aoEntrar(alvo,classe,limiar){
+  const el=typeof alvo==='string'?document.querySelector(alvo):alvo;
+  if(!el)return;
+  if(!('IntersectionObserver' in window)){el.classList.add(classe);return}
+  const io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){e.target.classList.add(classe);io.unobserve(e.target)}
+    });
+  },{threshold:limiar||.18,rootMargin:'0px 0px -6% 0px'});
+  io.observe(el);
+}
+
+/* 1 · SERVICOS — persiana: o cartao abre de dentro para fora */
+_aoEntrar('#servicos','abre',.12);
+
+/* 3 · INTERNACIONAL — bandeiras aterrissam como painel de aeroporto */
+_aoEntrar('#internacional','pousa',.16);
+
+/* 4 · CLIENTES — as marcas "puxam foco" ate a nitidez */
+_aoEntrar('#clients','foca',.14);
+
+/* 2 · PROCESSO — a linha percorre as etapas e cada uma acende na passagem.
+   Ligada ao scroll (nao dispara de uma vez): voce ve a linha avancando. */
+(function(){
+  const linha=document.querySelector('.pr-line');if(!linha)return;
+  const etapas=[].slice.call(linha.querySelectorAll('.pr-step'));
+  if(!etapas.length)return;
+  let ultimo=-1;
+  function desenha(){
+    const r=linha.getBoundingClientRect();
+    const vh=innerHeight||document.documentElement.clientHeight||0;
+    if(!vh)return;
+    /* avanca enquanto a faixa atravessa a metade de baixo da tela */
+    const a=vh*.88,b=vh*.30;
+    let p=(a-r.top)/(a-b);p=p<0?0:p>1?1:p;
+    const e=p*p*(3-2*p);
+    if(Math.abs(e-ultimo)<.004)return;ultimo=e;
+    linha.style.setProperty('--av',e.toFixed(3));
+    /* cada etapa acende quando a linha passa por ela */
+    etapas.forEach(function(s,i){
+      s.classList.toggle('acesa',e>=(i+.55)/etapas.length);
+    });
+  }
+  (function laco(){desenha();requestAnimationFrame(laco)})();
+  addEventListener('scroll',desenha,{passive:true});
+  addEventListener('resize',desenha,{passive:true});
+  desenha();
+})();
+
+/* 5 · CTA — o cartao e o botao seguem o cursor de leve (magnetico).
+   So em ponteiro fino; no toque nao existe hover e atrapalharia o clique. */
+(function(){
+  const cartao=document.querySelector('.cta-card');if(!cartao)return;
+  if(!matchMedia('(pointer:fine)').matches)return;
+  const botao=cartao.querySelector('.btn-g');
+  let ax=0,ay=0,x=0,y=0,dentro=false;
+  cartao.addEventListener('pointermove',function(ev){
+    const r=cartao.getBoundingClientRect();
+    ax=((ev.clientX-r.left)/r.width-.5)*2;
+    ay=((ev.clientY-r.top)/r.height-.5)*2;
+    dentro=true;
+  },{passive:true});
+  cartao.addEventListener('pointerleave',function(){ax=0;ay=0;dentro=false},{passive:true});
+  (function laco(){
+    x+=(ax-x)*.09; y+=(ay-y)*.09;
+    if(Math.abs(x)>.001||Math.abs(y)>.001||dentro){
+      cartao.style.transform='perspective(1100px) rotateY('+(x*2.6).toFixed(2)+'deg) rotateX('+(-y*1.8).toFixed(2)+'deg)';
+      if(botao)botao.style.transform='translate('+(x*9).toFixed(1)+'px,'+(y*6).toFixed(1)+'px)';
+    }
+    requestAnimationFrame(laco);
+  })();
+})();
 
 /* ---------- SHOWREEL 3D: a tela se vira para voce ----------
    O quadro chega rotacionado no eixo Y (visto de lado, como uma tela de
