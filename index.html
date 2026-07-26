@@ -528,7 +528,14 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
   letter-spacing:-.6px;color:var(--W)}
 .cl-cap em{display:block;font-family:var(--FM);font-style:normal;font-size:8.5px;letter-spacing:2.6px;
   text-transform:uppercase;color:var(--G);margin-top:8px}
-@media(max-width:760px){.cl-stage{height:clamp(300px,46vh,420px)}}
+@media(max-width:760px){
+  .cl-stage{height:clamp(330px,50vh,440px);margin:44px 0 0}
+  /* a moldura tecnica comia 26px de cada lado num palco ja estreito */
+  #colagem .tech{padding:22px 10px}
+  #colagem .tech>.tk.tkl{left:26px}
+  #colagem .tech>.tk.tkr{right:26px}
+  #colagem .tech>.bars{left:26px}
+}
 
 
 
@@ -2239,7 +2246,7 @@ document.querySelectorAll('.pf-tab').forEach(tab=>{tab.addEventListener('click',
     const semente=Math.sin(i*12.9898)*43758.5453;
     const r=semente-Math.floor(semente);              /* 0..1 estavel */
     return{
-      x:d*.079 + (r-.5)*.045,      /* fracao da largura do palco */
+      x:d*.069 + (r-.5)*.040,      /* fracao da largura do palco */
       y:(r-.5)*.20 + Math.abs(d)*.012,
       giro:(r-.5)*17,
       esc:.82+r*.30,
@@ -2247,9 +2254,14 @@ document.querySelectorAll('.pf-tab').forEach(tab=>{tab.addEventListener('click',
     };
   });
 
+  /* no celular o palco e estreito: manter o fator do desktop deixaria os
+     cartoes com ~16% da largura (miniaturas). Ai eles crescem e o leque
+     encolhe na mesma medida, para continuarem cabendo. */
+  function estreito(){return palco.clientWidth<620}
+  function fatorLeque(){return estreito()?.70:1}
   function medida(){
     const w=palco.clientWidth,h=palco.clientHeight;
-    const base=Math.min(w*.19,h*.42);
+    const base=estreito()?Math.min(w*.46,h*.46):Math.min(w*.19,h*.42);
     cards.forEach((c,i)=>{
       const dd=destinos[i];
       c.style.width=Math.round(base*dd.esc)+'px';
@@ -2259,10 +2271,10 @@ document.querySelectorAll('.pf-tab').forEach(tab=>{tab.addEventListener('click',
   }
   function posiciona(p){
     /* p=0 empilhado no centro | p=1 leque aberto */
-    const W=palco.clientWidth,H=palco.clientHeight;
+    const W=palco.clientWidth,H=palco.clientHeight,fl=fatorLeque();
     cards.forEach((c,i)=>{
       const d=destinos[i];
-      const x=d.x*W*p, y=d.y*H*p, g=d.giro*p;
+      const x=d.x*W*p*fl, y=d.y*H*p, g=d.giro*p;
       c.style.transform='translate(-50%,-50%) translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px) rotate('+g.toFixed(2)+'deg) scale('+(.55+.45*p).toFixed(3)+')';
       c.style.opacity=String(Math.min(1,.25+p*1.6));
     });
