@@ -255,8 +255,8 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .hero-trust-lbl{font-family:var(--FM);font-size:9px;letter-spacing:2.5px;color:rgba(255,255,255,.42);text-transform:uppercase;display:flex;align-items:center;gap:12px}
 .hero-trust-lbl::before{content:'';width:24px;height:1px;background:rgba(255,255,255,.22)}
 .hero-trust-row{display:flex;align-items:center;gap:34px;flex-wrap:wrap}
-.hero-trust-row img{height:22px;width:auto;object-fit:contain;opacity:.55;filter:grayscale(1) brightness(1.7) contrast(.85);transition:opacity .35s var(--E),filter .35s var(--E)}
-.hero-trust-row img:hover{opacity:1;filter:grayscale(0) brightness(1) contrast(1)}
+.hero-trust-row img{height:22px;width:auto;object-fit:contain;opacity:.82;filter:none;transition:opacity .35s var(--E)}
+.hero-trust-row img:hover{opacity:1}
 .hero-scroll{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);z-index:2;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeIn .8s var(--Ef) 2.6s forwards;pointer-events:none}
 .hero-scroll-line{width:1px;height:34px;background:linear-gradient(to bottom,rgba(107,240,25,.36),transparent);animation:scrollPulse 2.8s ease-in-out infinite}
 .hero-scroll-txt{font-family:var(--FM);font-size:8px;color:rgba(255,255,255,.16);letter-spacing:2.5px;text-transform:uppercase}
@@ -333,10 +333,12 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .int-countries{perspective:700px}
 
 /* 4 · CLIENTES — as marcas entram desfocadas e "puxam foco" ate a nitidez */
-.cl-item img{filter:blur(9px) grayscale(1) brightness(.4);opacity:0;
-  transition:filter 1s var(--E),opacity .7s var(--E)}
-#clients.foca .cl-item img{filter:blur(0) grayscale(1) brightness(.85);opacity:1}
-#clients.foca .cl-item:hover img{filter:blur(0) grayscale(0) brightness(1)}
+/* a cor chega junto com o foco: entram desbotadas e desfocadas e resolvem
+   para nitidez e cor cheia — a dessaturacao e transitoria, nao o estado final */
+.cl-item img{filter:blur(9px) saturate(.25) brightness(.55);opacity:0;
+  transition:filter 1s var(--E),opacity .7s var(--E),transform .45s var(--Ef)}
+#clients.foca .cl-item img{filter:blur(0) saturate(1) brightness(1);opacity:1}
+#clients.foca .cl-item:hover img{transform:scale(1.06)}
 
 /* 5 · CTA — o cartao segue o cursor de leve (paralaxe magnetica) */
 .cta-card{transition:transform .5s var(--Ef)}
