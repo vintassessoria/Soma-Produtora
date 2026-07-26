@@ -392,30 +392,7 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
   text-transform:uppercase;color:var(--G);margin-top:8px}
 @media(max-width:760px){.cl-stage{height:clamp(300px,46vh,420px)}}
 
-/* ══════ ORBITA: retratos circulares navegando a equipe ══════ */
-#equipe{position:relative}
-.or-stage{position:relative;height:clamp(440px,64vh,660px);margin:44px var(--gut) 0;overflow:hidden;
-  border-radius:16px;background:var(--D1)}
-.or-bg{position:absolute;inset:0}
-.or-bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
-  opacity:0;transform:scale(1.06);transition:opacity 1s var(--E),transform 1.4s var(--E)}
-.or-bg img.on{opacity:.42;transform:scale(1)}
-.or-veil{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,0,0,.24) 0%,rgba(0,0,0,.82) 100%)}
-.or-dot{position:absolute;border-radius:50%;overflow:hidden;cursor:pointer;padding:0;
-  border:1px solid rgba(255,255,255,.22);background:var(--D2);
-  transition:transform .8s var(--Ef),opacity .6s var(--E),border-color .4s var(--E);
-  will-change:transform,opacity}
-.or-dot img{width:100%;height:100%;object-fit:cover;filter:grayscale(1);transition:filter .5s var(--E)}
-.or-dot.on{border-color:var(--G);z-index:5}
-.or-dot.on img{filter:grayscale(0)}
-.or-dot:hover{border-color:rgba(255,255,255,.6)}
-.or-name{position:absolute;left:0;right:0;bottom:clamp(24px,5vh,52px);text-align:center;z-index:6;pointer-events:none}
-.or-name b{display:block;font-family:var(--FC);font-weight:400;font-size:clamp(26px,4.4vw,54px);
-  letter-spacing:-.4px;color:var(--W)}
-.or-name b i{font-style:italic;font-weight:800}
-.or-name em{display:block;font-family:var(--FM);font-style:normal;font-size:8.5px;letter-spacing:3px;
-  text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:10px}
-@media(max-width:760px){.or-stage{height:clamp(360px,54vh,460px)}}
+
 
 /* ══════ HEROI SIENA: carrossel vertical de projetos ══════
    O card do projeto empurra pra cima e o proximo entra por baixo, como rolo
@@ -1416,46 +1393,52 @@ footer.f-sn .f-copy{color:var(--Gr)}
 <section id="colagem">
   <div class="crm-head">
     <div class="crm-rule"></div>
-    <div class="crm-kick">Acervo &middot; 10 projetos</div>
-    <h2 class="crm-big">Trabalhos<span class="crm-dot" aria-hidden="true">&#9679;</span></h2>
+    <div class="crm-kick">As pessoas por tr&aacute;s de cada frame</div>
+    <h2 class="crm-big">Equipe<span class="crm-dot" aria-hidden="true">&#9679;</span></h2>
     <div class="crm-rule"></div>
   </div>
   <div class="tech">
     <span class="cm tl"></span><span class="cm tr"></span><span class="cm bl"></span><span class="cm br"></span>
-    <span class="tk tkl">All Purpose</span><span class="tk tkr">Aspect Test</span>
+    <span class="tk tkl">Soma Crew</span><span class="tk tkr">On Set</span>
     <span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
     <div class="cl-stage" id="clStage">
-      <div class="cl-card" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.MP4" data-nome="EXPOMIX &mdash; Aftermovie Dia 1" data-cat="Aftermovie &middot; Evento">
-        <video muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.MP4"></video>
+      <div class="cl-card" data-nome="Soma Crew" data-cat="Produ&ccedil;&atilde;o &middot; 01">
+        <img src="equipe-01.webp" loading="lazy" alt="Equipe SOMA em produ&ccedil;&atilde;o">
       </div>
-      <div class="cl-card" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-3.MP4" data-nome="EXPOMIX &mdash; Aftermovie Dia 3" data-cat="Aftermovie &middot; Evento">
-        <video muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-3.MP4"></video>
+      <div class="cl-card" data-nome="Bastidores" data-cat="Set &middot; 01">
+        <img src="foto-03.webp" loading="lazy" alt="Equipe SOMA em produ&ccedil;&atilde;o">
       </div>
-      <div class="cl-card" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.MP4" data-nome="Mari Fernandez &mdash; Palco Principal" data-cat="Videoclipe &middot; Show">
-        <video muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.MP4"></video>
+      <div class="cl-card" data-nome="Soma Crew" data-cat="Produ&ccedil;&atilde;o &middot; 02">
+        <img src="equipe-02.webp" loading="lazy" alt="Equipe SOMA em produ&ccedil;&atilde;o">
       </div>
-      <div class="cl-card" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%2016x9%20.MOV" data-nome="Bora de Bike &mdash; 16x9" data-cat="Videoclipe">
-        <video muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%2016x9%20.MOV"></video>
+      <div class="cl-card" data-nome="Bastidores" data-cat="Set &middot; 02">
+        <img src="foto-07.webp" loading="lazy" alt="Equipe SOMA em produ&ccedil;&atilde;o">
       </div>
-      <div class="cl-card" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20After%20Movie%20Final%20Maio%20.MOV" data-nome="Bora de Bike &mdash; Aftermovie Final" data-cat="Aftermovie &middot; Evento">
-        <video muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20After%20Movie%20Final%20Maio%20.MOV"></video>
+      <div class="cl-card" data-nome="Soma Crew" data-cat="Produ&ccedil;&atilde;o &middot; 03">
+        <img src="equipe-03.webp" loading="lazy" alt="Equipe SOMA em produ&ccedil;&atilde;o">
       </div>
-      <div class="cl-card" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/FOME%20DE%20M%C3%9ASICA%20-%20VER%C3%83O%20R2%20_v3.mp4" data-nome="Fome de Música &mdash; Verão" data-cat="Brand Content &middot; Campanha">
-        <video muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/FOME%20DE%20M%C3%9ASICA%20-%20VER%C3%83O%20R2%20_v3.mp4"></video>
+      <div class="cl-card" data-nome="Bastidores" data-cat="Set &middot; 03">
+        <img src="foto-12.webp" loading="lazy" alt="Equipe SOMA em produ&ccedil;&atilde;o">
       </div>
-      <div class="cl-card" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/ACESSIBILIDADE%20-%20VER%C3%83O%20R2%20_v3.mp4" data-nome="Acessibilidade &mdash; Verão" data-cat="Brand Content &middot; Campanha">
-        <video muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/ACESSIBILIDADE%20-%20VER%C3%83O%20R2%20_v3.mp4"></video>
+      <div class="cl-card" data-nome="Soma Crew" data-cat="Produ&ccedil;&atilde;o &middot; 04">
+        <img src="equipe-04.webp" loading="lazy" alt="Equipe SOMA em produ&ccedil;&atilde;o">
       </div>
-      <div class="cl-card" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/MULHERES%20-%20VER%C3%83O%20R2%20_v3%20%281%29.mp4" data-nome="Mulheres &mdash; Verão" data-cat="Brand Content &middot; Campanha">
-        <video muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/MULHERES%20-%20VER%C3%83O%20R2%20_v3%20%281%29.mp4"></video>
+      <div class="cl-card" data-nome="Bastidores" data-cat="Set &middot; 04">
+        <img src="foto-16.webp" loading="lazy" alt="Equipe SOMA em produ&ccedil;&atilde;o">
       </div>
-      <div class="cl-card" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Acessibilidade%20-%20Tel%C3%A3o%202025%20Na%20Praia.MOV" data-nome="Acessibilidade &mdash; Na Praia Telão" data-cat="Evento &middot; Festival">
-        <video muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Acessibilidade%20-%20Tel%C3%A3o%202025%20Na%20Praia.MOV"></video>
+      <div class="cl-card" data-nome="Soma Crew" data-cat="Produ&ccedil;&atilde;o &middot; 05">
+        <img src="equipe-05.webp" loading="lazy" alt="Equipe SOMA em produ&ccedil;&atilde;o">
       </div>
-      <div class="cl-card" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20Final%20.MOV" data-nome="Bora de Bike &mdash; Final" data-cat="Aftermovie &middot; Evento">
-        <video muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20Final%20.MOV"></video>
+      <div class="cl-card" data-nome="Bastidores" data-cat="Set &middot; 05">
+        <img src="foto-19.webp" loading="lazy" alt="Equipe SOMA em produ&ccedil;&atilde;o">
       </div>
-      <div class="cl-cap" id="clCap"><b></b><em></em></div>
+      <div class="cl-card" data-nome="Soma Crew" data-cat="Produ&ccedil;&atilde;o &middot; 06">
+        <img src="equipe-06.webp" loading="lazy" alt="Equipe SOMA em produ&ccedil;&atilde;o">
+      </div>
+      <div class="cl-card" data-nome="Soma Crew" data-cat="Produ&ccedil;&atilde;o &middot; 07">
+        <img src="equipe-07.webp" loading="lazy" alt="Equipe SOMA em produ&ccedil;&atilde;o">
+      </div>
+      <div class="cl-cap" id="clCap"><b>Soma Crew</b><em>Produ&ccedil;&atilde;o &middot; 01</em></div>
     </div>
   </div>
 </section>
@@ -1561,48 +1544,7 @@ footer.f-sn .f-copy{color:var(--Gr)}
   </div>
 </section>
 
-<section id="equipe">
-  <div class="crm-head">
-    <div class="crm-rule"></div>
-    <div class="crm-kick">As pessoas por tr&aacute;s de cada frame</div>
-    <h2 class="crm-big">Equipe<span class="crm-dot" aria-hidden="true">&#9679;</span></h2>
-    <div class="crm-rule"></div>
-  </div>
-  <div class="or-stage" id="orStage">
-    <div class="or-bg" id="orBg">
-      <img src="equipe-01.webp" class="on" loading="lazy" alt="" aria-hidden="true">
-      <img src="equipe-02.webp" class="" loading="lazy" alt="" aria-hidden="true">
-      <img src="equipe-03.webp" class="" loading="lazy" alt="" aria-hidden="true">
-      <img src="equipe-04.webp" class="" loading="lazy" alt="" aria-hidden="true">
-      <img src="equipe-05.webp" class="" loading="lazy" alt="" aria-hidden="true">
-      <img src="equipe-06.webp" class="" loading="lazy" alt="" aria-hidden="true">
-      <img src="equipe-07.webp" class="" loading="lazy" alt="" aria-hidden="true">
-    </div>
-    <div class="or-veil"></div>
-      <button class="or-dot on" type="button" data-i="0" aria-label="Integrante 1">
-        <img src="equipe-01.webp" loading="lazy" alt="Integrante da equipe SOMA">
-      </button>
-      <button class="or-dot" type="button" data-i="1" aria-label="Integrante 2">
-        <img src="equipe-02.webp" loading="lazy" alt="Integrante da equipe SOMA">
-      </button>
-      <button class="or-dot" type="button" data-i="2" aria-label="Integrante 3">
-        <img src="equipe-03.webp" loading="lazy" alt="Integrante da equipe SOMA">
-      </button>
-      <button class="or-dot" type="button" data-i="3" aria-label="Integrante 4">
-        <img src="equipe-04.webp" loading="lazy" alt="Integrante da equipe SOMA">
-      </button>
-      <button class="or-dot" type="button" data-i="4" aria-label="Integrante 5">
-        <img src="equipe-05.webp" loading="lazy" alt="Integrante da equipe SOMA">
-      </button>
-      <button class="or-dot" type="button" data-i="5" aria-label="Integrante 6">
-        <img src="equipe-06.webp" loading="lazy" alt="Integrante da equipe SOMA">
-      </button>
-      <button class="or-dot" type="button" data-i="6" aria-label="Integrante 7">
-        <img src="equipe-07.webp" loading="lazy" alt="Integrante da equipe SOMA">
-      </button>
-    <div class="or-name" id="orName"><b>Soma <i>Crew</i></b><em>Produ&ccedil;&atilde;o &middot; 01</em></div>
-  </div>
-</section>
+
 
 <section id="internacional">
   <div class="bgm" aria-hidden="true"><i></i><i></i></div>
@@ -2081,22 +2023,16 @@ document.querySelectorAll('.pf-tab').forEach(tab=>{tab.addEventListener('click',
       c.style.opacity=String(Math.min(1,.25+p*1.6));
     });
   }
-  function video(i,liga){
-    const v=cards[i]&&cards[i].querySelector('video');if(!v)return;
-    if(liga){
-      if(!v.getAttribute('src')&&v.dataset.src){v.src=v.dataset.src;try{v.load()}catch(e){}}
-      const pr=v.play();if(pr&&pr.catch)pr.catch(function(){});
-    }else{try{v.pause()}catch(e){}}
-  }
+  /* as fotos do leque alimentam o lightbox ja existente, com navegacao */
+  const fotos=cards.map(c=>{const im=c.querySelector('img');return im?im.getAttribute('src'):null}).filter(Boolean);
   cards.forEach((c,i)=>{
     c.addEventListener('mouseenter',()=>{
-      video(i,true);
-      if(capN){capN.textContent=c.dataset.nome||'';capC.textContent=c.dataset.cat||''}
+      if(capN){capN.textContent=c.dataset.nome||'';capC.innerHTML=c.dataset.cat||''}
     });
-    c.addEventListener('mouseleave',()=>video(i,false));
     c.addEventListener('click',()=>{
-      const s=c.dataset.video;
-      if(s&&typeof _reelOpen==='function')_reelOpen(s);
+      if(typeof lbPhotos!=='undefined'&&typeof lbOpen==='function'){
+        lbPhotos=fotos;lbOpen(Math.max(0,fotos.indexOf(c.querySelector('img').getAttribute('src'))));
+      }
     });
   });
 
@@ -2116,53 +2052,6 @@ document.querySelectorAll('.pf-tab').forEach(tab=>{tab.addEventListener('click',
   addEventListener('scroll',atualiza,{passive:true});
   addEventListener('resize',atualiza,{passive:true});
   atualiza();
-})();
-
-/* ──────────── ORBITA: retratos circulares navegando a equipe ────────────
-   O ativo cresce no centro; os outros orbitam menores. Trocar de retrato
-   troca tambem o fundo. Avanca sozinho e para quando o mouse entra. */
-(function(){
-  const palco=document.getElementById('orStage');if(!palco)return;
-  const bolhas=[].slice.call(palco.querySelectorAll('.or-dot'));
-  const fundos=[].slice.call(palco.querySelectorAll('.or-bg img'));
-  if(!bolhas.length)return;
-  const nome=document.getElementById('orName');
-  const nomeB=nome&&nome.querySelector('b'),nomeE=nome&&nome.querySelector('em');
-  let atual=0,timer=null,parado=false;
-
-  /* posicoes em orbita: o ativo no centro, os demais num anel elipsoidal */
-  function coloca(){
-    const n=bolhas.length;
-    bolhas.forEach((b,i)=>{
-      const dif=((i-atual)+n)%n;
-      if(dif===0){
-        b.style.width=b.style.height='clamp(112px,15vw,178px)';
-        b.style.left='50%';b.style.top='46%';
-        b.style.transform='translate(-50%,-50%)';
-        b.style.opacity='1';
-      }else{
-        const ang=(dif/(n-1))*Math.PI*2 - Math.PI/2;
-        const rx=34,ry=27;                       /* raio em % do palco */
-        b.style.width=b.style.height='clamp(48px,6.4vw,78px)';
-        b.style.left=(50+Math.cos(ang)*rx)+'%';
-        b.style.top=(46+Math.sin(ang)*ry)+'%';
-        b.style.transform='translate(-50%,-50%)';
-        b.style.opacity=String(Math.max(.42,.9-dif*.07));
-      }
-      b.classList.toggle('on',dif===0);
-    });
-    fundos.forEach((f,i)=>f.classList.toggle('on',i===atual));
-    if(nomeB){nomeB.innerHTML='Soma <i>Crew</i>';nomeE.innerHTML='Produ&ccedil;&atilde;o &middot; '+String(atual+1).padStart(2,'0')}
-  }
-  function ir(n){atual=(n+bolhas.length)%bolhas.length;coloca()}
-  function anda(){clearInterval(timer);if(!parado)timer=setInterval(()=>ir(atual+1),3400)}
-
-  bolhas.forEach((b,i)=>b.addEventListener('click',()=>{ir(i);anda()}));
-  palco.addEventListener('mouseenter',()=>{parado=true;clearInterval(timer)},{passive:true});
-  palco.addEventListener('mouseleave',()=>{parado=false;anda()},{passive:true});
-  document.addEventListener('visibilitychange',()=>{if(document.hidden)clearInterval(timer);else anda()});
-  addEventListener('resize',coloca,{passive:true});
-  coloca();anda();
 })();
 
 /* ──────────── HEROI: carrossel vertical de projetos (modelo SIENA) ────────────
