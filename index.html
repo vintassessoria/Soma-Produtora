@@ -291,7 +291,11 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
    mais abaixo e venceriam um seletor so de classe */
 .dk-pin>#servicos,.dk-pin>#processo{position:sticky;top:0;min-height:100svh;
   display:flex;flex-direction:column;justify-content:center;overflow:hidden}
-.dk{position:relative;padding:0 var(--gut);perspective:1250px;perspective-origin:50% 48%}
+/* veu de holofote: escurece tudo na secao menos os cartoes.
+   Fica acima do cabecalho (z 5) e abaixo do baralho (z 10). */
+.dk-pin>section::after{content:'';position:absolute;inset:0;background:#000;
+  opacity:var(--veu,0);pointer-events:none;z-index:5}
+.dk{position:relative;z-index:10;padding:0 var(--gut);perspective:1250px;perspective-origin:50% 48%}
 /* preserve-3d: sem isso o translateZ dos cartoes nao recebe a perspectiva
    do pai e o tunel de profundidade vira um simples redimensionamento */
 .dk-stage{position:relative;height:clamp(340px,40vh,460px);max-width:880px;margin:0 auto;
@@ -1899,6 +1903,7 @@ const nav=document.getElementById('nav');window.addEventListener('scroll',()=>na
   var cards=[].slice.call(palco.querySelectorAll('.dk-card'));
   if(cards.length<2)return;
   var pin=dk.closest('.dk-pin');
+  var sec=pin&&pin.querySelector('section');
   var dots=dk.querySelector('.dk-dots');
   var n=cards.length,frente=-1;
   var POR_CARTAO=.5;                 /* fracao de tela rolada por cartao */
@@ -1931,7 +1936,8 @@ const nav=document.getElementById('nav');window.addEventListener('scroll',()=>na
         c.style.transform='translateZ(-820px) translateY('+(k*10)+'px)';
         c.style.opacity='0';c.style.zIndex='0';c.style.pointerEvents='none';
       }else{                                     /* tunel: avanca ate o primeiro plano */
-        c.style.transform='translateZ('+(-k*205)+'px) translateY('+(k*11)+'px) rotate('+
+        /* o da frente passa do plano zero: da o zoom para fora da tela */
+        c.style.transform='translateZ('+(k===0?150:-k*205)+'px) translateY('+(k*11)+'px) rotate('+
           inclinacao(k).toFixed(1)+'deg)';
         c.style.opacity=String(1-k*.28);
         c.style.zIndex=String(50-k);
@@ -1961,7 +1967,12 @@ const nav=document.getElementById('nav');window.addEventListener('scroll',()=>na
     if(innerHeight!==ultimaAltura){ultimaAltura=innerHeight;mede()}
     var t=trilho();
     var y=Math.min(Math.max(-pin.getBoundingClientRect().top,0),t);
-    ir(Math.min(n-1,Math.floor((y/t)*n)));
+    var p=y/t;
+    ir(Math.min(n-1,Math.floor(p*n)));
+    /* o veu acende na entrada, segura durante o percurso e apaga na saida,
+       para o escurecimento nao aparecer de supetao nem sobrar no fim */
+    var v=Math.min(p/.10,1)*Math.min((1-p)/.10,1);
+    sec&&sec.style.setProperty('--veu',(Math.max(0,v)*.78).toFixed(3));
   }
   (function laco(){acompanha();requestAnimationFrame(laco)})();
   addEventListener('scroll',acompanha,{passive:true});
