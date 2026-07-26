@@ -284,8 +284,15 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 /* ══════ BARALHO "FUNKY TWIST" — servicos e processo ══════
    Cartoes empilhados com rotacoes diferentes; o da frente gira e desliza
    para fora enquanto o de tras se endireita e assume. Numero grande no pe. */
+/* trilho: a altura extra e o combustivel de scroll que troca os cartoes.
+   A secao inteira fica presa na tela para o cartao dominar o quadro. */
+.dk-pin{position:relative;background:var(--B)}
+/* especificidade de ID: #processo/#internacional definem position:relative
+   mais abaixo e venceriam um seletor so de classe */
+.dk-pin>#servicos,.dk-pin>#processo{position:sticky;top:0;min-height:100svh;
+  display:flex;flex-direction:column;justify-content:center;overflow:hidden}
 .dk{position:relative;padding:0 var(--gut);perspective:1500px;perspective-origin:50% 42%}
-.dk-stage{position:relative;height:clamp(320px,34vw,420px);max-width:820px;margin:0 auto}
+.dk-stage{position:relative;height:clamp(340px,40vh,460px);max-width:880px;margin:0 auto}
 .dk-card{position:absolute;top:0;left:0;right:0;height:100%;
   background:linear-gradient(158deg,var(--D3) 0%,var(--D2) 58%,#0b0b0b 100%);
   border:1px solid rgba(255,255,255,.09);border-radius:16px;
@@ -1615,6 +1622,7 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
   <p class="sm-foot">A SOMA existe porque existe um abismo entre <strong>produ&ccedil;&atilde;o t&eacute;cnica</strong> e <strong>impacto real</strong>. Cruzamos esse abismo toda vez que ligamos a c&acirc;mera &mdash; porque a obsess&atilde;o n&atilde;o &eacute; o frame perfeito, &eacute; o que ele gera para a sua marca.</p>
 </section>
 
+<div class="dk-pin" id="pin-servicos">
 <section id="servicos">
   <div class="sv-head rv">
     <div class="tag"><div class="tag-ln"></div><span class="tag-sp">Serviços</span></div>
@@ -1667,7 +1675,9 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
     </div>
   </div>
 </section>
+</div>
 
+<div class="dk-pin" id="pin-processo">
 <section id="processo">
   <div class="bgm" aria-hidden="true"><i></i><i></i></div>
   <div class="pr-head rv">
@@ -1708,6 +1718,7 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
     </div>
   </div>
 </section>
+</div>
 
 
 
@@ -1876,91 +1887,84 @@ const nav=document.getElementById('nav');window.addEventListener('scroll',()=>na
    ANIMACOES PROPRIAS DE CADA SECAO — cinco mecanicas distintas
    ══════════════════════════════════════════════════════════════ */
 
-/* ──────────── BARALHO "FUNKY TWIST": servicos e processo ────────────
-   Pilha com rotacoes alternadas; ao avancar, o cartao da frente gira e
-   desliza para fora e o de tras se endireita. Anda sozinho, para no hover,
-   e responde a setas, pontinhos, clique no cartao e arrasto. */
+/* ---------- BARALHO comandado pelo SCROLL: servicos e processo ----------
+   A secao fica presa na tela e o cartao ocupa o centro do quadro. A cada
+   faixa de scroll o da frente cai para baixo girando e o de tras se
+   endireita e assume. Voltando o scroll, o movimento se desfaz. */
 [].forEach.call(document.querySelectorAll('.dk'),function(dk){
   var palco=dk.querySelector('.dk-stage');
   var cards=[].slice.call(palco.querySelectorAll('.dk-card'));
   if(cards.length<2)return;
+  var pin=dk.closest('.dk-pin');
   var dots=dk.querySelector('.dk-dots');
-  var n=cards.length,frente=0,timer=null,parado=false,girando=false;
+  var n=cards.length,frente=-1;
+  var POR_CARTAO=.5;                 /* fracao de tela rolada por cartao */
 
   var bolinhas=cards.map(function(c,i){
     var b=document.createElement('button');b.type='button';b.className='dk-dot';
     b.setAttribute('role','tab');b.setAttribute('aria-label','Cartao '+(i+1));
-    b.addEventListener('click',function(){vaiPara(i);reinicia()});
+    b.addEventListener('click',function(){rolaAte(i)});
     dots&&dots.appendChild(b);return b;
   });
 
   /* angulos estaveis por posicao na pilha, para o baralho nao ficar simetrico */
   function inclinacao(k){return [0,-4.2,3.1,-2.4,4.6,-3.3][k%6]}
 
+  function mede(){if(pin)pin.style.height=(100+(n-1)*POR_CARTAO*100)+'svh'}
+  function trilho(){return pin?Math.max(1,pin.offsetHeight-innerHeight):1}
+  function rolaAte(i){
+    if(!pin)return;
+    i=Math.max(0,Math.min(n-1,i));
+    scrollTo({top:Math.round(pin.offsetTop+(i/n)*trilho())+6,behavior:'smooth'});
+  }
+
   function pinta(){
     cards.forEach(function(c,i){
-      var k=(i-frente+n)%n;                  /* 0 = frente */
+      var k=i-frente;                            /* negativo = ja passou */
+      if(k<0){                                   /* cai para baixo, girando */
+        c.style.transform='translateY(118%) rotate(-15deg) scale(.93)';
+        c.style.opacity='0';c.style.zIndex='0';c.style.pointerEvents='none';
+      }else if(k>3){                             /* ainda longe na pilha */
+        c.style.transform='translateY(30px) scale(.85) rotate(0deg)';
+        c.style.opacity='0';c.style.zIndex='0';c.style.pointerEvents='none';
+      }else{                                     /* pilha visivel */
+        c.style.transform='translateY('+(k*13)+'px) scale('+(1-k*.045).toFixed(3)+
+          ') rotate('+inclinacao(k).toFixed(1)+'deg)';
+        c.style.opacity=String(1-k*.16);
+        c.style.zIndex=String(50-k);
+        c.style.pointerEvents=k===0?'auto':'none';
+      }
       c.classList.toggle('frente',k===0);
       c.setAttribute('aria-hidden',k===0?'false':'true');
-      if(k>3){                                /* fora da pilha visivel */
-        c.style.opacity='0';c.style.zIndex='0';c.style.pointerEvents='none';
-        c.style.transform='translateY(26px) scale(.86) rotate(0deg)';
-        return;
-      }
-      c.style.opacity=String(1-k*.16);
-      c.style.zIndex=String(50-k);
-      c.style.pointerEvents=k===0?'auto':'none';
-      c.style.transform='translateY('+(k*13)+'px) scale('+(1-k*.045).toFixed(3)+
-        ') rotate('+inclinacao(k).toFixed(1)+'deg)';
     });
     bolinhas.forEach(function(b,i){b.classList.toggle('on',i===frente)});
   }
 
-  function avanca(dir){
-    if(girando)return;girando=true;
-    if(dir>0){
-      /* o da frente gira e sai; so depois volta para o fim da pilha */
-      var sai=cards[frente];
-      sai.classList.add('saindo');
-      sai.style.transform='translate(-16%,14%) rotate(-19deg) scale(.94)';
-      sai.style.opacity='0';
-      setTimeout(function(){
-        sai.classList.remove('saindo');
-        frente=(frente+1)%n;pinta();
-        setTimeout(function(){girando=false},420);
-      },330);
-    }else{
-      frente=(frente-1+n)%n;pinta();
-      setTimeout(function(){girando=false},420);
-    }
-  }
-  function vaiPara(i){if(girando||i===frente)return;frente=i;pinta();
-    girando=true;setTimeout(function(){girando=false},420)}
-  function reinicia(){clearInterval(timer);if(!parado)timer=setInterval(function(){avanca(1)},4200)}
+  function ir(i){i=Math.max(0,Math.min(n-1,i));if(i===frente)return;frente=i;pinta()}
 
   [].forEach.call(dk.querySelectorAll('.dk-arr'),function(b){
-    b.addEventListener('click',function(){avanca(+b.dataset.dir||1);reinicia()});
+    b.addEventListener('click',function(){rolaAte(frente+(+b.dataset.dir||1))});
   });
   /* clique no cartao da frente avanca — menos quando ele abre um modal proprio */
   palco.addEventListener('click',function(e){
     var c=e.target.closest('.dk-card');
-    if(c&&c.classList.contains('frente')&&!c.id){avanca(1);reinicia()}
+    if(c&&c.classList.contains('frente')&&!c.id)rolaAte(frente+1);
   });
-  dk.addEventListener('mouseenter',function(){parado=true;clearInterval(timer)},{passive:true});
-  dk.addEventListener('mouseleave',function(){parado=false;reinicia()},{passive:true});
-  document.addEventListener('visibilitychange',function(){
-    if(document.hidden)clearInterval(timer);else reinicia();
-  });
-  /* arrastar na horizontal */
-  var x0=null;
-  palco.addEventListener('pointerdown',function(e){x0=e.clientX});
-  palco.addEventListener('pointermove',function(e){
-    if(x0===null)return;var d=e.clientX-x0;
-    if(Math.abs(d)>64){avanca(d<0?1:-1);reinicia();x0=null}
-  });
-  addEventListener('pointerup',function(){x0=null},{passive:true});
 
-  pinta();reinicia();
+  /* laco de frame le a posicao real + scroll como rede */
+  var ultimaAltura=-1;
+  function acompanha(){
+    if(!pin)return;
+    if(innerHeight!==ultimaAltura){ultimaAltura=innerHeight;mede()}
+    var t=trilho();
+    var y=Math.min(Math.max(-pin.getBoundingClientRect().top,0),t);
+    ir(Math.min(n-1,Math.floor((y/t)*n)));
+  }
+  (function laco(){acompanha();requestAnimationFrame(laco)})();
+  addEventListener('scroll',acompanha,{passive:true});
+  addEventListener('resize',acompanha,{passive:true});
+
+  mede();ir(0);acompanha();
 });
 
 /* helper: dispara uma classe quando a secao entra na tela (uma vez so) */
