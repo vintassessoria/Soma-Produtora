@@ -375,6 +375,56 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .tech>.bars i:nth-child(3n){height:6px}
 .tech>.bars i:nth-child(4n){width:1px}
 
+/* ══════ MANIFESTO COMO CONTA DE ADICAO ══════
+   A marca se chama SOMA e o texto termina em "o resultado e a soma de tudo":
+   entao o manifesto e literalmente uma adicao — parcelas, tra&ccedil;o, total. */
+#manifesto{padding:104px 0 108px}
+.sm-lead{max-width:min(70ch,90%);margin:0 auto 72px;text-align:center;
+  font-family:var(--FC);font-weight:800;letter-spacing:-.02em;line-height:1.14;
+  font-size:clamp(22px,3.6vw,46px);color:var(--W)}
+.sm-lead .g{color:var(--G)}
+.sm-lead .d{color:var(--Gr);font-weight:400}
+
+.sm{max-width:1100px;margin:0 auto;padding:0 var(--gut)}
+.sm-row{display:grid;grid-template-columns:64px minmax(150px,1.1fr) 2.4fr 46px;
+  gap:clamp(14px,2.4vw,34px);align-items:baseline;padding:26px 0;
+  border-top:1px solid rgba(255,255,255,.10);position:relative;
+  opacity:0;transform:translateY(18px);
+  transition:opacity .7s var(--Ef),transform .7s var(--Ef)}
+.sm.in .sm-row{opacity:1;transform:none}
+.sm.in .sm-row:nth-child(1){transition-delay:.05s}
+.sm.in .sm-row:nth-child(2){transition-delay:.20s}
+.sm.in .sm-row:nth-child(3){transition-delay:.35s}
+.sm.in .sm-total{transition-delay:.86s}
+.sm-i{font-family:var(--FM);font-size:12px;letter-spacing:2px;color:var(--G);line-height:1}
+.sm-n{font-family:var(--FC);font-weight:800;text-transform:uppercase;letter-spacing:-.01em;
+  font-size:clamp(20px,2.8vw,34px);color:var(--W);line-height:1}
+.sm-d{font-family:var(--FB);font-size:14px;line-height:1.7;color:var(--Gr);padding-top:3px}
+.sm-op{font-family:var(--FM);font-size:22px;color:rgba(255,255,255,.24);text-align:right;line-height:1}
+
+/* o traco do somatorio: desenha da esquerda para a direita */
+.sm-bar{height:2px;margin:8px 0 0;position:relative;overflow:hidden}
+.sm-bar i{position:absolute;inset:0;background:var(--G);display:block;
+  transform-origin:left;transform:scaleX(0);
+  transition:transform 1s var(--Ef) .62s}
+.sm.in .sm-bar i{transform:scaleX(1)}
+
+/* o total: fundo levemente aceso, numero vira o simbolo de somatorio */
+.sm-total{border-top:none;padding-top:30px}
+.sm-total .sm-i{font-size:26px;color:var(--G);transform:translateY(2px)}
+.sm-total .sm-n{font-size:clamp(26px,4.4vw,52px);color:var(--G)}
+.sm-total .sm-d{color:var(--GrL)}
+
+.sm-foot{max-width:62ch;margin:74px auto 0;padding:0 var(--gut);text-align:center;
+  font-size:14.5px;line-height:1.85;color:var(--Gr)}
+.sm-foot strong{color:var(--W);font-weight:600}
+
+@media(max-width:820px){
+  .sm-row{grid-template-columns:40px 1fr;row-gap:8px;padding:22px 0}
+  .sm-d{grid-column:2}
+  .sm-op{position:absolute;right:0;top:22px}
+}
+
 /* ══════ COLAGEM: os cards se montam em leque a partir do centro ══════ */
 #colagem{background:var(--B);padding:104px 0 110px;overflow:hidden}
 .cl-stage{position:relative;height:clamp(400px,58vh,620px);margin:56px var(--gut) 0}
@@ -1445,27 +1495,48 @@ footer.f-sn .f-copy{color:var(--Gr)}
 
 <section id="manifesto">
   <div class="bgm" aria-hidden="true"><i></i><i></i></div>
-  <div class="mf-grid">
-    <div class="mf-left rv">
-      <div class="mf-badge">
-        <svg viewBox="0 0 110 110" xmlns="http://www.w3.org/2000/svg">
-          <defs><path id="badgePath" d="M55,55 m-42,0 a42,42 0 1,1 84,0 a42,42 0 1,1 -84,0"/></defs>
-          <text font-family="'Space Mono',monospace" font-size="8.5" fill="rgba(107,240,25,0.5)" letter-spacing="3.2"><textPath href="#badgePath">SOMA · PRODUTORA · EST. 2019 · BSB · </textPath></text>
-        </svg>
-        <div class="mf-badge-center"><img src="logomarca.png" alt=""></div>
-      </div>
-      <div class="tag"><div class="tag-ln"></div><span class="tag-sp">Manifesto</span></div>
-      <p class="mf-big">Não somos a produtora<br>que você <span class="g">contrata</span>.<br>Somos o parceiro criativo<br><span class="d">que sua marca precisava<br>ter encontrado antes.</span></p>
-      <div class="mf-rule"></div>
-      <p class="mf-body">A SOMA existe porque existe um abismo entre <strong>produção técnica</strong> e <strong>impacto real</strong>. Nós cruzamos esse abismo toda vez que ligamos a câmera — porque nossa obsessão não é o frame perfeito, é o resultado que ele gera para a sua marca.</p>
+  <div class="crm-head">
+    <div class="crm-rule"></div>
+    <div class="crm-kick">Manifesto &middot; Est. 2019 &middot; BSB</div>
+    <h2 class="crm-big">A Conta<span class="crm-dot" aria-hidden="true">&#9679;</span></h2>
+    <div class="crm-rule"></div>
+  </div>
+
+  <p class="sm-lead">N&atilde;o somos a produtora que voc&ecirc; <span class="g">contrata</span>.<br>
+     Somos o parceiro criativo <span class="d">que sua marca precisava ter encontrado antes.</span></p>
+
+  <!-- a marca se chama SOMA: o manifesto e literalmente uma adicao -->
+  <div class="sm" id="somaConta" role="table" aria-label="As parcelas do resultado SOMA">
+    <div class="sm-row" role="row">
+      <span class="sm-i" role="cell">01</span>
+      <span class="sm-n" role="cell">Estrat&eacute;gia</span>
+      <span class="sm-d" role="cell">Antes de ligar qualquer c&acirc;mera, entendemos a sua marca, a sua audi&ecirc;ncia e o resultado que voc&ecirc; precisa.</span>
+      <span class="sm-op" aria-hidden="true">+</span>
     </div>
-    <div class="mf-cards rv d2">
-      <div class="mc"><div class="mc-num">01 ——</div><div class="mc-t">Estratégia primeiro</div><div class="mc-d">Antes de ligar qualquer câmera, entendemos profundamente a sua marca, a sua audiência e o resultado que você precisa.</div></div>
-      <div class="mc"><div class="mc-num">02 ——</div><div class="mc-t">Direção com intenção</div><div class="mc-d">Cada decisão criativa existe por uma razão estratégica. Não fazemos estética pela estética.</div></div>
-      <div class="mc"><div class="mc-num">03 ——</div><div class="mc-t">Execução impecável</div><div class="mc-d">Equipe treinada, equipamento de cinema, pós-produção minuciosa.</div></div>
-      <div class="mc mc-hero"><div class="mc-num">SOMA ——</div><div class="mc-t">O resultado é a soma de tudo</div><div class="mc-d">Quando estratégia, direção e execução se somam, o que você recebe não é um vídeo. É uma ferramenta de transformação de marca.</div></div>
+    <div class="sm-row" role="row">
+      <span class="sm-i" role="cell">02</span>
+      <span class="sm-n" role="cell">Dire&ccedil;&atilde;o</span>
+      <span class="sm-d" role="cell">Cada decis&atilde;o criativa existe por uma raz&atilde;o estrat&eacute;gica. N&atilde;o fazemos est&eacute;tica pela est&eacute;tica.</span>
+      <span class="sm-op" aria-hidden="true">+</span>
+    </div>
+    <div class="sm-row" role="row">
+      <span class="sm-i" role="cell">03</span>
+      <span class="sm-n" role="cell">Execu&ccedil;&atilde;o</span>
+      <span class="sm-d" role="cell">Equipe treinada, equipamento de cinema, p&oacute;s-produ&ccedil;&atilde;o minuciosa at&eacute; o &uacute;ltimo frame.</span>
+      <span class="sm-op" aria-hidden="true"></span>
+    </div>
+
+    <div class="sm-bar" aria-hidden="true"><i></i></div>
+
+    <div class="sm-row sm-total" role="row">
+      <span class="sm-i" role="cell" aria-label="Soma">&#8721;</span>
+      <span class="sm-n" role="cell">Resultado</span>
+      <span class="sm-d" role="cell">O que voc&ecirc; recebe n&atilde;o &eacute; um v&iacute;deo. &Eacute; uma ferramenta de transforma&ccedil;&atilde;o de marca.</span>
+      <span class="sm-op" aria-hidden="true"></span>
     </div>
   </div>
+
+  <p class="sm-foot">A SOMA existe porque existe um abismo entre <strong>produ&ccedil;&atilde;o t&eacute;cnica</strong> e <strong>impacto real</strong>. Cruzamos esse abismo toda vez que ligamos a c&acirc;mera &mdash; porque a obsess&atilde;o n&atilde;o &eacute; o frame perfeito, &eacute; o que ele gera para a sua marca.</p>
 </section>
 
 <section id="servicos">
@@ -1976,6 +2047,20 @@ document.querySelectorAll('.btn-g,.btn-wh,.nav-cta').forEach(btn=>{btn.addEventL
 (function(){var el=document.querySelector('#hero .hero-eye');if(!el)return;if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var raw=el.textContent;if(!raw)return;var chars=Array.from(raw);el.textContent='';el.classList.add('type-on');var startDelay=1.6,perChar=0.022;chars.forEach(function(ch,i){var s=document.createElement('span');s.className='tch';s.textContent=(ch===' '?' ':ch);s.style.animationDelay=(startDelay+i*perChar).toFixed(3)+'s';el.appendChild(s)});var caret=document.createElement('span');caret.className='tch tcaret';caret.setAttribute('aria-hidden','true');el.appendChild(caret)})();
 document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}})});
 document.querySelectorAll('.pf-tab').forEach(tab=>{tab.addEventListener('click',()=>{const target=tab.dataset.tab;document.querySelectorAll('.pf-tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');document.querySelectorAll('[data-panel]').forEach(p=>{p.style.display=p.dataset.panel===target?(target==='fotos'?'grid':'block'):'none'});if(target==='fotos'){document.querySelectorAll('.ph-card').forEach(c=>c.classList.add('in'))}document.querySelectorAll('.pf-vid').forEach(v=>{v.pause()})})});
+
+/* ──────────── MANIFESTO: a conta se resolve quando entra na tela ────────────
+   Parcelas entram escalonadas, o traco do somatorio risca da esquerda para a
+   direita e so entao o total aparece — a ordem em que a conta e feita. */
+(function(){
+  const conta=document.getElementById('somaConta');if(!conta)return;
+  if(!('IntersectionObserver' in window)){conta.classList.add('in');return}
+  const io=new IntersectionObserver(function(es){
+    es.forEach(function(e){
+      if(e.isIntersecting){conta.classList.add('in');io.unobserve(e.target)}
+    });
+  },{threshold:.28,rootMargin:'0px 0px -8% 0px'});
+  io.observe(conta);
+})();
 
 /* ──────────── COLAGEM: os cards se montam em leque conforme a secao sobe ────────────
    Cada card tem um destino fixo (posicao, giro e tamanho sorteados de forma
