@@ -271,12 +271,12 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .btn:hover .ai{transform:translateX(5px)}
 .p-ring{width:44px;height:44px;border:1px solid rgba(255,255,255,0.18);border-radius:50%;display:flex;align-items:center;justify-content:center;transition:all .35s}
 .btn-wh:hover .p-ring{border-color:var(--G);background:var(--G1)}
-.ticker{border-top:1px solid rgba(255,255,255,0.05);border-bottom:1px solid rgba(255,255,255,0.05);padding:17px 0;overflow:hidden;background:var(--D1)}
-.t-track{display:flex;white-space:nowrap;animation:ticker 44s linear infinite;transform:translateZ(0);backface-visibility:hidden}
-.t-track.paused{animation-play-state:paused}
-.t-item{display:inline-flex;align-items:center;gap:28px;padding:0 28px;font-family:var(--FM);font-size:9px;letter-spacing:1.5px;text-transform:uppercase;color:var(--Gr);flex-shrink:0}
-.t-item .star{color:var(--G);font-size:10px;line-height:1;opacity:.5}
-@keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+
+
+
+
+
+to{transform:translateX(-50%)}}
 #reel{padding:0 0 80px;position:relative}
 #reel::before{content:'';position:absolute;left:0;right:0;top:80px;bottom:80px;pointer-events:none;z-index:1;background:linear-gradient(to bottom,var(--B) 0%,transparent 4%,transparent 96%,var(--B) 100%)}
 .reel-wrap{position:relative;border-radius:var(--rr,16px);overflow:hidden;cursor:pointer;background:var(--D2);z-index:2}
@@ -1392,25 +1392,6 @@ footer.f-sn .f-copy{color:var(--Gr)}
 </section>
 </div>
 
-<div class="ticker"><div class="t-track">
-  <div class="t-item">Direção Criativa <span class="star">&#10022;</span></div>
-  <div class="t-item">Eventos &amp; Festivais <span class="star">&#10022;</span></div>
-  <div class="t-item">Videoclipes <span class="star">&#10022;</span></div>
-  <div class="t-item">Aftermovies <span class="star">&#10022;</span></div>
-  <div class="t-item">Branded Content <span class="star">&#10022;</span></div>
-  <div class="t-item">Filmes Publicitários <span class="star">&#10022;</span></div>
-  <div class="t-item">Social Media <span class="star">&#10022;</span></div>
-  <div class="t-item">Campanhas 360&deg; <span class="star">&#10022;</span></div>
-  <div class="t-item">Direção Criativa <span class="star">&#10022;</span></div>
-  <div class="t-item">Eventos &amp; Festivais <span class="star">&#10022;</span></div>
-  <div class="t-item">Videoclipes <span class="star">&#10022;</span></div>
-  <div class="t-item">Aftermovies <span class="star">&#10022;</span></div>
-  <div class="t-item">Branded Content <span class="star">&#10022;</span></div>
-  <div class="t-item">Filmes Publicitários <span class="star">&#10022;</span></div>
-  <div class="t-item">Social Media <span class="star">&#10022;</span></div>
-  <div class="t-item">Campanhas 360&deg; <span class="star">&#10022;</span></div>
-</div></div>
-
 <div id="reel">
   <div class="crm-head">
     <div class="crm-rule"></div>
@@ -1886,7 +1867,7 @@ const nav=document.getElementById('nav');window.addEventListener('scroll',()=>na
 
 /* Pausa carrosseis animados quando off-screen — economiza GPU e bateria */
 (function(){
-  var tracks=document.querySelectorAll('.cl-track,.t-track');
+  var tracks=document.querySelectorAll('.cl-track');
   var eqTrack=document.querySelector('.eq-track');
   var eqSlider=document.querySelector('.eq-slider');
   if(!('IntersectionObserver' in window))return;
@@ -2508,7 +2489,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.con
 
   function autoTag(){
     document.querySelectorAll(selectors.join(',')).forEach(function(el){
-      if(el.closest('#modal, .cl-track, .t-track, #intro')) return;
+      if(el.closest('#modal, .cl-track, #intro')) return;
       if(el.classList.contains('rv')) return;
       el.classList.add('rv');
     });
@@ -2560,7 +2541,7 @@ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&modal.classList.con
 
   function observeAll(){
     document.querySelectorAll('.rv').forEach(function(el){
-      if(el.closest('#modal, .cl-track, .t-track, #intro')) return;
+      if(el.closest('#modal, .cl-track, #intro')) return;
       if(revealed.has(el)) return;
       io.observe(el);
     });
