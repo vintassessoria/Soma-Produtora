@@ -359,6 +359,64 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
 .pf-hint.show{opacity:1;pointer-events:auto;animation:pfHintBounce 1.7s ease-in-out infinite}
 .pf-hint.hide{opacity:0;pointer-events:none;transform:translate(16px,-50%)}
 
+/* ══════ MOLDURA TECNICA: marcas de corte + etiquetas (motivo do site inteiro) ══════ */
+.tech{position:relative;padding:clamp(26px,3vw,46px)}
+.tech>.cm{position:absolute;width:16px;height:16px;border:0 solid rgba(255,255,255,.30);pointer-events:none;z-index:6}
+.tech>.cm.tl{top:14px;left:14px;border-width:1px 0 0 1px}
+.tech>.cm.tr{top:14px;right:14px;border-width:1px 1px 0 0}
+.tech>.cm.bl{bottom:14px;left:14px;border-width:0 0 1px 1px}
+.tech>.cm.br{bottom:14px;right:14px;border-width:0 1px 1px 0}
+.tech>.tk{position:absolute;font-family:var(--FM);font-size:8px;letter-spacing:2.4px;
+  text-transform:uppercase;color:rgba(255,255,255,.42);z-index:6;pointer-events:none}
+.tech>.tk.tkl{top:16px;left:44px}
+.tech>.tk.tkr{bottom:16px;right:44px}
+.tech>.bars{position:absolute;bottom:16px;left:44px;z-index:6;display:flex;gap:2px;pointer-events:none}
+.tech>.bars i{width:2px;height:9px;background:rgba(255,255,255,.28);display:block}
+.tech>.bars i:nth-child(3n){height:6px}
+.tech>.bars i:nth-child(4n){width:1px}
+
+/* ══════ COLAGEM: os cards se montam em leque a partir do centro ══════ */
+#colagem{background:var(--B);padding:104px 0 110px;overflow:hidden}
+.cl-stage{position:relative;height:clamp(400px,58vh,620px);margin:56px var(--gut) 0}
+.cl-card{position:absolute;top:50%;left:50%;border-radius:6px;overflow:hidden;cursor:pointer;
+  background:var(--D2);box-shadow:0 18px 46px rgba(0,0,0,.62);
+  transform-origin:50% 50%;will-change:transform,opacity;
+  transition:transform .9s var(--Ef),opacity .7s var(--E),box-shadow .4s var(--E)}
+.cl-card video,.cl-card img{width:100%;height:100%;object-fit:cover;display:block}
+.cl-card::after{content:'';position:absolute;inset:0;border:1px solid rgba(255,255,255,.10);border-radius:6px;pointer-events:none}
+.cl-card:hover{box-shadow:0 26px 70px rgba(0,0,0,.8),0 0 0 1px var(--G3)}
+.cl-cap{position:absolute;left:0;right:0;bottom:-2px;text-align:center;z-index:8;pointer-events:none}
+.cl-cap b{display:block;font-family:var(--FC);font-weight:800;font-size:clamp(20px,3vw,38px);
+  letter-spacing:-.6px;color:var(--W)}
+.cl-cap em{display:block;font-family:var(--FM);font-style:normal;font-size:8.5px;letter-spacing:2.6px;
+  text-transform:uppercase;color:var(--G);margin-top:8px}
+@media(max-width:760px){.cl-stage{height:clamp(300px,46vh,420px)}}
+
+/* ══════ ORBITA: retratos circulares navegando a equipe ══════ */
+#equipe{position:relative}
+.or-stage{position:relative;height:clamp(440px,64vh,660px);margin:44px var(--gut) 0;overflow:hidden;
+  border-radius:16px;background:var(--D1)}
+.or-bg{position:absolute;inset:0}
+.or-bg img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+  opacity:0;transform:scale(1.06);transition:opacity 1s var(--E),transform 1.4s var(--E)}
+.or-bg img.on{opacity:.42;transform:scale(1)}
+.or-veil{position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(0,0,0,.24) 0%,rgba(0,0,0,.82) 100%)}
+.or-dot{position:absolute;border-radius:50%;overflow:hidden;cursor:pointer;padding:0;
+  border:1px solid rgba(255,255,255,.22);background:var(--D2);
+  transition:transform .8s var(--Ef),opacity .6s var(--E),border-color .4s var(--E);
+  will-change:transform,opacity}
+.or-dot img{width:100%;height:100%;object-fit:cover;filter:grayscale(1);transition:filter .5s var(--E)}
+.or-dot.on{border-color:var(--G);z-index:5}
+.or-dot.on img{filter:grayscale(0)}
+.or-dot:hover{border-color:rgba(255,255,255,.6)}
+.or-name{position:absolute;left:0;right:0;bottom:clamp(24px,5vh,52px);text-align:center;z-index:6;pointer-events:none}
+.or-name b{display:block;font-family:var(--FC);font-weight:400;font-size:clamp(26px,4.4vw,54px);
+  letter-spacing:-.4px;color:var(--W)}
+.or-name b i{font-style:italic;font-weight:800}
+.or-name em{display:block;font-family:var(--FM);font-style:normal;font-size:8.5px;letter-spacing:3px;
+  text-transform:uppercase;color:rgba(255,255,255,.5);margin-top:10px}
+@media(max-width:760px){.or-stage{height:clamp(360px,54vh,460px)}}
+
 /* ══════ HEROI SIENA: carrossel vertical de projetos ══════
    O card do projeto empurra pra cima e o proximo entra por baixo, como rolo
    de filme. O texto NAO viaja junto com a imagem: entra escalonado depois. */
@@ -1355,223 +1413,50 @@ footer.f-sn .f-copy{color:var(--Gr)}
   </div>
 </div>
 
-<section id="portfolio">
-  <div class="pf-head rv">
-    <div>
-      <div class="tag" style="margin-bottom:20px"><div class="tag-ln"></div><span class="tag-sp">Portfólio</span></div>
-      <h2 class="pf-h2">O acervo completo.<br>Vídeo e fotografia.</h2>
-    </div>
-    <div>
-      <p class="pf-side">Do palco ao pixel — cada projeto entregue com intenção criativa e obsessão por resultado.</p>
-      <div class="pf-tabs" role="tablist">
-        <button class="pf-tab active" data-tab="videos" role="tab">&#9654;&nbsp; Vídeos</button>
-        <button class="pf-tab" data-tab="fotos" role="tab">&#9728;&nbsp; Fotos</button>
-      </div>
-    </div>
+<section id="colagem">
+  <div class="crm-head">
+    <div class="crm-rule"></div>
+    <div class="crm-kick">Acervo &middot; 10 projetos</div>
+    <h2 class="crm-big">Trabalhos<span class="crm-dot" aria-hidden="true">&#9679;</span></h2>
+    <div class="crm-rule"></div>
   </div>
-
-  <div class="pf-row-wrap">
-  <div class="pf-row" id="pfRow" data-panel="videos">
-    <div class="pf-card rv" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.MP4" data-title="EXPOMIX — Aftermovie Dia 1">
-      <div class="pf-media">
-        <div class="pf-vid-wrap">
-          <video class="pf-vid" webkit-playsinline data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.MP4" muted loop playsinline preload="none"></video>
-          <div class="pf-vid-overlay"></div>
-        </div>
-        <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
-        <div class="pf-chip">&#9654; VÍDEO</div>
-        <div class="pf-hover"><div class="pf-pi"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div></div>
+  <div class="tech">
+    <span class="cm tl"></span><span class="cm tr"></span><span class="cm bl"></span><span class="cm br"></span>
+    <span class="tk tkl">All Purpose</span><span class="tk tkr">Aspect Test</span>
+    <span class="bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></span>
+    <div class="cl-stage" id="clStage">
+      <div class="cl-card" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.MP4" data-nome="EXPOMIX &mdash; Aftermovie Dia 1" data-cat="Aftermovie &middot; Evento">
+        <video muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.MP4"></video>
       </div>
-      <div class="pf-info">
-        <div class="pf-cat">Aftermovie &middot; Evento</div>
-        <div class="pf-name">EXPOMIX &mdash; Aftermovie Dia 1</div>
-        <div class="pf-cl">Produção SOMA</div>
+      <div class="cl-card" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-3.MP4" data-nome="EXPOMIX &mdash; Aftermovie Dia 3" data-cat="Aftermovie &middot; Evento">
+        <video muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-3.MP4"></video>
       </div>
+      <div class="cl-card" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.MP4" data-nome="Mari Fernandez &mdash; Palco Principal" data-cat="Videoclipe &middot; Show">
+        <video muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.MP4"></video>
+      </div>
+      <div class="cl-card" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%2016x9%20.MOV" data-nome="Bora de Bike &mdash; 16x9" data-cat="Videoclipe">
+        <video muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%2016x9%20.MOV"></video>
+      </div>
+      <div class="cl-card" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20After%20Movie%20Final%20Maio%20.MOV" data-nome="Bora de Bike &mdash; Aftermovie Final" data-cat="Aftermovie &middot; Evento">
+        <video muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20After%20Movie%20Final%20Maio%20.MOV"></video>
+      </div>
+      <div class="cl-card" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/FOME%20DE%20M%C3%9ASICA%20-%20VER%C3%83O%20R2%20_v3.mp4" data-nome="Fome de Música &mdash; Verão" data-cat="Brand Content &middot; Campanha">
+        <video muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/FOME%20DE%20M%C3%9ASICA%20-%20VER%C3%83O%20R2%20_v3.mp4"></video>
+      </div>
+      <div class="cl-card" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/ACESSIBILIDADE%20-%20VER%C3%83O%20R2%20_v3.mp4" data-nome="Acessibilidade &mdash; Verão" data-cat="Brand Content &middot; Campanha">
+        <video muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/ACESSIBILIDADE%20-%20VER%C3%83O%20R2%20_v3.mp4"></video>
+      </div>
+      <div class="cl-card" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/MULHERES%20-%20VER%C3%83O%20R2%20_v3%20%281%29.mp4" data-nome="Mulheres &mdash; Verão" data-cat="Brand Content &middot; Campanha">
+        <video muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/MULHERES%20-%20VER%C3%83O%20R2%20_v3%20%281%29.mp4"></video>
+      </div>
+      <div class="cl-card" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Acessibilidade%20-%20Tel%C3%A3o%202025%20Na%20Praia.MOV" data-nome="Acessibilidade &mdash; Na Praia Telão" data-cat="Evento &middot; Festival">
+        <video muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Acessibilidade%20-%20Tel%C3%A3o%202025%20Na%20Praia.MOV"></video>
+      </div>
+      <div class="cl-card" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20Final%20.MOV" data-nome="Bora de Bike &mdash; Final" data-cat="Aftermovie &middot; Evento">
+        <video muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20Final%20.MOV"></video>
+      </div>
+      <div class="cl-cap" id="clCap"><b></b><em></em></div>
     </div>
-
-    <div class="pf-card rv d1" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-3.MP4" data-title="EXPOMIX — Aftermovie Dia 3">
-      <div class="pf-media">
-        <div class="pf-vid-wrap">
-          <video class="pf-vid" webkit-playsinline data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-3.MP4" muted loop playsinline preload="none"></video>
-          <div class="pf-vid-overlay"></div>
-        </div>
-        <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
-        <div class="pf-chip">&#9654; VÍDEO</div>
-        <div class="pf-hover"><div class="pf-pi"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div></div>
-      </div>
-      <div class="pf-info">
-        <div class="pf-cat">Aftermovie &middot; Evento</div>
-        <div class="pf-name">EXPOMIX &mdash; Aftermovie Dia 3</div>
-        <div class="pf-cl">Produção SOMA</div>
-      </div>
-    </div>
-
-    <div class="pf-card rv d2" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.MP4" data-title="Mari Fernandez — Palco Principal">
-      <div class="pf-media">
-        <div class="pf-vid-wrap">
-          <video class="pf-vid" webkit-playsinline data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.MP4" muted loop playsinline preload="none"></video>
-          <div class="pf-vid-overlay"></div>
-        </div>
-        <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
-        <div class="pf-chip">&#9654; VÍDEO</div>
-        <div class="pf-hover"><div class="pf-pi"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div></div>
-      </div>
-      <div class="pf-info">
-        <div class="pf-cat">Videoclipe &middot; Show</div>
-        <div class="pf-name">Mari Fernandez &mdash; Palco Principal</div>
-        <div class="pf-cl">Produção SOMA</div>
-      </div>
-    </div>
-
-    <div class="pf-card rv" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%2016x9%20.MOV" data-title="Bora de Bike — 16x9">
-      <div class="pf-media">
-        <div class="pf-vid-wrap">
-          <video class="pf-vid" webkit-playsinline data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%2016x9%20.MOV" muted loop playsinline preload="none"></video>
-          <div class="pf-vid-overlay"></div>
-        </div>
-        <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
-        <div class="pf-chip">&#9654; VÍDEO</div>
-        <div class="pf-hover"><div class="pf-pi"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div></div>
-      </div>
-      <div class="pf-info">
-        <div class="pf-cat">Videoclipe</div>
-        <div class="pf-name">Bora de Bike &mdash; 16x9</div>
-        <div class="pf-cl">Produção SOMA</div>
-      </div>
-    </div>
-
-    <div class="pf-card rv d1" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20After%20Movie%20Final%20Maio%20.MOV" data-title="Bora de Bike — Aftermovie">
-      <div class="pf-media">
-        <div class="pf-vid-wrap">
-          <video class="pf-vid" webkit-playsinline data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20After%20Movie%20Final%20Maio%20.MOV" muted loop playsinline preload="none"></video>
-          <div class="pf-vid-overlay"></div>
-        </div>
-        <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
-        <div class="pf-chip">&#9654; VÍDEO</div>
-        <div class="pf-hover"><div class="pf-pi"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div></div>
-      </div>
-      <div class="pf-info">
-        <div class="pf-cat">Aftermovie &middot; Evento</div>
-        <div class="pf-name">Bora de Bike &mdash; Aftermovie Final</div>
-        <div class="pf-cl">Produção SOMA</div>
-      </div>
-    </div>
-
-    <div class="pf-card rv d2" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/FOME%20DE%20M%C3%9ASICA%20-%20VER%C3%83O%20R2%20_v3.mp4" data-title="Fome de Música — Verão">
-      <div class="pf-media">
-        <div class="pf-vid-wrap">
-          <video class="pf-vid" webkit-playsinline data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/FOME%20DE%20M%C3%9ASICA%20-%20VER%C3%83O%20R2%20_v3.mp4" muted loop playsinline preload="none"></video>
-          <div class="pf-vid-overlay"></div>
-        </div>
-        <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
-        <div class="pf-chip">&#9654; VÍDEO</div>
-        <div class="pf-hover"><div class="pf-pi"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div></div>
-      </div>
-      <div class="pf-info">
-        <div class="pf-cat">Brand Content &middot; Campanha</div>
-        <div class="pf-name">Fome de Música &mdash; Verão</div>
-        <div class="pf-cl">Produção SOMA</div>
-      </div>
-    </div>
-
-    <div class="pf-card rv d3" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/ACESSIBILIDADE%20-%20VER%C3%83O%20R2%20_v3.mp4" data-title="Acessibilidade — Verão">
-      <div class="pf-media">
-        <div class="pf-vid-wrap">
-          <video class="pf-vid" webkit-playsinline data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/ACESSIBILIDADE%20-%20VER%C3%83O%20R2%20_v3.mp4" muted loop playsinline preload="none"></video>
-          <div class="pf-vid-overlay"></div>
-        </div>
-        <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
-        <div class="pf-chip">&#9654; VÍDEO</div>
-        <div class="pf-hover"><div class="pf-pi"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div></div>
-      </div>
-      <div class="pf-info">
-        <div class="pf-cat">Brand Content &middot; Campanha</div>
-        <div class="pf-name">Acessibilidade &mdash; Verão</div>
-        <div class="pf-cl">Produção SOMA</div>
-      </div>
-    </div>
-
-    <div class="pf-card rv" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/MULHERES%20-%20VER%C3%83O%20R2%20_v3%20%281%29.mp4" data-title="Mulheres — Verão">
-      <div class="pf-media">
-        <div class="pf-vid-wrap">
-          <video class="pf-vid" webkit-playsinline data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/MULHERES%20-%20VER%C3%83O%20R2%20_v3%20%281%29.mp4" muted loop playsinline preload="none"></video>
-          <div class="pf-vid-overlay"></div>
-        </div>
-        <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
-        <div class="pf-chip">&#9654; VÍDEO</div>
-        <div class="pf-hover"><div class="pf-pi"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div></div>
-      </div>
-      <div class="pf-info">
-        <div class="pf-cat">Brand Content &middot; Campanha</div>
-        <div class="pf-name">Mulheres &mdash; Verão</div>
-        <div class="pf-cl">Produção SOMA</div>
-      </div>
-    </div>
-
-    <div class="pf-card rv d1" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Acessibilidade%20-%20Tel%C3%A3o%202025%20Na%20Praia.MOV" data-title="Acessibilidade — Na Praia Telão">
-      <div class="pf-media">
-        <div class="pf-vid-wrap">
-          <video class="pf-vid" webkit-playsinline data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Acessibilidade%20-%20Tel%C3%A3o%202025%20Na%20Praia.MOV" muted loop playsinline preload="none"></video>
-          <div class="pf-vid-overlay"></div>
-        </div>
-        <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
-        <div class="pf-chip">&#9654; VÍDEO</div>
-        <div class="pf-hover"><div class="pf-pi"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div></div>
-      </div>
-      <div class="pf-info">
-        <div class="pf-cat">Evento &middot; Festival</div>
-        <div class="pf-name">Acessibilidade &mdash; Na Praia Telão</div>
-        <div class="pf-cl">Produção SOMA</div>
-      </div>
-    </div>
-
-    <div class="pf-card rv d2" data-video="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20Final%20.MOV" data-title="Bora de Bike — Final">
-      <div class="pf-media">
-        <div class="pf-vid-wrap">
-          <video class="pf-vid" webkit-playsinline data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20Final%20.MOV" muted loop playsinline preload="none"></video>
-          <div class="pf-vid-overlay"></div>
-        </div>
-        <div class="pf-strip"><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div><div class="pf-perf"></div></div>
-        <div class="pf-chip">&#9654; VÍDEO</div>
-        <div class="pf-hover"><div class="pf-pi"><svg width="14" height="14" viewBox="0 0 24 24"><path d="M5 3l14 9-14 9V3z"/></svg></div></div>
-      </div>
-      <div class="pf-info">
-        <div class="pf-cat">Aftermovie &middot; Evento</div>
-        <div class="pf-name">Bora de Bike &mdash; Final</div>
-        <div class="pf-cl">Produção SOMA</div>
-      </div>
-    </div>
-  </div>
-  <button class="pf-hint" id="pfHint" type="button" aria-label="Deslize para ver mais vídeos">
-    <svg viewBox="0 0 24 24"><polyline points="9 6 15 12 9 18"/></svg>
-  </button>
-  </div>
-
-  <div class="ph-grid" id="phGrid" data-panel="fotos" style="display:none;">
-    <div class="ph-card rv" data-lightbox-photo="foto-01.jpeg"><img class="ph-thumb" src="foto-01.jpeg" alt="Foto SOMA" decoding="async"><div class="ph-hover-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
-    <div class="ph-card rv d1" data-lightbox-photo="foto-02.jpeg"><img class="ph-thumb" src="foto-02.jpeg" alt="Foto SOMA" decoding="async"><div class="ph-hover-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
-    <div class="ph-card rv d2" data-lightbox-photo="foto-03.jpeg"><img class="ph-thumb" src="foto-03.jpeg" alt="Foto SOMA" decoding="async"><div class="ph-hover-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
-    <div class="ph-card rv d3" data-lightbox-photo="foto-04.jpeg"><img class="ph-thumb" src="foto-04.jpeg" alt="Foto SOMA" decoding="async"><div class="ph-hover-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
-    <div class="ph-card rv" data-lightbox-photo="foto-05.jpeg"><img class="ph-thumb" src="foto-05.jpeg" alt="Foto SOMA" decoding="async"><div class="ph-hover-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
-    <div class="ph-card rv d1" data-lightbox-photo="foto-06.jpeg"><img class="ph-thumb" src="foto-06.jpeg" alt="Foto SOMA" decoding="async"><div class="ph-hover-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
-    <div class="ph-card rv d2" data-lightbox-photo="foto-07.jpeg"><img class="ph-thumb" src="foto-07.jpeg" alt="Foto SOMA" decoding="async"><div class="ph-hover-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
-    <div class="ph-card rv d3" data-lightbox-photo="foto-08.jpeg"><img class="ph-thumb" src="foto-08.jpeg" alt="Foto SOMA" decoding="async"><div class="ph-hover-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
-    <div class="ph-card rv" data-lightbox-photo="foto-09.jpeg"><img class="ph-thumb" src="foto-09.jpeg" alt="Foto SOMA" decoding="async"><div class="ph-hover-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
-    <div class="ph-card rv d1" data-lightbox-photo="foto-10.jpeg"><img class="ph-thumb" src="foto-10.jpeg" alt="Foto SOMA" decoding="async"><div class="ph-hover-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
-    <div class="ph-card rv d2" data-lightbox-photo="foto-11.jpeg"><img class="ph-thumb" src="foto-11.jpeg" alt="Foto SOMA" decoding="async"><div class="ph-hover-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
-    <div class="ph-card rv d3" data-lightbox-photo="foto-12.jpeg"><img class="ph-thumb" src="foto-12.jpeg" alt="Foto SOMA" decoding="async"><div class="ph-hover-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
-    <div class="ph-card rv" data-lightbox-photo="foto-13.jpeg"><img class="ph-thumb" src="foto-13.jpeg" alt="Foto SOMA" decoding="async"><div class="ph-hover-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
-    <div class="ph-card rv d1" data-lightbox-photo="foto-14.jpeg"><img class="ph-thumb" src="foto-14.jpeg" alt="Foto SOMA" decoding="async"><div class="ph-hover-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
-    <div class="ph-card rv d2" data-lightbox-photo="foto-15.jpeg"><img class="ph-thumb" src="foto-15.jpeg" alt="Foto SOMA" decoding="async"><div class="ph-hover-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
-    <div class="ph-card rv d3" data-lightbox-photo="foto-16.jpeg"><img class="ph-thumb" src="foto-16.jpeg" alt="Foto SOMA" decoding="async"><div class="ph-hover-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
-    <div class="ph-card rv" data-lightbox-photo="foto-17.jpeg"><img class="ph-thumb" src="foto-17.jpeg" alt="Foto SOMA" decoding="async"><div class="ph-hover-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
-    <div class="ph-card rv d1" data-lightbox-photo="foto-18.jpeg"><img class="ph-thumb" src="foto-18.jpeg" alt="Foto SOMA" decoding="async"><div class="ph-hover-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
-    <div class="ph-card rv d2" data-lightbox-photo="foto-19.jpeg"><img class="ph-thumb" src="foto-19.jpeg" alt="Foto SOMA" decoding="async"><div class="ph-hover-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
-    <div class="ph-card rv d3" data-lightbox-photo="foto-20.jpeg"><img class="ph-thumb" src="foto-20.jpeg" alt="Foto SOMA" decoding="async"><div class="ph-hover-icon"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><polyline points="15 3 21 3 21 9"/><polyline points="9 21 3 21 3 15"/><line x1="21" y1="3" x2="14" y2="10"/><line x1="3" y1="21" x2="10" y2="14"/></svg></div></div>
-  </div>
-
-  <div class="pf-foot rv">
-    <a href="https://wa.me/5561985011819?text=Olá%2C%20vim%20pelo%20site%20e%20gostaria%20de%20solicitar%20uma%20proposta." target="_blank" rel="noopener noreferrer" class="btn btn-g">Solicitar proposta<span class="ai"><svg width="14" height="14" viewBox="0 0 16 16" fill="none"><path d="M3 8h10M9 4l4 4-4 4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span></a>
   </div>
 </section>
 
@@ -1677,27 +1562,45 @@ footer.f-sn .f-copy{color:var(--Gr)}
 </section>
 
 <section id="equipe">
-  <div class="eq-head rv">
-    <div class="tag"><div class="tag-ln"></div><span class="tag-sp">Equipe</span></div>
-    <h2 class="eq-h2">O time por trás<br>de cada frame.</h2>
+  <div class="crm-head">
+    <div class="crm-rule"></div>
+    <div class="crm-kick">As pessoas por tr&aacute;s de cada frame</div>
+    <h2 class="crm-big">Equipe<span class="crm-dot" aria-hidden="true">&#9679;</span></h2>
+    <div class="crm-rule"></div>
   </div>
-  <div class="eq-slider rv">
-    <div class="eq-track">
-      <img src="equipe-01.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
-      <img src="equipe-02.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
-      <img src="equipe-03.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
-      <img src="equipe-04.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
-      <img src="equipe-05.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
-      <img src="equipe-06.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
-      <img src="equipe-07.jpeg" alt="Equipe SOMA" loading="lazy" decoding="async">
-      <img src="equipe-01.jpeg" alt="" loading="lazy" decoding="async" aria-hidden="true">
-      <img src="equipe-02.jpeg" alt="" loading="lazy" decoding="async" aria-hidden="true">
-      <img src="equipe-03.jpeg" alt="" loading="lazy" decoding="async" aria-hidden="true">
-      <img src="equipe-04.jpeg" alt="" loading="lazy" decoding="async" aria-hidden="true">
-      <img src="equipe-05.jpeg" alt="" loading="lazy" decoding="async" aria-hidden="true">
-      <img src="equipe-06.jpeg" alt="" loading="lazy" decoding="async" aria-hidden="true">
-      <img src="equipe-07.jpeg" alt="" loading="lazy" decoding="async" aria-hidden="true">
+  <div class="or-stage" id="orStage">
+    <div class="or-bg" id="orBg">
+      <img src="equipe-01.webp" class="on" loading="lazy" alt="" aria-hidden="true">
+      <img src="equipe-02.webp" class="" loading="lazy" alt="" aria-hidden="true">
+      <img src="equipe-03.webp" class="" loading="lazy" alt="" aria-hidden="true">
+      <img src="equipe-04.webp" class="" loading="lazy" alt="" aria-hidden="true">
+      <img src="equipe-05.webp" class="" loading="lazy" alt="" aria-hidden="true">
+      <img src="equipe-06.webp" class="" loading="lazy" alt="" aria-hidden="true">
+      <img src="equipe-07.webp" class="" loading="lazy" alt="" aria-hidden="true">
     </div>
+    <div class="or-veil"></div>
+      <button class="or-dot on" type="button" data-i="0" aria-label="Integrante 1">
+        <img src="equipe-01.webp" loading="lazy" alt="Integrante da equipe SOMA">
+      </button>
+      <button class="or-dot" type="button" data-i="1" aria-label="Integrante 2">
+        <img src="equipe-02.webp" loading="lazy" alt="Integrante da equipe SOMA">
+      </button>
+      <button class="or-dot" type="button" data-i="2" aria-label="Integrante 3">
+        <img src="equipe-03.webp" loading="lazy" alt="Integrante da equipe SOMA">
+      </button>
+      <button class="or-dot" type="button" data-i="3" aria-label="Integrante 4">
+        <img src="equipe-04.webp" loading="lazy" alt="Integrante da equipe SOMA">
+      </button>
+      <button class="or-dot" type="button" data-i="4" aria-label="Integrante 5">
+        <img src="equipe-05.webp" loading="lazy" alt="Integrante da equipe SOMA">
+      </button>
+      <button class="or-dot" type="button" data-i="5" aria-label="Integrante 6">
+        <img src="equipe-06.webp" loading="lazy" alt="Integrante da equipe SOMA">
+      </button>
+      <button class="or-dot" type="button" data-i="6" aria-label="Integrante 7">
+        <img src="equipe-07.webp" loading="lazy" alt="Integrante da equipe SOMA">
+      </button>
+    <div class="or-name" id="orName"><b>Soma <i>Crew</i></b><em>Produ&ccedil;&atilde;o &middot; 01</em></div>
   </div>
 </section>
 
@@ -2131,6 +2034,136 @@ document.querySelectorAll('.btn-g,.btn-wh,.nav-cta').forEach(btn=>{btn.addEventL
 (function(){var el=document.querySelector('#hero .hero-eye');if(!el)return;if(matchMedia('(prefers-reduced-motion: reduce)').matches)return;var raw=el.textContent;if(!raw)return;var chars=Array.from(raw);el.textContent='';el.classList.add('type-on');var startDelay=1.6,perChar=0.022;chars.forEach(function(ch,i){var s=document.createElement('span');s.className='tch';s.textContent=(ch===' '?' ':ch);s.style.animationDelay=(startDelay+i*perChar).toFixed(3)+'s';el.appendChild(s)});var caret=document.createElement('span');caret.className='tch tcaret';caret.setAttribute('aria-hidden','true');el.appendChild(caret)})();
 document.querySelectorAll('a[href^="#"]').forEach(a=>{a.addEventListener('click',e=>{const t=document.querySelector(a.getAttribute('href'));if(t){e.preventDefault();t.scrollIntoView({behavior:'smooth',block:'start'})}})});
 document.querySelectorAll('.pf-tab').forEach(tab=>{tab.addEventListener('click',()=>{const target=tab.dataset.tab;document.querySelectorAll('.pf-tab').forEach(t=>t.classList.remove('active'));tab.classList.add('active');document.querySelectorAll('[data-panel]').forEach(p=>{p.style.display=p.dataset.panel===target?(target==='fotos'?'grid':'block'):'none'});if(target==='fotos'){document.querySelectorAll('.ph-card').forEach(c=>c.classList.add('in'))}document.querySelectorAll('.pf-vid').forEach(v=>{v.pause()})})});
+
+/* ──────────── COLAGEM: os cards se montam em leque conforme a secao sobe ────────────
+   Cada card tem um destino fixo (posicao, giro e tamanho sorteados de forma
+   estavel pelo indice) e parte do centro empilhado. O progresso vem do scroll,
+   entao a colagem se monta enquanto voce desce e desmonta se voltar. */
+(function(){
+  const palco=document.getElementById('clStage');if(!palco)return;
+  const cards=[].slice.call(palco.querySelectorAll('.cl-card'));
+  if(!cards.length)return;
+  const cap=document.getElementById('clCap');
+  const capN=cap&&cap.querySelector('b'),capC=cap&&cap.querySelector('em');
+
+  /* destinos em FRACAO do palco (transform em % seria relativo ao proprio
+     card, nao ao palco — por isso convertemos para pixels em posiciona()) */
+  const destinos=cards.map((c,i)=>{
+    const n=cards.length, meio=(n-1)/2, d=i-meio;
+    const semente=Math.sin(i*12.9898)*43758.5453;
+    const r=semente-Math.floor(semente);              /* 0..1 estavel */
+    return{
+      x:d*.079 + (r-.5)*.045,      /* fracao da largura do palco */
+      y:(r-.5)*.20 + Math.abs(d)*.012,
+      giro:(r-.5)*17,
+      esc:.82+r*.30,
+      z:Math.round(50-Math.abs(d)*3+r*6)
+    };
+  });
+
+  function medida(){
+    const w=palco.clientWidth,h=palco.clientHeight;
+    const base=Math.min(w*.19,h*.42);
+    cards.forEach((c,i)=>{
+      const dd=destinos[i];
+      c.style.width=Math.round(base*dd.esc)+'px';
+      c.style.height=Math.round(base*dd.esc*1.34)+'px';
+      c.style.zIndex=String(dd.z);
+    });
+  }
+  function posiciona(p){
+    /* p=0 empilhado no centro | p=1 leque aberto */
+    const W=palco.clientWidth,H=palco.clientHeight;
+    cards.forEach((c,i)=>{
+      const d=destinos[i];
+      const x=d.x*W*p, y=d.y*H*p, g=d.giro*p;
+      c.style.transform='translate(-50%,-50%) translate('+x.toFixed(1)+'px,'+y.toFixed(1)+'px) rotate('+g.toFixed(2)+'deg) scale('+(.55+.45*p).toFixed(3)+')';
+      c.style.opacity=String(Math.min(1,.25+p*1.6));
+    });
+  }
+  function video(i,liga){
+    const v=cards[i]&&cards[i].querySelector('video');if(!v)return;
+    if(liga){
+      if(!v.getAttribute('src')&&v.dataset.src){v.src=v.dataset.src;try{v.load()}catch(e){}}
+      const pr=v.play();if(pr&&pr.catch)pr.catch(function(){});
+    }else{try{v.pause()}catch(e){}}
+  }
+  cards.forEach((c,i)=>{
+    c.addEventListener('mouseenter',()=>{
+      video(i,true);
+      if(capN){capN.textContent=c.dataset.nome||'';capC.textContent=c.dataset.cat||''}
+    });
+    c.addEventListener('mouseleave',()=>video(i,false));
+    c.addEventListener('click',()=>{
+      const s=c.dataset.video;
+      if(s&&typeof _reelOpen==='function')_reelOpen(s);
+    });
+  });
+
+  let ultimoP=-1,ultimaL=-1;
+  function atualiza(){
+    if(palco.clientWidth!==ultimaL){ultimaL=palco.clientWidth;medida()}
+    const r=palco.getBoundingClientRect();
+    /* abre enquanto a secao atravessa a metade de baixo da tela */
+    const a=innerHeight*.92,b=innerHeight*.22;
+    let p=(a-r.top)/(a-b);p=p<0?0:p>1?1:p;
+    const e=p*p*(3-2*p);
+    if(Math.abs(e-ultimoP)>.002){ultimoP=e;posiciona(e)}
+  }
+  /* laco de frame para fluidez + evento de scroll como rede: se a rAF for
+     estrangulada ou pausada (aba de fundo), a colagem ainda acompanha */
+  (function laco(){atualiza();requestAnimationFrame(laco)})();
+  addEventListener('scroll',atualiza,{passive:true});
+  addEventListener('resize',atualiza,{passive:true});
+  atualiza();
+})();
+
+/* ──────────── ORBITA: retratos circulares navegando a equipe ────────────
+   O ativo cresce no centro; os outros orbitam menores. Trocar de retrato
+   troca tambem o fundo. Avanca sozinho e para quando o mouse entra. */
+(function(){
+  const palco=document.getElementById('orStage');if(!palco)return;
+  const bolhas=[].slice.call(palco.querySelectorAll('.or-dot'));
+  const fundos=[].slice.call(palco.querySelectorAll('.or-bg img'));
+  if(!bolhas.length)return;
+  const nome=document.getElementById('orName');
+  const nomeB=nome&&nome.querySelector('b'),nomeE=nome&&nome.querySelector('em');
+  let atual=0,timer=null,parado=false;
+
+  /* posicoes em orbita: o ativo no centro, os demais num anel elipsoidal */
+  function coloca(){
+    const n=bolhas.length;
+    bolhas.forEach((b,i)=>{
+      const dif=((i-atual)+n)%n;
+      if(dif===0){
+        b.style.width=b.style.height='clamp(112px,15vw,178px)';
+        b.style.left='50%';b.style.top='46%';
+        b.style.transform='translate(-50%,-50%)';
+        b.style.opacity='1';
+      }else{
+        const ang=(dif/(n-1))*Math.PI*2 - Math.PI/2;
+        const rx=34,ry=27;                       /* raio em % do palco */
+        b.style.width=b.style.height='clamp(48px,6.4vw,78px)';
+        b.style.left=(50+Math.cos(ang)*rx)+'%';
+        b.style.top=(46+Math.sin(ang)*ry)+'%';
+        b.style.transform='translate(-50%,-50%)';
+        b.style.opacity=String(Math.max(.42,.9-dif*.07));
+      }
+      b.classList.toggle('on',dif===0);
+    });
+    fundos.forEach((f,i)=>f.classList.toggle('on',i===atual));
+    if(nomeB){nomeB.innerHTML='Soma <i>Crew</i>';nomeE.innerHTML='Produ&ccedil;&atilde;o &middot; '+String(atual+1).padStart(2,'0')}
+  }
+  function ir(n){atual=(n+bolhas.length)%bolhas.length;coloca()}
+  function anda(){clearInterval(timer);if(!parado)timer=setInterval(()=>ir(atual+1),3400)}
+
+  bolhas.forEach((b,i)=>b.addEventListener('click',()=>{ir(i);anda()}));
+  palco.addEventListener('mouseenter',()=>{parado=true;clearInterval(timer)},{passive:true});
+  palco.addEventListener('mouseleave',()=>{parado=false;anda()},{passive:true});
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)clearInterval(timer);else anda()});
+  addEventListener('resize',coloca,{passive:true});
+  coloca();anda();
+})();
 
 /* ──────────── HEROI: carrossel vertical de projetos (modelo SIENA) ────────────
    Empurra o slide atual pra cima e traz o proximo por baixo. O texto entra
