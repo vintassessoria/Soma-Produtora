@@ -1073,46 +1073,39 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
 /* ══════ FAIXAS CREME (linguagem SIENA) ══════
    O site alterna faixas escuras (aurora, assinatura SOMA) com momentos em
    papel creme: showreel, servicos e rodape. */
-.crm-head{position:relative;text-align:center;padding:0 var(--gut);margin-bottom:52px;color:#0C0C0C}
-.crm-rule{height:1px;background:rgba(12,12,12,.26)}
-.crm-kick{font-family:var(--FM);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(12,12,12,.58);padding:20px 0 12px}
-.crm-big{font-family:var(--FC);font-weight:800;font-size:clamp(46px,8.5vw,118px);line-height:.9;letter-spacing:-2.5px;text-transform:uppercase;color:#0C0C0C;margin:0 0 26px;display:inline-flex;align-items:flex-start;gap:12px}
+.crm-head{position:relative;text-align:center;padding:0 var(--gut);margin-bottom:52px;color:var(--W)}
+.crm-rule{height:1px;background:rgba(255,255,255,.16)}
+.crm-kick{font-family:var(--FM);font-size:9px;letter-spacing:3px;text-transform:uppercase;color:rgba(255,255,255,.46);padding:20px 0 12px}
+.crm-big{font-family:var(--FC);font-weight:800;font-size:clamp(46px,8.5vw,118px);line-height:.9;letter-spacing:-2.5px;text-transform:uppercase;color:var(--W);margin:0 0 26px;display:inline-flex;align-items:flex-start;gap:12px}
 .crm-dot{font-size:.15em;line-height:1;margin-top:.62em;color:var(--G)}
 
-/* showreel: player recuado sobre papel */
-#reel{background:#EFEDE6;padding:104px 0 96px}
+/* showreel: player recuado sobre o preto */
+#reel{background:var(--B);padding:104px 0 96px}
 #reel::before{display:none}
 #reel .reel-wrap{margin:0 var(--gut)}
 
-/* servicos: tabela de creditos (faixas pretas e vazadas alternadas) */
-#servicos{background:#EFEDE6;border-top:none}
-#servicos .tag-sp{color:#0C0C0C}
-#servicos .tag-ln{background:#0C0C0C}
-#servicos .sv-h2{color:#0C0C0C}
-#servicos .sv-sub{color:rgba(12,12,12,.62)}
+/* servicos: tabela de creditos — faixas cheias alternando com vazadas */
+#servicos{background:var(--D1);border-top:1px solid rgba(255,255,255,.06)}
 #servicos .sv-grid{grid-template-columns:1fr 1fr;gap:10px}
-#servicos .sv-card{background:#0C0C0C;border:1px solid #0C0C0C;border-radius:0;padding:26px 30px;transition:transform .4s var(--Ef)}
-#servicos .sv-card:hover{transform:translateY(-3px);background:#0C0C0C}
-#servicos .sv-card .sv-t{color:#fff;text-transform:uppercase;letter-spacing:.6px}
-#servicos .sv-card .sv-d{color:rgba(255,255,255,.55)}
-#servicos .sv-card:nth-child(even){background:transparent}
-#servicos .sv-card:nth-child(even):hover{background:transparent}
-#servicos .sv-card:nth-child(even) .sv-t{color:#0C0C0C}
-#servicos .sv-card:nth-child(even) .sv-d{color:rgba(12,12,12,.62)}
-#servicos .sv-card:nth-child(even) .sv-more{color:#0C0C0C}
+#servicos .sv-card{background:var(--D3);border:1px solid var(--D3);border-radius:0;padding:26px 30px;transition:transform .4s var(--Ef),border-color .4s var(--Ef)}
+#servicos .sv-card:hover{transform:translateY(-3px);border-color:var(--G3)}
+#servicos .sv-card .sv-t{color:var(--W);text-transform:uppercase;letter-spacing:.6px}
+#servicos .sv-card .sv-d{color:var(--GrL)}
+#servicos .sv-card:nth-child(even){background:transparent;border-color:rgba(255,255,255,.16)}
+#servicos .sv-card:nth-child(even):hover{background:transparent;border-color:var(--G3)}
 #servicos .sv-ico{display:none}
 
-/* rodape: tipografia gigante cortada por linhas, sobre papel */
-footer.f-sn{background:#EFEDE6;border-top:none;display:block;padding:88px 0 0;text-align:center}
+/* rodape: tipografia gigante cortada por linhas */
+footer.f-sn{background:var(--B);border-top:none;display:block;padding:88px 0 0;text-align:center}
 footer.f-sn .f-logo{margin-bottom:34px}
-.f-giant span{display:block;font-family:var(--FC);font-weight:800;text-transform:uppercase;font-size:clamp(42px,8.6vw,126px);line-height:1.06;letter-spacing:-2px;color:#0C0C0C;border-top:1px solid rgba(12,12,12,.3);padding:4px var(--gut)}
-.f-giant span:last-child{border-bottom:1px solid rgba(12,12,12,.3)}
+.f-giant span{display:block;font-family:var(--FC);font-weight:800;text-transform:uppercase;font-size:clamp(42px,8.6vw,126px);line-height:1.06;letter-spacing:-2px;color:var(--W);border-top:1px solid rgba(255,255,255,.14);padding:4px var(--gut)}
+.f-giant span:last-child{border-bottom:1px solid rgba(255,255,255,.14)}
 .f-base{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;padding:32px var(--gut) 40px}
 footer.f-sn .f-links{display:flex;flex-wrap:wrap;gap:20px}
-footer.f-sn .f-links a{color:rgba(12,12,12,.72)}
-footer.f-sn .f-links a:hover{color:#0C0C0C}
-footer.f-sn .f-copy{color:rgba(12,12,12,.5)}
-.f-mail a{font-family:var(--FM);font-size:11px;letter-spacing:1.5px;color:#0C0C0C;text-underline-offset:3px}
+footer.f-sn .f-links a{color:var(--GrL)}
+footer.f-sn .f-links a:hover{color:var(--W)}
+footer.f-sn .f-copy{color:var(--Gr)}
+.f-mail a{font-family:var(--FM);font-size:11px;letter-spacing:1.5px;color:var(--W);text-underline-offset:3px}
 @media(max-width:768px){
   #servicos .sv-grid{grid-template-columns:1fr}
   .f-base{flex-direction:column;text-align:center}
