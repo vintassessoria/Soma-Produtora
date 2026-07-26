@@ -1267,19 +1267,19 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
 #servicos .sv-ico{display:none}
 
 /* rodape: tipografia gigante cortada por linhas */
-footer.f-sn{background:var(--B);border-top:none;display:block;padding:88px 0 0;text-align:center}
-footer.f-sn .f-logo{margin-bottom:34px}
-.f-giant span{display:block;font-family:var(--FC);font-weight:800;text-transform:uppercase;font-size:clamp(42px,8.6vw,126px);line-height:1.06;letter-spacing:-2px;color:var(--W);border-top:1px solid rgba(255,255,255,.14);padding:4px var(--gut)}
-.f-giant span:last-child{border-bottom:1px solid rgba(255,255,255,.14)}
-.f-base{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:18px;padding:32px var(--gut) 40px}
-footer.f-sn .f-links{display:flex;flex-wrap:wrap;gap:20px}
-footer.f-sn .f-links a{color:var(--GrL)}
-footer.f-sn .f-links a:hover{color:var(--W)}
-footer.f-sn .f-copy{color:var(--Gr)}
-.f-mail a{font-family:var(--FM);font-size:11px;letter-spacing:1.5px;color:var(--W);text-underline-offset:3px}
+
+
+
+
+
+
+
+
+
+
 @media(max-width:768px){
   #servicos .sv-grid{grid-template-columns:1fr}
-  .f-base{flex-direction:column;text-align:center}
+  
 }
 </style>
 </head>
@@ -1811,22 +1811,15 @@ footer.f-sn .f-copy{color:var(--Gr)}
 </section>
 
 </main>
-<footer role="contentinfo" class="f-sn">
+<footer role="contentinfo">
   <div class="f-logo"><img class="f-sym" src="logotipo.png" alt="SOMA Produtora"></div>
-  <div class="f-giant" aria-hidden="true">
-    <span>Produtora</span>
-    <span>Audiovisual</span>
-    <span>Filme &middot; TV</span>
+  <div class="f-links">
+    <a href="#colagem">Equipe</a><a href="#manifesto">Sobre</a>
+    <a href="#processo">Processo</a><a href="#clients">Clientes</a>
+    <a href="https://www.instagram.com/soma.produtora/" target="_blank" rel="noopener noreferrer me" aria-label="Instagram da SOMA Produtora (abre em nova aba)">Instagram</a>
+    <a href="mailto:contato@somaprodutora.com" aria-label="Enviar email para contato@somaprodutora.com">Contato</a>
   </div>
-  <div class="f-base">
-    <div class="f-links">
-      <a href="#portfolio">Portfólio</a><a href="#manifesto">Sobre</a>
-      <a href="#processo">Processo</a><a href="#clients">Clientes</a>
-      <a href="https://www.instagram.com/soma.produtora/" target="_blank" rel="noopener noreferrer me" aria-label="Instagram da SOMA Produtora (abre em nova aba)">Instagram</a>
-    </div>
-    <div class="f-mail"><a href="mailto:contato@somaprodutora.com">contato@somaprodutora.com</a></div>
-    <div class="f-copy">&#169; 2025 SOMA PRODUTORA &mdash; BSB</div>
-  </div>
+  <div class="f-copy">&#169; 2025 SOMA PRODUTORA &mdash; BSB</div>
 </footer>
 
 <div id="lb">
