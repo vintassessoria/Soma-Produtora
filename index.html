@@ -409,11 +409,14 @@ nav.open .nav-burger span:nth-child(3){transform:translateY(-7px) rotate(-45deg)
   transition:transform 1s var(--Ef) .62s}
 .sm.in .sm-bar i{transform:scaleX(1)}
 
-/* o total: fundo levemente aceso, numero vira o simbolo de somatorio */
-.sm-total{border-top:none;padding-top:30px}
+/* o total ganha arranjo proprio: o nome e grande demais para a coluna das
+   parcelas e invadiria a descricao. Nome na primeira linha, texto embaixo. */
+.sm-total{border-top:none;padding-top:30px;
+  grid-template-columns:64px 1fr;row-gap:12px;align-items:baseline}
 .sm-total .sm-i{font-size:26px;color:var(--G);transform:translateY(2px)}
-.sm-total .sm-n{font-size:clamp(26px,4.4vw,52px);color:var(--G)}
-.sm-total .sm-d{color:var(--GrL)}
+.sm-total .sm-n{font-size:clamp(26px,4.4vw,52px);color:var(--G);line-height:.98}
+.sm-total .sm-d{grid-column:2;color:var(--GrL);max-width:56ch;padding-top:0}
+.sm-total .sm-op{display:none}
 
 .sm-foot{max-width:62ch;margin:74px auto 0;padding:0 var(--gut);text-align:center;
   font-size:14.5px;line-height:1.85;color:var(--Gr)}
