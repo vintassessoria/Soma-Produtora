@@ -2254,6 +2254,14 @@ document.querySelectorAll('.pf-tab').forEach(tab=>{tab.addEventListener('click',
     };
   });
 
+  /* o termo Math.abs(d) so empurra para baixo, nunca para cima: sem corrigir,
+     o conjunto fica pendurado abaixo do centro. Tira-se a media para
+     equilibrar e sobe-se um pouco, deixando o pe livre para a legenda. */
+  (function(){
+    const mediaY=destinos.reduce((a,d)=>a+d.y,0)/destinos.length;
+    destinos.forEach(d=>{d.y-=mediaY+.045});
+  })();
+
   /* no celular o palco e estreito: manter o fator do desktop deixaria os
      cartoes com ~16% da largura (miniaturas). Ai eles crescem e o leque
      encolhe na mesma medida, para continuarem cabendo. */
