@@ -1384,6 +1384,27 @@ html.lenis,.lenis.lenis-smooth{scroll-behavior:auto!important}
 .lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
 .lenis.lenis-stopped{overflow:hidden}
 .lenis.lenis-smooth iframe{pointer-events:none}
+/* ══════ INTERNACIONAL: nomes em mono, tudo no verde da marca ══════
+   O antigo recoloria a secao inteira numa cor aleatoria por pais (dourado,
+   roxo, rosa, azul...) — fora da identidade — e as bandeiras eram clip-art
+   miudo. Agora: nomes em mono, acento sempre no verde da SOMA e o brilho
+   neon pesado trocado por um marcador discreto. */
+#internacional .int-right{--country-color:#6BF019;--country-glow:rgba(107,240,25,.5);--country-bg:rgba(107,240,25,.16)}
+#internacional .int-nm{font-family:var(--FM);font-size:12px;letter-spacing:2px;text-transform:uppercase}
+/* trilho de progresso: verde fino, brilho contido (era um halo triplo) */
+#internacional .int-countries::after{box-shadow:0 0 10px rgba(107,240,25,.45)}
+/* marcador ativo: um ponto verde limpo, sem o pulso de tres aneis */
+#internacional .int-c.active::before{transform:scale(1.4);
+  box-shadow:0 0 0 4px rgba(107,240,25,.14),0 0 14px rgba(107,240,25,.5);animation:none}
+#internacional .int-c.active{color:#6BF019;font-weight:700;letter-spacing:2px}
+#internacional .int-c:hover{color:var(--W);transform:translateY(-2px)}
+/* sem os halos de fundo que acendiam a coluna/o player */
+#internacional .int-right::before,#internacional .int-player::before{display:none}
+@media(max-width:768px){
+  #internacional .int-nm{font-size:10.5px;letter-spacing:1px}
+  #internacional .int-c.active::before{transform:scale(1.35);
+    box-shadow:0 0 0 3px rgba(107,240,25,.14),0 0 10px rgba(107,240,25,.5);animation:none}
+}
 </style>
 </head>
 <body>
@@ -1856,22 +1877,22 @@ html.lenis,.lenis.lenis-smooth{scroll-behavior:auto!important}
     <div class="int-right rv d1">
       <div class="int-countries" role="tablist">
         <button class="int-c active" data-c="brasilia" role="tab" aria-label="Brasil" title="Brasil">
-          <span class="int-flag" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#009c3b"/><polygon points="15,3.5 26.5,10 15,16.5 3.5,10" fill="#ffdf00"/><circle cx="15" cy="10" r="3.5" fill="#002776"/></svg></span>
+          <span class="int-nm">BRASÍLIA</span>
         </button>
         <button class="int-c" data-c="londres" role="tab" aria-label="Londres" title="Londres">
-          <span class="int-flag" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#012169"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.8"/><path d="M15 0V20M0 10H30" stroke="#fff" stroke-width="5.5"/><path d="M15 0V20M0 10H30" stroke="#C8102E" stroke-width="3"/></svg></span>
+          <span class="int-nm">LONDRES</span>
         </button>
         <button class="int-c" data-c="gales" role="tab" aria-label="Gales" title="Gales">
-          <span class="int-flag" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="10" fill="#fff"/><rect y="10" width="30" height="10" fill="#00703C"/><path d="M9 10.5C9 9.5 10.2 8 12 8L13.8 7L15 8L16.5 8.5L18 7.8L19.5 8.2C20.8 8.5 21.5 9.3 21.5 10.2L21 11.3L19.2 11.8L17 12.2L15 13L13 12.2L11 11.9L9.6 11.5Z" fill="#D30731"/></svg></span>
+          <span class="int-nm">GALES</span>
         </button>
         <button class="int-c" data-c="escocia" role="tab" aria-label="Escócia" title="Escócia">
-          <span class="int-flag" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#0065BD"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="3.5"/></svg></span>
+          <span class="int-nm">ESCÓCIA</span>
         </button>
         <button class="int-c" data-c="paris" role="tab" aria-label="Paris" title="Paris">
-          <span class="int-flag" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="10" height="20" fill="#002395"/><rect x="10" width="10" height="20" fill="#fff"/><rect x="20" width="10" height="20" fill="#ED2939"/></svg></span>
+          <span class="int-nm">PARIS</span>
         </button>
         <button class="int-c" data-c="eua" role="tab" aria-label="EUA" title="EUA">
-          <span class="int-flag" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#BF0A30"/><g fill="#fff"><rect y="1.54" width="30" height="1.54"/><rect y="4.62" width="30" height="1.54"/><rect y="7.69" width="30" height="1.54"/><rect y="10.77" width="30" height="1.54"/><rect y="13.85" width="30" height="1.54"/><rect y="16.92" width="30" height="1.54"/></g><rect width="12" height="10.77" fill="#002868"/></svg></span>
+          <span class="int-nm">EUA</span>
         </button>
       </div>
       <div class="int-player">
@@ -3052,14 +3073,8 @@ if(_secReel)_secReel.addEventListener('click',function(){_openReel();});
   const btns=document.querySelectorAll('.int-c');
   const countries=document.querySelector('.int-countries');
   const player=document.querySelector('.int-player');
-  const countryColors={
-    brasilia:{color:'#00FF7F',glow:'rgba(0,255,127,.6)',bg:'rgba(0,255,127,.3)'},
-    londres:{color:'#00BFFF',glow:'rgba(0,191,255,.6)',bg:'rgba(0,191,255,.3)'},
-    gales:{color:'#FF3366',glow:'rgba(255,51,102,.6)',bg:'rgba(255,51,102,.3)'},
-    escocia:{color:'#9370DB',glow:'rgba(147,112,219,.6)',bg:'rgba(147,112,219,.3)'},
-    paris:{color:'#FFD700',glow:'rgba(255,215,0,.6)',bg:'rgba(255,215,0,.3)'},
-    eua:{color:'#FF4500',glow:'rgba(255,69,0,.6)',bg:'rgba(255,69,0,.3)'}
-  };
+  const _g={color:'#6BF019',glow:'rgba(107,240,25,.5)',bg:'rgba(107,240,25,.16)'};
+  const countryColors={brasilia:_g,londres:_g,gales:_g,escocia:_g,paris:_g,eua:_g};
   const intRight=document.querySelector('.int-right');
   const setCountryColor=(key)=>{
     const c=countryColors[key]||countryColors.brasilia;
