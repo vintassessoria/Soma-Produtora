@@ -1307,6 +1307,28 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
   #servicos .sv-grid{grid-template-columns:1fr}
   
 }
+/* ══════ RELOGIO AO VIVO NO NAV (ideia do site da Sand) ══════
+   Localizacao da sede + hora local de Brasilia, com um ponto verde
+   pulsando. So no desktop — no mobile o nav ja e apertado com o burger. */
+.nav-status{display:flex;align-items:center;gap:9px;
+  font-family:var(--FM);font-size:11px;letter-spacing:1.5px;
+  color:var(--Gr);text-transform:uppercase;pointer-events:none;
+  white-space:nowrap}
+.nav-status .ns-dot{width:6px;height:6px;border-radius:50%;background:var(--G);
+  box-shadow:0 0 8px rgba(107,240,25,.7);animation:nsPulse 2.4s ease-in-out infinite}
+.nav-status .ns-time{color:var(--W);font-variant-numeric:tabular-nums;
+  min-width:38px}
+@keyframes nsPulse{0%,100%{opacity:.5;transform:scale(1)}50%{opacity:1;transform:scale(1.25)}}
+@media(max-width:900px){.nav-status{display:none}}
+
+/* ══════ LENIS — scroll suave com inercia (ideia do site da Sand) ══════
+   CSS oficial da lib. Sem gate por prefers-reduced-motion: o Windows do
+   usuario reporta "sem animacao" e o scroll voltaria a ser seco pra ele. */
+html.lenis,html.lenis body{height:auto}
+html.lenis,.lenis.lenis-smooth{scroll-behavior:auto!important}
+.lenis.lenis-smooth [data-lenis-prevent]{overscroll-behavior:contain}
+.lenis.lenis-stopped{overflow:hidden}
+.lenis.lenis-smooth iframe{pointer-events:none}
 </style>
 </head>
 <body>
@@ -1338,6 +1360,12 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
   <a href="#" class="nav-logo">
     <img class="nav-sym" src="logotipo.png" alt="SOMA Produtora" fetchpriority="high" decoding="async">
   </a>
+  <!-- relogio ao vivo da sede (ideia do site da Sand): reforca presenca/"ao vivo" -->
+  <div class="nav-status" aria-hidden="true">
+    <span class="ns-dot"></span>
+    <span class="ns-loc">BSB&nbsp;&middot;&nbsp;BR</span>
+    <span class="ns-time" id="navClock">--:--</span>
+  </div>
   <div class="nav-r">
     <ul class="nav-links">
       <li><a href="#portfolio">Portfólio</a></li>
@@ -2928,9 +2956,13 @@ var _closeReel=function(){
   try{ modalVideo.removeAttribute('src'); modalVideoSrc.src=''; modalVideo.load(); }catch(e){}
   _unlockScroll();
 };
-document.getElementById('openReel').addEventListener('click',function(e){e.preventDefault();_openReel();});
+/* #openReel nunca existiu no HTML — sem a guarda esta linha lanca no load e
+   MATA o resto do bloco (menu mobile, seletor de paises, clique do showreel). */
+var _btnReel=document.getElementById('openReel');
+if(_btnReel)_btnReel.addEventListener('click',function(e){e.preventDefault();_openReel();});
 /* Sem botao de play: o quadro inteiro abre o showreel */
-document.getElementById('reelSection').addEventListener('click',function(){_openReel();});
+var _secReel=document.getElementById('reelSection');
+if(_secReel)_secReel.addEventListener('click',function(){_openReel();});
 
 (function(){
   const order=['brasilia','londres','gales','escocia','paris','eua'];
@@ -3145,6 +3177,70 @@ document.getElementById('reelSection').addEventListener('click',function(){_open
     },{rootMargin:'120px'}).observe(host);
   }
   for(var i=0;i<hosts.length;i++)init(hosts[i]);
+})();
+</script>
+
+<!-- ══════ Lenis (scroll suave) — embutido, sem CDN em runtime ══════ -->
+<script src="lenis.min.js"></script>
+<script>
+/* ── RELOGIO AO VIVO: hora local de Brasilia (nao a do visitante) ──
+   Mostrar a hora da SEDE e o que diz "estamos aqui, ao vivo" — igual
+   ao relogio do site da Sand. America/Sao_Paulo = mesmo fuso de Brasilia. */
+(function(){
+  var el=document.getElementById('navClock');if(!el)return;
+  var fmt;
+  try{fmt=new Intl.DateTimeFormat('pt-BR',{timeZone:'America/Sao_Paulo',
+    hour:'2-digit',minute:'2-digit',hour12:false});}catch(e){fmt=null;}
+  function tick(){
+    el.textContent=fmt?fmt.format(new Date())
+      :new Date().toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+  }
+  tick();setInterval(tick,15000);
+})();
+
+/* ── LENIS: scroll suave com inercia ──
+   Aplica o "feel" caro do site da Sand. Integra com o que o site ja tem:
+     - ancoras internas passam a rolar suave via lenis.scrollTo (com recuo
+       da altura do nav fixo);
+     - o trava-scroll dos modais chama lenis.stop()/start(), senao a pagina
+       rolaria por baixo do modal;
+     - se o arquivo da lib falhar, tudo degrada para o scroll nativo. */
+(function(){
+  if(typeof Lenis==='undefined'){console.warn('[SOMA] Lenis indisponivel — scroll nativo');return;}
+  document.documentElement.classList.add('lenis-on');
+  var lenis=new Lenis({
+    duration:1.05,
+    easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t));},
+    smoothWheel:true, wheelMultiplier:1, touchMultiplier:1.4,
+    /* o toque continua nativo: mais previsivel no celular e nao briga
+       com as secoes presas (sticky) que fazem conta com o scroll */
+    smoothTouch:false
+  });
+  window.lenis=lenis;
+  function raf(t){lenis.raf(t);requestAnimationFrame(raf);}
+  requestAnimationFrame(raf);
+
+  /* ancoras internas -> rolagem suave, com recuo do nav fixo */
+  function alturaNav(){var n=document.getElementById('nav');return n?n.offsetHeight+14:80;}
+  document.addEventListener('click',function(e){
+    var a=e.target.closest?e.target.closest('a[href^="#"]'):null;
+    if(!a)return;
+    var href=a.getAttribute('href');
+    if(!href||href==='#'||href.length<2)return;
+    var alvo;try{alvo=document.querySelector(href);}catch(_){return;}
+    if(!alvo)return;
+    e.preventDefault();
+    lenis.scrollTo(alvo,{offset:-alturaNav()});
+    var nm=document.getElementById('navMobile');if(nm)nm.classList.remove('open');
+    var bg=document.getElementById('navBurger');if(bg)bg.setAttribute('aria-expanded','false');
+  });
+
+  /* trava-scroll dos modais tambem para/retoma o Lenis */
+  if(typeof _lockScroll==='function'&&typeof _unlockScroll==='function'){
+    var _ol=_lockScroll,_ou=_unlockScroll;
+    window._lockScroll=function(){_ol();lenis.stop();};
+    window._unlockScroll=function(){_ou();lenis.start();};
+  }
 })();
 </script>
 
