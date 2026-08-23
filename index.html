@@ -1346,19 +1346,11 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
 .lh-link .a{transition:transform .35s var(--Ef)}
 .lh-link:hover{color:var(--G)}
 .lh-link:hover .a{transform:translateY(3px)}
-.lh-cue{position:absolute;left:var(--gut);bottom:clamp(24px,4vh,42px);z-index:2;
-  display:flex;align-items:center;gap:13px;font-family:var(--FM);font-size:9px;
-  letter-spacing:2.5px;text-transform:uppercase;color:rgba(255,255,255,.42);
-  pointer-events:none;opacity:0;animation:lhIn 1s var(--Ef) 1.1s forwards}
-.lh-cue i{width:1px;height:32px;background:linear-gradient(to bottom,var(--G),transparent);
-  transform-origin:top;animation:lhCue 2.2s ease-in-out infinite}
 @keyframes lhIn{to{opacity:1}}
 @keyframes lhUp{to{transform:translateY(0)}}
-@keyframes lhCue{0%,100%{transform:scaleY(.5);opacity:.5}50%{transform:scaleY(1);opacity:1}}
 @media(max-width:768px){
   .lh-h1{font-size:clamp(38px,12vw,62px);max-width:none}
   .lh-veil{background:linear-gradient(to bottom,rgba(0,0,0,.5) 0%,rgba(0,0,0,.32) 42%,rgba(0,0,0,.82) 100%)}
-  .lh-cue{display:none}
   .lh-acts{gap:18px}
 }
 
@@ -1486,7 +1478,6 @@ html.lenis,.lenis.lenis-smooth{scroll-behavior:auto!important}
       <a href="#snPin" class="lh-link">Ver o trabalho <span class="a">&#8595;</span></a>
     </div>
   </div>
-  <div class="lh-cue" aria-hidden="true"><i></i>Role para começar</div>
 </section>
 
 <div class="sn-pin" id="snPin">
