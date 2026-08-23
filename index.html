@@ -3263,14 +3263,16 @@ if(_secReel)_secReel.addEventListener('click',function(){_openReel();});
 
 <script>
 /* ── HERO DE ABERTURA: escolhe a fonte do video e da play ──
-   Desktop recebe hero-scrub.mp4 (nativo); celular, a versao 720p (2.3MB).
-   O src entra por JS para nao baixar os dois. autoplay+muted ja tocam;
-   o play() explicito e so um seguro. Se falhar, o poster (still da grade)
-   segura a cena. */
+   Fundo em PING-PONG (vai-e-volta): o arquivo ja traz o trecho e o seu
+   reverso concatenados, entao o loop nativo fecha sem emenda — o ultimo
+   frame e o mesmo do primeiro. Encode linear CRF22 (bem melhor que o antigo
+   scrub CRF26) no MESMO peso: 6.8MB desktop, 1.5MB no 720p do celular.
+   O src entra por JS para nao baixar os dois. autoplay+muted ja tocam; o
+   play() e so um seguro. Se falhar, o poster (still da grade) segura a cena. */
 (function(){
   var v=document.getElementById('leadVid');if(!v)return;
   var movel=matchMedia('(max-width:768px)').matches;
-  v.src=movel?'hero-scrub-mobile.mp4':'hero-scrub.mp4';
+  v.src=movel?'hero-bg-mobile.mp4':'hero-bg.mp4';
   v.load();
   var q=v.play();if(q&&q.catch)q.catch(function(){});
 })();
