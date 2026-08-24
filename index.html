@@ -1323,19 +1323,32 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
    Ken Burns = zoom/deriva lentos, como uma camera viva; o object-fit:cover
    com scale>=1.06 garante que a imagem nunca descubra as bordas. */
 .lh-img{transform-origin:56% 36%;will-change:transform;
-  animation:lhKen 26s ease-in-out infinite alternate}
+  animation:lhKen 16s ease-in-out infinite alternate}
 @keyframes lhKen{
-  from{transform:scale(1.06) translate3d(0,0,0)}
-  to{transform:scale(1.16) translate3d(-2%,2.5%,0)}
+  from{transform:scale(1.04) translate3d(0,0,0)}
+  to{transform:scale(1.22) translate3d(-4%,4%,0)}
 }
-/* respiro de luz verde sobre a esfera */
-.lh-glow{position:absolute;left:50%;top:32%;width:92%;height:56%;
+/* respiro de luz verde sobre a esfera (mais forte e mais rapido) */
+.lh-glow{position:absolute;left:50%;top:32%;width:94%;height:58%;
   transform:translate(-50%,-50%);pointer-events:none;display:none;z-index:1;
-  background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(107,240,25,.22),transparent 68%);
-  mix-blend-mode:screen;animation:lhBreath 5.5s ease-in-out infinite}
+  background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(107,240,25,.34),transparent 66%);
+  mix-blend-mode:screen;animation:lhBreath 4s ease-in-out infinite}
 @keyframes lhBreath{
-  0%,100%{opacity:.28;transform:translate(-50%,-50%) scale(1)}
-  50%{opacity:.7;transform:translate(-50%,-50%) scale(1.08)}
+  0%,100%{opacity:.2;transform:translate(-50%,-50%) scale(.96)}
+  50%{opacity:.9;transform:translate(-50%,-50%) scale(1.14)}
+}
+/* feixe de luz varrendo a cena — o movimento mais obvio */
+.lh-sweep{position:absolute;inset:-25% -45%;pointer-events:none;display:none;z-index:2;
+  background:linear-gradient(112deg,transparent 42%,rgba(107,240,25,.18) 47%,
+    rgba(220,255,200,.42) 50%,rgba(107,240,25,.18) 53%,transparent 58%);
+  mix-blend-mode:screen;transform:translateX(-80%);
+  animation:lhSweep 5.5s ease-in-out infinite}
+@keyframes lhSweep{
+  0%{transform:translateX(-85%);opacity:0}
+  12%{opacity:1}
+  46%{transform:translateX(85%);opacity:1}
+  58%{transform:translateX(85%);opacity:0}
+  100%{transform:translateX(85%);opacity:0}
 }
 .lh-veil{position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(to right,rgba(0,0,0,.88) 0%,rgba(0,0,0,.62) 40%,rgba(0,0,0,.22) 70%,transparent 100%),
@@ -1375,6 +1388,7 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
   .lh-vid{display:none}
   .lh-img{display:block}
   .lh-glow{display:block}
+  .lh-sweep{display:block}
   /* desce o texto para nao ficar sobre a esfera: ancora embaixo */
   #lead{align-items:flex-end}
   .lh-inner{padding-bottom:clamp(48px,11vh,104px)}
@@ -1496,6 +1510,8 @@ html.lenis,.lenis.lenis-smooth{scroll-behavior:auto!important}
     <img class="lh-img" src="hero-mobile.webp" alt="" decoding="async">
     <!-- respiro de luz verde sobre a esfera (da vida a arte estatica no mobile) -->
     <div class="lh-glow" aria-hidden="true"></div>
+    <!-- feixe de luz varrendo: movimento visivel, estilo scanner -->
+    <div class="lh-sweep" aria-hidden="true"></div>
     <div class="lh-veil"></div>
   </div>
   <div class="lh-inner">
