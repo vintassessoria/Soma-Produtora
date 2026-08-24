@@ -1352,11 +1352,15 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
 @keyframes lhUp{to{transform:translateY(0)}}
 @media(max-width:768px){
   .lh-h1{font-size:clamp(38px,12vw,62px);max-width:none}
-  .lh-veil{background:linear-gradient(to bottom,rgba(0,0,0,.5) 0%,rgba(0,0,0,.32) 42%,rgba(0,0,0,.82) 100%)}
   .lh-acts{gap:18px}
   /* mobile: troca o video pela imagem estatica vertical */
   .lh-vid{display:none}
   .lh-img{display:block}
+  /* desce o texto para nao ficar sobre a esfera: ancora embaixo */
+  #lead{align-items:flex-end}
+  .lh-inner{padding-bottom:clamp(48px,11vh,104px)}
+  /* reforca o escurecimento na base, onde o texto agora vive */
+  .lh-veil{background:linear-gradient(to bottom,rgba(0,0,0,.35) 0%,rgba(0,0,0,.12) 34%,rgba(0,0,0,.55) 72%,rgba(0,0,0,.9) 100%)}
 }
 
 /* ══════ RELOGIO AO VIVO NO NAV (ideia do site da Sand) ══════
