@@ -1319,6 +1319,24 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
 .lh-vid{width:100%;height:100%;object-fit:cover;display:block;background:#000}
 .lh-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
   object-position:center;display:none;background:#000}
+/* efeito na arte estatica do mobile (so aparece no mobile):
+   Ken Burns = zoom/deriva lentos, como uma camera viva; o object-fit:cover
+   com scale>=1.06 garante que a imagem nunca descubra as bordas. */
+.lh-img{transform-origin:56% 36%;will-change:transform;
+  animation:lhKen 26s ease-in-out infinite alternate}
+@keyframes lhKen{
+  from{transform:scale(1.06) translate3d(0,0,0)}
+  to{transform:scale(1.16) translate3d(-2%,2.5%,0)}
+}
+/* respiro de luz verde sobre a esfera */
+.lh-glow{position:absolute;left:50%;top:32%;width:92%;height:56%;
+  transform:translate(-50%,-50%);pointer-events:none;display:none;z-index:1;
+  background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(107,240,25,.22),transparent 68%);
+  mix-blend-mode:screen;animation:lhBreath 5.5s ease-in-out infinite}
+@keyframes lhBreath{
+  0%,100%{opacity:.28;transform:translate(-50%,-50%) scale(1)}
+  50%{opacity:.7;transform:translate(-50%,-50%) scale(1.08)}
+}
 .lh-veil{position:absolute;inset:0;pointer-events:none;
   background:linear-gradient(to right,rgba(0,0,0,.88) 0%,rgba(0,0,0,.62) 40%,rgba(0,0,0,.22) 70%,transparent 100%),
              linear-gradient(to bottom,rgba(0,0,0,.5) 0%,transparent 26%,transparent 58%,rgba(0,0,0,.78) 100%)}
@@ -1353,9 +1371,10 @@ nav.stuck{padding-top:max(14px,env(safe-area-inset-top))}
 @media(max-width:768px){
   .lh-h1{font-size:clamp(38px,12vw,62px);max-width:none}
   .lh-acts{gap:18px}
-  /* mobile: troca o video pela imagem estatica vertical */
+  /* mobile: troca o video pela imagem estatica vertical + efeitos */
   .lh-vid{display:none}
   .lh-img{display:block}
+  .lh-glow{display:block}
   /* desce o texto para nao ficar sobre a esfera: ancora embaixo */
   #lead{align-items:flex-end}
   .lh-inner{padding-bottom:clamp(48px,11vh,104px)}
@@ -1475,6 +1494,8 @@ html.lenis,.lenis.lenis-smooth{scroll-behavior:auto!important}
            preload="none" poster="hero-soma.webp" tabindex="-1" disablepictureinpicture></video>
     <!-- mobile usa imagem estatica vertical (encaixa melhor que o video landscape) -->
     <img class="lh-img" src="hero-mobile.webp" alt="" decoding="async">
+    <!-- respiro de luz verde sobre a esfera (da vida a arte estatica no mobile) -->
+    <div class="lh-glow" aria-hidden="true"></div>
     <div class="lh-veil"></div>
   </div>
   <div class="lh-inner">
