@@ -204,10 +204,14 @@ em.acc{font-style:italic}
   display:flex;flex-direction:column;align-items:center;justify-content:center;
   padding:clamp(60px,8vw,110px) var(--gut)}
 .case+.case{border-top:1px solid var(--hair)}
-.case-bg{position:absolute;inset:0;z-index:0}
+/* o fundo era blur(18px) + brightness(.5): virava um borrao ilegivel.
+   Agora e uma imagem legivel, so recuada por escurecimento e um blur leve,
+   e desliza mais devagar que a pagina (parallax). */
+.case-bg{position:absolute;inset:-12% 0;z-index:0;will-change:transform}
 .case-bg video,.case-bg img{width:100%;height:100%;object-fit:cover;
-  filter:blur(18px) brightness(.5) saturate(1.1);transform:scale(1.1)}
-.case::after{content:'';position:absolute;inset:0;z-index:1;background:rgba(0,0,0,.42)}
+  filter:blur(3px) brightness(.62) saturate(1.05);transform:scale(1.06)}
+.case::after{content:'';position:absolute;inset:0;z-index:1;
+  background:linear-gradient(to bottom,rgba(0,0,0,.72),rgba(0,0,0,.42) 42%,rgba(0,0,0,.85))}
 .case>*{position:relative;z-index:2}
 .case .ds{margin-bottom:clamp(20px,2.6vw,34px);text-align:center}
 .case-card{width:min(340px,72vw);aspect-ratio:3/4;border-radius:20px;overflow:hidden;
@@ -290,10 +294,36 @@ footer a:hover{color:var(--acc)}
   transition:opacity .9s var(--Ef),transform .9s var(--Ef)}
 .rv.on{opacity:1;transform:none}
 .rv.dl1{transition-delay:.09s}.rv.dl2{transition-delay:.18s}.rv.dl3{transition-delay:.27s}
-/* cortina na imagem */
-.rv-c{clip-path:inset(100% 0 0 0);transform:scale(1.12);
-  transition:clip-path 1.1s var(--Ef),transform 1.5s var(--Ef)}
-.rv-c.on{clip-path:inset(0 0 0 0);transform:scale(1)}
+
+/* CORTINA na imagem — sem clip-path, de proposito.
+   clip-path:inset(100%) zera a AREA do elemento, e nesse estado o
+   IntersectionObserver nunca o considera visivel: se o gatilho falha, a
+   imagem fica preta para sempre (foi o que quebrou as secoes de case).
+   Aqui a cortina e feita com escala + opacidade: o elemento mantem area
+   e o gatilho e por geometria no laco de rAF, nao por observer. */
+.rv-c{opacity:0;transform:scale(1.14);
+  transition:opacity 1s var(--Ef),transform 1.5s var(--Ef)}
+.rv-c.on{opacity:1;transform:scale(1)}
+
+/* ════════ PARALLAX + 3D (pedido do usuario) ════════ */
+/* fundo que desliza mais devagar que a pagina */
+.px{will-change:transform}
+/* cartao com inclinacao 3D conforme entra na tela */
+.tilt3d{transform-style:preserve-3d;will-change:transform}
+.persp{perspective:1400px;perspective-origin:50% 50%}
+/* FUNDO ATRAS ENTRANDO ENTRE AS SECOES:
+   o painel fica preso (sticky) e a secao seguinte sobe por cima dele,
+   revelando a imagem "por tras" — o gesto do template. */
+.reveal-stack{position:relative}
+.reveal-bg{position:sticky;top:0;height:100svh;overflow:hidden;z-index:0}
+.reveal-bg img,.reveal-bg video{width:100%;height:100%;object-fit:cover}
+.reveal-bg::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(0,0,0,.55),rgba(0,0,0,.25) 45%,rgba(0,0,0,.8))}
+.reveal-bg .rb-cap{position:absolute;left:0;right:0;bottom:clamp(30px,7vh,80px);
+  text-align:center;z-index:2}
+.reveal-over{position:relative;z-index:1;background:var(--bg);
+  border-radius:34px 34px 0 0;margin-top:-34px;
+  box-shadow:0 -30px 70px rgba(0,0,0,.7)}
 
 /* Lenis */
 html.lenis,html.lenis body{height:auto}
@@ -371,17 +401,17 @@ html.lenis,html.lenis body{height:auto}
     <div class="ix lb"><i>02</i> Serviços</div>
     <h2 class="d2 rv-w" data-words>Tudo o que sua marca precisa, em um só lugar.</h2>
   </div>
-  <div class="band"><img src="foto-04.webp" alt="" loading="lazy">
+  <div class="band"><img class="px" data-px="10" src="foto-04.webp" alt="" loading="lazy">
     <div class="cap"><div class="lb n">01</div><div class="ds">Audiovisual</div></div></div>
-  <div class="band"><img src="foto-09.webp" alt="" loading="lazy">
+  <div class="band"><img class="px" data-px="10" src="foto-09.webp" alt="" loading="lazy">
     <div class="cap"><div class="lb n">02</div><div class="ds">Gestão de Tráfego</div></div></div>
-  <div class="band"><img src="foto-14.webp" alt="" loading="lazy">
+  <div class="band"><img class="px" data-px="10" src="foto-14.webp" alt="" loading="lazy">
     <div class="cap"><div class="lb n">03</div><div class="ds">Social Media</div></div></div>
-  <div class="band"><img src="foto-17.webp" alt="" loading="lazy">
+  <div class="band"><img class="px" data-px="10" src="foto-17.webp" alt="" loading="lazy">
     <div class="cap"><div class="lb n">04</div><div class="ds">Sites &amp; Landing Pages</div></div></div>
-  <div class="band"><img src="foto-20.webp" alt="" loading="lazy">
+  <div class="band"><img class="px" data-px="10" src="foto-20.webp" alt="" loading="lazy">
     <div class="cap"><div class="lb n">05</div><div class="ds">Drone</div></div></div>
-  <div class="band"><img src="foto-06.webp" alt="" loading="lazy">
+  <div class="band"><img class="px" data-px="10" src="foto-06.webp" alt="" loading="lazy">
     <div class="cap"><div class="lb n">06</div><div class="ds">Fotografia</div></div></div>
 </section>
 
@@ -412,16 +442,27 @@ html.lenis,html.lenis body{height:auto}
 </div>
 
 <!-- ══════ (04) PROJETOS ══════ -->
-<section id="projetos">
+<!-- FUNDO ATRAS ENTRANDO ENTRE AS SECOES:
+     o painel .reveal-bg fica preso (sticky) e #projetos sobe por cima dele
+     com canto arredondado, revelando a imagem "por tras" -->
+<div class="reveal-stack">
+  <div class="reveal-bg">
+    <img class="px" data-px="9" src="foto-13.webp" alt="" loading="lazy">
+    <div class="rb-cap">
+      <div class="lb" style="margin-bottom:8px">Do conceito ao frame final</div>
+      <div class="ds">Bastidores SOMA</div>
+    </div>
+  </div>
+  <section id="projetos" class="reveal-over">
   <div class="sec wrap ctr" style="padding-bottom:clamp(30px,4vw,60px)">
     <div class="ix lb"><i>04</i> Projetos</div>
     <h2 class="d2 rv-w" data-words>Trabalhos selecionados para marcas e festivais.</h2>
   </div>
 
-  <article class="case">
-    <div class="case-bg"><img src="foto-02.webp" alt="" loading="lazy"></div>
+  <article class="case persp">
+    <div class="case-bg px" data-px="14"><img src="foto-02.webp" alt="" loading="lazy"></div>
     <h3 class="ds">EXPOMIX &mdash; Aftermovie</h3>
-    <div class="case-card rv-c">
+    <div class="case-card rv-c tilt3d">
       <video class="cv" muted loop playsinline preload="none"
         data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.MP4"></video>
     </div>
@@ -432,10 +473,10 @@ html.lenis,html.lenis body{height:auto}
     </div>
   </article>
 
-  <article class="case">
-    <div class="case-bg"><img src="foto-05.webp" alt="" loading="lazy"></div>
+  <article class="case persp">
+    <div class="case-bg px" data-px="14"><img src="foto-05.webp" alt="" loading="lazy"></div>
     <h3 class="ds">Mari Fernandez &mdash; Palco Principal</h3>
-    <div class="case-card rv-c">
+    <div class="case-card rv-c tilt3d">
       <video class="cv" muted loop playsinline preload="none"
         data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.MP4"></video>
     </div>
@@ -446,10 +487,10 @@ html.lenis,html.lenis body{height:auto}
     </div>
   </article>
 
-  <article class="case">
-    <div class="case-bg"><img src="foto-11.webp" alt="" loading="lazy"></div>
+  <article class="case persp">
+    <div class="case-bg px" data-px="14"><img src="foto-11.webp" alt="" loading="lazy"></div>
     <h3 class="ds">Fome de Música &mdash; Verão</h3>
-    <div class="case-card rv-c">
+    <div class="case-card rv-c tilt3d">
       <video class="cv" muted loop playsinline preload="none"
         data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/FOME%20DE%20M%C3%9ASICA%20-%20VER%C3%83O%20R2%20_v3.mp4"></video>
     </div>
@@ -460,10 +501,10 @@ html.lenis,html.lenis body{height:auto}
     </div>
   </article>
 
-  <article class="case">
-    <div class="case-bg"><img src="foto-16.webp" alt="" loading="lazy"></div>
+  <article class="case persp">
+    <div class="case-bg px" data-px="14"><img src="foto-16.webp" alt="" loading="lazy"></div>
     <h3 class="ds">Na Praia &mdash; Acessibilidade</h3>
-    <div class="case-card rv-c">
+    <div class="case-card rv-c tilt3d">
       <video class="cv" muted loop playsinline preload="none"
         data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Acessibilidade%20-%20Tel%C3%A3o%202025%20Na%20Praia.MOV"></video>
     </div>
@@ -474,6 +515,9 @@ html.lenis,html.lenis body{height:auto}
     </div>
   </article>
 </section>
+</div>
+
+
 
 <!-- ══════ SHOWREEL ══════ -->
 <section class="sec" id="showreel" style="padding-bottom:0">
@@ -530,7 +574,7 @@ html.lenis,html.lenis body{height:auto}
       </div>
       <div class="intl-pl">
         <video id="intlVid" muted loop playsinline preload="none"
-          data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/video-internacional.mp4"></video>
+          data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/video-internacional.MOV"></video>
       </div>
     </div>
   </div>
@@ -616,52 +660,68 @@ document.querySelectorAll('[data-words]').forEach(function(el){
 });
 
 /* ---------- gatilhos de entrada ---------- */
-var io=new IntersectionObserver(function(es){
-  es.forEach(function(e){if(e.isIntersecting)e.target.classList.add('on')});
-},{threshold:.12,rootMargin:'0px 0px -6% 0px'});
-document.querySelectorAll('.rv,.rv-u').forEach(function(el){io.observe(el)});
+/* REVELACOES POR GEOMETRIA, nao por IntersectionObserver.
+   O observer depende do ciclo de renderizacao; quando ele nao entrega o
+   callback, o elemento fica escondido PARA SEMPRE — foi o que deixou as
+   secoes de case com o fundo borrado e nada por cima. Aqui a decisao e
+   recalculada a cada quadro a partir da posicao real, entao nao existe
+   estado preso: se esta na tela, aparece. */
+var revs=[].slice.call(document.querySelectorAll('.rv,.rv-u,.rv-c'));
+function checaRevs(vh){
+  if(!revs.length)return;
+  for(var i=revs.length-1;i>=0;i--){
+    var el=revs[i];
+    var r=el.getBoundingClientRect();
+    if(r.height===0&&r.width===0)continue;
+    if(r.top<vh*0.94&&r.bottom>0){el.classList.add('on');revs.splice(i,1)}
+  }
+}
+/* TRES fontes independentes chamam a checagem, de proposito. O laco de
+   rAF sozinho nao basta: se ele for estrangulado (aba em segundo plano,
+   economia de bateria), o conteudo ficaria ESCONDIDO — exatamente o
+   defeito que estamos consertando. O scroll e o intervalo cobrem isso. */
+function rede(){var vh=innerHeight||1;checaRevs(vh);checaCnts(vh);checaVids(vh)}
+addEventListener('scroll',rede,{passive:true});
+setInterval(rede,350);
+addEventListener('load',rede);
 
-/* A cortina (.rv-c) comeca com clip-path:inset(100%) — area ZERO. Nesse
-   estado o IntersectionObserver nunca considera o elemento visivel e a
-   imagem ficaria preta para sempre. Por isso quem e observado e o PAI. */
-var cio2=new IntersectionObserver(function(es){
-  es.forEach(function(e){
-    if(!e.isIntersecting)return;
-    var alvo=e.target.matches('.rv-c')?e.target:e.target.querySelector('.rv-c');
-    if(alvo)alvo.classList.add('on');
-    cio2.unobserve(e.target);
-  });
-},{threshold:0,rootMargin:'0px 0px -5% 0px'});
-document.querySelectorAll('.rv-c').forEach(function(el){
-  cio2.observe(el.parentElement||el);
-});
+/* ---------- contadores (geometria, nao observer) ----------
+   Um contador preso em 0 e um bug VISIVEL; por isso ele entra na mesma
+   rede de seguranca das revelacoes em vez de depender do observer. */
+var cnts=[].slice.call(document.querySelectorAll('.cnt'));
+function checaCnts(vh){
+  if(!cnts.length)return;
+  for(var i=cnts.length-1;i>=0;i--){
+    var el=cnts[i],r=el.getBoundingClientRect();
+    if(r.height===0&&r.width===0)continue;
+    if(r.top>vh*0.9||r.bottom<0)continue;
+    cnts.splice(i,1);
+    (function(el){
+      var alvo=+el.dataset.t,t0=null;
+      function passo(t){
+        if(!t0)t0=t;var p=Math.min(1,(t-t0)/1400);
+        el.textContent=Math.round(alvo*(1-Math.pow(1-p,3)));
+        if(p<1)requestAnimationFrame(passo);else el.textContent=alvo;
+      }
+      requestAnimationFrame(passo);
+      /* se o rAF estiver congelado, o numero final entra assim mesmo */
+      setTimeout(function(){if(+el.textContent!==alvo)el.textContent=alvo},1800);
+    })(el);
+  }
+}
 
-/* ---------- contadores ---------- */
-var cio=new IntersectionObserver(function(es){
-  es.forEach(function(e){
-    if(!e.isIntersecting)return;
-    var el=e.target,alvo=+el.dataset.t,t0=null;
-    function passo(t){
-      if(!t0)t0=t;var p=Math.min(1,(t-t0)/1400);
-      el.textContent=Math.round(alvo*(1-Math.pow(1-p,3)));
-      if(p<1)requestAnimationFrame(passo);
-    }
-    requestAnimationFrame(passo);cio.unobserve(el);
-  });
-},{threshold:.5});
-document.querySelectorAll('.cnt').forEach(function(el){cio.observe(el)});
-
-/* ---------- videos: so carregam quando chegam perto ---------- */
-var vio=new IntersectionObserver(function(es){
-  es.forEach(function(e){
-    var v=e.target;
-    if(e.isIntersecting){
+/* ---------- videos: carregam quando chegam perto (geometria) ---------- */
+var vids=[].slice.call(document.querySelectorAll('video[data-src]'));
+function checaVids(vh){
+  for(var i=0;i<vids.length;i++){
+    var v=vids[i],r=v.getBoundingClientRect();
+    var perto=r.top<vh+300&&r.bottom>-300;
+    if(perto){
       if(!v.src&&v.dataset.src){v.src=v.dataset.src;v.load()}
-      var q=v.play();if(q&&q.catch)q.catch(function(){});
-    }else{try{v.pause()}catch(_){}}
-  });
-},{rootMargin:'200px'});
-document.querySelectorAll('video[data-src]').forEach(function(v){vio.observe(v)});
+      if(v.paused){var q=v.play();if(q&&q.catch)q.catch(function(){})}
+    }else if(!v.paused){try{v.pause()}catch(_){}}
+  }
+}
 
 /* hero: video local, so no desktop (no celular fica o poster) */
 (function(){
@@ -696,10 +756,39 @@ document.addEventListener('click',function(e){
   else alvo.scrollIntoView({behavior:'smooth'});
 });
 
-/* um unico rAF: Lenis + as palavras acendendo na medida do scroll */
+/* ---------- parallax + inclinacao 3D (pedido do usuario) ---------- */
+var pxs=[].slice.call(document.querySelectorAll('.px'));
+var tilts=[].slice.call(document.querySelectorAll('.tilt3d'));
+
+function moveParallax(vh){
+  for(var i=0;i<pxs.length;i++){
+    var el=pxs[i],pai=el.parentElement,r=pai.getBoundingClientRect();
+    if(r.bottom<-100||r.top>vh+100)continue;
+    /* -1..1 conforme a secao atravessa a tela */
+    var p=((r.top+r.height/2)-vh/2)/(vh/2+r.height/2);
+    var amp=parseFloat(el.dataset.px||'12');   /* % de deslocamento */
+    el.style.transform='translate3d(0,'+(p*amp).toFixed(2)+'%,0)';
+  }
+}
+function moveTilt(vh){
+  for(var i=0;i<tilts.length;i++){
+    var el=tilts[i],r=el.getBoundingClientRect();
+    if(r.bottom<-80||r.top>vh+80)continue;
+    var p=((r.top+r.height/2)-vh/2)/(vh/2+r.height/2); /* -1..1 */
+    if(p>1)p=1;if(p<-1)p=-1;
+    /* a peca chega deitada e se endireita ao cruzar o centro */
+    el.style.transform='rotateX('+(p*7).toFixed(2)+'deg) '+
+      'translate3d(0,'+(p*-2.2).toFixed(2)+'%,0) scale('+(1-Math.abs(p)*0.035).toFixed(4)+')';
+  }
+}
+
+/* um unico rAF: Lenis + revelacoes + parallax + 3D + palavras */
 function quadro(t){
   if(lenis)lenis.raf(t);
   var vh=innerHeight||1;
+  checaRevs(vh);
+  moveParallax(vh);
+  moveTilt(vh);
   for(var k=0;k<blocos.length;k++){
     var s=blocos[k],r=s.el.getBoundingClientRect();
     if(r.bottom<-200||r.top>vh+200)continue;
