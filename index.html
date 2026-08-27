@@ -168,6 +168,69 @@ em.acc{font-style:italic}
 .why-c .t{display:flex;align-items:center;justify-content:center;padding:22px;text-align:center}
 @media(max-width:600px){.why-c{grid-template-columns:96px 1fr}.why-c img{min-height:88px}}
 
+/* ██████ SISTEMA DE EFEITOS DE SCROLL ██████████████████████████████████
+   Antes havia UM efeito só (.rv, fade + sobe) repetido no site inteiro —
+   monotonia. Agora há dois tipos:
+
+   GATILHO (dispara uma vez ao entrar):  data-fx="rise|zoom|slide-l|slide-r"
+   CONTÍNUO (ligado ao progresso do scroll): data-sc="zoom|drift|grow"
+     — é o "dando zoom conforme eu desço" que o usuário pediu: o valor
+       acompanha o dedo, não um relógio.
+
+   Regra que segui do guia de UX: transform/opacity apenas (nunca
+   width/height), ease-out na entrada, e no máximo 1–2 peças em movimento
+   por tela — variedade sem poluição.
+   ────────────────────────────────────────────────────────────────────── */
+[data-fx]{will-change:transform,opacity}
+[data-fx="rise"]{opacity:0;transform:translateY(30px)}
+[data-fx="zoom"]{opacity:0;transform:scale(1.16)}
+[data-fx="slide-l"]{opacity:0;transform:translateX(-46px)}
+[data-fx="slide-r"]{opacity:0;transform:translateX(46px)}
+[data-fx]{transition:opacity .95s var(--Ef),transform 1.15s var(--Ef)}
+[data-fx].on{opacity:1;transform:none}
+[data-fx][data-d="1"]{transition-delay:.10s}
+[data-fx][data-d="2"]{transition-delay:.20s}
+[data-fx][data-d="3"]{transition-delay:.30s}
+/* contínuos: o JS escreve o transform a cada quadro, sem transição */
+[data-sc]{will-change:transform}
+
+/* ██████ SERVIÇOS: linhas assimétricas alternadas ██████████████████████
+   Antes: 6 faixas IDÊNTICAS empilhadas (mesma altura, mesma composição,
+   foto sem relação com o serviço) — ~2.400px repetindo o mesmo bloco.
+   Agora cada serviço é uma linha com número, nome, descrição e imagem,
+   alternando o lado e variando a largura. A imagem dá zoom conforme sobe.
+   ────────────────────────────────────────────────────────────────────── */
+.svc{display:flex;flex-direction:column;gap:clamp(48px,7vw,120px);
+  padding:clamp(40px,6vw,90px) var(--gut) 0}
+.svc-r{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,70px);
+  align-items:center}
+.svc-r:nth-child(even) .svc-fig{order:2}
+/* larguras irregulares: nada de fileira uniforme */
+.svc-r:nth-child(1) .svc-fig{aspect-ratio:4/3}
+.svc-r:nth-child(2) .svc-fig{aspect-ratio:3/4;max-width:78%}
+.svc-r:nth-child(3) .svc-fig{aspect-ratio:16/10}
+.svc-r:nth-child(4) .svc-fig{aspect-ratio:1/1;max-width:86%}
+.svc-r:nth-child(5) .svc-fig{aspect-ratio:4/5;max-width:74%}
+.svc-r:nth-child(6) .svc-fig{aspect-ratio:16/11}
+/* justify-self, NAO margin-left:auto. Numa grid, a margem automatica faz o
+   item encolher para o conteudo; como a imagem dentro e width:100% de uma
+   caixa indefinida, a figura colapsava para 0x0 e nunca aparecia. */
+.svc-r:nth-child(even) .svc-fig{justify-self:end}
+.svc-fig{position:relative;width:100%;overflow:hidden;border-radius:4px;
+  background:var(--paper)}
+.svc-fig img{width:100%;height:100%;object-fit:cover;display:block}
+.svc-n{font-family:var(--FS);font-size:12px;font-weight:600;letter-spacing:.1em;
+  color:var(--acc);display:block;margin-bottom:14px}
+.svc-t{font-family:var(--FD);font-style:italic;text-transform:uppercase;
+  font-size:clamp(30px,4.4vw,68px);line-height:.9;letter-spacing:-.035em;
+  margin-bottom:16px}
+.svc-d{color:var(--mut);font-size:clamp(14px,1.1vw,16px);line-height:1.65;max-width:42ch}
+@media(max-width:820px){
+  .svc-r{grid-template-columns:1fr;gap:20px}
+  .svc-r:nth-child(even) .svc-fig{order:0;margin-left:0}
+  .svc-r .svc-fig{max-width:none!important;aspect-ratio:4/3!important}
+}
+
 /* ════════ FAIXAS DE SERVICO (imagem sangrando + rotulo) ════════ */
 .band{position:relative;height:clamp(320px,52vh,520px);overflow:hidden;
   display:flex;align-items:flex-end;justify-content:center}
@@ -200,28 +263,43 @@ em.acc{font-style:italic}
 .logos img:hover{opacity:1;filter:none}
 
 /* ════════ CASES (faixa cheia + cartao interno + meta) ════════ */
-.case{position:relative;min-height:clamp(520px,84vh,860px);overflow:hidden;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:clamp(60px,8vw,110px) var(--gut)}
+/* ██████ CASES: o vídeo é o protagonista ██████████████████████████████
+   Dois defeitos foram removidos aqui:
+
+   1. FORMATO ESMAGADO. O cartão era aspect-ratio:3/4 fixo, mas metade dos
+      vídeos é 16:9 horizontal — um 16:9 dentro de uma caixa 3:4 perde ~58%
+      da largura, sobrava um pedaço do meio do quadro. Agora o cartão NÃO
+      tem proporção fixa: o JS lê videoWidth/videoHeight e aplica a real.
+   2. BLUR SEM PROPÓSITO. Havia uma foto aleatória desfocada atrás, sem
+      relação nenhuma com o vídeo — decoração para preencher espaço.
+      Removida. O fundo agora é preto e a composição é o vídeo + o texto.
+
+   A composição também deixou de ser centralizada: agora é assimétrica e
+   alterna de lado a cada case.
+   ────────────────────────────────────────────────────────────────────── */
+.case{position:relative;padding:clamp(46px,6vw,90px) var(--gut);
+  display:grid;grid-template-columns:1fr 1fr;gap:clamp(26px,4vw,72px);
+  align-items:center}
 .case+.case{border-top:1px solid var(--hair)}
-/* o fundo era blur(18px) + brightness(.5): virava um borrao ilegivel.
-   Agora e uma imagem legivel, so recuada por escurecimento e um blur leve,
-   e desliza mais devagar que a pagina (parallax). */
-.case-bg{position:absolute;inset:-12% 0;z-index:0;will-change:transform}
-.case-bg video,.case-bg img{width:100%;height:100%;object-fit:cover;
-  filter:blur(3px) brightness(.62) saturate(1.05);transform:scale(1.06)}
-.case::after{content:'';position:absolute;inset:0;z-index:1;
-  background:linear-gradient(to bottom,rgba(0,0,0,.72),rgba(0,0,0,.42) 42%,rgba(0,0,0,.85))}
-.case>*{position:relative;z-index:2}
-.case .ds{margin-bottom:clamp(20px,2.6vw,34px);text-align:center}
-.case-card{width:min(340px,72vw);aspect-ratio:3/4;border-radius:20px;overflow:hidden;
-  border:1px solid var(--hair);background:var(--paper)}
-.case-card video,.case-card img{width:100%;height:100%;object-fit:cover}
-.case-meta{margin-top:clamp(22px,3vw,38px);display:flex;gap:clamp(26px,5vw,80px);
-  flex-wrap:wrap;justify-content:center}
-.case-meta div{text-align:center}
+.case:nth-child(even) .case-card{order:2}
+.case:nth-child(even) .case-txt{order:1}
+.case-card{position:relative;overflow:hidden;border-radius:6px;
+  border:1px solid var(--hair);background:var(--paper);
+  aspect-ratio:16/9}                    /* padrão; o JS troca pela real */
+.case-card video,.case-card img{width:100%;height:100%;object-fit:cover;display:block}
+.case .ds{margin-bottom:14px}
+.case-txt .num{font-family:var(--FD);font-style:italic;
+  font-size:clamp(46px,6vw,104px);line-height:1;color:rgba(255,252,251,.10);
+  display:block;margin-bottom:8px}
+.case-meta{margin-top:clamp(18px,2.4vw,30px);display:flex;
+  gap:clamp(18px,3vw,44px);flex-wrap:wrap}
 .case-meta .k{display:block;color:var(--mut2);margin-bottom:5px}
 .case-meta .v{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.07em}
+@media(max-width:820px){
+  .case{grid-template-columns:1fr;gap:20px}
+  .case:nth-child(even) .case-card{order:0}
+  .case:nth-child(even) .case-txt{order:1}
+}
 
 /* ════════ LISTA DE PROCESSO (riscada por fios) ════════ */
 .rows{max-width:1000px;margin:clamp(34px,4.4vw,60px) auto 0}
@@ -389,9 +467,9 @@ html.lenis,html.lenis body{height:auto}
   <div class="ix lb"><i>01</i> Sobre</div>
   <h2 class="d2 rv-w" data-words>Muito além do vídeo. Parceiro criativo que move o ponteiro da sua marca.</h2>
   <div class="why">
-    <div class="why-c rv"><img src="foto-01.webp" alt="" loading="lazy"><div class="t"><span class="ds">Produção<br>Completa</span></div></div>
-    <div class="why-c rv dl1"><img src="foto-07.webp" alt="" loading="lazy"><div class="t"><span class="ds">Direção<br>Criativa</span></div></div>
-    <div class="why-c rv dl2"><img src="foto-12.webp" alt="" loading="lazy"><div class="t"><span class="ds">Consistência<br>de Marca</span></div></div>
+    <div class="why-c rv"><img data-sc="grow" src="foto-01.webp" alt="" loading="lazy"><div class="t"><span class="ds">Produção<br>Completa</span></div></div>
+    <div class="why-c rv dl1"><img data-sc="grow" src="foto-07.webp" alt="" loading="lazy"><div class="t"><span class="ds">Direção<br>Criativa</span></div></div>
+    <div class="why-c rv dl2"><img data-sc="grow" src="foto-12.webp" alt="" loading="lazy"><div class="t"><span class="ds">Consistência<br>de Marca</span></div></div>
   </div>
 </section>
 
@@ -401,18 +479,56 @@ html.lenis,html.lenis body{height:auto}
     <div class="ix lb"><i>02</i> Serviços</div>
     <h2 class="d2 rv-w" data-words>Tudo o que sua marca precisa, em um só lugar.</h2>
   </div>
-  <div class="band"><img class="px" data-px="10" src="foto-04.webp" alt="" loading="lazy">
-    <div class="cap"><div class="lb n">01</div><div class="ds">Audiovisual</div></div></div>
-  <div class="band"><img class="px" data-px="10" src="foto-09.webp" alt="" loading="lazy">
-    <div class="cap"><div class="lb n">02</div><div class="ds">Gestão de Tráfego</div></div></div>
-  <div class="band"><img class="px" data-px="10" src="foto-14.webp" alt="" loading="lazy">
-    <div class="cap"><div class="lb n">03</div><div class="ds">Social Media</div></div></div>
-  <div class="band"><img class="px" data-px="10" src="foto-17.webp" alt="" loading="lazy">
-    <div class="cap"><div class="lb n">04</div><div class="ds">Sites &amp; Landing Pages</div></div></div>
-  <div class="band"><img class="px" data-px="10" src="foto-20.webp" alt="" loading="lazy">
-    <div class="cap"><div class="lb n">05</div><div class="ds">Drone</div></div></div>
-  <div class="band"><img class="px" data-px="10" src="foto-06.webp" alt="" loading="lazy">
-    <div class="cap"><div class="lb n">06</div><div class="ds">Fotografia</div></div></div>
+  <div class="svc">
+    <div class="svc-r">
+      <figure class="svc-fig" data-fx="slide-l"><img data-sc="zoom" src="foto-04.webp" alt="Audiovisual" loading="lazy"></figure>
+      <div class="svc-txt" data-fx="slide-r" data-d="1">
+        <span class="svc-n">01</span>
+        <h3 class="svc-t">Audiovisual</h3>
+        <p class="svc-d">Filmes institucionais, comerciais, VSLs e conteúdo de marca com padrão de cinema — da direção ao frame final.</p>
+      </div>
+    </div>
+    <div class="svc-r">
+      <figure class="svc-fig" data-fx="slide-r"><img data-sc="zoom" src="foto-09.webp" alt="Gestão de Tráfego" loading="lazy"></figure>
+      <div class="svc-txt" data-fx="slide-l" data-d="1">
+        <span class="svc-n">02</span>
+        <h3 class="svc-t">Gestão de Tráfego</h3>
+        <p class="svc-d">Campanhas pagas em Google, Meta e TikTok com estratégia de funil e otimização orientada a retorno.</p>
+      </div>
+    </div>
+    <div class="svc-r">
+      <figure class="svc-fig" data-fx="slide-l"><img data-sc="zoom" src="foto-14.webp" alt="Social Media" loading="lazy"></figure>
+      <div class="svc-txt" data-fx="slide-r" data-d="1">
+        <span class="svc-n">03</span>
+        <h3 class="svc-t">Social Media</h3>
+        <p class="svc-d">Planejamento, conteúdo e gestão de redes com identidade forte e calendário estratégico.</p>
+      </div>
+    </div>
+    <div class="svc-r">
+      <figure class="svc-fig" data-fx="slide-r"><img data-sc="zoom" src="foto-17.webp" alt="Sites & Landing Pages" loading="lazy"></figure>
+      <div class="svc-txt" data-fx="slide-l" data-d="1">
+        <span class="svc-n">04</span>
+        <h3 class="svc-t">Sites & Landing Pages</h3>
+        <p class="svc-d">Sites institucionais e páginas de campanha com foco em conversão e performance.</p>
+      </div>
+    </div>
+    <div class="svc-r">
+      <figure class="svc-fig" data-fx="slide-l"><img data-sc="zoom" src="foto-20.webp" alt="Drone" loading="lazy"></figure>
+      <div class="svc-txt" data-fx="slide-r" data-d="1">
+        <span class="svc-n">05</span>
+        <h3 class="svc-t">Drone</h3>
+        <p class="svc-d">Filmagem aérea com pilotos certificados — planos que elevam qualquer narrativa.</p>
+      </div>
+    </div>
+    <div class="svc-r">
+      <figure class="svc-fig" data-fx="slide-r"><img data-sc="zoom" src="foto-06.webp" alt="Fotografia" loading="lazy"></figure>
+      <div class="svc-txt" data-fx="slide-l" data-d="1">
+        <span class="svc-n">06</span>
+        <h3 class="svc-t">Fotografia</h3>
+        <p class="svc-d">Ensaios de marca, produto e evento com direção de arte e pós apurada.</p>
+      </div>
+    </div>
+  </div>
 </section>
 
 <!-- ══════ FITA ══════ -->
@@ -447,7 +563,7 @@ html.lenis,html.lenis body{height:auto}
      com canto arredondado, revelando a imagem "por tras" -->
 <div class="reveal-stack">
   <div class="reveal-bg">
-    <img class="px" data-px="9" src="foto-13.webp" alt="" loading="lazy">
+    <img class="px" data-px="9" data-sc="grow" src="foto-13.webp" alt="" loading="lazy">
     <div class="rb-cap">
       <div class="lb" style="margin-bottom:8px">Do conceito ao frame final</div>
       <div class="ds">Bastidores SOMA</div>
@@ -459,59 +575,60 @@ html.lenis,html.lenis body{height:auto}
     <h2 class="d2 rv-w" data-words>Trabalhos selecionados para marcas e festivais.</h2>
   </div>
 
-  <article class="case persp">
-    <div class="case-bg px" data-px="14"><img src="foto-02.webp" alt="" loading="lazy"></div>
-    <h3 class="ds">EXPOMIX &mdash; Aftermovie</h3>
-    <div class="case-card rv-c tilt3d">
-      <video class="cv" muted loop playsinline preload="none"
-        data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.MP4"></video>
+  <article class="case">
+    <div class="case-card" data-fx="slide-l">
+      <video class="cv" muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.MP4"></video>
     </div>
-    <div class="case-meta">
-      <div><span class="lb k">Ano</span><span class="v">2025</span></div>
-      <div><span class="lb k">Entrega</span><span class="v">Aftermovie &middot; Evento</span></div>
-      <div><span class="lb k">Formato</span><span class="v">4K &middot; LOG3</span></div>
-    </div>
-  </article>
-
-  <article class="case persp">
-    <div class="case-bg px" data-px="14"><img src="foto-05.webp" alt="" loading="lazy"></div>
-    <h3 class="ds">Mari Fernandez &mdash; Palco Principal</h3>
-    <div class="case-card rv-c tilt3d">
-      <video class="cv" muted loop playsinline preload="none"
-        data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.MP4"></video>
-    </div>
-    <div class="case-meta">
-      <div><span class="lb k">Ano</span><span class="v">2024</span></div>
-      <div><span class="lb k">Entrega</span><span class="v">Videoclipe &middot; Show</span></div>
-      <div><span class="lb k">Formato</span><span class="v">4K &middot; LOG3</span></div>
+    <div class="case-txt" data-fx="slide-r" data-d="1">
+      <span class="num">01</span>
+      <h3 class="ds">EXPOMIX — Aftermovie</h3>
+      <div class="case-meta">
+        <div><span class="lb k">Ano</span><span class="v">2025</span></div>
+        <div><span class="lb k">Entrega</span><span class="v">Aftermovie · Evento</span></div>
+        <div><span class="lb k">Formato</span><span class="v">4K · LOG3</span></div>
+      </div>
     </div>
   </article>
-
-  <article class="case persp">
-    <div class="case-bg px" data-px="14"><img src="foto-11.webp" alt="" loading="lazy"></div>
-    <h3 class="ds">Fome de Música &mdash; Verão</h3>
-    <div class="case-card rv-c tilt3d">
-      <video class="cv" muted loop playsinline preload="none"
-        data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/FOME%20DE%20M%C3%9ASICA%20-%20VER%C3%83O%20R2%20_v3.mp4"></video>
+  <article class="case">
+    <div class="case-card" data-fx="slide-r">
+      <video class="cv" muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.MP4"></video>
     </div>
-    <div class="case-meta">
-      <div><span class="lb k">Ano</span><span class="v">2024</span></div>
-      <div><span class="lb k">Entrega</span><span class="v">Brand Content &middot; Campanha</span></div>
-      <div><span class="lb k">Formato</span><span class="v">4K &middot; LOG3</span></div>
+    <div class="case-txt" data-fx="slide-l" data-d="1">
+      <span class="num">02</span>
+      <h3 class="ds">Mari Fernandez — Palco Principal</h3>
+      <div class="case-meta">
+        <div><span class="lb k">Ano</span><span class="v">2024</span></div>
+        <div><span class="lb k">Entrega</span><span class="v">Videoclipe · Show</span></div>
+        <div><span class="lb k">Formato</span><span class="v">4K · LOG3</span></div>
+      </div>
     </div>
   </article>
-
-  <article class="case persp">
-    <div class="case-bg px" data-px="14"><img src="foto-16.webp" alt="" loading="lazy"></div>
-    <h3 class="ds">Na Praia &mdash; Acessibilidade</h3>
-    <div class="case-card rv-c tilt3d">
-      <video class="cv" muted loop playsinline preload="none"
-        data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Acessibilidade%20-%20Tel%C3%A3o%202025%20Na%20Praia.MOV"></video>
+  <article class="case">
+    <div class="case-card" data-fx="slide-l">
+      <video class="cv" muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/FOME%20DE%20M%C3%9ASICA%20-%20VER%C3%83O%20R2%20_v3.mp4"></video>
     </div>
-    <div class="case-meta">
-      <div><span class="lb k">Ano</span><span class="v">2025</span></div>
-      <div><span class="lb k">Entrega</span><span class="v">Evento &middot; Festival</span></div>
-      <div><span class="lb k">Formato</span><span class="v">4K &middot; LOG3</span></div>
+    <div class="case-txt" data-fx="slide-r" data-d="1">
+      <span class="num">03</span>
+      <h3 class="ds">Fome de Música — Verão</h3>
+      <div class="case-meta">
+        <div><span class="lb k">Ano</span><span class="v">2024</span></div>
+        <div><span class="lb k">Entrega</span><span class="v">Brand Content · Campanha</span></div>
+        <div><span class="lb k">Formato</span><span class="v">4K · LOG3</span></div>
+      </div>
+    </div>
+  </article>
+  <article class="case">
+    <div class="case-card" data-fx="slide-r">
+      <video class="cv" muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Acessibilidade%20-%20Tel%C3%A3o%202025%20Na%20Praia.MOV"></video>
+    </div>
+    <div class="case-txt" data-fx="slide-l" data-d="1">
+      <span class="num">04</span>
+      <h3 class="ds">Acessibilidade — Na Praia</h3>
+      <div class="case-meta">
+        <div><span class="lb k">Ano</span><span class="v">2025</span></div>
+        <div><span class="lb k">Entrega</span><span class="v">Evento · Festival</span></div>
+        <div><span class="lb k">Formato</span><span class="v">4K · LOG3</span></div>
+      </div>
     </div>
   </article>
 </section>
@@ -526,7 +643,7 @@ html.lenis,html.lenis body{height:auto}
     <h2 class="d2"><span class="rv-u"><i>Um minuto e quarenta</i></span></h2>
   </div>
   <div class="band" style="height:clamp(340px,72vh,720px)">
-    <video id="reelVid" muted loop playsinline preload="none" poster="foto-08.webp"
+    <video id="reelVid" data-sc="zoom" muted loop playsinline preload="none" poster="foto-08.webp"
       data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4"></video>
     <div class="cap"><div class="lb n">4K &middot; LOG3 &middot; 24fps</div><div class="ds">Showreel 2025</div></div>
   </div>
@@ -558,7 +675,7 @@ html.lenis,html.lenis body{height:auto}
   <h2 class="d2 rv-w" data-words>Da capital do Brasil para o mundo.</h2></div>
   <div class="intl">
     <div class="rv">
-      <div class="intl-ph"><img class="rv-c" src="davi.png" alt="Davi Bispo — CEO" loading="lazy"></div>
+      <div class="intl-ph"><img class="rv-c" data-sc="drift" src="davi.png" alt="Davi Bispo — CEO" loading="lazy"></div>
       <div class="ds" style="margin-top:16px">Davi Bispo</div>
       <div class="lb" style="margin-top:6px">CEO</div>
       <p class="bd" style="margin-top:10px">Produções audiovisuais entre Brasília e o mundo — presença em 6 países.</p>
@@ -585,10 +702,10 @@ html.lenis,html.lenis body{height:auto}
   <div class="ix lb"><i>08</i> Bastidores</div>
   <h2 class="d2 rv-w" data-words>As pessoas e os sets por trás de cada frame.</h2>
   <div class="crew">
-    <figure class="rv"><img class="rv-c" src="equipe-01.webp" alt="Equipe SOMA" loading="lazy"></figure>
-    <figure class="rv dl1"><img class="rv-c" src="equipe-03.webp" alt="Equipe SOMA" loading="lazy"></figure>
-    <figure class="rv dl2"><img class="rv-c" src="equipe-05.webp" alt="Equipe SOMA" loading="lazy"></figure>
-    <figure class="rv dl3"><img class="rv-c" src="equipe-07.webp" alt="Equipe SOMA" loading="lazy"></figure>
+    <figure class="rv"><img class="rv-c" data-sc="zoom" src="equipe-01.webp" alt="Equipe SOMA" loading="lazy"></figure>
+    <figure class="rv dl1"><img class="rv-c" data-sc="zoom" src="equipe-03.webp" alt="Equipe SOMA" loading="lazy"></figure>
+    <figure class="rv dl2"><img class="rv-c" data-sc="zoom" src="equipe-05.webp" alt="Equipe SOMA" loading="lazy"></figure>
+    <figure class="rv dl3"><img class="rv-c" data-sc="zoom" src="equipe-07.webp" alt="Equipe SOMA" loading="lazy"></figure>
   </div>
 </section>
 
@@ -666,7 +783,7 @@ document.querySelectorAll('[data-words]').forEach(function(el){
    secoes de case com o fundo borrado e nada por cima. Aqui a decisao e
    recalculada a cada quadro a partir da posicao real, entao nao existe
    estado preso: se esta na tela, aparece. */
-var revs=[].slice.call(document.querySelectorAll('.rv,.rv-u,.rv-c'));
+var revs=[].slice.call(document.querySelectorAll('.rv,.rv-u,.rv-c,[data-fx]'));
 function checaRevs(vh){
   if(!revs.length)return;
   for(var i=revs.length-1;i>=0;i--){
@@ -676,11 +793,36 @@ function checaRevs(vh){
     if(r.top<vh*0.94&&r.bottom>0){el.classList.add('on');revs.splice(i,1)}
   }
 }
+
+/* ---------- EFEITOS CONTINUOS (data-sc): ligados ao progresso ----------
+   Diferente dos gatilhos: aqui o valor acompanha o scroll quadro a quadro,
+   entao a peca "da zoom conforme voce desce" em vez de animar sozinha uma
+   vez. So transform — nunca width/height — para nao forcar relayout. */
+var scs=[].slice.call(document.querySelectorAll('[data-sc]'));
+function moveSc(vh){
+  for(var i=0;i<scs.length;i++){
+    var el=scs[i],cx=el.parentElement||el,r=cx.getBoundingClientRect();
+    if(r.bottom<-120||r.top>vh+120)continue;
+    /* p = 0 quando entra por baixo, 1 quando sai por cima */
+    var p=1-((r.top+r.height/2)/(vh+r.height));
+    if(p<0)p=0;if(p>1)p=1;
+    var tipo=el.dataset.sc;
+    if(tipo==='zoom'){
+      /* entra grande e assenta: 1.18 -> 1.0 no meio da tela */
+      el.style.transform='scale('+(1.18-0.18*Math.min(1,p*1.6)).toFixed(4)+')';
+    }else if(tipo==='grow'){
+      /* o inverso: cresce continuamente enquanto atravessa */
+      el.style.transform='scale('+(1+0.14*p).toFixed(4)+')';
+    }else if(tipo==='drift'){
+      el.style.transform='translate3d(0,'+((p-.5)*-9).toFixed(2)+'%,0)';
+    }
+  }
+}
 /* TRES fontes independentes chamam a checagem, de proposito. O laco de
    rAF sozinho nao basta: se ele for estrangulado (aba em segundo plano,
    economia de bateria), o conteudo ficaria ESCONDIDO — exatamente o
    defeito que estamos consertando. O scroll e o intervalo cobrem isso. */
-function rede(){var vh=innerHeight||1;checaRevs(vh);checaCnts(vh);checaVids(vh)}
+function rede(){var vh=innerHeight||1;checaRevs(vh);checaCnts(vh);checaVids(vh);moveSc(vh)}
 addEventListener('scroll',rede,{passive:true});
 setInterval(rede,350);
 addEventListener('load',rede);
@@ -712,6 +854,21 @@ function checaCnts(vh){
 
 /* ---------- videos: carregam quando chegam perto (geometria) ---------- */
 var vids=[].slice.call(document.querySelectorAll('video[data-src]'));
+
+/* PROPORCAO REAL DO VIDEO no cartao do case.
+   O cartao tinha aspect-ratio:3/4 fixo, mas metade do acervo e 16:9
+   horizontal — um 16:9 numa caixa 3:4 perde ~58% da largura e sobra um
+   pedaco do meio do quadro. Agora, assim que os metadados chegam, o
+   cartao assume a proporcao verdadeira do arquivo. */
+vids.forEach(function(v){
+  v.addEventListener('loadedmetadata',function(){
+    var card=v.closest('.case-card');
+    if(card&&v.videoWidth&&v.videoHeight){
+      card.style.aspectRatio=v.videoWidth+' / '+v.videoHeight;
+    }
+  });
+});
+
 function checaVids(vh){
   for(var i=0;i<vids.length;i++){
     var v=vids[i],r=v.getBoundingClientRect();
@@ -787,6 +944,7 @@ function quadro(t){
   if(lenis)lenis.raf(t);
   var vh=innerHeight||1;
   checaRevs(vh);
+  moveSc(vh);
   moveParallax(vh);
   moveTilt(vh);
   for(var k=0;k<blocos.length;k++){
