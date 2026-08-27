@@ -444,7 +444,8 @@ html.lenis,html.lenis body{height:auto}
 <!-- ══════ HERO ══════ -->
 <section id="hero">
   <div class="hr-bg">
-    <video id="heroVid" muted loop playsinline preload="none" poster="hero-soma.webp"></video>
+    <video id="heroVid" muted loop playsinline preload="auto"
+           poster="hero-reel-poster.webp" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4"></video>
   </div>
   <div class="hr-veil"></div>
   <div class="hr-in">
@@ -458,7 +459,7 @@ html.lenis,html.lenis body{height:auto}
   </div>
   <div class="hr-meta">
     <span class="lb lb-m">Brasília &middot; Brasil</span>
-    <span class="lb lb-m">Presença em 6 países</span>
+    <span class="lb lb-m">Showreel 2025 &middot; 4K &middot; LOG3</span>
   </div>
 </section>
 
@@ -637,21 +638,11 @@ html.lenis,html.lenis body{height:auto}
 
 
 <!-- ══════ SHOWREEL ══════ -->
-<section class="sec" id="showreel" style="padding-bottom:0">
-  <div class="wrap ctr" style="margin-bottom:clamp(28px,3.6vw,48px)">
-    <div class="ix lb"><i>05</i> Showreel</div>
-    <h2 class="d2"><span class="rv-u"><i>Um minuto e quarenta</i></span></h2>
-  </div>
-  <div class="band" style="height:clamp(340px,72vh,720px)">
-    <video id="reelVid" data-sc="zoom" muted loop playsinline preload="none" poster="foto-08.webp"
-      data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4"></video>
-    <div class="cap"><div class="lb n">4K &middot; LOG3 &middot; 24fps</div><div class="ds">Showreel 2025</div></div>
-  </div>
-</section>
+
 
 <!-- ══════ (06) PROCESSO ══════ -->
 <section class="sec wrap ctr" id="processo">
-  <div class="ix lb"><i>06</i> Processo</div>
+  <div class="ix lb"><i>05</i> Processo</div>
   <h2 class="d2 rv-w" data-words>Da imersão à entrega. Cada etapa existe para eliminar risco.</h2>
   <div class="rows">
     <div class="row rv"><span class="k">Imersão</span><span class="v">Mergulhamos na marca, audiência e contexto.</span></div>
@@ -671,7 +662,7 @@ html.lenis,html.lenis body{height:auto}
 
 <!-- ══════ (07) INTERNACIONAL ══════ -->
 <section class="sec wrap" id="internacional">
-  <div class="ctr"><div class="ix lb"><i>07</i> Internacional</div>
+  <div class="ctr"><div class="ix lb"><i>06</i> Internacional</div>
   <h2 class="d2 rv-w" data-words>Da capital do Brasil para o mundo.</h2></div>
   <div class="intl">
     <div class="rv">
@@ -699,7 +690,7 @@ html.lenis,html.lenis body{height:auto}
 
 <!-- ══════ (08) EQUIPE ══════ -->
 <section class="sec wrap ctr" id="equipe">
-  <div class="ix lb"><i>08</i> Bastidores</div>
+  <div class="ix lb"><i>07</i> Bastidores</div>
   <h2 class="d2 rv-w" data-words>As pessoas e os sets por trás de cada frame.</h2>
   <div class="crew">
     <figure class="rv"><img class="rv-c" data-sc="zoom" src="equipe-01.webp" alt="Equipe SOMA" loading="lazy"></figure>
@@ -711,7 +702,7 @@ html.lenis,html.lenis body{height:auto}
 
 <!-- ══════ CTA ══════ -->
 <section class="sec wrap" id="cta">
-  <div class="ix lb"><i>09</i> Contato</div>
+  <div class="ix lb"><i>08</i> Contato</div>
   <h2 class="d1"><span class="rv-u"><i>Vamos criar</i></span><span class="rv-u"><i class="acc">algo que fica</i></span></h2>
   <p class="bd hr-sub rv dl1" style="margin-top:22px">Sua marca já esperou tempo suficiente.</p>
   <div class="btns rv dl2">
@@ -880,12 +871,18 @@ function checaVids(vh){
   }
 }
 
-/* hero: video local, so no desktop (no celular fica o poster) */
+/* HERO = SHOWREEL.
+   O video vem do R2 e e o mesmo showreel; quem carrega e toca e o
+   checaVids (ele tem data-src, entao ja esta na lista). No celular o
+   data-src e REMOVIDO: sao dezenas de MB numa conexao movel, e o poster
+   — um frame do proprio showreel — segura a cena sozinho. */
 (function(){
   var v=document.getElementById('heroVid');if(!v)return;
-  if(matchMedia('(max-width:768px)').matches)return;
-  v.src='hero-bg.mp4';v.load();
-  var q=v.play();if(q&&q.catch)q.catch(function(){});
+  if(matchMedia('(max-width:768px)').matches){
+    v.removeAttribute('data-src');
+    v.setAttribute('poster','hero-reel-poster-m.webp');
+    return;
+  }
 })();
 
 /* ---------- abas do internacional ---------- */
