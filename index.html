@@ -136,8 +136,16 @@ em.acc{font-style:italic}
   text-transform:uppercase;letter-spacing:.09em;color:var(--acc)}
 
 /* ════════ HERO ════════ */
-#hero{position:relative;height:100svh;min-height:560px;overflow:hidden;
-  display:flex;align-items:center;justify-content:center}
+/* O hero fica PRESO enquanto você rola a primeira tela e vai encolhendo
+   num cartão arredondado — a animação acompanha o dedo, não um relógio.
+   O trilho abaixo é o combustível de scroll desse gesto. */
+.hero-track{position:relative;height:185svh}
+/* no celular o gesto fica mais curto: 1,85 tela presa no hero e demais
+   quando o polegar tem menos alcance por rolagem */
+@media(max-width:820px){.hero-track{height:140svh}}
+#hero{position:sticky;top:0;height:100svh;min-height:560px;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  transform-origin:50% 0;will-change:transform,border-radius}
 .hr-bg{position:absolute;inset:0;z-index:0}
 .hr-bg video,.hr-bg img{width:100%;height:100%;object-fit:cover}
 .hr-veil{position:absolute;inset:0;z-index:1;pointer-events:none;
@@ -306,7 +314,12 @@ em.acc{font-style:italic}
 .row{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:baseline;
   padding:clamp(16px,2vw,24px) 0;border-bottom:1px solid var(--hair)}
 .row:first-child{border-top:1px solid var(--hair)}
-.row .k{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;color:var(--acc)}
+/* --lit vem do JS: 0 = apagada, 1 = acesa. O scroll conduz. */
+.row{--lit:0}
+.row .k{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;
+  color:var(--acc);opacity:calc(.28 + .72*var(--lit))}
+.row .v{opacity:calc(.3 + .7*var(--lit))}
+.row{border-bottom-color:rgba(255,252,251,calc(.06 + .16*var(--lit)))}
 .row .v{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;
   color:var(--mut);text-align:right}
 @media(max-width:640px){.row{grid-template-columns:1fr;gap:6px}.row .v{text-align:left}}
@@ -442,6 +455,7 @@ html.lenis,html.lenis body{height:auto}
 <main>
 
 <!-- ══════ HERO ══════ -->
+<div class="hero-track" id="heroTrack">
 <section id="hero">
   <div class="hr-bg">
     <video id="heroVid" muted loop playsinline preload="auto"
@@ -462,6 +476,7 @@ html.lenis,html.lenis body{height:auto}
     <span class="lb lb-m">Showreel 2025 &middot; 4K &middot; LOG3</span>
   </div>
 </section>
+</div>
 
 <!-- ══════ (01) SOBRE ══════ -->
 <section class="sec wrap ctr" id="sobre">
@@ -767,6 +782,59 @@ document.querySelectorAll('[data-words]').forEach(function(el){
   blocos.push({el:el,w:[].slice.call(el.querySelectorAll('.w')),n:0});
 });
 
+/* ██████ EFEITOS QUE O SCROLL CONDUZ ██████████████████████████████████
+   Nestes tres o progresso da animacao E a posicao do scroll: parando o
+   dedo, a animacao para no meio. Nada de "dispara e roda sozinho".
+   ────────────────────────────────────────────────────────────────────── */
+
+/* (1) HERO ENCOLHE NUM CARTAO enquanto voce sai dele */
+var heroTrack=document.getElementById('heroTrack'),heroSec=document.getElementById('hero');
+function moveHero(){
+  if(!heroTrack||!heroSec)return;
+  var curso=heroTrack.offsetHeight-innerHeight;
+  if(curso<=0)return;
+  var p=(-heroTrack.getBoundingClientRect().top)/curso;
+  p=p<0?0:(p>1?1:p);
+  var esc=1-0.13*p;                 /* 1 -> 0.87  */
+  var raio=(p*30).toFixed(1);       /* 0 -> 30px  */
+  heroSec.style.transform='scale('+esc.toFixed(4)+')';
+  heroSec.style.borderRadius=raio+'px';
+}
+
+/* (2) CONTADORES contam junto com o scroll (antes rodavam sozinhos em
+   1.4s ao entrar; agora o numero e funcao da posicao da pagina) */
+var blocoNums=document.querySelector('.nums');
+var cntEls=[].slice.call(document.querySelectorAll('.cnt'));
+function moveNums(vh){
+  if(!blocoNums||!cntEls.length)return;
+  var r=blocoNums.getBoundingClientRect();
+  if(r.bottom<0||r.top>vh)return;
+  /* 0 quando o bloco encosta embaixo, 1 quando chega a 45% da tela */
+  var p=(vh-r.top)/(vh*0.55);
+  p=p<0?0:(p>1?1:p);
+  var e=1-Math.pow(1-p,3);          /* ease-out */
+  for(var i=0;i<cntEls.length;i++){
+    var alvo=+cntEls[i].dataset.t;
+    cntEls[i].textContent=Math.round(alvo*e);
+  }
+}
+
+/* (3) PROCESSO: as etapas acendem uma a uma conforme o scroll atravessa */
+var rowsBloco=document.querySelector('.rows');
+var rowsEls=[].slice.call(document.querySelectorAll('.rows .row'));
+function moveRows(vh){
+  if(!rowsBloco||!rowsEls.length)return;
+  var r=rowsBloco.getBoundingClientRect();
+  if(r.bottom<-100||r.top>vh+100)return;
+  var p=(vh*0.82-r.top)/(r.height+vh*0.28);
+  p=p<0?0:(p>1?1:p);
+  var acesas=p*rowsEls.length;
+  for(var i=0;i<rowsEls.length;i++){
+    var f=acesas-i;f=f<0?0:(f>1?1:f);
+    rowsEls[i].style.setProperty('--lit',f.toFixed(3));
+  }
+}
+
 /* ---------- gatilhos de entrada ---------- */
 /* REVELACOES POR GEOMETRIA, nao por IntersectionObserver.
    O observer depende do ciclo de renderizacao; quando ele nao entrega o
@@ -813,7 +881,7 @@ function moveSc(vh){
    rAF sozinho nao basta: se ele for estrangulado (aba em segundo plano,
    economia de bateria), o conteudo ficaria ESCONDIDO — exatamente o
    defeito que estamos consertando. O scroll e o intervalo cobrem isso. */
-function rede(){var vh=innerHeight||1;checaRevs(vh);checaCnts(vh);checaVids(vh);moveSc(vh)}
+function rede(){var vh=innerHeight||1;checaRevs(vh);checaVids(vh);moveSc(vh);moveHero();moveNums(vh);moveRows(vh)}
 addEventListener('scroll',rede,{passive:true});
 setInterval(rede,350);
 addEventListener('load',rede);
@@ -942,6 +1010,9 @@ function quadro(t){
   var vh=innerHeight||1;
   checaRevs(vh);
   moveSc(vh);
+  moveHero();
+  moveNums(vh);
+  moveRows(vh);
   moveParallax(vh);
   moveTilt(vh);
   for(var k=0;k<blocos.length;k++){
