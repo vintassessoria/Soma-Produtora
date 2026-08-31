@@ -20,8 +20,9 @@
 
      tipografia .... Plus Jakarta Sans (display/corpo) + Fragment Mono
                      (rotulos), ambas gratuitas no Google Fonts
-     paleta ........ branco #FFFFFF, tinta #262A2D, cinza #616161,
-                     acento #F94137, faixas escuras #050609
+     paleta ........ INVERTIDA para a identidade SOMA: preto #050609 /
+                     #0D0F13 / #000 e acento verde #6BF019 (o template e
+                     branco com acento vermelho #F94137)
      raio .......... 8px dominante
      ritmo ......... hero e projetos escuros, corpo claro, cinza #F9F9F9
                      alternando
@@ -30,18 +31,24 @@
                      rolete (digitos 0-9 rolando), processo numerado com
                      prazo, scroll suave
 
-   ACENTO: --acc esta no vermelho do template. Trocar para o verde da SOMA
-   e UMA linha (ver comentario no :root).
+   LOGOS: logotipo.png (assinatura completa) no nav e no rodape;
+   logomarca.png (so o simbolo) no hero e no menu.
    ██████████████████████████████████████████████████████████████████████ */
 
+/* IDENTIDADE SOMA: preto + verde.
+   O template de referencia e claro (branco, acento vermelho). Aqui a
+   paleta e invertida para a marca, mas o RITMO de contraste do original
+   foi preservado: ele alterna branco / cinza claro / faixa escura; aqui
+   alterna tres tons de preto (--bg / --soft / --dark), entao as secoes
+   continuam se separando visualmente como na referencia. */
 :root{
-  --bg:#FFFFFF;
-  --ink:#262A2D;
-  --mut:#616161;
-  --line:rgba(38,42,45,.14);
-  --dark:#050609;
-  --soft:#F9F9F9;
-  --acc:#F94137;        /* <<< vermelho do Spector. Verde SOMA: #6BF019 */
+  --bg:#050609;         /* preto da marca (fundo principal)  */
+  --soft:#0D0F13;       /* faixa alternada, um degrau acima   */
+  --dark:#000000;       /* faixa mais funda (hero, projetos)  */
+  --ink:#F5F7F5;
+  --mut:rgba(245,247,245,.58);
+  --line:rgba(245,247,245,.15);
+  --acc:#6BF019;        /* verde SOMA (era #F94137 no template) */
   --FD:'Plus Jakarta Sans',system-ui,-apple-system,Segoe UI,sans-serif;
   --FM:'Fragment Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
   --gut:clamp(18px,4.4vw,72px);
@@ -57,7 +64,7 @@ body{background:var(--bg);color:var(--ink);font-family:var(--FD);
 img,video{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
-::selection{background:var(--acc);color:#fff}
+::selection{background:var(--acc);color:#000}
 
 /* ── TIPOGRAFIA ─────────────────────────────────────────────────────── */
 /* declaracao gigante: caixa alta, peso alto, tracking bem fechado */
@@ -93,8 +100,13 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   transition:background .45s var(--E),padding .45s var(--E),color .45s var(--E)}
 #nav.stuck{background:rgba(5,6,9,.9);backdrop-filter:blur(18px);
   -webkit-backdrop-filter:blur(18px);padding:13px var(--gut)}
-.nv-w{font-weight:800;letter-spacing:.16em;font-size:15px;text-transform:uppercase}
-.nv-w sup{color:var(--acc);font-size:.6em;vertical-align:super}
+/* LOGO. logotipo.png = lockup horizontal (simbolo + SOMA + PRODUTORA),
+   com o texto ja em branco: nasceu para fundo escuro, entao cai certo
+   aqui. logomarca.png = so o simbolo, usado onde nao cabe a assinatura
+   inteira. Nenhum dos dois recebe filtro — cor da marca intacta. */
+.nv-logo{display:flex;align-items:center}
+.nv-logo img{height:clamp(20px,2vw,26px);width:auto}
+.mk{height:1em;width:auto;flex:0 0 auto}
 .nv-l{display:flex;gap:clamp(18px,2.6vw,44px)}
 .nv-l a{font-size:13px;font-weight:500;opacity:.82;transition:opacity .3s}
 .nv-l a:hover{opacity:1;color:var(--acc)}
@@ -130,8 +142,8 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   padding-top:clamp(96px,14vh,170px);flex:1}
 .hr-id .jp{font-family:var(--FM);font-size:11px;color:var(--acc);
   display:flex;align-items:center;gap:8px;margin-bottom:14px}
-.hr-id .jp::before{content:'';width:9px;height:9px;border-radius:50%;
-  background:var(--acc);display:block}
+/* o ponto do template vira o simbolo da marca */
+.hr-id .jp img{height:15px;width:auto}
 .hr-id h1{font-size:clamp(28px,3.6vw,52px);font-weight:800;letter-spacing:-.035em;
   line-height:1.05;color:#fff;margin-bottom:16px}
 .hr-adr{font-family:var(--FM);font-size:11px;line-height:1.85;
@@ -187,9 +199,10 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .lg-i{display:flex;align-items:center;gap:clamp(40px,6vw,96px);width:max-content;
   animation:mq 42s linear infinite}
 .lg-i img{height:clamp(24px,2.6vw,38px);width:auto;object-fit:contain;
-  filter:grayscale(1) contrast(.25) brightness(1.9);opacity:.75;
-  transition:filter .4s,opacity .4s}
-.lg-i img:hover{filter:none;opacity:1}
+  /* os PNGs sao escuros; no fundo preto precisam clarear para aparecer */
+  filter:grayscale(1) brightness(2.6);opacity:.7;
+  transition:filter .45s,opacity .45s}
+.lg-i img:hover{filter:grayscale(0) brightness(1.15);opacity:1}
 @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
 /* ── SERVIÇOS (lista que abre) ───────────────────────────────────────── */
@@ -286,8 +299,8 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .ct .st-2{margin:clamp(16px,2vw,26px) 0 clamp(24px,3vw,40px)}
 .btn{display:inline-flex;align-items:center;gap:10px;border-radius:8px;
   padding:15px 28px;font-size:14px;font-weight:600;transition:all .35s var(--E)}
-.btn-a{background:var(--acc);color:#fff}
-.btn-a:hover{background:var(--ink)}
+.btn-a{background:var(--acc);color:#000;font-weight:700}
+.btn-a:hover{background:var(--ink);color:#000}
 .btn-o{border:1px solid var(--line);color:var(--ink)}
 .btn-o:hover{border-color:var(--ink)}
 .btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
@@ -331,7 +344,7 @@ html.lenis{scroll-behavior:auto!important}
 <body>
 
 <nav id="nav">
-  <a href="#" class="nv-w">SOMA<sup>®</sup></a>
+  <a href="#" class="nv-logo" aria-label="SOMA Produtora"><img src="logotipo.png" alt="SOMA Produtora" fetchpriority="high"></a>
   <div class="nv-l">
     <a href="#projetos">Projetos</a>
     <a href="#servicos">Serviços</a>
@@ -342,6 +355,7 @@ html.lenis{scroll-behavior:auto!important}
   <button class="nv-b" id="navB" aria-label="Abrir menu"><span></span><span></span></button>
 </nav>
 <div id="menu">
+  <img src="logomarca.png" alt="" aria-hidden="true" style="height:40px;width:auto;margin-bottom:26px">
   <button class="x" id="menuX">Fechar</button>
   <a href="#projetos">Projetos</a><a href="#servicos">Serviços</a>
   <a href="#processo">Processo</a><a href="#equipe">Equipe</a><a href="#contato">Contato</a>
@@ -356,7 +370,7 @@ html.lenis{scroll-behavior:auto!important}
   <div class="hr-grid"></div>
   <div class="hr-top">
     <div class="hr-id">
-      <div class="jp">Produtora Criativa</div>
+      <div class="jp"><img class="mk" src="logomarca.png" alt="" aria-hidden="true">Produtora Criativa</div>
       <h1>SOMA Produtora</h1>
       <div class="hr-adr">Brasília — DF<br>Distrito Federal<br>Brasil</div>
     </div>
@@ -589,7 +603,7 @@ html.lenis{scroll-behavior:auto!important}
 <footer>
   <div class="ft-g">
     <div>
-      <div class="nv-w" style="margin-bottom:14px">SOMA<sup>®</sup></div>
+      <img src="logotipo.png" alt="SOMA Produtora" style="height:26px;width:auto;margin-bottom:16px" loading="lazy">
       <p class="bd" style="max-width:38ch">Produtora criativa em Brasília. Do conceito ao frame final.</p>
     </div>
     <div><h4>Navegação</h4>
