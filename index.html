@@ -3,565 +3,413 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
-<title>SOMA Produtora — Não é só vídeo. É impacto.</title>
+<title>SOMA Produtora — Marcas que não passam despercebidas</title>
 <meta name="description" content="Produtora criativa em Brasília. Audiovisual, tráfego, social media, sites, drone e fotografia — do conceito ao frame final.">
 <link rel="icon" href="favicon.png">
-
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Fragment+Mono:ital@0;1&display=swap" rel="stylesheet">
 
 <style>
 /* ██████████████████████████████████████████████████████████████████████
-   SOMA — v2, na linguagem do template Gen Studio (genstudio.framer.media)
+   SOMA — v3, na linguagem do template Spector (spector.framer.website)
    ----------------------------------------------------------------------
-   O que foi copiado da referencia: a tipografia (Instrument Serif em
-   CAIXA ALTA + ITALICO para display, DM Sans 12/600 em caixa alta para
-   rotulos), o line-height 0.8 e o tracking -0.04em dos titulos, os
-   indices numerados de secao, as faixas de imagem sangrando com rotulo
-   serifado, a lista de processo riscada por fios, o nav em pilula
-   flutuante, o preloader com o wordmark e as revelacoes por scroll.
+   Reconstruido nativamente: o site de referencia e Framer (React
+   compilado), entao o codigo nao e portavel para HTML estatico. O que foi
+   reproduzido e a GRAMATICA VISUAL, medida no site rodando:
 
-   O que mudou, por decisao do usuario: a paleta. O template e claro
-   (creme #FFFCFB, acento vermelho #E9281F); aqui e a paleta da SOMA —
-   preto, creme como tinta e o verde #6BF019 no lugar do vermelho.
+     tipografia .... Plus Jakarta Sans (display/corpo) + Fragment Mono
+                     (rotulos), ambas gratuitas no Google Fonts
+     paleta ........ branco #FFFFFF, tinta #262A2D, cinza #616161,
+                     acento #F94137, faixas escuras #050609
+     raio .......... 8px dominante
+     ritmo ......... hero e projetos escuros, corpo claro, cinza #F9F9F9
+                     alternando
+     assinaturas ... declaracao gigante em caixa alta, rotulo mono com
+                     barra, linha secundaria acima do titulo, contador de
+                     rolete (digitos 0-9 rolando), processo numerado com
+                     prazo, scroll suave
+
+   ACENTO: --acc esta no vermelho do template. Trocar para o verde da SOMA
+   e UMA linha (ver comentario no :root).
    ██████████████████████████████████████████████████████████████████████ */
 
 :root{
-  --bg:#000;
-  --paper:#0B0B0B;         /* cartao/faixa recuada */
-  --ink:#FFFCFB;           /* creme do template, aqui como tinta        */
-  --acc:#6BF019;           /* verde SOMA no lugar do vermelho da ref.   */
-  --mut:rgba(255,252,251,.58);
-  --mut2:rgba(255,252,251,.34);
-  --hair:rgba(255,252,251,.14);
-  --FD:'Instrument Serif',Georgia,serif;
-  --FS:'DM Sans',system-ui,-apple-system,Segoe UI,sans-serif;
-  --gut:clamp(20px,5vw,88px);
-  --sec:clamp(84px,11vw,190px);
+  --bg:#FFFFFF;
+  --ink:#262A2D;
+  --mut:#616161;
+  --line:rgba(38,42,45,.14);
+  --dark:#050609;
+  --soft:#F9F9F9;
+  --acc:#F94137;        /* <<< vermelho do Spector. Verde SOMA: #6BF019 */
+  --FD:'Plus Jakarta Sans',system-ui,-apple-system,Segoe UI,sans-serif;
+  --FM:'Fragment Mono',ui-monospace,SFMono-Regular,Menlo,monospace;
+  --gut:clamp(18px,4.4vw,72px);
+  --sec:clamp(76px,10vw,168px);
   --E:cubic-bezier(.4,0,.2,1);
   --Ef:cubic-bezier(.16,1,.3,1);
 }
 
 *{margin:0;padding:0;box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;overflow-x:clip}
-body{background:var(--bg);color:var(--ink);font-family:var(--FS);
-  font-size:16px;line-height:1.6;overflow-x:clip;
-  -webkit-font-smoothing:antialiased}
+body{background:var(--bg);color:var(--ink);font-family:var(--FD);
+  font-size:16px;line-height:1.6;overflow-x:clip;-webkit-font-smoothing:antialiased}
 img,video{display:block;max-width:100%}
 a{color:inherit;text-decoration:none}
 button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
-::selection{background:var(--acc);color:#000}
+::selection{background:var(--acc);color:#fff}
 
-/* ─── TIPOGRAFIA: os dois registros do template ─── */
-/* display: serifada, CAIXA ALTA, ITALICO, apertada e com entrelinha 0.8 */
-.d1,.d2,.d3{font-family:var(--FD);font-weight:400;font-style:italic;
-  text-transform:uppercase;letter-spacing:-.04em;line-height:.82}
-.d1{font-size:clamp(52px,11.5vw,168px)}
-.d2{font-size:clamp(38px,7vw,104px)}
-.d3{font-size:clamp(26px,3.6vw,56px)}
-/* serifada reta (nao italica): rotulos sobre imagem, como no template */
-.ds{font-family:var(--FD);font-weight:400;font-style:normal;
-  text-transform:uppercase;letter-spacing:.01em;line-height:1.1;
-  font-size:clamp(17px,1.9vw,26px)}
-/* rotulo tecnico: DM Sans 12/600 caixa alta */
-.lb{font-family:var(--FS);font-size:12px;font-weight:600;
-  text-transform:uppercase;letter-spacing:.09em;color:var(--acc)}
-.lb-m{color:var(--mut2)}
-.bd{font-size:clamp(15px,1.15vw,17px);line-height:1.65;color:var(--mut)}
+/* ── TIPOGRAFIA ─────────────────────────────────────────────────────── */
+/* declaracao gigante: caixa alta, peso alto, tracking bem fechado */
+.st{font-weight:800;text-transform:uppercase;letter-spacing:-.045em;line-height:.92}
+.st-1{font-size:clamp(38px,8.6vw,124px)}
+.st-2{font-size:clamp(30px,5.6vw,80px)}
+.st-3{font-size:clamp(22px,3.2vw,44px)}
+/* rotulo tecnico em mono com barra antes */
+.lb{font-family:var(--FM);font-size:11px;text-transform:uppercase;
+  letter-spacing:.06em;color:var(--mut);display:inline-flex;align-items:center;gap:9px}
+.lb::before{content:'';width:22px;height:1px;background:var(--acc);flex:0 0 auto}
+.lb-p{font-family:var(--FM);font-size:11px;text-transform:uppercase;
+  letter-spacing:.06em;color:var(--mut)}
 .acc{color:var(--acc)}
-em.acc{font-style:italic}
-
+.bd{color:var(--mut);font-size:clamp(14px,1.05vw,16.5px);line-height:1.7}
 .wrap{padding-left:var(--gut);padding-right:var(--gut)}
 .sec{padding-top:var(--sec);padding-bottom:var(--sec);position:relative}
-.ctr{text-align:center}
+.dark{background:var(--dark);color:#fff}
+.dark .bd{color:rgba(255,255,255,.62)}
+.dark .lb,.dark .lb-p{color:rgba(255,255,255,.55)}
+.soft{background:var(--soft)}
 
-/* indice numerado de secao: "02 SERVIÇOS" */
-.ix{display:flex;align-items:center;justify-content:center;gap:10px;
-  margin-bottom:clamp(22px,3vw,40px)}
-.ix i{font-style:normal;color:var(--acc)}
+/* cabecalho de secao: linha secundaria + nome, como na referencia */
+.sh{margin-bottom:clamp(28px,4vw,60px)}
+.sh .sub{font-family:var(--FM);font-size:12px;color:var(--mut);
+  margin-top:6px;display:block}
+.dark .sh .sub{color:rgba(255,255,255,.5)}
 
-/* ════════ PRELOADER (wordmark, como na referencia) ════════ */
-#pre{position:fixed;inset:0;z-index:9999;background:var(--bg);
-  display:flex;align-items:center;justify-content:center;
-  transition:opacity .7s var(--E),visibility .7s}
-#pre.off{opacity:0;visibility:hidden;pointer-events:none}
-#pre .pw{font-family:var(--FD);font-style:italic;text-transform:uppercase;
-  font-size:clamp(40px,9vw,120px);letter-spacing:-.04em;line-height:1;
-  color:var(--ink);overflow:hidden;display:block}
-#pre .pw span{display:inline-block;transform:translateY(105%);
-  animation:preUp .9s var(--Ef) .15s forwards}
-#pre .pbar{position:absolute;left:50%;bottom:16%;transform:translateX(-50%);
-  width:clamp(120px,22vw,260px);height:2px;background:var(--hair);overflow:hidden}
-#pre .pbar i{position:absolute;inset:0;background:var(--acc);
-  transform-origin:left;transform:scaleX(0);animation:preBar 1.6s var(--E) .25s forwards}
-@keyframes preUp{to{transform:translateY(0)}}
-@keyframes preBar{to{transform:scaleX(1)}}
-
-/* ════════ NAV EM PILULA FLUTUANTE ════════ */
-#nav{position:fixed;top:clamp(12px,2vw,22px);left:50%;transform:translateX(-50%);
-  z-index:900;display:flex;align-items:center;gap:clamp(14px,2vw,26px);
-  background:rgba(11,11,11,.82);backdrop-filter:blur(20px);
-  -webkit-backdrop-filter:blur(20px);border:1px solid var(--hair);
-  border-radius:70px;padding:9px 9px 9px 22px;
-  transition:box-shadow .5s var(--E)}
-#nav.stuck{box-shadow:0 12px 40px rgba(0,0,0,.55)}
-.nv-logo img{height:19px;width:auto}
-.nv-links{display:flex;align-items:center;gap:clamp(14px,1.6vw,24px)}
-.nv-links a{font-size:12px;font-weight:600;text-transform:uppercase;
-  letter-spacing:.07em;color:var(--mut);transition:color .3s var(--E)}
-.nv-links a:hover{color:var(--ink)}
-.nv-cta{background:var(--acc);color:#000;border-radius:70px;
-  padding:11px 20px;font-size:12px;font-weight:700;text-transform:uppercase;
-  letter-spacing:.06em;transition:background .3s var(--E)}
-.nv-cta:hover{background:var(--ink)}
-.nv-burger{display:none;width:42px;height:42px;border-radius:50%;
-  background:var(--acc);align-items:center;justify-content:center;flex-direction:column;gap:4px}
-.nv-burger span{display:block;width:16px;height:2px;background:#000}
-@media(max-width:860px){
-  .nv-links{display:none}
-  .nv-cta{display:none}
-  .nv-burger{display:flex}
-  #nav{padding:8px 8px 8px 18px}
-}
-/* menu mobile */
-#menu{position:fixed;inset:0;z-index:890;background:var(--bg);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
-  opacity:0;visibility:hidden;transition:opacity .5s var(--E),visibility .5s}
+/* ── NAV ────────────────────────────────────────────────────────────── */
+#nav{position:fixed;top:0;left:0;right:0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px var(--gut);color:#fff;
+  transition:background .45s var(--E),padding .45s var(--E),color .45s var(--E)}
+#nav.stuck{background:rgba(5,6,9,.9);backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);padding:13px var(--gut)}
+.nv-w{font-weight:800;letter-spacing:.16em;font-size:15px;text-transform:uppercase}
+.nv-w sup{color:var(--acc);font-size:.6em;vertical-align:super}
+.nv-l{display:flex;gap:clamp(18px,2.6vw,44px)}
+.nv-l a{font-size:13px;font-weight:500;opacity:.82;transition:opacity .3s}
+.nv-l a:hover{opacity:1;color:var(--acc)}
+.nv-b{display:none;width:40px;height:40px;flex-direction:column;
+  align-items:center;justify-content:center;gap:5px}
+.nv-b span{width:19px;height:1.5px;background:currentColor;display:block}
+@media(max-width:840px){.nv-l{display:none}.nv-b{display:flex}}
+#menu{position:fixed;inset:0;z-index:890;background:var(--dark);color:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  opacity:0;visibility:hidden;transition:opacity .45s var(--E),visibility .45s}
 #menu.on{opacity:1;visibility:visible}
-#menu a{font-family:var(--FD);font-style:italic;text-transform:uppercase;
-  font-size:clamp(32px,9vw,60px);letter-spacing:-.03em;line-height:1.15;color:var(--ink)}
+#menu a{font-weight:800;text-transform:uppercase;letter-spacing:-.03em;
+  font-size:clamp(28px,8vw,54px)}
 #menu a:hover{color:var(--acc)}
-#menu .mx{position:absolute;top:22px;right:22px;font-size:12px;font-weight:600;
-  text-transform:uppercase;letter-spacing:.09em;color:var(--acc)}
+#menu .x{position:absolute;top:22px;right:22px;font-family:var(--FM);font-size:12px;
+  text-transform:uppercase;letter-spacing:.08em;color:var(--acc)}
 
-/* ════════ HERO ════════ */
-/* O hero fica PRESO enquanto você rola a primeira tela e vai encolhendo
-   num cartão arredondado — a animação acompanha o dedo, não um relógio.
-   O trilho abaixo é o combustível de scroll desse gesto. */
-.hero-track{position:relative;height:185svh}
-/* no celular o gesto fica mais curto: 1,85 tela presa no hero e demais
-   quando o polegar tem menos alcance por rolagem */
-@media(max-width:820px){.hero-track{height:140svh}}
-#hero{position:sticky;top:0;height:100svh;min-height:560px;overflow:hidden;
-  display:flex;align-items:center;justify-content:center;
-  transform-origin:50% 0;will-change:transform,border-radius}
+/* ── HERO ───────────────────────────────────────────────────────────── */
+#hero{position:relative;min-height:100svh;background:var(--dark);
+  overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:0 var(--gut) clamp(28px,4vw,58px)}
 .hr-bg{position:absolute;inset:0;z-index:0}
-.hr-bg video,.hr-bg img{width:100%;height:100%;object-fit:cover}
-.hr-veil{position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:radial-gradient(ellipse 70% 62% at 50% 46%,rgba(0,0,0,.30),rgba(0,0,0,.72) 78%,rgba(0,0,0,.92)),
-             linear-gradient(to bottom,rgba(0,0,0,.72),transparent 26%,transparent 62%,rgba(0,0,0,.9))}
-.hr-in{position:relative;z-index:2;text-align:center;width:100%;padding:0 var(--gut)}
-.hr-in .d1{margin-bottom:clamp(16px,2vw,26px)}
-.hr-sub{max-width:52ch;margin:0 auto clamp(26px,3.4vw,42px)}
-.hr-meta{position:absolute;left:var(--gut);right:var(--gut);bottom:clamp(20px,3vh,34px);
-  z-index:2;display:flex;align-items:baseline;justify-content:space-between;gap:16px}
-@media(max-width:700px){.hr-meta{display:none}}
-
-/* botao padrao */
-.btn{display:inline-flex;align-items:center;gap:10px;border-radius:70px;
-  padding:15px 28px;font-size:12px;font-weight:700;text-transform:uppercase;
-  letter-spacing:.07em;transition:background .35s var(--E),color .35s var(--E)}
-.btn-a{background:var(--acc);color:#000}
-.btn-a:hover{background:var(--ink)}
-.btn-o{border:1px solid var(--hair);color:var(--ink)}
-.btn-o:hover{background:var(--ink);color:#000}
-.btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
-
-/* ════════ CARTOES "POR QUE" (imagem + rotulo serifado) ════════ */
-.why{display:flex;flex-direction:column;gap:12px;max-width:760px;margin:clamp(40px,5vw,70px) auto 0}
-.why-c{display:grid;grid-template-columns:132px 1fr;align-items:stretch;
-  background:var(--paper);border:1px solid var(--hair);border-radius:20px;overflow:hidden}
-.why-c img{width:100%;height:100%;object-fit:cover;min-height:104px}
-.why-c .t{display:flex;align-items:center;justify-content:center;padding:22px;text-align:center}
-@media(max-width:600px){.why-c{grid-template-columns:96px 1fr}.why-c img{min-height:88px}}
-
-/* ██████ SISTEMA DE EFEITOS DE SCROLL ██████████████████████████████████
-   Antes havia UM efeito só (.rv, fade + sobe) repetido no site inteiro —
-   monotonia. Agora há dois tipos:
-
-   GATILHO (dispara uma vez ao entrar):  data-fx="rise|zoom|slide-l|slide-r"
-   CONTÍNUO (ligado ao progresso do scroll): data-sc="zoom|drift|grow"
-     — é o "dando zoom conforme eu desço" que o usuário pediu: o valor
-       acompanha o dedo, não um relógio.
-
-   Regra que segui do guia de UX: transform/opacity apenas (nunca
-   width/height), ease-out na entrada, e no máximo 1–2 peças em movimento
-   por tela — variedade sem poluição.
-   ────────────────────────────────────────────────────────────────────── */
-[data-fx]{will-change:transform,opacity}
-[data-fx="rise"]{opacity:0;transform:translateY(30px)}
-[data-fx="zoom"]{opacity:0;transform:scale(1.16)}
-[data-fx="slide-l"]{opacity:0;transform:translateX(-46px)}
-[data-fx="slide-r"]{opacity:0;transform:translateX(46px)}
-[data-fx]{transition:opacity .95s var(--Ef),transform 1.15s var(--Ef)}
-[data-fx].on{opacity:1;transform:none}
-[data-fx][data-d="1"]{transition-delay:.10s}
-[data-fx][data-d="2"]{transition-delay:.20s}
-[data-fx][data-d="3"]{transition-delay:.30s}
-/* contínuos: o JS escreve o transform a cada quadro, sem transição */
-[data-sc]{will-change:transform}
-
-/* ██████ SERVIÇOS: linhas assimétricas alternadas ██████████████████████
-   Antes: 6 faixas IDÊNTICAS empilhadas (mesma altura, mesma composição,
-   foto sem relação com o serviço) — ~2.400px repetindo o mesmo bloco.
-   Agora cada serviço é uma linha com número, nome, descrição e imagem,
-   alternando o lado e variando a largura. A imagem dá zoom conforme sobe.
-   ────────────────────────────────────────────────────────────────────── */
-.svc{display:flex;flex-direction:column;gap:clamp(48px,7vw,120px);
-  padding:clamp(40px,6vw,90px) var(--gut) 0}
-.svc-r{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,70px);
-  align-items:center}
-.svc-r:nth-child(even) .svc-fig{order:2}
-/* larguras irregulares: nada de fileira uniforme */
-.svc-r:nth-child(1) .svc-fig{aspect-ratio:4/3}
-.svc-r:nth-child(2) .svc-fig{aspect-ratio:3/4;max-width:78%}
-.svc-r:nth-child(3) .svc-fig{aspect-ratio:16/10}
-.svc-r:nth-child(4) .svc-fig{aspect-ratio:1/1;max-width:86%}
-.svc-r:nth-child(5) .svc-fig{aspect-ratio:4/5;max-width:74%}
-.svc-r:nth-child(6) .svc-fig{aspect-ratio:16/11}
-/* justify-self, NAO margin-left:auto. Numa grid, a margem automatica faz o
-   item encolher para o conteudo; como a imagem dentro e width:100% de uma
-   caixa indefinida, a figura colapsava para 0x0 e nunca aparecia. */
-.svc-r:nth-child(even) .svc-fig{justify-self:end}
-.svc-fig{position:relative;width:100%;overflow:hidden;border-radius:4px;
-  background:var(--paper)}
-.svc-fig img{width:100%;height:100%;object-fit:cover;display:block}
-.svc-n{font-family:var(--FS);font-size:12px;font-weight:600;letter-spacing:.1em;
-  color:var(--acc);display:block;margin-bottom:14px}
-.svc-t{font-family:var(--FD);font-style:italic;text-transform:uppercase;
-  font-size:clamp(30px,4.4vw,68px);line-height:.9;letter-spacing:-.035em;
-  margin-bottom:16px}
-.svc-d{color:var(--mut);font-size:clamp(14px,1.1vw,16px);line-height:1.65;max-width:42ch}
-@media(max-width:820px){
-  .svc-r{grid-template-columns:1fr;gap:20px}
-  .svc-r:nth-child(even) .svc-fig{order:0;margin-left:0}
-  .svc-r .svc-fig{max-width:none!important;aspect-ratio:4/3!important}
+.hr-bg video,.hr-bg img{width:100%;height:100%;object-fit:cover;opacity:.62}
+.hr-bg::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(5,6,9,.82),rgba(5,6,9,.35) 38%,rgba(5,6,9,.92))}
+/* malha tecnica sobre a imagem — detalhe da referencia */
+.hr-grid{position:absolute;inset:0;z-index:1;pointer-events:none;opacity:.16;
+  background-image:linear-gradient(rgba(255,255,255,.5) 1px,transparent 1px),
+                   linear-gradient(90deg,rgba(255,255,255,.5) 1px,transparent 1px);
+  background-size:clamp(60px,7vw,110px) clamp(60px,7vw,110px)}
+.hr-top{position:relative;z-index:2;display:grid;
+  grid-template-columns:1fr auto;gap:24px;align-items:start;
+  padding-top:clamp(96px,14vh,170px);flex:1}
+.hr-id .jp{font-family:var(--FM);font-size:11px;color:var(--acc);
+  display:flex;align-items:center;gap:8px;margin-bottom:14px}
+.hr-id .jp::before{content:'';width:9px;height:9px;border-radius:50%;
+  background:var(--acc);display:block}
+.hr-id h1{font-size:clamp(28px,3.6vw,52px);font-weight:800;letter-spacing:-.035em;
+  line-height:1.05;color:#fff;margin-bottom:16px}
+.hr-adr{font-family:var(--FM);font-size:11px;line-height:1.85;
+  color:rgba(255,255,255,.6);text-transform:uppercase}
+.hr-svc{text-align:right}
+.hr-svc .yr{font-family:var(--FM);font-size:11px;color:var(--acc);
+  margin-bottom:14px;display:block}
+.hr-svc ul{list-style:none}
+.hr-svc li{font-size:clamp(16px,1.7vw,25px);font-weight:600;color:#fff;
+  line-height:1.35;opacity:.9}
+.hr-st{position:relative;z-index:2}
+.hr-st .st-1{color:#fff}
+.hr-st .st-1 .ln{display:block;overflow:hidden}
+.hr-st .st-1 .ln>span{display:block;transform:translateY(105%)}
+.hr-st .st-1 .ln.on>span{transform:none;transition:transform 1.05s var(--Ef)}
+.hr-st .st-1 .ln:nth-child(2).on>span{transition-delay:.09s}
+.hr-st .st-1 .ln:nth-child(3).on>span{transition-delay:.18s}
+.hr-side{position:absolute;right:var(--gut);bottom:clamp(90px,16vh,180px);
+  z-index:2;writing-mode:vertical-rl;font-family:var(--FM);font-size:10px;
+  color:rgba(255,255,255,.4);letter-spacing:.1em;text-transform:uppercase}
+@media(max-width:760px){
+  .hr-top{grid-template-columns:1fr}
+  .hr-svc{text-align:left;margin-top:22px}
+  .hr-side{display:none}
 }
 
-/* ════════ FAIXAS DE SERVICO (imagem sangrando + rotulo) ════════ */
-.band{position:relative;height:clamp(320px,52vh,520px);overflow:hidden;
-  display:flex;align-items:flex-end;justify-content:center}
-.band+.band{margin-top:10px}
-.band img,.band video{position:absolute;inset:0;width:100%;height:100%;
-  object-fit:cover;z-index:0;transition:transform 1.2s var(--Ef)}
-.band:hover img{transform:scale(1.05)}
-.band::after{content:'';position:absolute;inset:0;z-index:1;
-  background:linear-gradient(to top,rgba(0,0,0,.86),rgba(0,0,0,.15) 55%,rgba(0,0,0,.35))}
-.band .cap{position:relative;z-index:2;padding-bottom:clamp(22px,3.4vw,44px);text-align:center}
-.band .cap .n{color:var(--acc);margin-bottom:8px}
+/* ── PROJETOS (faixa escura, lista com media no hover) ───────────────── */
+.pj{border-top:1px solid rgba(255,255,255,.14)}
+.pj-r{position:relative;display:grid;grid-template-columns:auto 1fr auto;
+  gap:clamp(14px,3vw,40px);align-items:center;
+  padding:clamp(18px,2.4vw,32px) 0;border-bottom:1px solid rgba(255,255,255,.14);
+  cursor:pointer;transition:padding-left .5s var(--Ef),opacity .35s var(--E)}
+.pj:hover .pj-r{opacity:.35}
+.pj .pj-r:hover{opacity:1;padding-left:clamp(8px,1.6vw,26px)}
+.pj-n{font-family:var(--FM);font-size:11px;color:var(--acc)}
+.pj-t{font-size:clamp(19px,2.9vw,42px);font-weight:700;letter-spacing:-.03em;
+  line-height:1.1;color:#fff;transition:color .35s var(--E)}
+.pj-r:hover .pj-t{color:var(--acc)}
+.pj-m{font-family:var(--FM);font-size:11px;color:rgba(255,255,255,.55);
+  text-transform:uppercase;white-space:nowrap}
+/* previa que segue o cursor */
+#peek{position:fixed;top:0;left:0;width:clamp(180px,17vw,270px);aspect-ratio:4/5;
+  border-radius:8px;overflow:hidden;pointer-events:none;z-index:800;
+  opacity:0;transform:translate(-50%,-50%) scale(.92);
+  transition:opacity .3s var(--E),transform .5s var(--Ef)}
+#peek.on{opacity:1;transform:translate(-50%,-50%) scale(1)}
+#peek video{width:100%;height:100%;object-fit:cover}
+@media(hover:none){#peek{display:none}}
 
-/* ════════ MARQUEE ════════ */
-.mq{overflow:hidden;border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
-  padding:clamp(16px,2.2vw,28px) 0}
-.mq-t{display:flex;width:max-content;animation:mq 32s linear infinite}
-.mq:hover .mq-t{animation-play-state:paused}
-.mq-t span{display:inline-flex;align-items:center;gap:clamp(20px,3vw,44px);
-  padding-right:clamp(20px,3vw,44px);white-space:nowrap;
-  font-family:var(--FD);font-style:italic;text-transform:uppercase;
-  font-size:clamp(24px,4vw,58px);letter-spacing:-.03em}
-.mq-t i{font-style:normal;color:var(--acc);font-size:.38em;transform:translateY(-.2em)}
+/* ── LOGOS ──────────────────────────────────────────────────────────── */
+.lg-t{overflow:hidden;border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  padding:clamp(22px,3vw,40px) 0}
+.lg-i{display:flex;align-items:center;gap:clamp(40px,6vw,96px);width:max-content;
+  animation:mq 42s linear infinite}
+.lg-i img{height:clamp(24px,2.6vw,38px);width:auto;object-fit:contain;
+  filter:grayscale(1) contrast(.25) brightness(1.9);opacity:.75;
+  transition:filter .4s,opacity .4s}
+.lg-i img:hover{filter:none;opacity:1}
 @keyframes mq{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-/* ════════ LOGOS DE CLIENTES ════════ */
-.logos{display:flex;align-items:center;gap:clamp(30px,5vw,80px);width:max-content;
-  animation:mq 38s linear infinite}
-.logos img{height:clamp(30px,3.4vw,46px);width:auto;object-fit:contain;
-  opacity:.55;filter:grayscale(1) brightness(1.7);transition:opacity .4s,filter .4s}
-.logos img:hover{opacity:1;filter:none}
+/* ── SERVIÇOS (lista que abre) ───────────────────────────────────────── */
+.sv{border-top:1px solid var(--line)}
+.sv-i{border-bottom:1px solid var(--line)}
+.sv-h{display:grid;grid-template-columns:auto 1fr auto;gap:clamp(14px,3vw,36px);
+  align-items:center;padding:clamp(18px,2.4vw,30px) 0;cursor:pointer;width:100%;text-align:left}
+.sv-n{font-family:var(--FM);font-size:11px;color:var(--acc)}
+.sv-t{font-size:clamp(19px,2.6vw,38px);font-weight:700;letter-spacing:-.03em;
+  transition:color .35s var(--E)}
+.sv-i:hover .sv-t,.sv-i.on .sv-t{color:var(--acc)}
+.sv-p{width:26px;height:26px;position:relative;flex:0 0 auto}
+.sv-p::before,.sv-p::after{content:'';position:absolute;background:currentColor;
+  transition:transform .45s var(--Ef);top:50%;left:50%}
+.sv-p::before{width:13px;height:1.5px;transform:translate(-50%,-50%)}
+.sv-p::after{width:1.5px;height:13px;transform:translate(-50%,-50%)}
+.sv-i.on .sv-p::after{transform:translate(-50%,-50%) scaleY(0)}
+.sv-b{max-height:0;overflow:hidden;transition:max-height .6s var(--Ef)}
+.sv-i.on .sv-b{max-height:340px}
+.sv-b-in{padding:0 0 clamp(22px,3vw,34px);display:grid;
+  grid-template-columns:1fr 1fr;gap:clamp(18px,3vw,50px)}
+.sv-b-in .bd{max-width:52ch}
+.sv-tags{display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start}
+.sv-tags span{font-family:var(--FM);font-size:11px;text-transform:uppercase;
+  border:1px solid var(--line);border-radius:8px;padding:7px 12px;color:var(--mut)}
+@media(max-width:760px){.sv-b-in{grid-template-columns:1fr}}
 
-/* ════════ CASES (faixa cheia + cartao interno + meta) ════════ */
-/* ██████ CASES: o vídeo é o protagonista ██████████████████████████████
-   Dois defeitos foram removidos aqui:
+/* ── NÚMEROS (contador de rolete) ────────────────────────────────────── */
+.nb{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,3vw,48px);
+  border-top:1px solid var(--line);padding-top:clamp(30px,4vw,56px)}
+.nb-i .val{display:flex;align-items:flex-end;font-weight:800;
+  font-size:clamp(40px,6.6vw,96px);letter-spacing:-.05em;line-height:.9}
+.rol{display:inline-block;height:1em;overflow:hidden;vertical-align:bottom}
+.rol i{display:block;font-style:normal;transition:transform 1.4s var(--Ef)}
+.nb-i .suf{color:var(--acc)}
+.nb-i .k{font-family:var(--FM);font-size:11px;text-transform:uppercase;
+  color:var(--mut);margin-top:14px;display:block}
+.nb-i .d{margin-top:10px;font-size:13.5px;color:var(--mut);line-height:1.6;max-width:34ch}
+@media(max-width:900px){.nb{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.nb{grid-template-columns:1fr}}
 
-   1. FORMATO ESMAGADO. O cartão era aspect-ratio:3/4 fixo, mas metade dos
-      vídeos é 16:9 horizontal — um 16:9 dentro de uma caixa 3:4 perde ~58%
-      da largura, sobrava um pedaço do meio do quadro. Agora o cartão NÃO
-      tem proporção fixa: o JS lê videoWidth/videoHeight e aplica a real.
-   2. BLUR SEM PROPÓSITO. Havia uma foto aleatória desfocada atrás, sem
-      relação nenhuma com o vídeo — decoração para preencher espaço.
-      Removida. O fundo agora é preto e a composição é o vídeo + o texto.
+/* ── SHOWREEL ───────────────────────────────────────────────────────── */
+.rl{position:relative;border-radius:8px;overflow:hidden;background:#000;
+  aspect-ratio:16/9}
+.rl video{width:100%;height:100%;object-fit:cover}
+.rl-c{position:absolute;left:0;right:0;bottom:0;padding:clamp(16px,2.4vw,30px);
+  display:flex;justify-content:space-between;align-items:flex-end;gap:16px;
+  background:linear-gradient(to top,rgba(0,0,0,.7),transparent);color:#fff}
 
-   A composição também deixou de ser centralizada: agora é assimétrica e
-   alterna de lado a cada case.
-   ────────────────────────────────────────────────────────────────────── */
-.case{position:relative;padding:clamp(46px,6vw,90px) var(--gut);
-  display:grid;grid-template-columns:1fr 1fr;gap:clamp(26px,4vw,72px);
-  align-items:center}
-.case+.case{border-top:1px solid var(--hair)}
-.case:nth-child(even) .case-card{order:2}
-.case:nth-child(even) .case-txt{order:1}
-.case-card{position:relative;overflow:hidden;border-radius:6px;
-  border:1px solid var(--hair);background:var(--paper);
-  aspect-ratio:16/9}                    /* padrão; o JS troca pela real */
-.case-card video,.case-card img{width:100%;height:100%;object-fit:cover;display:block}
-.case .ds{margin-bottom:14px}
-.case-txt .num{font-family:var(--FD);font-style:italic;
-  font-size:clamp(46px,6vw,104px);line-height:1;color:rgba(255,252,251,.10);
-  display:block;margin-bottom:8px}
-.case-meta{margin-top:clamp(18px,2.4vw,30px);display:flex;
-  gap:clamp(18px,3vw,44px);flex-wrap:wrap}
-.case-meta .k{display:block;color:var(--mut2);margin-bottom:5px}
-.case-meta .v{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.07em}
-@media(max-width:820px){
-  .case{grid-template-columns:1fr;gap:20px}
-  .case:nth-child(even) .case-card{order:0}
-  .case:nth-child(even) .case-txt{order:1}
+/* ── PROCESSO (numerado com prazo) ───────────────────────────────────── */
+.pc{border-top:1px solid var(--line)}
+.pc-i{display:grid;grid-template-columns:auto 1.1fr 1fr auto;
+  gap:clamp(14px,2.6vw,40px);align-items:start;
+  padding:clamp(20px,2.8vw,38px) 0;border-bottom:1px solid var(--line);
+  --lit:0}
+.pc-n{font-family:var(--FM);font-size:11px;color:var(--acc)}
+.pc-t{font-size:clamp(18px,2.2vw,32px);font-weight:700;letter-spacing:-.025em;
+  opacity:calc(.4 + .6*var(--lit));transition:opacity .1s linear}
+.pc-d{font-size:14px;color:var(--mut);line-height:1.65;
+  opacity:calc(.35 + .65*var(--lit));transition:opacity .1s linear}
+.pc-p{font-family:var(--FM);font-size:11px;text-transform:uppercase;
+  color:var(--mut);white-space:nowrap;text-align:right}
+.pc-p b{display:block;color:var(--ink);font-weight:400;margin-top:5px}
+@media(max-width:860px){
+  .pc-i{grid-template-columns:auto 1fr;row-gap:8px}
+  .pc-d{grid-column:2}.pc-p{grid-column:2;text-align:left}
 }
 
-/* ════════ LISTA DE PROCESSO (riscada por fios) ════════ */
-.rows{max-width:1000px;margin:clamp(34px,4.4vw,60px) auto 0}
-.row{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:baseline;
-  padding:clamp(16px,2vw,24px) 0;border-bottom:1px solid var(--hair)}
-.row:first-child{border-top:1px solid var(--hair)}
-/* --lit vem do JS: 0 = apagada, 1 = acesa. O scroll conduz. */
-.row{--lit:0}
-.row .k{font-size:12px;font-weight:600;text-transform:uppercase;letter-spacing:.09em;
-  color:var(--acc);opacity:calc(.28 + .72*var(--lit))}
-.row .v{opacity:calc(.3 + .7*var(--lit))}
-.row{border-bottom-color:rgba(255,252,251,calc(.06 + .16*var(--lit)))}
-.row .v{font-size:12px;font-weight:500;text-transform:uppercase;letter-spacing:.06em;
-  color:var(--mut);text-align:right}
-@media(max-width:640px){.row{grid-template-columns:1fr;gap:6px}.row .v{text-align:left}}
+/* ── EQUIPE ─────────────────────────────────────────────────────────── */
+.tm{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.6vw,22px)}
+.tm figure{position:relative;aspect-ratio:3/4;border-radius:8px;overflow:hidden;
+  background:var(--soft)}
+.tm img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--Ef)}
+.tm figure:hover img{transform:scale(1.05)}
+.tm figcaption{position:absolute;left:0;right:0;bottom:0;padding:14px;
+  background:linear-gradient(to top,rgba(5,6,9,.8),transparent);color:#fff;
+  font-family:var(--FM);font-size:11px;text-transform:uppercase}
+@media(max-width:860px){.tm{grid-template-columns:repeat(2,1fr)}}
 
-/* ════════ NUMEROS ════════ */
-.nums{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;background:var(--hair);
-  border-top:1px solid var(--hair);border-bottom:1px solid var(--hair)}
-.num{background:var(--bg);padding:clamp(26px,3.6vw,52px) clamp(16px,2vw,30px);text-align:center}
-.num b{display:block;font-family:var(--FD);font-style:italic;font-weight:400;
-  text-transform:uppercase;letter-spacing:-.03em;line-height:1;
-  font-size:clamp(38px,5.4vw,84px);margin-bottom:10px}
-.num b em{font-style:italic;color:var(--acc)}
-@media(max-width:760px){.nums{grid-template-columns:repeat(2,1fr)}}
+/* ── FAQ ────────────────────────────────────────────────────────────── */
+.fq{border-top:1px solid var(--line);max-width:900px}
+.fq-i{border-bottom:1px solid var(--line)}
+.fq-h{display:flex;justify-content:space-between;align-items:center;gap:20px;
+  width:100%;text-align:left;padding:clamp(16px,2.2vw,26px) 0;cursor:pointer}
+.fq-q{font-size:clamp(15px,1.5vw,20px);font-weight:600;letter-spacing:-.015em}
+.fq-i.on .fq-q{color:var(--acc)}
+.fq-b{max-height:0;overflow:hidden;transition:max-height .55s var(--Ef)}
+.fq-i.on .fq-b{max-height:260px}
+.fq-b p{padding-bottom:clamp(16px,2.2vw,26px);color:var(--mut);
+  font-size:14.5px;line-height:1.7;max-width:62ch}
 
-/* ════════ EQUIPE / BASTIDORES ════════ */
-.crew{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;
-  margin-top:clamp(34px,4.4vw,60px)}
-.crew figure{position:relative;aspect-ratio:3/4;border-radius:14px;overflow:hidden;
-  background:var(--paper);border:1px solid var(--hair)}
-.crew img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--Ef)}
-.crew figure:hover img{transform:scale(1.06)}
-@media(max-width:860px){.crew{grid-template-columns:repeat(2,1fr)}}
+/* ── CTA ────────────────────────────────────────────────────────────── */
+.ct{text-align:center}
+.ct .st-2{margin:clamp(16px,2vw,26px) 0 clamp(24px,3vw,40px)}
+.btn{display:inline-flex;align-items:center;gap:10px;border-radius:8px;
+  padding:15px 28px;font-size:14px;font-weight:600;transition:all .35s var(--E)}
+.btn-a{background:var(--acc);color:#fff}
+.btn-a:hover{background:var(--ink)}
+.btn-o{border:1px solid var(--line);color:var(--ink)}
+.btn-o:hover{border-color:var(--ink)}
+.btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
 
-/* ════════ INTERNACIONAL ════════ */
-.intl{display:grid;grid-template-columns:320px 1fr;gap:clamp(30px,4.4vw,70px);
-  align-items:center;margin-top:clamp(34px,4.4vw,60px)}
-.intl-ph{border-radius:20px;overflow:hidden;border:1px solid var(--hair);
-  background:var(--paper);aspect-ratio:4/5}
-.intl-ph img{width:100%;height:100%;object-fit:cover}
-.intl-pl{border-radius:20px;overflow:hidden;border:1px solid var(--hair);
-  background:var(--paper);aspect-ratio:16/9}
-.intl-pl video{width:100%;height:100%;object-fit:cover}
-.intl-tabs{display:flex;gap:clamp(10px,2vw,26px);flex-wrap:wrap;margin-bottom:18px}
-.intl-tabs button{font-size:12px;font-weight:600;text-transform:uppercase;
-  letter-spacing:.08em;color:var(--mut2);padding-bottom:6px;
-  border-bottom:2px solid transparent;transition:color .3s,border-color .3s}
-.intl-tabs button:hover{color:var(--ink)}
-.intl-tabs button.on{color:var(--acc);border-color:var(--acc)}
-@media(max-width:900px){.intl{grid-template-columns:1fr}}
+/* ── RODAPÉ ─────────────────────────────────────────────────────────── */
+footer{background:var(--dark);color:#fff;padding:clamp(50px,7vw,100px) var(--gut) 32px}
+.ft-g{display:grid;grid-template-columns:2fr 1fr 1fr;gap:clamp(24px,4vw,60px);
+  padding-bottom:clamp(34px,5vw,64px);border-bottom:1px solid rgba(255,255,255,.14)}
+.ft-g h4{font-family:var(--FM);font-size:11px;text-transform:uppercase;
+  color:rgba(255,255,255,.45);margin-bottom:14px;font-weight:400}
+.ft-g a{display:block;font-size:14px;padding:5px 0;opacity:.82}
+.ft-g a:hover{opacity:1;color:var(--acc)}
+.ft-b{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  padding-top:22px;font-family:var(--FM);font-size:11px;
+  color:rgba(255,255,255,.45);text-transform:uppercase}
+@media(max-width:760px){.ft-g{grid-template-columns:1fr}}
 
-/* ════════ CTA + RODAPE ════════ */
-#cta{text-align:center}
-footer{border-top:1px solid var(--hair);padding:clamp(34px,4vw,60px) var(--gut);
-  display:flex;align-items:center;justify-content:space-between;gap:20px;flex-wrap:wrap}
-footer .f-l{display:flex;gap:clamp(14px,2vw,26px);flex-wrap:wrap}
-footer a,footer span{font-size:12px;font-weight:500;text-transform:uppercase;
-  letter-spacing:.07em;color:var(--mut2)}
-footer a:hover{color:var(--acc)}
-
-/* ════════ ANIMACOES DE SCROLL (como na referencia) ════════
-   Sem gate por prefers-reduced-motion: o sistema do usuario reporta
-   animacoes desligadas e o site ficaria estatico para ele. */
-/* palavras acendendo conforme o scroll (o gesto-assinatura do template) */
-.rv-w .w{opacity:.16;transition:opacity .5s var(--E)}
-.rv-w .w.on{opacity:1}
-/* subida por tras de mascara */
-.rv-u{overflow:hidden;display:block}
-.rv-u>i{display:block;font-style:inherit;transform:translateY(105%);opacity:0;
-  transition:transform 1s var(--Ef),opacity .7s var(--Ef)}
-.rv-u.on>i{transform:translateY(0);opacity:1}
-/* fade + subida simples */
-.rv{opacity:0;transform:translateY(26px);
-  transition:opacity .9s var(--Ef),transform .9s var(--Ef)}
-.rv.on{opacity:1;transform:none}
-.rv.dl1{transition-delay:.09s}.rv.dl2{transition-delay:.18s}.rv.dl3{transition-delay:.27s}
-
-/* CORTINA na imagem — sem clip-path, de proposito.
-   clip-path:inset(100%) zera a AREA do elemento, e nesse estado o
-   IntersectionObserver nunca o considera visivel: se o gatilho falha, a
-   imagem fica preta para sempre (foi o que quebrou as secoes de case).
-   Aqui a cortina e feita com escala + opacidade: o elemento mantem area
-   e o gatilho e por geometria no laco de rAF, nao por observer. */
-.rv-c{opacity:0;transform:scale(1.14);
-  transition:opacity 1s var(--Ef),transform 1.5s var(--Ef)}
-.rv-c.on{opacity:1;transform:scale(1)}
-
-/* ════════ PARALLAX + 3D (pedido do usuario) ════════ */
-/* fundo que desliza mais devagar que a pagina */
-.px{will-change:transform}
-/* cartao com inclinacao 3D conforme entra na tela */
-.tilt3d{transform-style:preserve-3d;will-change:transform}
-.persp{perspective:1400px;perspective-origin:50% 50%}
-/* FUNDO ATRAS ENTRANDO ENTRE AS SECOES:
-   o painel fica preso (sticky) e a secao seguinte sobe por cima dele,
-   revelando a imagem "por tras" — o gesto do template. */
-.reveal-stack{position:relative}
-.reveal-bg{position:sticky;top:0;height:100svh;overflow:hidden;z-index:0}
-.reveal-bg img,.reveal-bg video{width:100%;height:100%;object-fit:cover}
-.reveal-bg::after{content:'';position:absolute;inset:0;
-  background:linear-gradient(to bottom,rgba(0,0,0,.55),rgba(0,0,0,.25) 45%,rgba(0,0,0,.8))}
-.reveal-bg .rb-cap{position:absolute;left:0;right:0;bottom:clamp(30px,7vh,80px);
-  text-align:center;z-index:2}
-.reveal-over{position:relative;z-index:1;background:var(--bg);
-  border-radius:34px 34px 0 0;margin-top:-34px;
-  box-shadow:0 -30px 70px rgba(0,0,0,.7)}
+/* ── REVELAÇÕES ─────────────────────────────────────────────────────── */
+/* Decididas por GEOMETRIA no laco, nunca por IntersectionObserver: um
+   observer que nao entrega o callback deixaria o conteudo escondido para
+   sempre. Aqui, se esta na tela, aparece. */
+[data-r]{opacity:0;will-change:transform,opacity;
+  transition:opacity .9s var(--Ef),transform 1.05s var(--Ef)}
+[data-r="up"]{transform:translateY(28px)}
+[data-r="l"]{transform:translateX(-38px)}
+[data-r="r"]{transform:translateX(38px)}
+[data-r="z"]{transform:scale(1.1)}
+[data-r].on{opacity:1;transform:none}
+[data-d="1"]{transition-delay:.08s}
+[data-d="2"]{transition-delay:.16s}
+[data-d="3"]{transition-delay:.24s}
+/* zoom continuo: o valor acompanha o scroll, nao um relogio */
+[data-sc]{will-change:transform}
 
 /* Lenis */
 html.lenis,html.lenis body{height:auto}
-.lenis.lenis-smooth{scroll-behavior:auto!important}
+html.lenis{scroll-behavior:auto!important}
 .lenis.lenis-stopped{overflow:hidden}
 </style>
 </head>
 <body>
 
-<!-- ══════ PRELOADER ══════ -->
-<div id="pre">
-  <span class="pw"><span>SOMA</span></span>
-  <span class="pbar"><i></i></span>
-</div>
-
-<!-- ══════ NAV ══════ -->
 <nav id="nav">
-  <a href="#hero" class="nv-logo"><img src="logotipo.png" alt="SOMA Produtora"></a>
-  <div class="nv-links">
-    <a href="#servicos">Serviços</a>
+  <a href="#" class="nv-w">SOMA<sup>®</sup></a>
+  <div class="nv-l">
     <a href="#projetos">Projetos</a>
+    <a href="#servicos">Serviços</a>
     <a href="#processo">Processo</a>
     <a href="#equipe">Equipe</a>
+    <a href="#contato">Contato</a>
   </div>
-  <a href="#cta" class="nv-cta">Falar com a equipe</a>
-  <button class="nv-burger" id="burger" aria-label="Abrir menu"><span></span><span></span></button>
+  <button class="nv-b" id="navB" aria-label="Abrir menu"><span></span><span></span></button>
 </nav>
-
 <div id="menu">
-  <button class="mx" id="menuX">Fechar</button>
-  <a href="#servicos">Serviços</a>
-  <a href="#projetos">Projetos</a>
-  <a href="#processo">Processo</a>
-  <a href="#equipe">Equipe</a>
-  <a href="#cta">Contato</a>
+  <button class="x" id="menuX">Fechar</button>
+  <a href="#projetos">Projetos</a><a href="#servicos">Serviços</a>
+  <a href="#processo">Processo</a><a href="#equipe">Equipe</a><a href="#contato">Contato</a>
 </div>
-
-<main>
 
 <!-- ══════ HERO ══════ -->
-<div class="hero-track" id="heroTrack">
 <section id="hero">
   <div class="hr-bg">
-    <video id="heroVid" muted loop playsinline preload="auto"
-           poster="hero-reel-poster.webp" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4"></video>
+    <video id="heroVid" muted loop playsinline preload="auto" poster="hero-reel-poster.webp"
+      data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4"></video>
   </div>
-  <div class="hr-veil"></div>
-  <div class="hr-in">
-    <div class="lb rv" style="margin-bottom:18px">Produtora Criativa &middot; Est. 2019 &middot; BSB</div>
-    <h1 class="d1"><span class="rv-u"><i>SOMA</i></span></h1>
-    <p class="bd hr-sub rv dl1">Não é só vídeo. É impacto. Do conceito ao frame final — audiovisual, tráfego, social, sites, drone e fotografia.</p>
-    <div class="btns rv dl2">
-      <a href="#cta" class="btn btn-a">Começar um projeto</a>
-      <a href="#projetos" class="btn btn-o">Ver o trabalho</a>
+  <div class="hr-grid"></div>
+  <div class="hr-top">
+    <div class="hr-id">
+      <div class="jp">Produtora Criativa</div>
+      <h1>SOMA Produtora</h1>
+      <div class="hr-adr">Brasília — DF<br>Distrito Federal<br>Brasil</div>
+    </div>
+    <div class="hr-svc">
+      <span class="yr">EST. 2019</span>
+      <ul>
+        <li>Audiovisual</li><li>Tráfego</li><li>Social</li><li>Web</li>
+      </ul>
     </div>
   </div>
-  <div class="hr-meta">
-    <span class="lb lb-m">Brasília &middot; Brasil</span>
-    <span class="lb lb-m">Showreel 2025 &middot; 4K &middot; LOG3</span>
+  <div class="hr-st">
+    <h2 class="st st-1">
+      <span class="ln"><span>Marcas que</span></span>
+      <span class="ln"><span>não passam</span></span>
+      <span class="ln"><span>despercebidas</span></span>
+    </h2>
   </div>
-</section>
-</div>
-
-<!-- ══════ (01) SOBRE ══════ -->
-<section class="sec wrap ctr" id="sobre">
-  <div class="ix lb"><i>01</i> Sobre</div>
-  <h2 class="d2 rv-w" data-words>Muito além do vídeo. Parceiro criativo que move o ponteiro da sua marca.</h2>
-  <div class="why">
-    <div class="why-c rv"><img data-sc="grow" src="foto-01.webp" alt="" loading="lazy"><div class="t"><span class="ds">Produção<br>Completa</span></div></div>
-    <div class="why-c rv dl1"><img data-sc="grow" src="foto-07.webp" alt="" loading="lazy"><div class="t"><span class="ds">Direção<br>Criativa</span></div></div>
-    <div class="why-c rv dl2"><img data-sc="grow" src="foto-12.webp" alt="" loading="lazy"><div class="t"><span class="ds">Consistência<br>de Marca</span></div></div>
-  </div>
+  <div class="hr-side">SOMA Produtora · Todos os direitos</div>
 </section>
 
-<!-- ══════ (02) SERVIÇOS ══════ -->
-<section id="servicos">
-  <div class="sec wrap ctr" style="padding-bottom:clamp(30px,4vw,60px)">
-    <div class="ix lb"><i>02</i> Serviços</div>
-    <h2 class="d2 rv-w" data-words>Tudo o que sua marca precisa, em um só lugar.</h2>
+<!-- ══════ PROJETOS ══════ -->
+<section class="sec wrap dark" id="projetos">
+  <div class="sh">
+    <span class="lb">Projetos selecionados</span>
+    <span class="sub">Uma seleção de trabalhos guiados por narrativa.</span>
   </div>
-  <div class="svc">
-    <div class="svc-r">
-      <figure class="svc-fig" data-fx="slide-l"><img data-sc="zoom" src="foto-04.webp" alt="Audiovisual" loading="lazy"></figure>
-      <div class="svc-txt" data-fx="slide-r" data-d="1">
-        <span class="svc-n">01</span>
-        <h3 class="svc-t">Audiovisual</h3>
-        <p class="svc-d">Filmes institucionais, comerciais, VSLs e conteúdo de marca com padrão de cinema — da direção ao frame final.</p>
-      </div>
-    </div>
-    <div class="svc-r">
-      <figure class="svc-fig" data-fx="slide-r"><img data-sc="zoom" src="foto-09.webp" alt="Gestão de Tráfego" loading="lazy"></figure>
-      <div class="svc-txt" data-fx="slide-l" data-d="1">
-        <span class="svc-n">02</span>
-        <h3 class="svc-t">Gestão de Tráfego</h3>
-        <p class="svc-d">Campanhas pagas em Google, Meta e TikTok com estratégia de funil e otimização orientada a retorno.</p>
-      </div>
-    </div>
-    <div class="svc-r">
-      <figure class="svc-fig" data-fx="slide-l"><img data-sc="zoom" src="foto-14.webp" alt="Social Media" loading="lazy"></figure>
-      <div class="svc-txt" data-fx="slide-r" data-d="1">
-        <span class="svc-n">03</span>
-        <h3 class="svc-t">Social Media</h3>
-        <p class="svc-d">Planejamento, conteúdo e gestão de redes com identidade forte e calendário estratégico.</p>
-      </div>
-    </div>
-    <div class="svc-r">
-      <figure class="svc-fig" data-fx="slide-r"><img data-sc="zoom" src="foto-17.webp" alt="Sites & Landing Pages" loading="lazy"></figure>
-      <div class="svc-txt" data-fx="slide-l" data-d="1">
-        <span class="svc-n">04</span>
-        <h3 class="svc-t">Sites & Landing Pages</h3>
-        <p class="svc-d">Sites institucionais e páginas de campanha com foco em conversão e performance.</p>
-      </div>
-    </div>
-    <div class="svc-r">
-      <figure class="svc-fig" data-fx="slide-l"><img data-sc="zoom" src="foto-20.webp" alt="Drone" loading="lazy"></figure>
-      <div class="svc-txt" data-fx="slide-r" data-d="1">
-        <span class="svc-n">05</span>
-        <h3 class="svc-t">Drone</h3>
-        <p class="svc-d">Filmagem aérea com pilotos certificados — planos que elevam qualquer narrativa.</p>
-      </div>
-    </div>
-    <div class="svc-r">
-      <figure class="svc-fig" data-fx="slide-r"><img data-sc="zoom" src="foto-06.webp" alt="Fotografia" loading="lazy"></figure>
-      <div class="svc-txt" data-fx="slide-l" data-d="1">
-        <span class="svc-n">06</span>
-        <h3 class="svc-t">Fotografia</h3>
-        <p class="svc-d">Ensaios de marca, produto e evento com direção de arte e pós apurada.</p>
-      </div>
-    </div>
+  <div class="pj" id="pjList">
+    <div class="pj-r" data-r="up" data-v="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.MP4">
+      <span class="pj-n">01</span><span class="pj-t">EXPOMIX — Aftermovie</span><span class="pj-m">2025 · Evento</span></div>
+    <div class="pj-r" data-r="up" data-v="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.MP4">
+      <span class="pj-n">02</span><span class="pj-t">Mari Fernandez — Palco Principal</span><span class="pj-m">2024 · Show</span></div>
+    <div class="pj-r" data-r="up" data-v="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20After%20Movie%20Final%20Maio%20.MOV">
+      <span class="pj-n">03</span><span class="pj-t">Bora de Bike — Aftermovie</span><span class="pj-m">2025 · Evento</span></div>
+    <div class="pj-r" data-r="up" data-v="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/FOME%20DE%20M%C3%9ASICA%20-%20VER%C3%83O%20R2%20_v3.mp4">
+      <span class="pj-n">04</span><span class="pj-t">Fome de Música — Verão</span><span class="pj-m">2024 · Campanha</span></div>
+    <div class="pj-r" data-r="up" data-v="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Acessibilidade%20-%20Tel%C3%A3o%202025%20Na%20Praia.MOV">
+      <span class="pj-n">05</span><span class="pj-t">Acessibilidade — Na Praia</span><span class="pj-m">2025 · Festival</span></div>
+    <div class="pj-r" data-r="up" data-v="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20Final%20.MOV">
+      <span class="pj-n">06</span><span class="pj-t">Bora de Bike — Final</span><span class="pj-m">2024 · Evento</span></div>
   </div>
 </section>
-
-<!-- ══════ FITA ══════ -->
-<div class="mq" style="margin-top:clamp(60px,8vw,120px)">
-  <div class="mq-t">
-    <span>Aftermovie <i>&#10006;</i> Videoclipe <i>&#10006;</i> Branded Content <i>&#10006;</i> Campanha 360° <i>&#10006;</i> Direção Criativa <i>&#10006;</i></span>
-    <span>Aftermovie <i>&#10006;</i> Videoclipe <i>&#10006;</i> Branded Content <i>&#10006;</i> Campanha 360° <i>&#10006;</i> Direção Criativa <i>&#10006;</i></span>
-  </div>
-</div>
+<div id="peek"><video id="peekV" muted loop playsinline></video></div>
 
 <!-- ══════ CLIENTES ══════ -->
-<section class="sec wrap ctr" id="clientes" style="padding-bottom:clamp(40px,5vw,70px)">
-  <div class="ix lb"><i>03</i> Clientes</div>
-  <h2 class="d3 rv" style="font-style:italic">Marcas que confiam na SOMA</h2>
+<section class="sec wrap" id="clientes" style="padding-bottom:clamp(30px,4vw,54px)">
+  <div class="sh" data-r="up">
+    <span class="lb">Nossos clientes</span>
+    <span class="sub">Marcas que não se contentaram com o suficiente.</span>
+  </div>
+  <p class="st st-3" data-r="up" data-d="1" style="max-width:22ch">De festival a banco.<br>Seis setores, <span class="acc">um padrão só.</span></p>
 </section>
-<div class="mq" style="border-bottom:none">
-  <div class="logos">
+<div class="lg-t">
+  <div class="lg-i">
     <img src="logo-expomix.png" alt="Expomix" loading="lazy"><img src="logo-bb.png" alt="Banco do Brasil" loading="lazy">
     <img src="logo-record.png" alt="Record" loading="lazy"><img src="logo-r2.png" alt="R2" loading="lazy">
     <img src="logo-cbf.png" alt="CBF" loading="lazy"><img src="logo-napraia.png" alt="Na Praia" loading="lazy">
@@ -573,463 +421,357 @@ html.lenis,html.lenis body{height:auto}
   </div>
 </div>
 
-<!-- ══════ (04) PROJETOS ══════ -->
-<!-- FUNDO ATRAS ENTRANDO ENTRE AS SECOES:
-     o painel .reveal-bg fica preso (sticky) e #projetos sobe por cima dele
-     com canto arredondado, revelando a imagem "por tras" -->
-<div class="reveal-stack">
-  <div class="reveal-bg">
-    <img class="px" data-px="9" data-sc="grow" src="foto-13.webp" alt="" loading="lazy">
-    <div class="rb-cap">
-      <div class="lb" style="margin-bottom:8px">Do conceito ao frame final</div>
-      <div class="ds">Bastidores SOMA</div>
-    </div>
+<!-- ══════ SERVIÇOS ══════ -->
+<section class="sec wrap" id="servicos">
+  <div class="sh" data-r="up">
+    <span class="lb">Serviços</span>
+    <span class="sub">Transformando ideias em forma.</span>
   </div>
-  <section id="projetos" class="reveal-over">
-  <div class="sec wrap ctr" style="padding-bottom:clamp(30px,4vw,60px)">
-    <div class="ix lb"><i>04</i> Projetos</div>
-    <h2 class="d2 rv-w" data-words>Trabalhos selecionados para marcas e festivais.</h2>
-  </div>
-
-  <article class="case">
-    <div class="case-card" data-fx="slide-l">
-      <video class="cv" muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.MP4"></video>
+  <p class="st st-2" data-r="up" data-d="1" style="max-width:16ch;margin-bottom:clamp(34px,5vw,64px)">
+    Construímos marcas. <span class="acc">E damos a elas onde viver.</span></p>
+  <div class="sv" id="svList">
+    <div class="sv-i" data-r="up">
+      <button class="sv-h"><span class="sv-n">01</span><span class="sv-t">Audiovisual</span><span class="sv-p"></span></button>
+      <div class="sv-b"><div class="sv-b-in">
+        <p class="bd">Filmes institucionais, comerciais, VSLs e conteúdo de marca com padrão de cinema — da direção ao frame final.</p>
+        <div class="sv-tags"><span>Direção</span><span>Aftermovie</span><span>Videoclipe</span><span>Brand Content</span><span>Pós-produção</span></div>
+      </div></div>
     </div>
-    <div class="case-txt" data-fx="slide-r" data-d="1">
-      <span class="num">01</span>
-      <h3 class="ds">EXPOMIX — Aftermovie</h3>
-      <div class="case-meta">
-        <div><span class="lb k">Ano</span><span class="v">2025</span></div>
-        <div><span class="lb k">Entrega</span><span class="v">Aftermovie · Evento</span></div>
-        <div><span class="lb k">Formato</span><span class="v">4K · LOG3</span></div>
-      </div>
+    <div class="sv-i" data-r="up">
+      <button class="sv-h"><span class="sv-n">02</span><span class="sv-t">Gestão de Tráfego</span><span class="sv-p"></span></button>
+      <div class="sv-b"><div class="sv-b-in">
+        <p class="bd">Campanhas pagas em Google, Meta e TikTok com estratégia de funil e otimização orientada a retorno.</p>
+        <div class="sv-tags"><span>Meta Ads</span><span>Google Ads</span><span>TikTok</span><span>Funil</span><span>ROI</span></div>
+      </div></div>
     </div>
-  </article>
-  <article class="case">
-    <div class="case-card" data-fx="slide-r">
-      <video class="cv" muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.MP4"></video>
+    <div class="sv-i" data-r="up">
+      <button class="sv-h"><span class="sv-n">03</span><span class="sv-t">Social Media</span><span class="sv-p"></span></button>
+      <div class="sv-b"><div class="sv-b-in">
+        <p class="bd">Planejamento, conteúdo e gestão de redes com identidade forte e calendário estratégico.</p>
+        <div class="sv-tags"><span>Conteúdo</span><span>Calendário</span><span>Identidade</span><span>Gestão</span></div>
+      </div></div>
     </div>
-    <div class="case-txt" data-fx="slide-l" data-d="1">
-      <span class="num">02</span>
-      <h3 class="ds">Mari Fernandez — Palco Principal</h3>
-      <div class="case-meta">
-        <div><span class="lb k">Ano</span><span class="v">2024</span></div>
-        <div><span class="lb k">Entrega</span><span class="v">Videoclipe · Show</span></div>
-        <div><span class="lb k">Formato</span><span class="v">4K · LOG3</span></div>
-      </div>
+    <div class="sv-i" data-r="up">
+      <button class="sv-h"><span class="sv-n">04</span><span class="sv-t">Sites & Landing Pages</span><span class="sv-p"></span></button>
+      <div class="sv-b"><div class="sv-b-in">
+        <p class="bd">Sites institucionais e páginas de campanha com foco em conversão e performance.</p>
+        <div class="sv-tags"><span>Institucional</span><span>Landing</span><span>Conversão</span><span>Performance</span></div>
+      </div></div>
     </div>
-  </article>
-  <article class="case">
-    <div class="case-card" data-fx="slide-l">
-      <video class="cv" muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/FOME%20DE%20M%C3%9ASICA%20-%20VER%C3%83O%20R2%20_v3.mp4"></video>
+    <div class="sv-i" data-r="up">
+      <button class="sv-h"><span class="sv-n">05</span><span class="sv-t">Drone</span><span class="sv-p"></span></button>
+      <div class="sv-b"><div class="sv-b-in">
+        <p class="bd">Filmagem aérea com pilotos certificados — planos que elevam qualquer narrativa.</p>
+        <div class="sv-tags"><span>Aéreo</span><span>Certificado</span><span>4K</span></div>
+      </div></div>
     </div>
-    <div class="case-txt" data-fx="slide-r" data-d="1">
-      <span class="num">03</span>
-      <h3 class="ds">Fome de Música — Verão</h3>
-      <div class="case-meta">
-        <div><span class="lb k">Ano</span><span class="v">2024</span></div>
-        <div><span class="lb k">Entrega</span><span class="v">Brand Content · Campanha</span></div>
-        <div><span class="lb k">Formato</span><span class="v">4K · LOG3</span></div>
-      </div>
+    <div class="sv-i" data-r="up">
+      <button class="sv-h"><span class="sv-n">06</span><span class="sv-t">Fotografia</span><span class="sv-p"></span></button>
+      <div class="sv-b"><div class="sv-b-in">
+        <p class="bd">Ensaios de marca, produto e evento com direção de arte e pós apurada.</p>
+        <div class="sv-tags"><span>Marca</span><span>Produto</span><span>Evento</span><span>Editorial</span></div>
+      </div></div>
     </div>
-  </article>
-  <article class="case">
-    <div class="case-card" data-fx="slide-r">
-      <video class="cv" muted loop playsinline preload="none" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Acessibilidade%20-%20Tel%C3%A3o%202025%20Na%20Praia.MOV"></video>
-    </div>
-    <div class="case-txt" data-fx="slide-l" data-d="1">
-      <span class="num">04</span>
-      <h3 class="ds">Acessibilidade — Na Praia</h3>
-      <div class="case-meta">
-        <div><span class="lb k">Ano</span><span class="v">2025</span></div>
-        <div><span class="lb k">Entrega</span><span class="v">Evento · Festival</span></div>
-        <div><span class="lb k">Formato</span><span class="v">4K · LOG3</span></div>
-      </div>
-    </div>
-  </article>
-</section>
-</div>
-
-
-
-<!-- ══════ SHOWREEL ══════ -->
-
-
-<!-- ══════ (06) PROCESSO ══════ -->
-<section class="sec wrap ctr" id="processo">
-  <div class="ix lb"><i>05</i> Processo</div>
-  <h2 class="d2 rv-w" data-words>Da imersão à entrega. Cada etapa existe para eliminar risco.</h2>
-  <div class="rows">
-    <div class="row rv"><span class="k">Imersão</span><span class="v">Mergulhamos na marca, audiência e contexto.</span></div>
-    <div class="row rv dl1"><span class="k">Conceito</span><span class="v">A ideia central que orienta cada escolha visual.</span></div>
-    <div class="row rv dl2"><span class="k">Produção</span><span class="v">Câmera de cinema, equipe experiente, obsessão por detalhe.</span></div>
-    <div class="row rv dl3"><span class="k">Entrega</span><span class="v">Conteúdo finalizado e otimizado por plataforma.</span></div>
   </div>
 </section>
 
 <!-- ══════ NÚMEROS ══════ -->
-<div class="nums">
-  <div class="num rv"><b><span class="cnt" data-t="200">0</span><em>+</em></b><span class="lb lb-m">Projetos entregues</span></div>
-  <div class="num rv dl1"><b><span class="cnt" data-t="80">0</span><em>+</em></b><span class="lb lb-m">Marcas atendidas</span></div>
-  <div class="num rv dl2"><b><span class="cnt" data-t="6">0</span><em></em></b><span class="lb lb-m">Países</span></div>
-  <div class="num rv dl3"><b><span class="cnt" data-t="5">0</span><em></em></b><span class="lb lb-m">Anos de mercado</span></div>
-</div>
-
-<!-- ══════ (07) INTERNACIONAL ══════ -->
-<section class="sec wrap" id="internacional">
-  <div class="ctr"><div class="ix lb"><i>06</i> Internacional</div>
-  <h2 class="d2 rv-w" data-words>Da capital do Brasil para o mundo.</h2></div>
-  <div class="intl">
-    <div class="rv">
-      <div class="intl-ph"><img class="rv-c" data-sc="drift" src="davi.png" alt="Davi Bispo — CEO" loading="lazy"></div>
-      <div class="ds" style="margin-top:16px">Davi Bispo</div>
-      <div class="lb" style="margin-top:6px">CEO</div>
-      <p class="bd" style="margin-top:10px">Produções audiovisuais entre Brasília e o mundo — presença em 6 países.</p>
-    </div>
-    <div class="rv dl1">
-      <div class="intl-tabs" id="intlTabs">
-        <button class="on" data-c="brasilia">Brasília</button>
-        <button data-c="londres">Londres</button>
-        <button data-c="gales">Gales</button>
-        <button data-c="escocia">Escócia</button>
-        <button data-c="paris">Paris</button>
-        <button data-c="eua">EUA</button>
-      </div>
-      <div class="intl-pl">
-        <video id="intlVid" muted loop playsinline preload="none"
-          data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/video-internacional.MOV"></video>
-      </div>
-    </div>
+<section class="sec wrap soft" id="numeros">
+  <div class="sh" data-r="up">
+    <span class="lb">Reconhecimento</span>
+    <span class="sub">O trabalho fala por nós.</span>
+  </div>
+  <p class="st st-2" data-r="up" data-d="1" style="max-width:17ch;margin-bottom:clamp(30px,4vw,56px)">
+    Menos projetos. <span class="acc">Atenção inteira em cada um.</span></p>
+  <div class="nb" id="numBlk">
+    <div class="nb-i"><div class="val"><span class="rol" data-t="200"></span><span class="suf">+</span></div>
+      <span class="k">Projetos entregues</span>
+      <p class="d">Cada entrega passa pela mesma régua, do aftermovie ao filme institucional.</p></div>
+    <div class="nb-i"><div class="val"><span class="rol" data-t="80"></span><span class="suf">+</span></div>
+      <span class="k">Marcas atendidas</span>
+      <p class="d">Nem toda conversa vira projeto. As que viram partilham a mesma exigência.</p></div>
+    <div class="nb-i"><div class="val"><span class="rol" data-t="6"></span></div>
+      <span class="k">Países</span>
+      <p class="d">O pensamento atravessa contextos. O que muda é o cenário, não o padrão.</p></div>
+    <div class="nb-i"><div class="val"><span class="rol" data-t="5"></span></div>
+      <span class="k">Anos de mercado</span>
+      <p class="d">Tempo suficiente para saber o que funciona — e curto para não acomodar.</p></div>
   </div>
 </section>
 
-<!-- ══════ (08) EQUIPE ══════ -->
-<section class="sec wrap ctr" id="equipe">
-  <div class="ix lb"><i>07</i> Bastidores</div>
-  <h2 class="d2 rv-w" data-words>As pessoas e os sets por trás de cada frame.</h2>
-  <div class="crew">
-    <figure class="rv"><img class="rv-c" data-sc="zoom" src="equipe-01.webp" alt="Equipe SOMA" loading="lazy"></figure>
-    <figure class="rv dl1"><img class="rv-c" data-sc="zoom" src="equipe-03.webp" alt="Equipe SOMA" loading="lazy"></figure>
-    <figure class="rv dl2"><img class="rv-c" data-sc="zoom" src="equipe-05.webp" alt="Equipe SOMA" loading="lazy"></figure>
-    <figure class="rv dl3"><img class="rv-c" data-sc="zoom" src="equipe-07.webp" alt="Equipe SOMA" loading="lazy"></figure>
+<!-- ══════ SHOWREEL ══════ -->
+<section class="sec wrap" id="showreel">
+  <div class="sh" data-r="up">
+    <span class="lb">/ Showreel</span>
+    <span class="sub">(2019—2026) Um recorte do trabalho recente.</span>
+  </div>
+  <div class="rl" data-r="z">
+    <video id="reelVid" muted loop playsinline preload="none" poster="hero-reel-poster.webp"
+      data-sc="zoom" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4"></video>
+    <div class="rl-c"><span class="lb-p" style="color:#fff">Showreel 2025</span><span class="lb-p" style="color:rgba(255,255,255,.7)">4K · LOG3 · 24fps</span></div>
+  </div>
+</section>
+
+<!-- ══════ PROCESSO ══════ -->
+<section class="sec wrap" id="processo">
+  <div class="sh" data-r="up">
+    <span class="lb">Processo</span>
+    <span class="sub">Do pensamento à forma.</span>
+  </div>
+  <p class="st st-2" data-r="up" data-d="1" style="max-width:18ch;margin-bottom:clamp(34px,5vw,64px)">
+    Não começamos com respostas. <span class="acc">Começamos com as perguntas certas.</span></p>
+  <div class="pc" id="pcList">
+    <div class="pc-i"><span class="pc-n">01</span>
+      <span class="pc-t">Imersão</span>
+      <p class="pc-d">Mergulhamos na marca, na audiência e no contexto competitivo antes de qualquer decisão.</p>
+      <span class="pc-p">Prazo<b>2–3 dias</b></span></div>
+    <div class="pc-i"><span class="pc-n">02</span>
+      <span class="pc-t">Conceito</span>
+      <p class="pc-d">A ideia central que vai orientar cada escolha visual — testada antes de virar design.</p>
+      <span class="pc-p">Prazo<b>3–5 dias</b></span></div>
+    <div class="pc-i"><span class="pc-n">03</span>
+      <span class="pc-t">Produção</span>
+      <p class="pc-d">Câmera de cinema, equipe experiente e obsessão por detalhe do primeiro ao último take.</p>
+      <span class="pc-p">Prazo<b>1–3 semanas</b></span></div>
+    <div class="pc-i"><span class="pc-n">04</span>
+      <span class="pc-t">Entrega</span>
+      <p class="pc-d">Conteúdo finalizado e otimizado por plataforma. Sai quando está pronto — não antes.</p>
+      <span class="pc-p">Prazo<b>4–8 dias</b></span></div>
+  </div>
+</section>
+
+<!-- ══════ EQUIPE ══════ -->
+<section class="sec wrap soft" id="equipe">
+  <div class="sh" data-r="up">
+    <span class="lb">A equipe</span>
+    <span class="sub">Quem você conhece é quem faz.</span>
+  </div>
+  <p class="st st-2" data-r="up" data-d="1" style="max-width:18ch;margin-bottom:clamp(30px,4vw,54px)">
+    As pessoas e os sets <span class="acc">por trás de cada frame.</span></p>
+  <div class="tm">
+    <figure data-r="z"><img data-sc="zoom" src="equipe-01.webp" alt="Equipe SOMA" loading="lazy"><figcaption>Set · Produção</figcaption></figure>
+    <figure data-r="z" data-d="1"><img data-sc="zoom" src="equipe-03.webp" alt="Equipe SOMA" loading="lazy"><figcaption>Direção</figcaption></figure>
+    <figure data-r="z" data-d="2"><img data-sc="zoom" src="equipe-05.webp" alt="Equipe SOMA" loading="lazy"><figcaption>Câmera</figcaption></figure>
+    <figure data-r="z" data-d="3"><img data-sc="zoom" src="equipe-07.webp" alt="Equipe SOMA" loading="lazy"><figcaption>Bastidores</figcaption></figure>
+  </div>
+</section>
+
+<!-- ══════ FAQ ══════ -->
+<section class="sec wrap" id="faq">
+  <div class="sh" data-r="up">
+    <span class="lb">Dúvidas</span>
+    <span class="sub">Respostas claras.</span>
+  </div>
+  <p class="st st-3" data-r="up" data-d="1" style="max-width:20ch;margin-bottom:clamp(28px,4vw,50px)">
+    O que você precisa saber <span class="acc">antes de começarmos.</span></p>
+  <div class="fq" id="fqList">
+    <div class="fq-i"><button class="fq-h"><span class="fq-q">Quanto tempo leva um projeto?</span><span class="sv-p"></span></button>
+      <div class="fq-b"><p>Depende do escopo. Um aftermovie de evento sai em dias; uma campanha completa leva de 4 a 8 semanas. Definimos o prazo na imersão, antes de começar.</p></div></div>
+    <div class="fq-i"><button class="fq-h"><span class="fq-q">Vocês atendem fora de Brasília?</span><span class="sv-p"></span></button>
+      <div class="fq-b"><p>Sim. Já produzimos em 6 países e viajamos para onde o projeto pedir. Boa parte do nosso trabalho acontece fora do DF.</p></div></div>
+    <div class="fq-i"><button class="fq-h"><span class="fq-q">Só fazem vídeo?</span><span class="sv-p"></span></button>
+      <div class="fq-b"><p>Não. Audiovisual é a origem, mas entregamos também tráfego pago, social media, sites, drone e fotografia — normalmente integrados na mesma campanha.</p></div></div>
+    <div class="fq-i"><button class="fq-h"><span class="fq-q">Como funciona o orçamento?</span><span class="sv-p"></span></button>
+      <div class="fq-b"><p>Cada projeto é orçado a partir do escopo definido na imersão. Sem pacote fechado antes de entender o problema.</p></div></div>
   </div>
 </section>
 
 <!-- ══════ CTA ══════ -->
-<section class="sec wrap" id="cta">
-  <div class="ix lb"><i>08</i> Contato</div>
-  <h2 class="d1"><span class="rv-u"><i>Vamos criar</i></span><span class="rv-u"><i class="acc">algo que fica</i></span></h2>
-  <p class="bd hr-sub rv dl1" style="margin-top:22px">Sua marca já esperou tempo suficiente.</p>
-  <div class="btns rv dl2">
-    <a href="https://wa.me/5561985011819?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20solicitar%20uma%20proposta." target="_blank" rel="noopener noreferrer" class="btn btn-a">Começar uma conversa</a>
-    <a href="https://www.instagram.com/soma.produtora/" target="_blank" rel="noopener noreferrer" class="btn btn-o">@soma.produtora</a>
+<section class="sec wrap ct" id="contato">
+  <span class="lb" data-r="up" style="justify-content:center">Contato</span>
+  <h2 class="st st-2" data-r="up" data-d="1">Sua marca já esperou<br><span class="acc">tempo suficiente.</span></h2>
+  <div class="btns" data-r="up" data-d="2">
+    <a class="btn btn-a" href="https://wa.me/5561985011819?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20SOMA." target="_blank" rel="noopener">Começar um projeto</a>
+    <a class="btn btn-o" href="https://www.instagram.com/soma.produtora/" target="_blank" rel="noopener">@soma.produtora</a>
   </div>
 </section>
 
-</main>
-
 <footer>
-  <a href="#hero" class="nv-logo"><img src="logotipo.png" alt="SOMA Produtora" style="height:17px"></a>
-  <div class="f-l">
-    <a href="#servicos">Serviços</a><a href="#projetos">Projetos</a>
-    <a href="#processo">Processo</a><a href="#equipe">Equipe</a>
-    <a href="https://www.instagram.com/soma.produtora/" target="_blank" rel="noopener noreferrer me">Instagram</a>
-    <a href="mailto:contato@somaprodutora.com">Contato</a>
+  <div class="ft-g">
+    <div>
+      <div class="nv-w" style="margin-bottom:14px">SOMA<sup>®</sup></div>
+      <p class="bd" style="max-width:38ch">Produtora criativa em Brasília. Do conceito ao frame final.</p>
+    </div>
+    <div><h4>Navegação</h4>
+      <a href="#projetos">Projetos</a><a href="#servicos">Serviços</a>
+      <a href="#processo">Processo</a><a href="#equipe">Equipe</a></div>
+    <div><h4>Contato</h4>
+      <a href="mailto:contato@somaprodutora.com">contato@somaprodutora.com</a>
+      <a href="https://www.instagram.com/soma.produtora/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://wa.me/5561985011819" target="_blank" rel="noopener">WhatsApp</a></div>
   </div>
-  <span>&copy; 2026 SOMA Produtora &mdash; BSB</span>
+  <div class="ft-b"><span>© 2026 SOMA Produtora</span><span>Brasília · Brasil</span></div>
 </footer>
 
 <script src="lenis.min.js"></script>
 <script>
-/* ══════════════════════════════════════════════════════════════════════
-   SOMA v2 — motor de interacao (linguagem Gen Studio)
-   Nenhuma checagem de prefers-reduced-motion: o sistema do usuario
-   reporta animacoes desligadas e o site ficaria parado para ele.
-   ══════════════════════════════════════════════════════════════════════ */
 (function(){
 'use strict';
 
-/* ---------- preloader ---------- */
-setTimeout(function(){document.getElementById('pre').classList.add('off')},1700);
-
-/* ---------- nav: sombra ao rolar + menu mobile ---------- */
-var nav=document.getElementById('nav');
-addEventListener('scroll',function(){nav.classList.toggle('stuck',scrollY>60)},{passive:true});
-var menu=document.getElementById('menu'),burger=document.getElementById('burger'),mx=document.getElementById('menuX');
-function fecha(){menu.classList.remove('on')}
-if(burger)burger.addEventListener('click',function(){menu.classList.add('on')});
-if(mx)mx.addEventListener('click',fecha);
-menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',fecha)});
-
-/* ---------- corte em palavras (o reveal-assinatura do template) ---------- */
-function corta(el){
-  var w=document.createTreeWalker(el,NodeFilter.SHOW_TEXT,null,false),ns=[],n;
-  while((n=w.nextNode()))ns.push(n);
-  ns.forEach(function(tn){
-    if(!tn.nodeValue.trim())return;
-    var f=document.createDocumentFragment();
-    tn.nodeValue.split(/(\s+)/).forEach(function(t){
-      if(!t)return;
-      if(/^\s+$/.test(t)){f.appendChild(document.createTextNode(t));return}
-      var s=document.createElement('span');s.className='w';s.textContent=t;f.appendChild(s);
-    });
-    tn.parentNode.replaceChild(f,tn);
-  });
+/* ── Lenis: scroll suave, como na referencia ───────────────────────── */
+var lenis=null;
+if(typeof Lenis!=='undefined'){
+  lenis=new Lenis({duration:1.05,smoothWheel:true,smoothTouch:false});
+  window.lenis=lenis;
 }
-var blocos=[];
-document.querySelectorAll('[data-words]').forEach(function(el){
-  el.classList.add('rv-w');corta(el);
-  blocos.push({el:el,w:[].slice.call(el.querySelectorAll('.w')),n:0});
+
+/* ── nav ──────────────────────────────────────────────────────────── */
+var nav=document.getElementById('nav'),menu=document.getElementById('menu');
+document.getElementById('navB').addEventListener('click',function(){menu.classList.add('on')});
+document.getElementById('menuX').addEventListener('click',function(){menu.classList.remove('on')});
+menu.addEventListener('click',function(e){if(e.target.tagName==='A')menu.classList.remove('on')});
+
+/* ancoras: rolagem suave com recuo do nav fixo */
+document.addEventListener('click',function(e){
+  var a=e.target.closest?e.target.closest('a[href^="#"]'):null;
+  if(!a)return;var href=a.getAttribute('href');
+  if(!href||href.length<2)return;
+  var alvo;try{alvo=document.querySelector(href)}catch(_){return}
+  if(!alvo)return;e.preventDefault();
+  if(lenis)lenis.scrollTo(alvo,{offset:-70});
+  else alvo.scrollIntoView({behavior:'smooth'});
 });
 
-/* ██████ EFEITOS QUE O SCROLL CONDUZ ██████████████████████████████████
-   Nestes tres o progresso da animacao E a posicao do scroll: parando o
-   dedo, a animacao para no meio. Nada de "dispara e roda sozinho".
-   ────────────────────────────────────────────────────────────────────── */
+/* ── acordeoes: servicos e FAQ ────────────────────────────────────── */
+function acordeao(sel,itemSel){
+  var lista=document.querySelector(sel);if(!lista)return;
+  [].forEach.call(lista.querySelectorAll(itemSel),function(it){
+    var h=it.querySelector('button');if(!h)return;
+    h.addEventListener('click',function(){
+      var aberto=it.classList.contains('on');
+      [].forEach.call(lista.querySelectorAll(itemSel),function(o){o.classList.remove('on')});
+      if(!aberto)it.classList.add('on');
+    });
+  });
+}
+acordeao('#svList','.sv-i');
+acordeao('#fqList','.fq-i');
 
-/* (1) HERO ENCOLHE NUM CARTAO enquanto voce sai dele */
-var heroTrack=document.getElementById('heroTrack'),heroSec=document.getElementById('hero');
-function moveHero(){
-  if(!heroTrack||!heroSec)return;
-  var curso=heroTrack.offsetHeight-innerHeight;
-  if(curso<=0)return;
-  var p=(-heroTrack.getBoundingClientRect().top)/curso;
-  p=p<0?0:(p>1?1:p);
-  var esc=1-0.13*p;                 /* 1 -> 0.87  */
-  var raio=(p*30).toFixed(1);       /* 0 -> 30px  */
-  heroSec.style.transform='scale('+esc.toFixed(4)+')';
-  heroSec.style.borderRadius=raio+'px';
+/* ── previa de projeto que segue o cursor ─────────────────────────── */
+var peek=document.getElementById('peek'),pv=document.getElementById('peekV'),
+    pjList=document.getElementById('pjList');
+if(peek&&pjList&&matchMedia('(hover:hover)').matches){
+  var mx=0,my=0,cx=0,cy=0;
+  pjList.addEventListener('pointermove',function(e){mx=e.clientX;my=e.clientY});
+  [].forEach.call(pjList.querySelectorAll('.pj-r'),function(row){
+    row.addEventListener('pointerenter',function(){
+      var s=row.dataset.v;
+      if(pv.getAttribute('src')!==s){pv.src=s;pv.load()}
+      var q=pv.play();if(q&&q.catch)q.catch(function(){});
+      peek.classList.add('on');
+    });
+  });
+  pjList.addEventListener('pointerleave',function(){
+    peek.classList.remove('on');try{pv.pause()}catch(_){}
+  });
+  (function segue(){
+    cx+=(mx-cx)*.15;cy+=(my-cy)*.15;
+    peek.style.left=cx.toFixed(1)+'px';peek.style.top=cy.toFixed(1)+'px';
+    requestAnimationFrame(segue);
+  })();
 }
 
-/* (2) CONTADORES contam junto com o scroll (antes rodavam sozinhos em
-   1.4s ao entrar; agora o numero e funcao da posicao da pagina) */
-var blocoNums=document.querySelector('.nums');
-var cntEls=[].slice.call(document.querySelectorAll('.cnt'));
-function moveNums(vh){
-  if(!blocoNums||!cntEls.length)return;
+/* ── CONTADOR DE ROLETE (digitos 0-9 rolando), como na referencia ──── */
+var rols=[].slice.call(document.querySelectorAll('.rol'));
+rols.forEach(function(el){
+  var alvo=String(el.dataset.t||'0');
+  el.innerHTML='';
+  for(var i=0;i<alvo.length;i++){
+    var col=document.createElement('span');
+    col.style.cssText='display:inline-block;height:1em;overflow:hidden;vertical-align:bottom';
+    var reel=document.createElement('i');
+    reel.style.cssText='display:block;transition:transform 1.6s cubic-bezier(.16,1,.3,1)';
+    for(var d=0;d<=9;d++){
+      var s=document.createElement('span');
+      s.style.cssText='display:block;height:1em;line-height:1em';
+      s.textContent=d;reel.appendChild(s);
+    }
+    col.appendChild(reel);el.appendChild(col);
+    reel._alvo=+alvo[i];
+  }
+});
+var blocoNums=document.getElementById('numBlk'),rolado=false;
+function giraRoletes(vh){
+  if(rolado||!blocoNums)return;
   var r=blocoNums.getBoundingClientRect();
-  if(r.bottom<0||r.top>vh)return;
-  /* 0 quando o bloco encosta embaixo, 1 quando chega a 45% da tela */
-  var p=(vh-r.top)/(vh*0.55);
-  p=p<0?0:(p>1?1:p);
-  var e=1-Math.pow(1-p,3);          /* ease-out */
-  for(var i=0;i<cntEls.length;i++){
-    var alvo=+cntEls[i].dataset.t;
-    cntEls[i].textContent=Math.round(alvo*e);
-  }
+  if(r.top>vh*0.85||r.bottom<0)return;
+  rolado=true;
+  rols.forEach(function(el){
+    [].forEach.call(el.querySelectorAll('i'),function(reel,i){
+      setTimeout(function(){reel.style.transform='translateY(-'+(reel._alvo*10)+'%)'},i*110);
+    });
+  });
 }
 
-/* (3) PROCESSO: as etapas acendem uma a uma conforme o scroll atravessa */
-var rowsBloco=document.querySelector('.rows');
-var rowsEls=[].slice.call(document.querySelectorAll('.rows .row'));
-function moveRows(vh){
-  if(!rowsBloco||!rowsEls.length)return;
-  var r=rowsBloco.getBoundingClientRect();
-  if(r.bottom<-100||r.top>vh+100)return;
-  var p=(vh*0.82-r.top)/(r.height+vh*0.28);
-  p=p<0?0:(p>1?1:p);
-  var acesas=p*rowsEls.length;
-  for(var i=0;i<rowsEls.length;i++){
-    var f=acesas-i;f=f<0?0:(f>1?1:f);
-    rowsEls[i].style.setProperty('--lit',f.toFixed(3));
-  }
-}
-
-/* ---------- gatilhos de entrada ---------- */
-/* REVELACOES POR GEOMETRIA, nao por IntersectionObserver.
-   O observer depende do ciclo de renderizacao; quando ele nao entrega o
-   callback, o elemento fica escondido PARA SEMPRE — foi o que deixou as
-   secoes de case com o fundo borrado e nada por cima. Aqui a decisao e
-   recalculada a cada quadro a partir da posicao real, entao nao existe
-   estado preso: se esta na tela, aparece. */
-var revs=[].slice.call(document.querySelectorAll('.rv,.rv-u,.rv-c,[data-fx]'));
+/* ── revelacoes + zoom continuo, decididos por GEOMETRIA ──────────── */
+var revs=[].slice.call(document.querySelectorAll('[data-r]'));
 function checaRevs(vh){
-  if(!revs.length)return;
   for(var i=revs.length-1;i>=0;i--){
-    var el=revs[i];
-    var r=el.getBoundingClientRect();
-    if(r.height===0&&r.width===0)continue;
-    if(r.top<vh*0.94&&r.bottom>0){el.classList.add('on');revs.splice(i,1)}
+    var r=revs[i].getBoundingClientRect();
+    if(r.width===0&&r.height===0)continue;
+    if(r.top<vh*0.93&&r.bottom>0){revs[i].classList.add('on');revs.splice(i,1)}
   }
 }
-
-/* ---------- EFEITOS CONTINUOS (data-sc): ligados ao progresso ----------
-   Diferente dos gatilhos: aqui o valor acompanha o scroll quadro a quadro,
-   entao a peca "da zoom conforme voce desce" em vez de animar sozinha uma
-   vez. So transform — nunca width/height — para nao forcar relayout. */
+var lns=[].slice.call(document.querySelectorAll('.hr-st .ln'));
+function checaHero(vh){
+  for(var i=lns.length-1;i>=0;i--){
+    var r=lns[i].getBoundingClientRect();
+    if(r.top<vh*0.98){lns[i].classList.add('on');lns.splice(i,1)}
+  }
+}
 var scs=[].slice.call(document.querySelectorAll('[data-sc]'));
 function moveSc(vh){
   for(var i=0;i<scs.length;i++){
-    var el=scs[i],cx=el.parentElement||el,r=cx.getBoundingClientRect();
+    var el=scs[i],cx2=el.parentElement||el,r=cx2.getBoundingClientRect();
     if(r.bottom<-120||r.top>vh+120)continue;
-    /* p = 0 quando entra por baixo, 1 quando sai por cima */
     var p=1-((r.top+r.height/2)/(vh+r.height));
     if(p<0)p=0;if(p>1)p=1;
-    var tipo=el.dataset.sc;
-    if(tipo==='zoom'){
-      /* entra grande e assenta: 1.18 -> 1.0 no meio da tela */
-      el.style.transform='scale('+(1.18-0.18*Math.min(1,p*1.6)).toFixed(4)+')';
-    }else if(tipo==='grow'){
-      /* o inverso: cresce continuamente enquanto atravessa */
-      el.style.transform='scale('+(1+0.14*p).toFixed(4)+')';
-    }else if(tipo==='drift'){
-      el.style.transform='translate3d(0,'+((p-.5)*-9).toFixed(2)+'%,0)';
-    }
+    el.style.transform='scale('+(1.16-0.16*Math.min(1,p*1.6)).toFixed(4)+')';
   }
 }
-/* TRES fontes independentes chamam a checagem, de proposito. O laco de
-   rAF sozinho nao basta: se ele for estrangulado (aba em segundo plano,
-   economia de bateria), o conteudo ficaria ESCONDIDO — exatamente o
-   defeito que estamos consertando. O scroll e o intervalo cobrem isso. */
-function rede(){var vh=innerHeight||1;checaRevs(vh);checaVids(vh);moveSc(vh);moveHero();moveNums(vh);moveRows(vh)}
-addEventListener('scroll',rede,{passive:true});
-setInterval(rede,350);
-addEventListener('load',rede);
-
-/* ---------- contadores (geometria, nao observer) ----------
-   Um contador preso em 0 e um bug VISIVEL; por isso ele entra na mesma
-   rede de seguranca das revelacoes em vez de depender do observer. */
-var cnts=[].slice.call(document.querySelectorAll('.cnt'));
-function checaCnts(vh){
-  if(!cnts.length)return;
-  for(var i=cnts.length-1;i>=0;i--){
-    var el=cnts[i],r=el.getBoundingClientRect();
-    if(r.height===0&&r.width===0)continue;
-    if(r.top>vh*0.9||r.bottom<0)continue;
-    cnts.splice(i,1);
-    (function(el){
-      var alvo=+el.dataset.t,t0=null;
-      function passo(t){
-        if(!t0)t0=t;var p=Math.min(1,(t-t0)/1400);
-        el.textContent=Math.round(alvo*(1-Math.pow(1-p,3)));
-        if(p<1)requestAnimationFrame(passo);else el.textContent=alvo;
-      }
-      requestAnimationFrame(passo);
-      /* se o rAF estiver congelado, o numero final entra assim mesmo */
-      setTimeout(function(){if(+el.textContent!==alvo)el.textContent=alvo},1800);
-    })(el);
+/* processo: as etapas acendem conforme o scroll atravessa o bloco */
+var pcBloco=document.getElementById('pcList');
+var pcEls=[].slice.call(document.querySelectorAll('.pc-i'));
+function movePc(vh){
+  if(!pcBloco)return;
+  var r=pcBloco.getBoundingClientRect();
+  if(r.bottom<-120||r.top>vh+120)return;
+  var p=(vh*0.82-r.top)/(r.height+vh*0.25);
+  if(p<0)p=0;if(p>1)p=1;
+  var n=p*pcEls.length;
+  for(var i=0;i<pcEls.length;i++){
+    var f=n-i;f=f<0?0:(f>1?1:f);
+    pcEls[i].style.setProperty('--lit',f.toFixed(3));
   }
 }
-
-/* ---------- videos: carregam quando chegam perto (geometria) ---------- */
+/* videos: carregam quando chegam perto */
 var vids=[].slice.call(document.querySelectorAll('video[data-src]'));
-
-/* PROPORCAO REAL DO VIDEO no cartao do case.
-   O cartao tinha aspect-ratio:3/4 fixo, mas metade do acervo e 16:9
-   horizontal — um 16:9 numa caixa 3:4 perde ~58% da largura e sobra um
-   pedaco do meio do quadro. Agora, assim que os metadados chegam, o
-   cartao assume a proporcao verdadeira do arquivo. */
-vids.forEach(function(v){
-  v.addEventListener('loadedmetadata',function(){
-    var card=v.closest('.case-card');
-    if(card&&v.videoWidth&&v.videoHeight){
-      card.style.aspectRatio=v.videoWidth+' / '+v.videoHeight;
-    }
-  });
-});
-
+if(matchMedia('(max-width:768px)').matches){
+  var hv=document.getElementById('heroVid');
+  if(hv)hv.removeAttribute('data-src');   /* poupa dados no celular */
+}
 function checaVids(vh){
   for(var i=0;i<vids.length;i++){
     var v=vids[i],r=v.getBoundingClientRect();
-    var perto=r.top<vh+300&&r.bottom>-300;
-    if(perto){
+    if(r.top<vh+300&&r.bottom>-300){
       if(!v.src&&v.dataset.src){v.src=v.dataset.src;v.load()}
       if(v.paused){var q=v.play();if(q&&q.catch)q.catch(function(){})}
     }else if(!v.paused){try{v.pause()}catch(_){}}
   }
 }
 
-/* HERO = SHOWREEL.
-   O video vem do R2 e e o mesmo showreel; quem carrega e toca e o
-   checaVids (ele tem data-src, entao ja esta na lista). No celular o
-   data-src e REMOVIDO: sao dezenas de MB numa conexao movel, e o poster
-   — um frame do proprio showreel — segura a cena sozinho. */
-(function(){
-  var v=document.getElementById('heroVid');if(!v)return;
-  if(matchMedia('(max-width:768px)').matches){
-    v.removeAttribute('data-src');
-    v.setAttribute('poster','hero-reel-poster-m.webp');
-    return;
-  }
-})();
-
-/* ---------- abas do internacional ---------- */
-var tabs=document.getElementById('intlTabs');
-if(tabs)tabs.addEventListener('click',function(e){
-  var b=e.target.closest('button');if(!b)return;
-  tabs.querySelectorAll('button').forEach(function(x){x.classList.toggle('on',x===b)});
-});
-
-/* ---------- Lenis + laco de scroll ---------- */
-var lenis=null;
-if(typeof Lenis!=='undefined'){
-  lenis=new Lenis({duration:1.05,smoothWheel:true,smoothTouch:false,
-    easing:function(t){return Math.min(1,1.001-Math.pow(2,-10*t))}});
-  window.lenis=lenis;
-}
-/* ancoras internas com recuo do nav */
-document.addEventListener('click',function(e){
-  var a=e.target.closest&&e.target.closest('a[href^="#"]');if(!a)return;
-  var h=a.getAttribute('href');if(!h||h.length<2)return;
-  var alvo;try{alvo=document.querySelector(h)}catch(_){return}
-  if(!alvo)return;e.preventDefault();
-  var off=-(nav.offsetHeight+26);
-  if(lenis)lenis.scrollTo(alvo,{offset:off});
-  else alvo.scrollIntoView({behavior:'smooth'});
-});
-
-/* ---------- parallax + inclinacao 3D (pedido do usuario) ---------- */
-var pxs=[].slice.call(document.querySelectorAll('.px'));
-var tilts=[].slice.call(document.querySelectorAll('.tilt3d'));
-
-function moveParallax(vh){
-  for(var i=0;i<pxs.length;i++){
-    var el=pxs[i],pai=el.parentElement,r=pai.getBoundingClientRect();
-    if(r.bottom<-100||r.top>vh+100)continue;
-    /* -1..1 conforme a secao atravessa a tela */
-    var p=((r.top+r.height/2)-vh/2)/(vh/2+r.height/2);
-    var amp=parseFloat(el.dataset.px||'12');   /* % de deslocamento */
-    el.style.transform='translate3d(0,'+(p*amp).toFixed(2)+'%,0)';
-  }
-}
-function moveTilt(vh){
-  for(var i=0;i<tilts.length;i++){
-    var el=tilts[i],r=el.getBoundingClientRect();
-    if(r.bottom<-80||r.top>vh+80)continue;
-    var p=((r.top+r.height/2)-vh/2)/(vh/2+r.height/2); /* -1..1 */
-    if(p>1)p=1;if(p<-1)p=-1;
-    /* a peca chega deitada e se endireita ao cruzar o centro */
-    el.style.transform='rotateX('+(p*7).toFixed(2)+'deg) '+
-      'translate3d(0,'+(p*-2.2).toFixed(2)+'%,0) scale('+(1-Math.abs(p)*0.035).toFixed(4)+')';
-  }
-}
-
-/* um unico rAF: Lenis + revelacoes + parallax + 3D + palavras */
-function quadro(t){
-  if(lenis)lenis.raf(t);
+/* TRES fontes chamam a rede: se o rAF for estrangulado, scroll e
+   intervalo cobrem — o conteudo nunca fica preso escondido. */
+function rede(){
   var vh=innerHeight||1;
-  checaRevs(vh);
-  moveSc(vh);
-  moveHero();
-  moveNums(vh);
-  moveRows(vh);
-  moveParallax(vh);
-  moveTilt(vh);
-  for(var k=0;k<blocos.length;k++){
-    var s=blocos[k],r=s.el.getBoundingClientRect();
-    if(r.bottom<-200||r.top>vh+200)continue;
-    var p=(vh*.86-r.top)/(vh*.44+r.height*.5);
-    p=p<0?0:(p>1?1:p);
-    var q=Math.round(p*s.w.length);
-    if(q!==s.n){
-      if(q>s.n)for(var i=s.n;i<q;i++)s.w[i].classList.add('on');
-      else for(var j=s.n-1;j>=q;j--)s.w[j].classList.remove('on');
-      s.n=q;
-    }
-  }
-  requestAnimationFrame(quadro);
+  checaRevs(vh);checaHero(vh);moveSc(vh);movePc(vh);giraRoletes(vh);checaVids(vh);
+  if(nav)nav.classList.toggle('stuck',scrollY>60);
 }
-requestAnimationFrame(quadro);
+addEventListener('scroll',rede,{passive:true});
+setInterval(rede,320);
+addEventListener('load',rede);
+(function laco(t){if(lenis)lenis.raf(t);rede();requestAnimationFrame(laco)})();
+rede();
 })();
 </script>
 </body>
