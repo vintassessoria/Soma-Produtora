@@ -335,6 +335,101 @@ footer{background:var(--dark);color:#fff;padding:clamp(50px,7vw,100px) var(--gut
 /* zoom continuo: o valor acompanha o scroll, nao um relogio */
 [data-sc]{will-change:transform}
 
+/* ██████ EFEITOS ADICIONAIS ███████████████████████████████████████████
+   Quatro tecnicas identificadas na referencia por evidencia ESTRUTURAL
+   (nao por assistir ao movimento, que o navegador nao me deixa ver):
+   o texto de acessibilidade anuncia "3D Carousel — item 1 of 6, use
+   arrow keys" e "Progress Bar"; ha textos duplicados (assinatura de fita
+   corrida), 3 trilhos horizontais e 2 elementos presos.
+   ────────────────────────────────────────────────────────────────────── */
+
+/* (1) BARRA DE PROGRESSO DE LEITURA */
+#prog{position:fixed;top:0;left:0;height:2px;width:100%;z-index:950;
+  background:transparent;pointer-events:none}
+#prog i{display:block;height:100%;width:0;background:var(--acc);
+  box-shadow:0 0 12px rgba(107,240,25,.5)}
+
+/* (2) CARROSSEL 3D */
+.c3{position:relative;height:clamp(300px,44vh,460px);
+  perspective:1200px;perspective-origin:50% 50%;
+  overflow:hidden;cursor:grab;user-select:none;-webkit-user-select:none}
+.c3:active{cursor:grabbing}
+.c3-st{position:absolute;inset:0;transform-style:preserve-3d;
+  display:flex;align-items:center;justify-content:center}
+.c3-i{position:absolute;width:clamp(190px,22vw,320px);aspect-ratio:3/4;
+  border-radius:8px;overflow:hidden;background:var(--soft);
+  border:1px solid var(--line);
+  transition:transform .75s var(--Ef),opacity .6s var(--E);
+  will-change:transform,opacity;backface-visibility:hidden}
+.c3-i img{width:100%;height:100%;object-fit:cover}
+.c3-i figcaption{position:absolute;left:0;right:0;bottom:0;padding:12px 14px;
+  background:linear-gradient(to top,rgba(0,0,0,.85),transparent);
+  font-family:var(--FM);font-size:11px;text-transform:uppercase;color:#fff}
+.c3-nav{display:flex;align-items:center;justify-content:center;gap:14px;
+  margin-top:clamp(18px,2.4vw,30px)}
+.c3-b{width:42px;height:42px;border:1px solid var(--line);border-radius:8px;
+  display:flex;align-items:center;justify-content:center;
+  transition:border-color .3s var(--E),background .3s var(--E)}
+.c3-b:hover{border-color:var(--acc);background:rgba(107,240,25,.08)}
+.c3-b svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:2}
+.c3-c{font-family:var(--FM);font-size:11px;color:var(--mut);min-width:56px;text-align:center}
+.c3-c b{color:var(--acc);font-weight:400}
+
+/* (3) FITA TIPOGRAFICA GIGANTE */
+.tk{overflow:hidden;border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);padding:clamp(14px,2vw,26px) 0}
+.tk-i{display:flex;width:max-content;animation:mq 34s linear infinite}
+.tk:hover .tk-i{animation-play-state:paused}
+.tk-i span{display:inline-flex;align-items:center;gap:clamp(18px,2.6vw,40px);
+  padding-right:clamp(18px,2.6vw,40px);white-space:nowrap;
+  font-weight:800;text-transform:uppercase;letter-spacing:-.04em;
+  font-size:clamp(26px,4.6vw,66px)}
+.tk-i em{font-style:normal;color:var(--acc);font-size:.4em;transform:translateY(-.18em)}
+
+/* (4) SECAO PRESA: o showreel fica fixo e cresce enquanto voce passa */
+.pin-tr{position:relative;height:190svh}
+.pin-st{position:sticky;top:0;height:100svh;display:flex;align-items:center;
+  padding:0 var(--gut)}
+@media(max-width:820px){
+  .pin-tr{height:auto}
+  /* o padding lateral fica; zerar TUDO colava a secao nas vizinhas */
+  .pin-st{position:relative;height:auto;
+    padding:var(--sec) var(--gut)}
+}
+
+/* ██████ PROJETOS PRESOS: a lista fica fixa e a midia troca ████████████
+   A secao prende e o scroll percorre os projetos: a linha ativa acende e
+   o painel da direita troca de video. E o gesto de "secao presa" pedido,
+   aplicado onde ele rende mais — no portfolio. */
+/* combustivel de scroll: ~0.55 tela por projeto, mais uma de folga */
+.pj-tr{position:relative;height:430svh}
+.pj-pin{position:sticky;top:0;min-height:100svh;display:flex;align-items:center;
+  padding:clamp(90px,12vh,140px) var(--gut) clamp(40px,6vh,80px);
+  background:var(--dark);color:#fff}
+.pj-in{display:grid;grid-template-columns:1.05fr .95fr;
+  gap:clamp(28px,5vw,90px);align-items:center;width:100%}
+.pj-media{position:relative;aspect-ratio:4/3;border-radius:8px;overflow:hidden;
+  background:#0B0D10;border:1px solid rgba(255,255,255,.14)}
+.pj-media video,.pj-media img{position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;opacity:0;transition:opacity .7s var(--E),transform 1.2s var(--Ef);
+  transform:scale(1.06)}
+.pj-media .on{opacity:1;transform:scale(1)}
+/* na versao presa a linha ativa e conduzida pelo SCROLL, nao pelo hover */
+.pj-tr .pj-r{opacity:.3;transition:opacity .45s var(--E),padding-left .5s var(--Ef)}
+.pj-tr .pj-r.viva{opacity:1;padding-left:clamp(8px,1.4vw,22px)}
+.pj-tr .pj-r.viva .pj-t{color:var(--acc)}
+.pj-tr:hover .pj-r{opacity:.3}
+.pj-tr .pj-r.viva,.pj-tr .pj-r:hover{opacity:1}
+@media(max-width:900px){
+  .pj-pin{position:relative;min-height:0;padding:var(--sec) var(--gut)}
+  .pj-in{grid-template-columns:1fr;gap:26px}
+  .pj-media{order:-1;aspect-ratio:16/10}
+  .pj-tr .pj-r{opacity:1}
+}
+
+/* botao magnetico: segue o cursor de leve */
+.mag{will-change:transform}
+
 /* Lenis */
 html.lenis,html.lenis body{height:auto}
 html.lenis{scroll-behavior:auto!important}
@@ -342,6 +437,8 @@ html.lenis{scroll-behavior:auto!important}
 </style>
 </head>
 <body>
+
+<div id="prog"><i></i></div>
 
 <nav id="nav">
   <a href="#" class="nv-logo" aria-label="SOMA Produtora"><img src="logotipo.png" alt="SOMA Produtora" fetchpriority="high"></a>
@@ -392,26 +489,40 @@ html.lenis{scroll-behavior:auto!important}
 </section>
 
 <!-- ══════ PROJETOS ══════ -->
-<section class="sec wrap dark" id="projetos">
-  <div class="sh">
-    <span class="lb">Projetos selecionados</span>
-    <span class="sub">Uma seleção de trabalhos guiados por narrativa.</span>
-  </div>
-  <div class="pj" id="pjList">
-    <div class="pj-r" data-r="up" data-v="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.MP4">
+<div class="pj-tr" id="pjTr">
+  <section class="pj-pin" id="projetos">
+    <div class="pj-in">
+      <div class="pj-left">
+        <div class="sh">
+          <span class="lb">Projetos selecionados</span>
+          <span class="sub">Uma seleção de trabalhos guiados por narrativa.</span>
+        </div>
+        <div class="pj" id="pjList">
+          <div class="pj-r" data-v="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.MP4">
       <span class="pj-n">01</span><span class="pj-t">EXPOMIX — Aftermovie</span><span class="pj-m">2025 · Evento</span></div>
-    <div class="pj-r" data-r="up" data-v="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.MP4">
+          <div class="pj-r" data-v="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.MP4">
       <span class="pj-n">02</span><span class="pj-t">Mari Fernandez — Palco Principal</span><span class="pj-m">2024 · Show</span></div>
-    <div class="pj-r" data-r="up" data-v="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20After%20Movie%20Final%20Maio%20.MOV">
+          <div class="pj-r" data-v="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20After%20Movie%20Final%20Maio%20.MOV">
       <span class="pj-n">03</span><span class="pj-t">Bora de Bike — Aftermovie</span><span class="pj-m">2025 · Evento</span></div>
-    <div class="pj-r" data-r="up" data-v="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/FOME%20DE%20M%C3%9ASICA%20-%20VER%C3%83O%20R2%20_v3.mp4">
+          <div class="pj-r" data-v="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/FOME%20DE%20M%C3%9ASICA%20-%20VER%C3%83O%20R2%20_v3.mp4">
       <span class="pj-n">04</span><span class="pj-t">Fome de Música — Verão</span><span class="pj-m">2024 · Campanha</span></div>
-    <div class="pj-r" data-r="up" data-v="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Acessibilidade%20-%20Tel%C3%A3o%202025%20Na%20Praia.MOV">
+          <div class="pj-r" data-v="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Acessibilidade%20-%20Tel%C3%A3o%202025%20Na%20Praia.MOV">
       <span class="pj-n">05</span><span class="pj-t">Acessibilidade — Na Praia</span><span class="pj-m">2025 · Festival</span></div>
-    <div class="pj-r" data-r="up" data-v="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20Final%20.MOV">
+          <div class="pj-r" data-v="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20Final%20.MOV">
       <span class="pj-n">06</span><span class="pj-t">Bora de Bike — Final</span><span class="pj-m">2024 · Evento</span></div>
-  </div>
-</section>
+        </div>
+      </div>
+      <div class="pj-media" id="pjMedia">
+        <img src="foto-02.webp" alt="" loading="lazy" class="on">
+        <img src="foto-05.webp" alt="" loading="lazy">
+        <img src="foto-11.webp" alt="" loading="lazy">
+        <img src="foto-16.webp" alt="" loading="lazy">
+        <img src="foto-08.webp" alt="" loading="lazy">
+        <img src="foto-19.webp" alt="" loading="lazy">
+      </div>
+    </div>
+  </section>
+</div>
 <div id="peek"><video id="peekV" muted loop playsinline></video></div>
 
 <!-- ══════ CLIENTES ══════ -->
@@ -420,7 +531,22 @@ html.lenis{scroll-behavior:auto!important}
     <span class="lb">Nossos clientes</span>
     <span class="sub">Marcas que não se contentaram com o suficiente.</span>
   </div>
-  <p class="st st-3" data-r="up" data-d="1" style="max-width:22ch">De festival a banco.<br>Seis setores, <span class="acc">um padrão só.</span></p>
+  <p class="st st-3" data-r="up" data-d="1" style="max-width:22ch;margin-bottom:clamp(34px,4.5vw,64px)">De festival a banco.<br>Seis setores, <span class="acc">um padrão só.</span></p>
+  <div class="c3" id="c3" tabindex="0" role="group" aria-label="Carrossel de projetos — use as setas">
+    <div class="c3-st" id="c3st">
+      <figure class="c3-i"><img src="foto-02.webp" alt="EXPOMIX" loading="lazy"><figcaption>EXPOMIX · 2025</figcaption></figure>
+      <figure class="c3-i"><img src="foto-05.webp" alt="Mari Fernandez" loading="lazy"><figcaption>Mari Fernandez · 2024</figcaption></figure>
+      <figure class="c3-i"><img src="foto-11.webp" alt="Bora de Bike" loading="lazy"><figcaption>Bora de Bike · 2025</figcaption></figure>
+      <figure class="c3-i"><img src="foto-16.webp" alt="Fome de Música" loading="lazy"><figcaption>Fome de Música · 2024</figcaption></figure>
+      <figure class="c3-i"><img src="foto-08.webp" alt="Acessibilidade" loading="lazy"><figcaption>Acessibilidade · 2025</figcaption></figure>
+      <figure class="c3-i"><img src="foto-19.webp" alt="Na Praia" loading="lazy"><figcaption>Na Praia · 2024</figcaption></figure>
+    </div>
+  </div>
+  <div class="c3-nav">
+    <button class="c3-b" id="c3p" aria-label="Anterior"><svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg></button>
+    <span class="c3-c"><b id="c3n">01</b> / 06</span>
+    <button class="c3-b" id="c3x" aria-label="Próximo"><svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg></button>
+  </div>
 </section>
 <div class="lg-t">
   <div class="lg-i">
@@ -432,6 +558,13 @@ html.lenis{scroll-behavior:auto!important}
     <img src="logo-record.png" alt="" loading="lazy"><img src="logo-r2.png" alt="" loading="lazy">
     <img src="logo-cbf.png" alt="" loading="lazy"><img src="logo-napraia.png" alt="" loading="lazy">
     <img src="logo-arenabrb.png" alt="" loading="lazy">
+  </div>
+</div>
+
+<div class="tk">
+  <div class="tk-i">
+    <span>Aftermovie <em>✦</em> Videoclipe <em>✦</em> Branded Content <em>✦</em> Campanha 360° <em>✦</em> Direção Criativa <em>✦</em></span>
+    <span>Aftermovie <em>✦</em> Videoclipe <em>✦</em> Branded Content <em>✦</em> Campanha 360° <em>✦</em> Direção Criativa <em>✦</em></span>
   </div>
 </div>
 
@@ -514,7 +647,7 @@ html.lenis{scroll-behavior:auto!important}
 </section>
 
 <!-- ══════ SHOWREEL ══════ -->
-<section class="sec wrap" id="showreel">
+<div class="pin-tr"><section class="sec wrap pin-st" id="showreel">
   <div class="sh" data-r="up">
     <span class="lb">/ Showreel</span>
     <span class="sub">(2019—2026) Um recorte do trabalho recente.</span>
@@ -524,7 +657,7 @@ html.lenis{scroll-behavior:auto!important}
       data-sc="zoom" data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4"></video>
     <div class="rl-c"><span class="lb-p" style="color:#fff">Showreel 2025</span><span class="lb-p" style="color:rgba(255,255,255,.7)">4K · LOG3 · 24fps</span></div>
   </div>
-</section>
+</section></div>
 
 <!-- ══════ PROCESSO ══════ -->
 <section class="sec wrap" id="processo">
@@ -595,8 +728,8 @@ html.lenis{scroll-behavior:auto!important}
   <span class="lb" data-r="up" style="justify-content:center">Contato</span>
   <h2 class="st st-2" data-r="up" data-d="1">Sua marca já esperou<br><span class="acc">tempo suficiente.</span></h2>
   <div class="btns" data-r="up" data-d="2">
-    <a class="btn btn-a" href="https://wa.me/5561985011819?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20SOMA." target="_blank" rel="noopener">Começar um projeto</a>
-    <a class="btn btn-o" href="https://www.instagram.com/soma.produtora/" target="_blank" rel="noopener">@soma.produtora</a>
+    <a class="btn btn-a mag" href="https://wa.me/5561985011819?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20SOMA." target="_blank" rel="noopener">Começar um projeto</a>
+    <a class="btn btn-o mag" href="https://www.instagram.com/soma.produtora/" target="_blank" rel="noopener">@soma.produtora</a>
   </div>
 </section>
 
@@ -774,11 +907,121 @@ function checaVids(vh){
   }
 }
 
+/* ── CARROSSEL 3D ──────────────────────────────────────────────────────
+   Os itens ficam num cilindro: cada um gira em rotateY e e empurrado para
+   fora em translateZ. Setas do teclado, botoes e arrasto. */
+var c3=document.getElementById('c3');
+if(c3){
+  var itens=[].slice.call(c3.querySelectorAll('.c3-i')),
+      atual=0,total=itens.length,
+      passo=360/total, raio=0;
+  function raioC3(){
+    var l=itens[0]?itens[0].getBoundingClientRect().width:260;
+    /* raio que evita sobreposicao para N faces de largura L */
+    return (l/2)/Math.tan(Math.PI/total)*1.15;
+  }
+  function pintaC3(){
+    raio=raioC3();
+    for(var i=0;i<total;i++){
+      var d=i-atual;
+      if(d>total/2)d-=total;if(d<-total/2)d+=total;
+      var ang=d*passo;
+      itens[i].style.transform='rotateY('+ang+'deg) translateZ('+raio+'px)';
+      var dist=Math.abs(d);
+      itens[i].style.opacity=(dist===0?1:(dist===1?.55:.2)).toFixed(2);
+      itens[i].style.zIndex=String(100-Math.round(dist));
+    }
+    var n=document.getElementById('c3n');
+    if(n)n.textContent=String(atual+1).padStart(2,'0');
+  }
+  function vai(d){atual=(atual+d+total)%total;pintaC3()}
+  var bp=document.getElementById('c3p'),bx=document.getElementById('c3x');
+  if(bp)bp.addEventListener('click',function(){vai(-1)});
+  if(bx)bx.addEventListener('click',function(){vai(1)});
+  c3.addEventListener('keydown',function(e){
+    if(e.key==='ArrowLeft'){e.preventDefault();vai(-1)}
+    if(e.key==='ArrowRight'){e.preventDefault();vai(1)}
+    if(e.key==='Home'){e.preventDefault();atual=0;pintaC3()}
+    if(e.key==='End'){e.preventDefault();atual=total-1;pintaC3()}
+  });
+  /* arrasto: cada ~90px puxa um item */
+  var px=0,arr=false;
+  c3.addEventListener('pointerdown',function(e){arr=true;px=e.clientX;
+    try{c3.setPointerCapture(e.pointerId)}catch(_){}});
+  c3.addEventListener('pointermove',function(e){
+    if(!arr)return;var dx=e.clientX-px;
+    if(Math.abs(dx)>90){vai(dx>0?-1:1);px=e.clientX}
+  });
+  ['pointerup','pointercancel'].forEach(function(ev){
+    c3.addEventListener(ev,function(){arr=false})});
+  addEventListener('resize',pintaC3);
+  pintaC3();
+}
+
+/* ── PROJETOS PRESOS: o scroll percorre a lista ──────────────────────
+   A secao fica presa e o progresso do scroll escolhe o projeto ativo:
+   a linha acende e o painel troca de imagem. Se a tela for estreita o
+   efeito e desligado — la a secao volta a rolar normalmente. */
+var pjTr=document.getElementById('pjTr'),
+    pjRows=[].slice.call(document.querySelectorAll('#pjList .pj-r')),
+    pjMed=[].slice.call(document.querySelectorAll('#pjMedia img')),
+    pjAtual=-1;
+function movePj(){
+  if(!pjTr||!pjRows.length)return;
+  if(matchMedia('(max-width:900px)').matches){
+    if(pjAtual!==-1){pjRows.forEach(function(r){r.classList.remove('viva')});pjAtual=-1}
+    return;
+  }
+  var curso=pjTr.offsetHeight-innerHeight;
+  if(curso<=0)return;
+  var p=(-pjTr.getBoundingClientRect().top)/curso;
+  p=p<0?0:(p>1?1:p);
+  var i=Math.min(pjRows.length-1,Math.floor(p*pjRows.length));
+  if(i===pjAtual)return;
+  pjAtual=i;
+  for(var k=0;k<pjRows.length;k++)pjRows[k].classList.toggle('viva',k===i);
+  for(var m=0;m<pjMed.length;m++)pjMed[m].classList.toggle('on',m===i);
+}
+
+/* ── SHOWREEL PRESO: cresce enquanto voce atravessa ──────────────────── */
+var pinTr=document.querySelector('.pin-tr'),pinRl=document.querySelector('.pin-st .rl');
+function movePin(){
+  if(!pinTr||!pinRl)return;
+  if(matchMedia('(max-width:820px)').matches){pinRl.style.transform='';return}
+  var curso=pinTr.offsetHeight-innerHeight;
+  if(curso<=0)return;
+  var p=(-pinTr.getBoundingClientRect().top)/curso;
+  p=p<0?0:(p>1?1:p);
+  /* 0.86 -> 1 no meio, e segura: o quadro "abre" conforme voce desce */
+  var e=Math.min(1,p*1.8);
+  pinRl.style.transform='scale('+(0.86+0.14*e).toFixed(4)+')';
+}
+
+/* ── BARRA DE PROGRESSO ──────────────────────────────────────────────── */
+var progI=document.querySelector('#prog i');
+function moveProg(){
+  if(!progI)return;
+  var H=document.documentElement.scrollHeight-innerHeight;
+  progI.style.width=(H>0?(scrollY/H)*100:0).toFixed(2)+'%';
+}
+
+/* ── BOTOES MAGNETICOS: puxam de leve na direcao do cursor ───────────── */
+[].forEach.call(document.querySelectorAll('.mag'),function(b){
+  b.addEventListener('pointermove',function(e){
+    var r=b.getBoundingClientRect();
+    var dx=(e.clientX-(r.left+r.width/2))*.28,
+        dy=(e.clientY-(r.top+r.height/2))*.28;
+    b.style.transform='translate('+dx.toFixed(1)+'px,'+dy.toFixed(1)+'px)';
+  });
+  b.addEventListener('pointerleave',function(){b.style.transform=''});
+});
+
 /* TRES fontes chamam a rede: se o rAF for estrangulado, scroll e
    intervalo cobrem — o conteudo nunca fica preso escondido. */
 function rede(){
   var vh=innerHeight||1;
   checaRevs(vh);checaHero(vh);moveSc(vh);movePc(vh);giraRoletes(vh);checaVids(vh);
+  movePin();moveProg();movePj();
   if(nav)nav.classList.toggle('stuck',scrollY>60);
 }
 addEventListener('scroll',rede,{passive:true});
