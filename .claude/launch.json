@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "site-soma",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["--yes", "http-server", "-p", "8765", "-c-1", "."],
+      "port": 8765
+    },
+    {
+      "name": "pacote-deploy",
+      "runtimeExecutable": "npx",
+      "runtimeArgs": ["--yes", "http-server", "-p", "8790", "-c-1", "./site-pronto-deploy"],
+      "port": 8790
+    }
+  ]
+}

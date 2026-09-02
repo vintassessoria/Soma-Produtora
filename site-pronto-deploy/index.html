@@ -1,0 +1,2577 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SOMA Produtora — Marcas que não passam despercebidas</title>
+<meta property="og:image" content="hero-napraia-poster.webp">
+<meta property="og:image:alt" content="Equipe SOMA em gravação de evento">
+<meta name="description" content="Produtora criativa em Brasília. Audiovisual, tráfego, social media, sites, drone e fotografia — do conceito ao frame final.">
+<link rel="icon" href="favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ██████████████████████████████████████████████████████████████████████
+   SOMA — v3, na linguagem do template Spector (spector.framer.website)
+   ----------------------------------------------------------------------
+   Reconstruido nativamente: o site de referencia e Framer (React
+   compilado), entao o codigo nao e portavel para HTML estatico. O que foi
+   reproduzido e a GRAMATICA VISUAL, medida no site rodando:
+
+     tipografia .... Plus Jakarta Sans, so ela. A mono de rotulos que o
+                     template usa foi REMOVIDA: etiqueta pequena em caixa
+                     alta com tracking largo dava ao site um ar de gerado,
+                     e estava em 20 lugares. O que era informacao virou
+                     texto normal; o que era so enfeite saiu.
+     paleta ........ INVERTIDA para a identidade SOMA: preto #050609 /
+                     #0D0F13 / #000 e acento verde #6BF019 (o template e
+                     branco com acento vermelho #F94137)
+     raio .......... 8px dominante
+     ritmo ......... hero e projetos escuros, corpo claro, cinza #F9F9F9
+                     alternando
+     assinaturas ... declaracao gigante em caixa alta, rotulo mono com
+                     barra, linha secundaria acima do titulo, contador de
+                     rolete (digitos 0-9 rolando), processo numerado com
+                     prazo, scroll suave
+
+   LOGOS: logotipo.png (assinatura completa) no nav e no rodape;
+   logomarca.png (so o simbolo) no hero e no menu.
+   ██████████████████████████████████████████████████████████████████████ */
+
+/* IDENTIDADE SOMA: preto + verde.
+   O template de referencia e claro (branco, acento vermelho). Aqui a
+   paleta e invertida para a marca, mas o RITMO de contraste do original
+   foi preservado: ele alterna branco / cinza claro / faixa escura; aqui
+   alterna tres tons de preto (--bg / --soft / --dark), entao as secoes
+   continuam se separando visualmente como na referencia. */
+:root{
+  --bg:#050609;         /* preto da marca (fundo principal)  */
+  --soft:#0D0F13;       /* faixa alternada, um degrau acima   */
+  --dark:#000000;       /* faixa mais funda (hero, projetos)  */
+  --tkAr:calc(var(--sec) * .62); /* ar dos DOIS lados da fita      */
+  --ink:#F5F7F5;
+  --mut:rgba(245,247,245,.58);
+  --line:rgba(245,247,245,.15);
+  --acc:#6BF019;        /* verde SOMA (era #F94137 no template) */
+  --FD:'Plus Jakarta Sans',system-ui,-apple-system,Segoe UI,sans-serif;
+  /* MARGENS LATERAIS de todo o site (14 usos: secoes, nav, rodape,
+     galeria, legendas). Nao basta subir o teto: com 4.4vw no meio, um teto
+     de 120px so seria alcancado numa tela de 2727px. A taxa subiu junto —
+     6.25vw — para o desktop comum sentir a mudanca.
+       375px  -> 24px (minimo)      1280px -> 80px
+       768px  -> 48px               1920px -> 120px (teto) */
+  --gut:clamp(24px,6.25vw,120px);
+  --sec:clamp(76px,10vw,168px);
+  --E:cubic-bezier(.4,0,.2,1);
+  --Ef:cubic-bezier(.16,1,.3,1);
+  /* sinal de mais reto, usado como mascara no separador da faixa. Ja foi
+     uma estrela de bracos afilados: ficava bonito mas lia como estrela, e
+     o ponto aqui e o simbolo da adicao — SOMA e soma. */
+  --sinal:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cpath d='M37 0h26v37h37v26H63v37H37V63H0V37h37z' fill='black'/%3E%3C/svg%3E");
+}
+
+*{margin:0;padding:0;box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;overflow-x:clip}
+body{background:var(--bg);color:var(--ink);font-family:var(--FD);
+  font-size:16px;line-height:1.6;overflow-x:clip;-webkit-font-smoothing:antialiased}
+img,video{display:block;max-width:100%}
+a{color:inherit;text-decoration:none}
+button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
+::selection{background:var(--acc);color:#000}
+
+/* ── TIPOGRAFIA ─────────────────────────────────────────────────────── */
+/* declaracao gigante: caixa alta, peso alto, tracking bem fechado */
+.st{font-weight:800;text-transform:uppercase;letter-spacing:-.045em;line-height:.92}
+.st-1{font-size:clamp(32px,5.3vw,76px)}
+.st-2{font-size:clamp(26px,3.4vw,48px)}
+.st-3{font-size:clamp(20px,2.1vw,30px)}
+/* rotulo tecnico em mono com barra antes */
+.lb-p{font-size:13px;color:var(--mut)}
+.acc{color:var(--acc)}
+.bd{color:var(--mut);font-size:clamp(14px,1.05vw,16.5px);line-height:1.7}
+.wrap{padding-left:var(--gut);padding-right:var(--gut)}
+.sec{padding-top:var(--sec);padding-bottom:var(--sec);position:relative}
+.dark{background:var(--dark);color:#fff}
+.dark .bd{color:rgba(255,255,255,.62)}
+.dark .lb,.dark .lb-p{color:rgba(255,255,255,.55)}
+.soft{background:var(--soft)}
+
+/* cabecalho de secao: linha secundaria + nome, como na referencia */
+.sh{margin-bottom:clamp(28px,4vw,60px)}
+/* Antes era mono, e virava carimbo tecnico. Agora e so uma frase. */
+.sh .sub{font-size:clamp(15px,1.2vw,17px);color:var(--mut);
+  display:block;line-height:1.5;max-width:46ch}
+.dark .sh .sub{color:rgba(255,255,255,.5)}
+
+/* ██████ ABERTURA: QUEIMA (shader) ████████████████████████████████████
+   Reconstrucao do Burn (Jay Ji). Massas pretas de borda muito mole
+   entram pelas laterais como tinta e recuam, abrindo o hero. Ruido de
+   baixa frequencia com limiar animado; a camada fina de dispersao solta
+   os pingos destacados que aparecem longe da massa principal.
+
+   Constantes da referencia, mantidas: queima 0.7, densidade 0.5,
+   distorcao 0.3, suavidade 0.5, dispersao 1, 2s. Mascara preta, SEM
+   borda acesa — no original a borda e so uma rampa muito longa, e o que
+   parece desfoque e a suavidade alta, nao um blur.
+
+   Fica sobre o hero e some sozinha ao terminar. Se o WebGL falhar, a tela
+   simplesmente nao aparece e o hero ja esta la embaixo, intacto. */
+/* fundo solido no CSS: o canvas so recebe o primeiro quadro depois que o
+   script roda, e sem isto o hero aparece inteiro e SO ENTAO leva o preto
+   na cara. O JS tira este fundo assim que desenha o quadro 0, que ja e
+   opaco — nao ha brecha entre um e outro. */
+#burn{position:absolute;inset:0;z-index:4;pointer-events:none;
+  display:block;width:100%;height:100%;background:var(--dark)}
+#burn.fim{display:none}
+
+
+/* ── PROJETOS: galeria WebGL ─────────────────────────────────────────
+   Reconstrucao nativa do componente three.js da referencia. O original
+   carrega three.js r128 do cdnjs (~600KB) so para desenhar planos com
+   textura; aqui e WebGL cru, ~9KB, porque o site inteiro pesa menos que
+   aquela unica dependencia.
+
+   Os cartoes mostram POSTER, nao video: o bucket R2 nao manda cabecalho
+   CORS, entao um <video crossOrigin> de la falha com erro 4 e o navegador
+   se recusa a usa-lo como textura. Foi medido, nao suposto. O video toca
+   no lightbox em DOM, que nao precisa de CORS. Se o CORS for ligado no
+   Cloudflare, trocar a textura por video e mexer em uma funcao so. */
+#projetos{position:relative;background:var(--dark);overflow:hidden}
+.pjw{position:relative;height:100svh;min-height:560px}
+#pjGL{position:absolute;inset:0;width:100%;height:100%;display:block;
+  touch-action:pan-y;cursor:grab}
+#pjGL.pegando{cursor:grabbing}
+#pjGL.emcima{cursor:pointer}
+
+.pj-hud{position:absolute;left:var(--gut);bottom:clamp(38px,7vh,74px);
+  z-index:2;pointer-events:none;max-width:min(430px,62vw)}
+.pj-cta{display:flex;align-items:center;gap:16px;margin-bottom:14px}
+.pj-num{font-size:13px;color:rgba(255,255,255,.5);font-variant-numeric:tabular-nums}
+.pj-num b{color:#fff;font-weight:400}
+.pj-num i{font-style:normal}
+.pj-cat{font-size:13px;color:rgba(255,255,255,.72);
+  display:inline-flex;align-items:center;gap:9px}
+.pj-cat em{width:7px;height:7px;background:var(--acc);display:block;flex:0 0 auto}
+.pj-tit{font-weight:800;text-transform:uppercase;letter-spacing:-.04em;
+  line-height:.94;font-size:clamp(26px,3.1vw,44px);color:#fff;
+  transition:opacity .34s var(--E),transform .34s var(--E)}
+.pj-des{margin-top:12px;font-size:clamp(13px,1.05vw,15px);line-height:1.65;
+  color:rgba(255,255,255,.6);
+  transition:opacity .34s var(--E),transform .34s var(--E)}
+.pj-hud.troca .pj-tit,.pj-hud.troca .pj-des{opacity:0;transform:translateY(9px)}
+
+.pj-ctr{position:absolute;right:var(--gut);bottom:clamp(38px,7vh,74px);
+  z-index:2;display:flex;gap:10px}
+.pj-b{width:46px;height:46px;border-radius:50%;color:#fff;
+  border:1px solid rgba(255,255,255,.22);display:grid;place-items:center;
+  transition:background .3s var(--E),border-color .3s var(--E),color .3s var(--E)}
+.pj-b:hover{background:var(--acc);border-color:var(--acc);color:#000}
+
+
+/* lightbox do video */
+.pj-lb{position:fixed;inset:0;z-index:950;background:rgba(3,4,6,.94);
+  backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  display:flex;align-items:center;justify-content:center;padding:var(--gut);
+  opacity:0;visibility:hidden;transition:opacity .4s var(--E),visibility .4s}
+.pj-lb.abre{opacity:1;visibility:visible}
+.pj-lb video{max-width:min(1180px,100%);max-height:82vh;width:auto;
+  border-radius:8px;background:#000}
+.pj-x{position:absolute;top:20px;right:var(--gut);font-size:14px;color:var(--acc)}
+
+@media(max-width:760px){
+  .pj-hud{max-width:none;right:var(--gut);bottom:clamp(96px,15vh,130px)}
+  .pj-ctr{left:var(--gut);right:auto;bottom:clamp(38px,6vh,54px)}
+}
+
+
+/* ── SOBRE ───────────────────────────────────────────────────────────
+   Registro deliberadamente DIFERENTE do resto do site. As outras secoes
+   usam a mesma receita — rotulo mono, declaracao gigante em caixa alta com
+   uma palavra no acento, corpo pequeno. Repetir isso aqui era o que dava
+   ar de template.
+
+   Aqui o texto e o desenho: caixa baixa, peso 600, entrelinha quase 1 e
+   tracking negativo, na linguagem do sand.black (medido no site: PP
+   Pangram Sans Semibold, 600, entrelinha 1.0, tracking -0.02em). E os
+   riscos a mao sobre as frases-chave, que sao desenhados em SVG pelo JS
+   com a medida real de cada trecho — por isso acompanham a quebra de
+   linha em vez de ficarem tortos. */
+.sb{display:grid;gap:clamp(30px,4.4vw,72px);align-items:center;
+  grid-template-columns:minmax(0,1.45fr) minmax(0,1fr)}
+/* SEM max-width aqui, de proposito. Um limite em ch neste elemento e uma
+   armadilha: ch resolve no tipo HERDADO (16px), nao nos 43px do paragrafo,
+   entao 40ch travava a coluna em 468px enquanto o grid dava 924 — dai o
+   vao de 598px ate a foto. Deixando a COLUNA definir a medida, e como
+   coluna e tipo crescem os dois por vw, a medida em caracteres fica
+   constante (~40ch) de 1200px a 1840px de tela. */
+.sb-txt{max-width:none}
+.fala{font-size:clamp(18px,1.5vw,26px);font-weight:600;line-height:1.34;
+  letter-spacing:-.021em;color:var(--ink);text-wrap:pretty}
+.fala+.fala{margin-top:.86em}
+.assina{margin-top:clamp(26px,3.4vw,44px);display:flex;flex-wrap:wrap;gap:8px 22px;
+  font-size:13px;color:var(--mut)}
+.assina span:last-child{color:var(--acc)}
+
+/* ── riscos a mao ─────────────────────────────────────────────────────
+   O SVG e gerado no tamanho real do trecho, entao o traco nao estica.
+   overflow:visible porque a elipse passa de proposito para fora da caixa
+   da palavra — risco a mao nao encaixa certinho, e e isso que faz parecer
+   feito por gente. */
+/* O SVG NAO fica dentro do span: um inline que ocupa duas linhas nao
+   forma uma caixa de referencia unica — o navegador usa so o primeiro
+   fragmento, e o traco da segunda linha saia deslocado. O host e o
+   paragrafo, que e bloco e tem caixa previsivel. */
+.fala{position:relative}
+/* z-index negativo: o risco passa POR TRAS das letras, como quem marca um
+   papel ja impresso. Sem isso o circulo cobre a palavra que ele destaca. */
+.fala>svg.risco{position:absolute;overflow:visible;pointer-events:none;z-index:-1}
+/* O seletor precisa mirar o SVG onde ele REALMENTE esta (no paragrafo).
+   Enquanto mirava .rsc path, os caminhos ficaram sem fill:none e a elipse
+   virou uma mancha verde solida por cima do texto. */
+.fala>svg.risco path{fill:none;stroke:var(--acc);stroke-width:2.4;
+  stroke-linecap:round;stroke-linejoin:round;opacity:.95;
+  transition:stroke-dashoffset 1.15s cubic-bezier(.33,.9,.4,1)}
+/* A elipse so faz sentido em UMA linha: se a frase quebra, saem duas meias
+   elipses. Sublinhado quebra bem (um traco por linha), circulo nao. */
+.rsc[data-rsc="circulo"]{padding:0 .12em;white-space:nowrap}
+
+.sb-fig{margin:0;position:relative}
+/* max-height segura a foto: numa tela larga a coluna passa de 660px e o
+   3:4 daria 880px de altura, mais que a propria janela. */
+.sb-moldura{position:relative;overflow:hidden;border-radius:8px;
+  aspect-ratio:3/4;max-height:min(76vh,760px);background:#0b0d11}
+/* folga maior que o deslize do scroll, senao a borda aparece */
+.sb-moldura img{position:absolute;left:0;top:-18%;width:100%;height:136%;
+  object-fit:cover;will-change:transform}
+
+@media(max-width:820px){
+  .sb{grid-template-columns:1fr;gap:clamp(26px,5vw,40px)}
+  .sb-txt{max-width:none;order:2}
+  .sb-fig{order:1}
+  .sb-moldura{aspect-ratio:4/5}
+}
+
+/* ── CLIENTES ────────────────────────────────────────────────────────
+   Blur Rise, os valores exatos do componente de referencia:
+     entra de  y 40%,  blur 14px, opacidade 0, escala .92
+     assenta em y 0,   blur 0,    opacidade 1, escala 1
+     0.7s, cubic-bezier(.76, 0, .24, 1)
+   La o efeito serve para TROCAR logos numa grade que fica ciclando; aqui
+   ele e a ENTRADA de todas as 15 de uma vez, escalonada — o site nao tem
+   laco perpetuo em lugar nenhum e as 15 cabem na tela.
+
+   As logos ficam na COR original de cada marca, sem moldura atras — o
+   fundo da secao e o unico plano. */
+.cli{list-style:none;display:grid;gap:clamp(16px,2.4vw,34px);
+  grid-template-columns:repeat(5,1fr);align-items:center}
+.cli li{display:grid;place-items:center;padding:clamp(16px,2.2vw,30px) clamp(8px,1.4vw,18px);
+  opacity:0;transform:translateY(40%) scale(.92);filter:blur(14px);
+  transition:opacity .7s cubic-bezier(.76,0,.24,1),
+             transform .7s cubic-bezier(.76,0,.24,1),
+             filter .7s cubic-bezier(.76,0,.24,1);
+  transition-delay:calc(var(--n) * .055s)}
+.cli.subiu li{opacity:1;transform:none;filter:blur(0)}
+.cli img{width:100%;max-width:clamp(92px,10vw,146px);height:auto;
+  max-height:clamp(34px,3.8vw,54px);object-fit:contain}
+@media(max-width:900px){.cli{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:520px){.cli{grid-template-columns:repeat(2,1fr)}}
+
+/* ── DAVI ────────────────────────────────────────────────────────────
+   Duas colunas espelhando o Sobre, mas com a foto na ESQUERDA e mais
+   estreita: o retrato e vertical (900x1463) e, na largura do Sobre, comeria
+   a tela toda de altura.
+   Sem max-width em ch no texto — mesma armadilha ja documentada no .sb-txt:
+   ch resolve no tipo herdado, nao no tamanho real do paragrafo. */
+.dv{display:grid;gap:clamp(28px,4.4vw,68px);align-items:center;
+  grid-template-columns:minmax(0,1fr) minmax(0,1.25fr)}
+.dv-fig{margin:0;position:relative}
+.dv-moldura{position:relative;overflow:hidden;border-radius:8px;
+  aspect-ratio:78/100;max-height:min(74vh,700px);background:#0b0d11}
+/* PROFUNDIDADE SEM DECEPAR A CABECA.
+   O "pan" que as outras fotos usam desliza a imagem 9.5% dentro de uma
+   folga de 18%, o que faz a borda de cima varrer de 3.7% a 22.7% da foto.
+   Num retrato isso e fatal: so existem 15% de imagem acima da cabeca do
+   Davi, entao em parte do percurso ela seria cortada.
+   A imersao vem de outro par, que nao tem esse risco:
+     1. a MOLDURA anda 130px e o texto -120px, em sentidos opostos — sao
+        250px de deslocamento relativo, contra os 82px de antes. Os limites
+        sao medidos: no desktop a foto tem 144px de folga ate a borda da
+        secao e o texto 227px; no celular a foto tem 38px ate o texto, dai
+        os data-px-m bem menores;
+     2. a IMAGEM da zoom de 1.16 a 1.00 pivotando em 50% 22%, em cima do
+        rosto. Como a escala nunca desce de 1, nao ha como abrir fresta na
+        moldura; e como o pivo esta no rosto, ele fica parado enquanto o
+        entorno cresce — que e exatamente a sensacao de aproximacao. */
+.dv-moldura img{position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;object-position:50% 18%;
+  transform-origin:50% 22%;will-change:transform}
+.dv-cargo{margin-top:.5em;font-size:clamp(14px,1.05vw,15px);color:var(--mut)}
+.dv-fala{margin-top:clamp(20px,2.6vw,34px)}
+/* O link e o unico elemento clicavel da secao, entao ele precisa parecer
+   clicavel parado — nao so no hover. Dai o fio embaixo, que a seta puxa. */
+.dv-ig{margin-top:clamp(24px,3.2vw,40px);display:inline-flex;align-items:center;
+  gap:10px;font-size:clamp(15px,1.15vw,16px);font-weight:600;color:var(--ink);
+  padding-bottom:6px;border-bottom:1px solid var(--line);
+  transition:color .3s var(--E),border-color .3s var(--E)}
+.dv-ig svg{transition:transform .3s var(--Ef)}
+.dv-ig:hover{color:var(--acc);border-color:var(--acc)}
+.dv-ig:hover svg{transform:translate(3px,-3px)}
+@media(max-width:820px){
+  .dv{grid-template-columns:1fr;gap:clamp(38px,10vw,56px)}
+  .dv-fig{order:1}
+  .dv-txt{order:2}
+  .dv-moldura{aspect-ratio:4/5;max-height:none}
+}
+
+/* ── EMENDA LÍQUIDA ENTRE SEÇÕES (SectionMorph) ──────────────────────
+   Um SVG na costura entre duas secoes: um retangulo da cor de baixo, e
+   por cima um caminho da cor de cima cuja borda inferior e uma curva. A
+   curva MERGULHA conforme a velocidade do scroll e volta por mola.
+
+   Geometria e fisica sao as do modulo (preset "cinematic"): mola 95/24/1,
+   sensibilidade 1.1, suavizacao .18, repique .1, deslocamento vertical 10,
+   tensao de borda 78, largura de curva 72.
+
+   O QUE MUDEI, e por que: la o efeito se ve porque as duas cores tem 14.6:1
+   de contraste (quase-preto sobre creme). Aqui TODAS as emendas do site
+   estao em 1.09:1 — medido — e a curva colorida seria invisivel. Entao o
+   elemento visivel passou a ser a ARESTA da curva, que e o proprio
+   highlight do componente, subido para existir no escuro.
+
+   margin -1px em cima e embaixo: sem isso o arredondamento de subpixel
+   deixa um fio da cor errada na costura. */
+.morf{position:relative;height:clamp(96px,13vh,150px);overflow:hidden;
+  margin:-1px 0;pointer-events:none;line-height:0}
+.morf svg{display:block;width:100%;height:100%}
+.morf .aresta{fill:none;stroke-width:1.4;vector-effect:non-scaling-stroke}
+@media(max-width:760px){.morf{height:clamp(72px,10vh,110px)}}
+
+/* ── NAV ────────────────────────────────────────────────────────────── */
+#nav{position:fixed;top:0;left:0;right:0;z-index:900;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:20px var(--gut);color:#fff;
+  transition:background .45s var(--E),padding .45s var(--E),color .45s var(--E)}
+#nav.stuck{background:rgba(5,6,9,.9);backdrop-filter:blur(18px);
+  -webkit-backdrop-filter:blur(18px);padding:13px var(--gut)}
+/* LOGO. logotipo.png = lockup horizontal (simbolo + SOMA + PRODUTORA),
+   com o texto ja em branco: nasceu para fundo escuro, entao cai certo
+   aqui. logomarca.png = so o simbolo, usado onde nao cabe a assinatura
+   inteira. Nenhum dos dois recebe filtro — cor da marca intacta. */
+.nv-logo{display:flex;align-items:center}
+.nv-logo img{height:clamp(20px,2vw,26px);width:auto}
+.mk{height:1em;width:auto;flex:0 0 auto}
+.nv-l{display:flex;gap:clamp(18px,2.6vw,44px)}
+.nv-l a{font-size:13px;font-weight:500;opacity:.82;transition:opacity .3s}
+.nv-l a:hover{opacity:1;color:var(--acc)}
+.nv-b{display:none;width:40px;height:40px;flex-direction:column;
+  align-items:center;justify-content:center;gap:5px}
+.nv-b span{width:19px;height:1.5px;background:currentColor;display:block}
+@media(max-width:840px){.nv-l{display:none}.nv-b{display:flex}}
+#menu{position:fixed;inset:0;z-index:890;background:var(--dark);color:#fff;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  opacity:0;visibility:hidden;transition:opacity .45s var(--E),visibility .45s}
+#menu.on{opacity:1;visibility:visible}
+#menu a{font-weight:800;text-transform:uppercase;letter-spacing:-.03em;
+  font-size:clamp(24px,5vw,38px)}
+#menu a:hover{color:var(--acc)}
+#menu .x{position:absolute;top:22px;right:22px;font-size:14px;color:var(--acc)}
+
+/* ── HERO ───────────────────────────────────────────────────────────── */
+#hero{position:relative;min-height:100svh;background:var(--dark);
+  overflow:hidden;display:flex;flex-direction:column;justify-content:flex-end;
+  padding:0 var(--gut) clamp(28px,4vw,58px)}
+.hr-bg{position:absolute;inset:0;z-index:0}
+.hr-bg video,.hr-bg img{width:100%;height:100%;object-fit:cover;opacity:.62}
+/* O veu foi reforcado quando o fundo virou a filmagem do Na Praia: ela tem
+   close de produto e luz de palco, bem mais clara que o showreel anterior.
+   Medido em 10 pontos ao longo dos 61s, a faixa do topo — onde ficam os
+   textos pequenos em mono — caia para 4.98:1 de contraste, no limite do
+   minimo. O ponto fraco era a barriga do degrade (era .35), nao as pontas. */
+.hr-bg::after{content:'';position:absolute;inset:0;
+  background:linear-gradient(to bottom,rgba(5,6,9,.86),rgba(5,6,9,.46) 38%,rgba(5,6,9,.92))}
+.hr-top{position:relative;z-index:2;display:grid;
+  grid-template-columns:1fr auto;gap:24px;align-items:start;
+  padding-top:clamp(96px,14vh,170px);flex:1}
+.hr-id .jp{font-size:13px;color:var(--acc);
+  display:flex;align-items:center;gap:8px;margin-bottom:14px}
+/* o ponto do template vira o simbolo da marca */
+.hr-id .jp img{height:15px;width:auto}
+.hr-id .nome{font-size:clamp(22px,2.4vw,34px);font-weight:800;letter-spacing:-.035em;
+  line-height:1.05;color:#fff;margin-bottom:16px}
+.hr-adr{font-size:13px;line-height:1.7;color:rgba(255,255,255,.58)}
+.hr-svc{text-align:right}
+.hr-svc .yr{font-size:13px;color:var(--acc);
+  margin-bottom:14px;display:block}
+.hr-svc ul{list-style:none}
+.hr-svc li{font-size:clamp(15px,1.35vw,19px);font-weight:600;color:#fff;
+  line-height:1.35;opacity:.9}
+.hr-st{position:relative;z-index:2}
+.hr-st .st-1{color:#fff}
+.hr-st .st-1 .ln{display:block;overflow:hidden}
+.hr-st .st-1 .ln>span{display:block;transform:translateY(105%)}
+.hr-st .st-1 .ln.on>span{transform:none;transition:transform 1.05s var(--Ef)}
+.hr-st .st-1 .ln:nth-child(2).on>span{transition-delay:.09s}
+.hr-st .st-1 .ln:nth-child(3).on>span{transition-delay:.18s}
+@media(max-width:760px){
+  .hr-top{grid-template-columns:1fr}
+  .hr-svc{text-align:left;margin-top:22px}
+}
+
+/* ── SERVIÇOS (lista que abre) ───────────────────────────────────────── */
+.sv{border-top:1px solid var(--line)}
+.sv-i{border-bottom:1px solid var(--line)}
+.sv-h{display:grid;grid-template-columns:auto 1fr auto;gap:clamp(14px,3vw,36px);
+  align-items:center;padding:clamp(18px,2.4vw,30px) 0;cursor:pointer;width:100%;text-align:left}
+.sv-n{font-size:13px;color:var(--acc);font-variant-numeric:tabular-nums}
+.sv-t{font-size:clamp(17px,1.8vw,26px);font-weight:700;letter-spacing:-.03em;
+  transition:color .35s var(--E)}
+.sv-i:hover .sv-t,.sv-i.aberto .sv-t{color:var(--acc)}
+.sv-p{width:26px;height:26px;position:relative;flex:0 0 auto}
+.sv-p::before,.sv-p::after{content:'';position:absolute;background:currentColor;
+  transition:transform .45s var(--Ef);top:50%;left:50%}
+.sv-p::before{width:13px;height:1.5px;transform:translate(-50%,-50%)}
+.sv-p::after{width:1.5px;height:13px;transform:translate(-50%,-50%)}
+.sv-i.aberto .sv-p::after{transform:translate(-50%,-50%) scaleY(0)}
+.sv-b{max-height:0;overflow:hidden;transition:max-height .6s var(--Ef)}
+.sv-i.aberto .sv-b{max-height:340px}
+.sv-b-in{padding:0 0 clamp(22px,3vw,34px);display:grid;
+  grid-template-columns:1fr 1fr;gap:clamp(18px,3vw,50px)}
+.sv-b-in .bd{max-width:52ch}
+.sv-tags{display:flex;flex-wrap:wrap;gap:8px;align-content:flex-start}
+.sv-tags span{font-size:12.5px;
+  border:1px solid var(--line);border-radius:8px;padding:7px 12px;color:var(--mut)}
+@media(max-width:760px){.sv-b-in{grid-template-columns:1fr}}
+
+/* ── NÚMEROS (contador de rolete) ────────────────────────────────────── */
+.nb{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(20px,3vw,48px);
+  border-top:1px solid var(--line);padding-top:clamp(30px,4vw,56px)}
+.nb-i .val{display:flex;align-items:flex-end;font-weight:800;
+  font-size:clamp(30px,4.2vw,60px);letter-spacing:-.05em;line-height:.9}
+.rol{display:inline-block;height:1em;overflow:hidden;vertical-align:bottom}
+.rol i{display:block;font-style:normal;transition:transform 1.4s var(--Ef)}
+.nb-i .suf{color:var(--acc)}
+.nb-i .k{font-size:14px;font-weight:600;
+  color:var(--mut);margin-top:14px;display:block}
+.nb-i .d{margin-top:10px;font-size:14.5px;color:var(--mut);line-height:1.6;max-width:34ch}
+@media(max-width:900px){.nb{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:520px){.nb{grid-template-columns:1fr}}
+
+
+/* ── PROCESSO (numerado com prazo) ───────────────────────────────────── */
+.pc{border-top:1px solid var(--line)}
+.pc-i{display:grid;grid-template-columns:auto 1.1fr 1fr auto;
+  gap:clamp(14px,2.6vw,40px);align-items:start;
+  padding:clamp(20px,2.8vw,38px) 0;border-bottom:1px solid var(--line);
+  --lit:0}
+.pc-n{font-size:13px;color:var(--acc);font-variant-numeric:tabular-nums}
+.pc-t{font-size:clamp(17px,1.55vw,22px);font-weight:700;letter-spacing:-.025em;
+  opacity:calc(.4 + .6*var(--lit));transition:opacity .1s linear}
+.pc-d{font-size:15px;color:var(--mut);line-height:1.65;
+  opacity:calc(.35 + .65*var(--lit));transition:opacity .1s linear}
+.pc-p{font-size:12.5px;
+  color:var(--mut);white-space:nowrap;text-align:right}
+.pc-p b{display:block;color:var(--ink);font-weight:400;margin-top:5px}
+@media(max-width:860px){
+  .pc-i{grid-template-columns:auto 1fr;row-gap:8px}
+  .pc-d{grid-column:2}.pc-p{grid-column:2;text-align:left}
+}
+
+/* ── EQUIPE ─────────────────────────────────────────────────────────── */
+.tm{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(10px,1.6vw,22px)}
+.tm figure{position:relative;aspect-ratio:3/4;border-radius:8px;overflow:hidden;
+  background:var(--soft)}
+/* 12% de folga acima e abaixo contra os 10% de translacao do data-px:
+   sem isso, no fim do percurso a escala volta a 1.0, a translacao segue e
+   a moldura fica exposta (medido: ate 43px de fundo a mostra). */
+.tm img{position:absolute;left:0;top:-12%;width:100%;height:124%;
+  object-fit:cover;transition:transform 1s var(--Ef)}
+.tm figure:hover img{transform:scale(1.05)}
+@media(max-width:860px){.tm{grid-template-columns:repeat(2,1fr)}}
+
+/* ── FAQ ────────────────────────────────────────────────────────────── */
+.fq{border-top:1px solid var(--line);max-width:900px}
+.fq-i{border-bottom:1px solid var(--line)}
+.fq-h{display:flex;justify-content:space-between;align-items:center;gap:20px;
+  width:100%;text-align:left;padding:clamp(16px,2.2vw,26px) 0;cursor:pointer}
+.fq-q{font-size:clamp(15px,1.2vw,17px);font-weight:600;letter-spacing:-.015em}
+.fq-i.aberto .fq-q{color:var(--acc)}
+.fq-b{max-height:0;overflow:hidden;transition:max-height .55s var(--Ef)}
+.fq-i.aberto .fq-b{max-height:260px}
+.fq-b p{padding-bottom:clamp(16px,2.2vw,26px);color:var(--mut);
+  font-size:15.5px;line-height:1.7;max-width:62ch}
+
+/* ── CTA ────────────────────────────────────────────────────────────── */
+.ct{text-align:center}
+.ct .st-2{margin:clamp(16px,2vw,26px) 0 clamp(24px,3vw,40px)}
+.btn{display:inline-flex;align-items:center;gap:10px;border-radius:8px;
+  padding:15px 28px;font-size:14px;font-weight:600;transition:all .35s var(--E)}
+.btn-a{background:var(--acc);color:#000;font-weight:700}
+.btn-a:hover{background:var(--ink);color:#000}
+.btn-o{border:1px solid var(--line);color:var(--ink)}
+.btn-o:hover{border-color:var(--ink)}
+.btns{display:flex;gap:12px;justify-content:center;flex-wrap:wrap}
+
+/* ── RODAPÉ ─────────────────────────────────────────────────────────── */
+footer{background:var(--dark);color:#fff;padding:clamp(50px,7vw,100px) var(--gut) 32px}
+.ft-g{display:grid;grid-template-columns:2fr 1fr 1fr;gap:clamp(24px,4vw,60px);
+  padding-bottom:clamp(34px,5vw,64px);border-bottom:1px solid rgba(255,255,255,.14)}
+.ft-g h4{font-size:13px;font-weight:600;
+  color:rgba(255,255,255,.45);margin-bottom:14px;font-weight:400}
+.ft-g a{display:block;font-size:14px;padding:5px 0;opacity:.82}
+.ft-g a:hover{opacity:1;color:var(--acc)}
+.ft-b{display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  padding-top:22px;font-size:13px;color:rgba(255,255,255,.45)}
+@media(max-width:760px){.ft-g{grid-template-columns:1fr}}
+
+/* ── REVELAÇÕES ─────────────────────────────────────────────────────── */
+/* Decididas por GEOMETRIA no laco, nunca por IntersectionObserver: um
+   observer que nao entrega o callback deixaria o conteudo escondido para
+   sempre. Aqui, se esta na tela, aparece. */
+[data-r]{opacity:0;will-change:transform,opacity;
+  transition:opacity .9s var(--Ef),transform 1.05s var(--Ef)}
+[data-r="up"]{transform:translateY(28px)}
+[data-r="l"]{transform:translateX(-70px)}
+[data-r="r"]{transform:translateX(70px)}
+/* variante FORTE para as linhas de lista (servicos, FAQ, processo):
+   entram de longe, giradas em 3D, e se endireitam ao assentar. O giro so
+   aparece porque o container tem perspective — sem ele, rotateY seria
+   uma deformacao chapada. */
+.sv,.fq,.pc{perspective:1400px;perspective-origin:50% 50%}
+[data-r="lx"],[data-r="rx"]{transform-origin:50% 50%}
+[data-r="lx"]{transform:translateX(-38vw) rotateY(-22deg) scale(.9)}
+[data-r="rx"]{transform:translateX(38vw) rotateY(22deg) scale(.9)}
+[data-r="lx"],[data-r="rx"]{transition:opacity .8s var(--Ef),transform 1.15s var(--Ef)}
+@media(max-width:760px){
+  /* no celular 38vw ja e a tela quase toda: encurta para nao virar salto */
+  [data-r="lx"]{transform:translateX(-22vw) rotateY(-16deg) scale(.93)}
+  [data-r="rx"]{transform:translateX(22vw) rotateY(16deg) scale(.93)}
+}
+[data-r="z"]{transform:scale(1.1)}
+[data-r].on{opacity:1;transform:none}
+[data-d="1"]{transition-delay:.09s}
+[data-d="2"]{transition-delay:.18s}
+[data-d="3"]{transition-delay:.27s}
+[data-d="4"]{transition-delay:.36s}
+[data-d="5"]{transition-delay:.45s}
+/* zoom continuo: o valor acompanha o scroll, nao um relogio */
+[data-sc]{will-change:transform}
+
+/* ██████ EFEITOS ADICIONAIS ███████████████████████████████████████████
+   Quatro tecnicas identificadas na referencia por evidencia ESTRUTURAL
+   (nao por assistir ao movimento, que o navegador nao me deixa ver):
+   o texto de acessibilidade anuncia "3D Carousel — item 1 of 6, use
+   arrow keys" e "Progress Bar"; ha textos duplicados (assinatura de fita
+   corrida), 3 trilhos horizontais e 2 elementos presos.
+   ────────────────────────────────────────────────────────────────────── */
+
+/* (1) BARRA DE PROGRESSO DE LEITURA */
+#prog{position:fixed;top:0;left:0;height:2px;width:100%;z-index:950;
+  background:transparent;pointer-events:none}
+#prog i{display:block;height:100%;width:0;background:var(--acc);
+  box-shadow:0 0 12px rgba(107,240,25,.5)}
+
+/* (3) FITA TIPOGRAFICA — CONDUZIDA PELO SCROLL
+   Sem animacao em laco: o deslocamento vem da posicao da pagina, entao a
+   faixa anda enquanto voce desce e PARA quando voce para. Era o laco
+   infinito que dava o ar de template — movimento perpetuo que ninguem
+   pediu e que nao responde a nada.
+   O separador tambem mudou: era um ✦, glifo de template. Agora e o mesmo
+   quadradinho verde que a legenda dos projetos ja usa. */
+/* A fita e uma EMENDA entre o hero e o Sobre, entao precisa do mesmo ar
+   dos dois lados. Estava com 0px acima e 144px abaixo (medido): colada na
+   base do hero, lia como rodape dele em vez de respiro entre as secoes.
+   O mesmo token vai na margem de cima e no padding do Sobre logo abaixo,
+   entao os dois lados nao tem como divergir depois. */
+.tk{overflow:hidden;border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);padding:clamp(14px,2vw,26px) 0;
+  margin-top:var(--tkAr)}
+.tk + #sobre{padding-top:var(--tkAr)}
+.tk-i{display:flex;width:max-content;will-change:transform}
+.tk-i span{display:inline-flex;align-items:center;gap:clamp(20px,2.8vw,44px);
+  padding-right:clamp(20px,2.8vw,44px);white-space:nowrap;
+  font-weight:800;text-transform:uppercase;letter-spacing:-.04em;
+  font-size:clamp(18px,2.4vw,34px)}
+/* O separador e um SINAL DE MAIS: SOMA e soma, entao o simbolo da adicao
+   diz o nome da empresa a cada palavra. Deixa de ser enfeite e passa a
+   significar — o contrario do ✦ generico que estava aqui.
+   Desenhado em CSS, nao com o glifo "+" da fonte: no peso 800 ele sai
+   grosso demais e sentado na linha de base, em vez de centrado entre as
+   palavras. Assim eu controlo espessura e centro. */
+/* O sinal tem BRACOS AFILADOS, nao duas barras retas: as laterais sao
+   curvas concavas puxadas para o centro, entao ele le como simbolo
+   desenhado e nao como cruz de gabarito. Continua sendo um mais — os
+   eixos vertical e horizontal estao la —, so que com forma propria.
+   Feito por mask e nao por background: assim a cor continua saindo de
+   var(--acc) e acompanha a marca se ela mudar. */
+
+.tk-i em{font-style:normal;flex:0 0 auto;
+  width:.42em;height:.42em;background:var(--acc);
+  transform:translateY(-.04em);
+  -webkit-mask:var(--sinal) center/contain no-repeat;
+          mask:var(--sinal) center/contain no-repeat}
+
+/* ── NO CHAO DO EVENTO ───────────────────────────────────────────────
+   PROFUNDIDADE POR VELOCIDADE, nao por travamento. A secao tem a altura
+   de uma tela e rola normalmente; o que cria a camada de fundo e a foto
+   andar MAIS DEVAGAR que a pagina enquanto o texto anda mais rapido. Dois
+   planos com velocidades diferentes = profundidade. (A versao anterior
+   prendia a secao na tela; o efeito era outro e nao era o desejado.)
+
+   A foto e 150% da altura da moldura e comeca 25% acima: essa folga e o
+   que o deslize consome. Tem de ser MAIOR que o curso (20%), senao a
+   borda aparece — foi exatamente o erro que a foto do Sobre cometeu.
+
+   A COR entra conforme a secao toma a tela: preto e branco quando esta
+   entrando, colorida quando enche o quadro. Quem calcula e o laco de
+   scroll, escrevendo --cor de 0 a 1. */
+/* Um pouco mais alta que a tela DE PROPOSITO: com exatamente 100svh a
+   ocupacao so chega a 1 num instante e a cor cheia virava um piscar. Com
+   125svh sobra um patamar em que a secao enche o quadro e a cor vive. Nao
+   e trava: a secao continua rolando junto com a pagina. */
+#raiz{position:relative;height:125svh;min-height:620px;background:#000;
+  overflow:hidden}
+.rz-janela{position:relative;height:100%;overflow:hidden}
+.rz-foto{position:absolute;left:0;top:-25%;width:100%;height:150%;
+  object-fit:cover;object-position:center 60%;
+  /* --cor vai de 0 (cinza) a 1 (cor cheia) */
+  filter:grayscale(calc(1 - var(--cor,0))) contrast(calc(1 + var(--cor,0)*.06))
+         saturate(calc(.9 + var(--cor,0)*.35));
+  will-change:filter,transform}
+/* o veu segue o texto: pesado embaixo a esquerda, leve em cima a direita,
+   onde ficam os rostos e o palco que a gente quer ver */
+/* Dois gradientes EMPILHAM: onde os dois sao fortes as opacidades se
+   somam. A primeira versao dava .9 e .72 no canto do texto, ou seja ~97%
+   de preto — a foto sumia. Agora cada um cobre uma funcao e eles quase nao
+   se cruzam: o de baixo assenta o texto, o da esquerda so encosta. */
+.rz-veu{position:absolute;inset:0;
+  background:linear-gradient(to top,rgba(4,5,7,.84) 0%,rgba(4,5,7,.34) 40%,
+             rgba(4,5,7,0) 74%),
+             linear-gradient(to right,rgba(4,5,7,.5) 0%,rgba(4,5,7,0) 58%)}
+/* DUAS VOZES, nao um bloco centralizado.
+   Todas as outras secoes do site abrem igual: declaracao grande, centrada
+   ou a esquerda, corpo pequeno embaixo. Aqui a frase se parte em dois
+   registros que conversam — a afirmacao em caixa alta e, recuada e em
+   caixa baixa, a explicacao. E o recuo da segunda que quebra a simetria.
+
+   Fica na base a esquerda e nao no centro: assim os rostos e o palco no
+   alto do quadro continuam visiveis, em vez de servirem de fundo tapado. */
+/* Ancorado no MEIO da secao, nao na base dela: a secao tem 125svh e, quando
+   ela enche a tela, a faixa visivel o tempo todo e a do meio. O -50% entra
+   no transform escrito pelo JS, senao o parallax apagaria a centragem.
+
+   NADA DE ch NA LARGURA. A unidade ch resolve no tipo HERDADO deste
+   elemento (16px), nao nos 62px do display que vive dentro dele: com
+   "19ch" o bloco travava em 222px tendo 956px disponiveis, e a frase se
+   partia em "NINGUEM / DIRIGE / DE / LONGE". A medida vem de vw com teto
+   em px. */
+.rz-txt{position:absolute;left:var(--gut);right:var(--gut);
+  top:57%;z-index:2;will-change:transform;text-align:center;
+  max-width:min(62vw,980px);margin:0 auto}
+.rz-a{font-weight:800;text-transform:uppercase;letter-spacing:-.042em;
+  line-height:.98;color:#fff;font-size:clamp(26px,3.5vw,50px);
+  text-shadow:0 2px 44px rgba(0,0,0,.5)}
+.rz-a span{display:block}
+
+/* ── REVELACAO EM FATIAS (KineticTextMotion) ─────────────────────────
+   A frase e cortada em 40 tiras verticais e cada tira abre o proprio
+   scaleX de 0 a 1, escalonada de 0.01s em 0.01s. E o desenho do modulo
+   de referencia: la cada palavra vira textura no Three.js e e dividida
+   em 40 secoes cujo x anima de 0 a 1, com power3.inOut em 0.8s.
+
+   Aqui nao ha Three.js: cada tira e uma COPIA do texto recortada por
+   clip-path na sua coluna, com transform-origin no centro dessa coluna —
+   por isso ela abre no lugar em vez de deslizar. A copia legivel continua
+   no DOM (invisivel, mas lida por leitor de tela); as 40 sao aria-hidden.
+
+   O original repete em laco infinito trocando de palavra. Aqui dispara
+   UMA vez, quando a secao entra — laco perpetuo foi justamente o que
+   tiramos do resto do site. */
+.fatiado{position:relative;display:block}
+.fatiado>.base{opacity:0;display:block}
+.fatiado>i{position:absolute;left:0;top:0;width:100%;font-style:normal;
+  transform-origin:0% center;   /* pivo na borda esquerda: tOffsetX -1 */
+  transform:scaleX(0);
+  transition:transform .8s cubic-bezier(.76,0,.24,1);
+  transition-delay:calc(var(--i) * .01s)}
+.fatiado.fatias-on>i{transform:scaleX(1)}
+/* TERMINOU: devolve o texto inteiro e apaga as 40 copias. Empilhar 40
+   recortes deixa fios finos nas emendas por arredondamento de subpixel —
+   'as letras ficam repartidas'. As fatias sao so o veiculo da entrada;
+   passada a entrada, quem fica na tela e o texto de verdade, sem emenda. */
+.fatiado.fatias-fim>.base{opacity:1}
+.fatiado.fatias-fim>i{opacity:0}
+.rz-b{margin:clamp(18px,2.4vw,32px) auto 0;
+  font-size:clamp(14px,1.2vw,17px);font-weight:500;line-height:1.55;
+  color:rgba(255,255,255,.82);max-width:44ch}
+.rz-b em{font-style:normal;color:var(--acc)}
+/* so o paragrafo usa o fade do --txt; a afirmacao tem a propria revelacao */
+.rz-b{opacity:var(--txt,0);
+  transform:translateY(calc((1 - var(--txt,0)) * 20px))}
+
+@media(max-width:760px){
+  .rz-txt{max-width:none;top:56%}
+}
+@media(max-width:760px){
+  .rz-foto{object-position:center 56%}
+}
+
+/* (4) SECAO PRESA: o showreel fica fixo e cresce enquanto voce passa */
+/* ── SHOWREEL: o video dentro da palavra ─────────────────────────────
+   O video ocupa a tela inteira e por cima vem uma camada opaca com
+   "SHOWREEL" recortado nela — entao so se ve o filme por dentro das
+   letras. Descendo, a palavra AMPLIA ate a letra virar a tela e a camada
+   sair de cena: o video fica cheio.
+
+   A mascara e o retangulo que a usa sao MUITO maiores que a tela
+   (7000x7000 em coordenadas do viewBox). Sem essa folga, ao ampliar a
+   palavra a borda do retangulo apareceria e a tapa deixaria de tapar. */
+.sr-janela{position:absolute;inset:0;overflow:hidden;background:#000}
+.sr-video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.sr-tapa{position:absolute;inset:0;width:100%;height:100%;
+  pointer-events:none;will-change:transform}
+#srLetra{font-family:var(--FD);font-weight:800;font-size:172px;
+  letter-spacing:-6px;fill:#000}
+.sr-leg{position:absolute;left:0;right:0;bottom:clamp(24px,5vh,54px);
+  text-align:center;z-index:2;font-size:13px;color:rgba(255,255,255,.62);
+  pointer-events:none;transition:opacity .4s var(--E)}
+@media(max-width:820px){
+  /* 158, nao 118: com 118 a palavra ocupava 242px de 375 (65% da tela)
+     contra 93% no desktop — pouca letra, pouco video aparecendo dentro. */
+  #srLetra{font-size:158px;letter-spacing:-5px}
+}
+
+/* 260svh dao 160svh de percurso preso (~1370px). Com os 190svh antigos
+   sobravam 774px: o zoom inteiro cabia em menos de uma tela de rolagem e
+   passava como um piscar. */
+.pin-tr{position:relative;height:260svh}
+.pin-st{position:sticky;top:0;height:100svh;padding:0}
+@media(max-width:820px){
+  /* O pin CONTINUA no celular. Ele estava desligado aqui (height:auto),
+     regra que servia ao showreel antigo — um cartao de video que nao
+     precisava de percurso. Com o zoom na palavra, desligar colapsava a
+     secao para 152px e o efeito simplesmente nao acontecia.
+     Percurso menor que no desktop: dedo rola mais rapido que roda. */
+  .pin-tr{height:210svh}
+}
+
+/* botao magnetico: segue o cursor de leve */
+.mag{will-change:transform}
+
+/* Lenis */
+html.lenis,html.lenis body{height:auto}
+html.lenis{scroll-behavior:auto!important}
+.lenis.lenis-stopped{overflow:hidden}
+
+/* ══════ CELULAR: TRILHOS QUE ARRASTAM PARA O LADO ══════════════════════
+   Medido no iPhone (375x812): o Processo ocupava 1.41 tela empilhado, os
+   Numeros 1.09 e a Equipe 0.88 — o visitante rolava por cima de tudo. Aqui
+   os tres viram trilhos horizontais.
+
+   Fica NO FIM da folha de proposito: precisa vencer as regras de grade que
+   vieram antes (.tm em 860px, .nb em 520px, .pc-i em 860px).
+
+   O margin negativo somado ao padding faz o trilho sangrar ate a borda da
+   tela: o cartao cortado na lateral e o que avisa, sem escrever nada, que
+   ha mais coisa ao lado. */
+@media(max-width:820px){
+  .pc,.tm,.nb{display:flex;flex-wrap:nowrap;
+    overflow-x:auto;overflow-y:hidden;
+    scroll-snap-type:x proximity;scroll-padding-left:var(--gut);
+    gap:12px;
+    margin-left:calc(var(--gut) * -1);margin-right:calc(var(--gut) * -1);
+    padding-left:var(--gut);padding-right:var(--gut);
+    -webkit-overflow-scrolling:touch;scrollbar-width:none;
+    overscroll-behavior-x:contain}
+  .pc::-webkit-scrollbar,.tm::-webkit-scrollbar,.nb::-webkit-scrollbar{width:0;height:0}
+  .pc>*,.tm>*,.nb>*{flex:0 0 auto;scroll-snap-align:start}
+
+  .pc-i{width:80vw;border-bottom:0;border:1px solid var(--line);
+    border-radius:10px;padding:18px}
+  .tm figure{width:60vw}
+  .nb-i{width:64vw}
+
+  /* Dentro de um trilho a entrada NAO pode empurrar para os lados: os
+     -22vw do data-r alargariam o proprio trilho e deslocariam o encaixe.
+     Sobra o esmaecer, que basta. */
+  .pc-i[data-r],.tm figure[data-r],.nb-i[data-r]{transform:none}
+
+  /* ALVOS DE TOQUE: medidos 18 abaixo de 44px, o minimo recomendado.
+     Uso padding em vez de altura para nao mexer no desenho. */
+  #menu a{padding:11px 0}
+  #menu .x{padding:11px 14px;margin:-11px -14px}
+  .nv-b{width:44px;height:44px}
+  .nv-logo{padding:12px 0}
+  .ft-g a{padding:11px 0}
+  .pj-x{padding:11px 14px;margin:-11px -14px}
+  .dv-ig{padding-top:7px;padding-bottom:13px}
+}
+</style>
+</head>
+<body>
+
+<div id="prog"><i></i></div>
+
+<nav id="nav">
+  <a href="#" class="nv-logo" aria-label="SOMA Produtora"><img src="logotipo.png" alt="SOMA Produtora" fetchpriority="high" width="1031" height="362"></a>
+  <div class="nv-l">
+    <a href="#sobre">Sobre</a>
+    <a href="#servicos">Serviços</a>
+    <a href="#projetos">Projetos</a>
+    <a href="#processo">Processo</a>
+    <a href="#equipe">Equipe</a>
+    <a href="#contato">Contato</a>
+  </div>
+  <button class="nv-b" id="navB" aria-label="Abrir menu"><span></span><span></span></button>
+</nav>
+<div id="menu">
+  <img src="logomarca.png" alt="" aria-hidden="true" style="height:40px;width:auto;margin-bottom:26px" width="592" height="549">
+  <button class="x" id="menuX">Fechar</button>
+  <a href="#sobre">Sobre</a><a href="#servicos">Serviços</a><a href="#projetos">Projetos</a>
+  <a href="#processo">Processo</a><a href="#equipe">Equipe</a><a href="#contato">Contato</a>
+</div>
+
+<!-- ══════ HERO ══════ -->
+<section id="hero">
+  <div class="hr-bg">
+    <!-- servido do proprio site, nao do R2: 61s codificados a 1100px de
+         largura (o fundo fica a 62% de opacidade sob um degrade, entao
+         resolucao cheia seria banda jogada fora) e sem trilha de audio,
+         que num hero mudo e peso morto. -->
+    <video id="heroVid" muted loop playsinline preload="auto"
+      poster="hero-napraia-poster.webp"
+      data-src="hero-napraia.mp4" data-src-m="hero-napraia-m.mp4"></video>
+  </div>
+  <!-- abertura: a camada queima e revela o hero (shader) -->
+  <canvas id="burn" aria-hidden="true"></canvas>
+  <script type="x-shader/x-fragment" id="fragQueima">
+precision highp float;
+uniform vec2 uRes;
+uniform float uT;                          /* 0 -> 1 ao longo dos 2s      */
+uniform float uBurn,uDens,uDist,uSoft,uDisp;
+uniform vec3 uMask;
+
+float hash(vec2 p){return fract(sin(dot(p,vec2(127.1,311.7)))*43758.5453);}
+float nz(vec2 p){
+  vec2 i=floor(p),f=fract(p); f=f*f*(3.-2.*f);
+  return mix(mix(hash(i),        hash(i+vec2(1,0)),f.x),
+             mix(hash(i+vec2(0,1)),hash(i+vec2(1,1)),f.x),f.y);
+}
+/* 3 oitavas, nao 4: a quarta so acrescenta filigrana e a mascara vira
+   fumaca. O original e tinta grossa — poucas massas, grandes e moles. */
+float fbm(vec2 p){float v=0.,a=.5;for(int i=0;i<3;i++){v+=a*nz(p);p*=2.07;a*=.5;}return v;}
+
+void main(){
+  vec2 uv=gl_FragCoord.xy/uRes;
+  vec2 ar=vec2(uRes.x/uRes.y,1.0);        /* sem isto as massas esticam */
+
+  /* DENSIDADE: escala baixa de proposito. As massas do original sao
+     grandes e moles; ruido fino viraria fumaca, nao tinta. */
+  vec2 q=uv*ar*(1.15+uDens*2.6);
+
+  /* DISTORCAO: o campo deforma a si mesmo. O deslocamento e CENTRADO em
+     zero — sem o -0.5 vira quase so um empurrao fixo e as formas saem
+     redondas em vez de linguas com bracos finos. */
+  vec2 w=vec2(fbm(q+vec2(1.7,9.2)),fbm(q+vec2(5.2,1.3)))-0.5;
+  float base=fbm(q+uDist*4.0*w);
+  base=(base-0.5)*2.05+0.5;               /* contraste: quebra em ilhas  */
+
+  /* DISPERSAO: camada fina que so empurra o campo localmente. Onde ela
+     sobe o bastante longe da massa, nasce um pingo solto. */
+  float fino=fbm(q*3.1+vec2(11.0,3.0));
+
+  /* Vies de borda: a mascara resiste mais nas laterais. Precisa ser uma
+     rampa LARGA e fraca. Quando era estreita (0.10->0.56) e pesada, virava
+     um muro: centro 0.17-0.64 contra borda 0.54-1.44, quase sem sobrepor,
+     e a mascara abria como uma iris redonda. Larga e fraca, o ruido passa
+     por cima dela e sobram bracos pretos no meio e furos na borda. */
+  float d=length((uv-0.5)*ar*vec2(1.0,1.12));
+  float borda=smoothstep(0.02,0.74,d);
+
+  /* QUEIMA: quanto o ruido manda na forma. Em 0 sobra so a vinheta (iris);
+     em 1 a mascara se parte toda. 0.7 e o valor do original. */
+  float campo=base*(0.35+uBurn*0.85)+borda*0.52
+             +(fino-0.5)*0.34*uDisp;
+
+  float t=mix(-0.02,1.62,uT);             /* limiar sobe: cobre -> limpa */
+
+  /* SUAVIDADE alta = rampa larga. E daqui que vem o ar de borrado do
+     original: nao ha blur nenhum, a transicao e que e longa. */
+  float s=0.03+uSoft*0.30;
+
+  float a=clamp(smoothstep(t-s,t+s,campo),0.0,1.0);
+  gl_FragColor=vec4(uMask*a,a);           /* alfa premultiplicado */
+}
+  </script>
+  <div class="hr-top">
+    <div class="hr-id">
+      <div class="jp"><img class="mk" src="logomarca.png" alt="" aria-hidden="true" width="592" height="549">Produtora Criativa</div>
+      <div class="hr-adr">Brasília — DF</div>
+    </div>
+    <div class="hr-svc">
+      <span class="yr">EST. 2019</span>
+      <ul>
+        <li>Audiovisual</li><li>Tráfego</li><li>Social</li><li>Web</li>
+      </ul>
+    </div>
+  </div>
+  <div class="hr-st">
+    <h1 class="st st-1">
+      <span class="ln"><span>Marcas que</span></span>
+      <span class="ln"><span>não passam</span></span>
+      <span class="ln"><span class="acc">despercebidas</span></span>
+    </h1>
+  </div>
+</section>
+
+<!-- ══════ FITA ══════ -->
+<div class="tk" aria-hidden="true">
+  <div class="tk-i">
+    <span>Aftermovie <em></em> Videoclipe <em></em> Branded Content <em></em> Campanha 360° <em></em> Direção Criativa <em></em></span>
+    <span>Aftermovie <em></em> Videoclipe <em></em> Branded Content <em></em> Campanha 360° <em></em> Direção Criativa <em></em></span>
+  </div>
+</div>
+
+<!-- ══════ SOBRE ══════ -->
+<section class="sec wrap soft" id="sobre">
+  <div class="sb">
+    <div class="sb-txt" data-px="-40">
+      <p class="fala" data-r="up">
+        A SOMA nasceu cobrindo evento em Brasília, em 2019. O que separa a gente
+        até hoje é simples: quem grava aqui é <span class="rsc" data-rsc="onda">a mesma
+        equipe</span> que cuida do tráfego, do social e do site onde o filme vai
+        parar.
+      </p>
+      <p class="fala" data-r="up" data-d="1">
+        Vídeo bonito que morre num feed sem estratégia não serve para nada. E
+        estratégia certa com material que não segura o olho <span class="rsc"
+        data-rsc="risco">nos primeiros três segundos</span> também não.
+      </p>
+      <p class="fala" data-r="up" data-d="2">
+        A gente trata as duas pontas como uma coisa só. É por isso que o
+        resultado aparece <span class="rsc" data-rsc="circulo">fora da tela</span>.
+      </p>
+      <p class="assina" data-r="up" data-d="3">
+        <span>Brasília — DF</span>
+        <span>Crafting stories · Capturing moments</span>
+      </p>
+    </div>
+
+    <figure class="sb-fig" data-r="r" data-d="1">
+      <div class="sb-moldura" data-px="66">
+        <img data-sc="pan" src="sobre-soma.webp"
+             srcset="sobre-soma-m.webp 640w, sobre-soma.webp 1100w"
+             sizes="(max-width:820px) 92vw, 34vw"
+             alt="Equipe da SOMA em serviço durante evento à noite, de camiseta e credencial"
+             loading="lazy" decoding="async" width="1100" height="1650">
+      </div>
+    </figure>
+  </div>
+</section>
+
+<div class="morf" data-cima="#0D0F13" data-baixo="#050609" aria-hidden="true"></div>
+<!-- ══════ SERVIÇOS ══════ -->
+<section class="sec wrap" id="servicos">
+  <div class="sh" data-r="up">
+    <span class="sub">Transformando ideias em forma.</span>
+  </div>
+  <p class="st st-2" data-r="up" data-d="1" style="max-width:16ch;margin-bottom:clamp(34px,5vw,64px)">
+    Construímos marcas. <span class="acc">E damos a elas onde viver.</span></p>
+  <div class="sv" id="svList">
+    <div class="sv-i" data-r="lx">
+      <button class="sv-h"><span class="sv-n">01</span><span class="sv-t">Audiovisual</span><span class="sv-p"></span></button>
+      <div class="sv-b"><div class="sv-b-in">
+        <p class="bd">Filmes institucionais, comerciais, VSLs e conteúdo de marca com padrão de cinema — da direção ao frame final.</p>
+        <div class="sv-tags"><span>Direção</span><span>Aftermovie</span><span>Videoclipe</span><span>Brand Content</span><span>Pós-produção</span></div>
+      </div></div>
+    </div>
+    <div class="sv-i" data-r="rx" data-d="1">
+      <button class="sv-h"><span class="sv-n">02</span><span class="sv-t">Gestão de Tráfego</span><span class="sv-p"></span></button>
+      <div class="sv-b"><div class="sv-b-in">
+        <p class="bd">Campanhas pagas em Google, Meta e TikTok com estratégia de funil e otimização orientada a retorno.</p>
+        <div class="sv-tags"><span>Meta Ads</span><span>Google Ads</span><span>TikTok</span><span>Funil</span><span>ROI</span></div>
+      </div></div>
+    </div>
+    <div class="sv-i" data-r="lx" data-d="2">
+      <button class="sv-h"><span class="sv-n">03</span><span class="sv-t">Social Media</span><span class="sv-p"></span></button>
+      <div class="sv-b"><div class="sv-b-in">
+        <p class="bd">Planejamento, conteúdo e gestão de redes com identidade forte e calendário estratégico.</p>
+        <div class="sv-tags"><span>Conteúdo</span><span>Calendário</span><span>Identidade</span><span>Gestão</span></div>
+      </div></div>
+    </div>
+    <div class="sv-i" data-r="rx" data-d="3">
+      <button class="sv-h"><span class="sv-n">04</span><span class="sv-t">Sites & Landing Pages</span><span class="sv-p"></span></button>
+      <div class="sv-b"><div class="sv-b-in">
+        <p class="bd">Sites institucionais e páginas de campanha com foco em conversão e performance.</p>
+        <div class="sv-tags"><span>Institucional</span><span>Landing</span><span>Conversão</span><span>Performance</span></div>
+      </div></div>
+    </div>
+    <div class="sv-i" data-r="lx" data-d="4">
+      <button class="sv-h"><span class="sv-n">05</span><span class="sv-t">Drone</span><span class="sv-p"></span></button>
+      <div class="sv-b"><div class="sv-b-in">
+        <p class="bd">Filmagem aérea com pilotos certificados — planos que elevam qualquer narrativa.</p>
+        <div class="sv-tags"><span>Aéreo</span><span>Certificado</span><span>4K</span></div>
+      </div></div>
+    </div>
+    <div class="sv-i" data-r="rx" data-d="5">
+      <button class="sv-h"><span class="sv-n">06</span><span class="sv-t">Fotografia</span><span class="sv-p"></span></button>
+      <div class="sv-b"><div class="sv-b-in">
+        <p class="bd">Ensaios de marca, produto e evento com direção de arte e pós apurada.</p>
+        <div class="sv-tags"><span>Marca</span><span>Produto</span><span>Evento</span><span>Editorial</span></div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ PROJETOS — galeria WebGL ══════ -->
+<section class="dark" id="projetos">
+  <div class="pjw">
+    <canvas id="pjGL"></canvas>
+
+    <div class="pj-hud">
+      <div class="pj-cta">
+        <span class="pj-num"><b id="pjNum">01</b> / <i id="pjTot">06</i></span>
+        <span class="pj-cat"><em></em><span id="pjCat">Evento</span></span>
+      </div>
+      <h3 class="pj-tit" id="pjTit">EXPOMIX</h3>
+      <p class="pj-des" id="pjDes">Aftermovie do maior encontro de food trucks do Centro-Oeste.</p>
+    </div>
+
+    <div class="pj-ctr">
+      <button class="pj-b" id="pjPrev" aria-label="Projeto anterior">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M15 5l-7 7 7 7"/></svg></button>
+      <button class="pj-b" id="pjNext" aria-label="Proximo projeto">
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="1.6">
+          <path d="M9 5l7 7-7 7"/></svg></button>
+    </div>
+
+  </div>
+
+  <!-- o video toca aqui, em DOM. Ver a nota de CORS no modulo. -->
+  <div class="pj-lb" id="pjLb" aria-hidden="true">
+    <button class="pj-x" id="pjX" aria-label="Fechar">fechar</button>
+    <video id="pjVid" controls playsinline preload="none"></video>
+  </div>
+</section>
+
+<!-- ══════ CLIENTES ══════ -->
+<section class="sec wrap" id="clientes">
+  <div class="sh" data-r="up">
+    <span class="sub">Marcas que já sentaram do nosso lado.</span>
+  </div>
+  <ul class="cli" id="cliGrade">
+      <li style="--n:0"><img src="cli-arena.webp" alt="Arena Mané Garrincha" loading="lazy" decoding="async" width="591" height="240"></li>
+      <li style="--n:1"><img src="cli-bb.webp" alt="Banco do Brasil" loading="lazy" decoding="async" width="235" height="240"></li>
+      <li style="--n:2"><img src="cli-globo.webp" alt="Globo" loading="lazy" decoding="async" width="285" height="240"></li>
+      <li style="--n:3"><img src="cli-record.webp" alt="Record" loading="lazy" decoding="async" width="135" height="240"></li>
+      <li style="--n:4"><img src="cli-redbull.webp" alt="Red Bull" loading="lazy" decoding="async" width="513" height="240"></li>
+      <li style="--n:5"><img src="cli-cbf.webp" alt="CBF" loading="lazy" decoding="async" width="145" height="240"></li>
+      <li style="--n:6"><img src="cli-chivas.webp" alt="Chivas" loading="lazy" decoding="async" width="1156" height="240"></li>
+      <li style="--n:7"><img src="cli-chandon.webp" alt="Moët &amp; Chandon" loading="lazy" decoding="async" width="365" height="159"></li>
+      <li style="--n:8"><img src="cli-napraia.webp" alt="Na Praia" loading="lazy" decoding="async" width="272" height="240"></li>
+      <li style="--n:9"><img src="cli-expomix.webp" alt="Expomix" loading="lazy" decoding="async" width="227" height="103"></li>
+      <li style="--n:10"><img src="cli-hungria.webp" alt="Quintal do Hungria" loading="lazy" decoding="async" width="386" height="240"></li>
+      <li style="--n:11"><img src="cli-fome.webp" alt="Fome de Música" loading="lazy" decoding="async" width="501" height="240"></li>
+      <li style="--n:12"><img src="cli-batenopeito.webp" alt="Bate no Peito" loading="lazy" decoding="async" width="173" height="240"></li>
+      <li style="--n:13"><img src="cli-historias.webp" alt="Histórias" loading="lazy" decoding="async" width="427" height="240"></li>
+      <li style="--n:14"><img src="cli-r2.webp" alt="R2" loading="lazy" decoding="async" width="230" height="240"></li>
+  </ul>
+</section>
+
+<div class="morf" data-cima="#050609" data-baixo="#0D0F13" aria-hidden="true"></div>
+<!-- ══════ NÚMEROS ══════ -->
+<section class="sec wrap soft" id="numeros">
+  <div class="sh" data-r="up">
+    <span class="sub">O trabalho fala por nós.</span>
+  </div>
+  <p class="st st-2" data-r="up" data-d="1" style="max-width:17ch;margin-bottom:clamp(30px,4vw,56px)">
+    Menos projetos. <span class="acc">Atenção inteira em cada um.</span></p>
+  <div class="nb" id="numBlk">
+    <div class="nb-i"><div class="val"><span class="rol" data-t="200"></span><span class="suf">+</span></div>
+      <span class="k">Projetos entregues</span>
+      <p class="d">Cada entrega passa pela mesma régua, do aftermovie ao filme institucional.</p></div>
+    <div class="nb-i"><div class="val"><span class="rol" data-t="80"></span><span class="suf">+</span></div>
+      <span class="k">Marcas atendidas</span>
+      <p class="d">Nem toda conversa vira projeto. As que viram partilham a mesma exigência.</p></div>
+    <div class="nb-i"><div class="val"><span class="rol" data-t="6"></span></div>
+      <span class="k">Países</span>
+      <p class="d">O pensamento atravessa contextos. O que muda é o cenário, não o padrão.</p></div>
+    <div class="nb-i"><div class="val"><span class="rol" data-t="5"></span></div>
+      <span class="k">Anos de mercado</span>
+      <p class="d">Tempo suficiente para saber o que funciona — e curto para não acomodar.</p></div>
+  </div>
+</section>
+
+<!-- ══════ NO CHAO DO EVENTO — janela para o fundo do site ══════ -->
+<section id="raiz">
+  <div class="rz-janela">
+    <img class="rz-foto" src="raiz-equipe.webp"
+         srcset="raiz-equipe-m.webp 1000w, raiz-equipe.webp 1800w"
+         sizes="100vw" alt="Equipe SOMA reunida no chão do evento, durante o Expomix"
+         loading="lazy" decoding="async" width="1800" height="2700">
+    <div class="rz-veu"></div>
+    <div class="rz-txt">
+      <p class="rz-a" data-fatia><span>Ninguém dirige</span><span>de longe.</span></p>
+      <p class="rz-b">O plano a gente fecha no local,<br>
+        junto de quem vai <em>segurar a câmera</em>.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ SHOWREEL ══════ -->
+<div class="pin-tr"><section class="pin-st" id="showreel">
+  <div class="sr-janela">
+    <video id="reelVid" class="sr-video" muted loop playsinline preload="none"
+      poster="hero-reel-poster.webp"
+      data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4"></video>
+
+    <!-- camada opaca com a palavra RECORTADA nela: o video so aparece
+         por dentro das letras. Branco na mascara = tapa, preto = furo. -->
+    <!-- meet, nao slice: slice recorta as laterais para preencher e comia
+         o S e o L de SHOWREEL nas telas largas. -->
+    <svg class="sr-tapa" viewBox="0 0 1000 320" preserveAspectRatio="xMidYMid meet"
+         aria-hidden="true">
+      <defs>
+        <mask id="mascaraShowreel" maskUnits="userSpaceOnUse"
+              x="-3000" y="-3000" width="7000" height="7000">
+          <rect x="-3000" y="-3000" width="7000" height="7000" fill="#fff"/>
+          <text id="srLetra" x="500" y="215" text-anchor="middle">SHOWREEL</text>
+        </mask>
+      </defs>
+      <rect x="-3000" y="-3000" width="7000" height="7000"
+            fill="#050609" mask="url(#mascaraShowreel)"/>
+    </svg>
+
+    <p class="sr-leg" id="srLeg">Showreel 2025 &nbsp;·&nbsp; 4K · LOG3 · 24fps</p>
+  </div>
+</section></div>
+
+
+<!-- ══════ DAVI ══════ -->
+<section class="sec wrap" id="davi">
+  <div class="dv">
+    <figure class="dv-fig" data-r="l">
+      <div class="dv-moldura" data-px="130" data-px-m="20">
+        <img data-sc="zoom" src="davi-ceo.webp"
+             srcset="davi-ceo-m.webp 640w, davi-ceo.webp 1100w"
+             sizes="(max-width:820px) 92vw, 37vw"
+             alt="Davi Bispo, CEO da SOMA Produtora"
+             loading="lazy" decoding="async" width="1100" height="1410">
+      </div>
+    </figure>
+
+    <div class="dv-txt" data-px="-120" data-px-m="-12">
+      <div class="sh" data-r="up">
+        <span class="sub">Quem senta na cadeira de diretor.</span>
+      </div>
+      <h2 class="st st-2" data-r="up" data-d="1">Davi Bispo</h2>
+      <p class="dv-cargo" data-r="up" data-d="1">CEO da SOMA</p>
+      <p class="fala dv-fala" data-r="up" data-d="2">
+        Está em <span class="rsc" data-rsc="onda">todo set que a SOMA assina</span>,
+        dirigindo de perto em vez de mandar instrução por mensagem. É o que faz o
+        material sair com a cara de quem <span class="rsc" data-rsc="circulo">estava
+        lá</span>.
+      </p>
+      <a class="dv-ig" href="https://www.instagram.com/films_davi/"
+         target="_blank" rel="noopener noreferrer" data-r="up" data-d="3">
+        <span class="dv-ig-t">@films_davi</span>
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none"
+             stroke="currentColor" stroke-width="1.7" aria-hidden="true">
+          <path d="M7 17L17 7M17 7H9M17 7v8"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ══════ PROCESSO ══════ -->
+<section class="sec wrap soft" id="processo">
+  <div class="sh" data-r="up">
+    <span class="sub">Do pensamento à forma.</span>
+  </div>
+  <p class="st st-2" data-r="up" data-d="1" style="max-width:18ch;margin-bottom:clamp(34px,5vw,64px)">
+    Não começamos com respostas. <span class="acc">Começamos com as perguntas certas.</span></p>
+  <div class="pc" id="pcList">
+    <div class="pc-i" data-r="lx"><span class="pc-n">01</span>
+      <span class="pc-t">Imersão</span>
+      <p class="pc-d">Mergulhamos na marca, na audiência e no contexto competitivo antes de qualquer decisão.</p>
+      <span class="pc-p">Prazo<b>2–3 dias</b></span></div>
+    <div class="pc-i" data-r="rx"><span class="pc-n">02</span>
+      <span class="pc-t">Conceito</span>
+      <p class="pc-d">A ideia central que vai orientar cada escolha visual — testada antes de virar design.</p>
+      <span class="pc-p">Prazo<b>3–5 dias</b></span></div>
+    <div class="pc-i" data-r="lx"><span class="pc-n">03</span>
+      <span class="pc-t">Produção</span>
+      <p class="pc-d">Câmera de cinema, equipe experiente e obsessão por detalhe do primeiro ao último take.</p>
+      <span class="pc-p">Prazo<b>1–3 semanas</b></span></div>
+    <div class="pc-i" data-r="rx"><span class="pc-n">04</span>
+      <span class="pc-t">Entrega</span>
+      <p class="pc-d">Conteúdo finalizado e otimizado por plataforma. Sai quando está pronto — não antes.</p>
+      <span class="pc-p">Prazo<b>4–8 dias</b></span></div>
+  </div>
+</section>
+
+<div class="morf" data-cima="#0D0F13" data-baixo="#050609" aria-hidden="true"></div>
+<!-- ══════ EQUIPE ══════ -->
+<section class="sec wrap" id="equipe">
+  <div class="sh" data-r="up">
+    <span class="sub">Quem você conhece é quem faz.</span>
+  </div>
+  <p class="st st-2" data-r="up" data-d="1" style="max-width:18ch;margin-bottom:clamp(30px,4vw,54px)">
+    As pessoas <span class="acc">por trás de cada projeto.</span></p>
+  <div class="tm">
+    <figure data-r="z"><img data-sc="zoom" data-px="64" src="equipe-01.webp" alt="Operador da SOMA pilotando drone em set ao entardecer" loading="lazy" width="640" height="961"></figure>
+    <figure data-r="z" data-d="1"><img data-sc="zoom" data-px="-42" src="equipe-03.webp" alt="Gravação dirigida em locação externa, com câmera em estabilizador" loading="lazy" width="640" height="960"></figure>
+    <figure data-r="z" data-d="2"><img data-sc="zoom" data-px="86" src="equipe-05.webp" alt="Câmera em punho registrando o palco durante o evento" loading="lazy" width="640" height="960"></figure>
+    <figure data-r="z" data-d="3"><img data-sc="zoom" data-px="-30" src="equipe-07.webp" alt="Integrante da SOMA nos bastidores do evento" loading="lazy" width="640" height="960"></figure>
+  </div>
+</section>
+
+<!-- ══════ FAQ ══════ -->
+<section class="sec wrap soft" id="faq">
+  <div class="sh" data-r="up">
+    <span class="sub">Respostas claras.</span>
+  </div>
+  <p class="st st-3" data-r="up" data-d="1" style="max-width:20ch;margin-bottom:clamp(28px,4vw,50px)">
+    O que você precisa saber <span class="acc">antes de começarmos.</span></p>
+  <div class="fq" id="fqList">
+    <div class="fq-i" data-r="lx"><button class="fq-h"><span class="fq-q">Quanto tempo leva um projeto?</span><span class="sv-p"></span></button>
+      <div class="fq-b"><p>Depende do escopo. Um aftermovie de evento sai em dias; uma campanha completa leva de 4 a 8 semanas. Definimos o prazo na imersão, antes de começar.</p></div></div>
+    <div class="fq-i" data-r="rx"><button class="fq-h"><span class="fq-q">Vocês atendem fora de Brasília?</span><span class="sv-p"></span></button>
+      <div class="fq-b"><p>Sim. Já produzimos em 6 países e viajamos para onde o projeto pedir. Boa parte do nosso trabalho acontece fora do DF.</p></div></div>
+    <div class="fq-i" data-r="lx"><button class="fq-h"><span class="fq-q">Só fazem vídeo?</span><span class="sv-p"></span></button>
+      <div class="fq-b"><p>Não. Audiovisual é a origem, mas entregamos também tráfego pago, social media, sites, drone e fotografia — normalmente integrados na mesma campanha.</p></div></div>
+    <div class="fq-i" data-r="rx"><button class="fq-h"><span class="fq-q">Como funciona o orçamento?</span><span class="sv-p"></span></button>
+      <div class="fq-b"><p>Cada projeto é orçado a partir do escopo definido na imersão. Sem pacote fechado antes de entender o problema.</p></div></div>
+  </div>
+</section>
+
+<!-- ══════ CTA ══════ -->
+<section class="sec wrap ct" id="contato">
+  <h2 class="st st-2" data-fatia>Sua marca já esperou<br><span class="acc">tempo suficiente.</span></h2>
+  <div class="btns" data-r="up" data-d="2">
+    <a class="btn btn-a mag" href="https://wa.me/5561985011819?text=Ol%C3%A1%2C%20vim%20pelo%20site%20da%20SOMA." target="_blank" rel="noopener">Começar um projeto</a>
+    <a class="btn btn-o mag" href="https://www.instagram.com/soma.produtora/" target="_blank" rel="noopener">@soma.produtora</a>
+  </div>
+</section>
+
+
+
+<footer>
+  <div class="ft-g">
+    <div>
+      <img src="logotipo.png" alt="SOMA Produtora" style="height:26px;width:auto;margin-bottom:16px" loading="lazy" width="1031" height="362">
+      <p class="bd" style="max-width:38ch">Produtora criativa em Brasília. Do conceito ao frame final.</p>
+    </div>
+    <div><h4>Navegação</h4>
+      <a href="#projetos">Projetos</a><a href="#servicos">Serviços</a>
+      <a href="#processo">Processo</a><a href="#equipe">Equipe</a></div>
+    <div><h4>Contato</h4>
+      <a href="mailto:contato@somaprodutora.com">contato@somaprodutora.com</a>
+      <a href="https://www.instagram.com/soma.produtora/" target="_blank" rel="noopener">Instagram</a>
+      <a href="https://wa.me/5561985011819" target="_blank" rel="noopener">WhatsApp</a></div>
+  </div>
+  <div class="ft-b"><span>© 2026 SOMA Produtora</span><span>Brasília · Brasil</span></div>
+</footer>
+
+<script src="lenis.min.js"></script>
+<script>
+(function(){
+'use strict';
+
+/* ── Lenis: scroll suave, como na referencia ───────────────────────── */
+var lenis=null;
+if(typeof Lenis!=='undefined'){
+  lenis=new Lenis({duration:1.05,smoothWheel:true,smoothTouch:false});
+  window.lenis=lenis;
+}
+
+
+/* ── ABERTURA: QUEIMA (shader) ─────────────────────────────────────────
+   Massas pretas de borda muito mole cobrem o hero e recuam, abrindo a
+   cena — o desenho do modulo Burn. A conta esta no bloco #fragQueima.
+
+   Nao ha gate por reduced-motion de proposito: no Windows do usuario o
+   sistema reporta animacoes desligadas e a abertura nao apareceria. */
+var heroLiberado=false;   /* as linhas do titulo esperam a mascara abrir */
+(function(){
+  var cv=document.getElementById('burn');
+  function desiste(){                  /* qualquer falha: hero limpo, sem preso */
+    heroLiberado=true;
+    if(cv)cv.classList.add('fim');
+  }
+  if(!cv){heroLiberado=true;return}
+  var gl=null;
+  try{gl=cv.getContext('webgl',{alpha:true,premultipliedAlpha:false,antialias:false})}catch(e){}
+  if(!gl){desiste();return}            /* sem WebGL: hero aparece direto */
+
+  var vs='attribute vec2 p;void main(){gl_Position=vec4(p,0.,1.);}';
+  var alvo=document.getElementById('fragQueima');
+  if(!alvo){desiste();return}
+  var fs=alvo.textContent;
+
+  function shader(t,src){var s=gl.createShader(t);gl.shaderSource(s,src);gl.compileShader(s);
+    if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)){return null}return s}
+  var v=shader(gl.VERTEX_SHADER,vs),f=shader(gl.FRAGMENT_SHADER,fs);
+  if(!v||!f){desiste();return}
+  var pr=gl.createProgram();gl.attachShader(pr,v);gl.attachShader(pr,f);gl.linkProgram(pr);
+  if(!gl.getProgramParameter(pr,gl.LINK_STATUS)){desiste();return}
+  gl.useProgram(pr);
+  var buf=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,buf);
+  gl.bufferData(gl.ARRAY_BUFFER,new Float32Array([-1,-1,3,-1,-1,3]),gl.STATIC_DRAW);
+  var loc=gl.getAttribLocation(pr,'p');gl.enableVertexAttribArray(loc);
+  gl.vertexAttribPointer(loc,2,gl.FLOAT,false,0,0);
+  var uRes=gl.getUniformLocation(pr,'uRes'),uT=gl.getUniformLocation(pr,'uT'),
+      uBurn=gl.getUniformLocation(pr,'uBurn'),uDens=gl.getUniformLocation(pr,'uDens'),
+      uDist=gl.getUniformLocation(pr,'uDist'),uSoft=gl.getUniformLocation(pr,'uSoft'),
+      uDisp=gl.getUniformLocation(pr,'uDisp'),
+      uMask=gl.getUniformLocation(pr,'uMask');
+  gl.enable(gl.BLEND);gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA);
+  function medir(){
+    var r=cv.getBoundingClientRect();
+    var d=Math.min(devicePixelRatio||1,2);
+    cv.width=Math.max(1,Math.round(r.width*d));
+    cv.height=Math.max(1,Math.round(r.height*d));
+    gl.viewport(0,0,cv.width,cv.height);
+  }
+  medir();addEventListener('resize',medir);
+
+  /* CONSTANTES DO ORIGINAL: queima 0.7, densidade 0.5, distorcao 0.3,
+     suavidade 0.5, dispersao 1, 2s. Mascara preta, sem borda acesa. */
+  function pinta(p){
+    gl.uniform2f(uRes,cv.width,cv.height);
+    gl.uniform1f(uT,p);
+    gl.uniform1f(uBurn,0.7);gl.uniform1f(uDens,0.5);
+    gl.uniform1f(uDist,0.3);gl.uniform1f(uSoft,0.5);gl.uniform1f(uDisp,1.0);
+    gl.uniform3f(uMask,0.008,0.010,0.014);
+    /* QUEIMA: transparente. Onde a mascara arde o alfa vai a 0 e o
+       hero aparece por baixo. Com preto opaco aqui a camada nunca
+       revela nada — a tela fica preta e some de uma vez. */
+    gl.clearColor(0,0,0,0);gl.clear(gl.COLOR_BUFFER_BIT);
+    gl.drawArrays(gl.TRIANGLES,0,3);
+  }
+  /* quadro 0 ja, antes de qualquer espera: e 100% opaco, entao substitui o
+     fundo do CSS sem brecha. So depois disso o fundo solido pode sair —
+     se saisse antes, a mascara vazaria e o hero piscaria. */
+  pinta(0);
+  cv.style.background='transparent';
+
+  var DUR=2000,t0=null,pronto=false;
+  /* espera o poster/video pintar: queimar sobre um quadro vazio nao revela nada */
+  var hv=document.getElementById('heroVid');
+  function comeca(){if(!pronto){pronto=true;t0=null;requestAnimationFrame(quadro)}}
+  if(hv&&hv.readyState>=2)comeca();
+  else{
+    if(hv)hv.addEventListener('loadeddata',comeca,{once:true});
+    setTimeout(comeca,900);   /* nao depende do video: comeca de todo jeito */
+  }
+  function quadro(ts){
+    if(t0===null)t0=ts;
+    var p=Math.min(1,(ts-t0)/DUR);
+    pinta(p);
+    /* solta o titulo quando o meio da tela ja abriu, para as linhas
+       subirem A VISTA em vez de terminarem escondidas sob a mascara */
+    if(p>0.42)heroLiberado=true;
+    if(p<1)requestAnimationFrame(quadro);
+    else cv.classList.add('fim');
+  }
+  /* rede de seguranca: se o laco travar, a camada sai e o hero aparece */
+  setTimeout(desiste,5000);
+})();
+
+
+/* ── PROJETOS: galeria WebGL ──────────────────────────────────────────
+   Reconstrucao do componente three.js da referencia, em WebGL cru.
+   As duas contas que definem o efeito vieram do modulo original:
+
+   VERTICE  — o cartao INFLA na direcao da camera ao passar o mouse:
+              bulge = smoothstep(0.8, 0.0, dist(uv,centro))
+              z += bulge * uHover * 0.4
+              mais uma ondulacao viva o tempo todo: sin(t*1.5 + y*2)*0.01
+   FRAGMENTO— as UV sao puxadas para o centro, dando o aumento de lente:
+              uv = centro + p * (1 - 0.2*uHover * (1 - length(p)))
+
+   Constantes mantidas do original: inflar 0.4, estica 0.2, plano
+   1.6x2.2, cantos 0.07 em (+-0.85, +-1.15), fila de detalhe a cada 2.6
+   com recuo 1.5, lerp 0.05, hover 0.1, camera fov 50 e limiar de
+   arrasto 50px.
+
+   O QUE MUDEI, e por que:
+   - Recorte "cover" (uCober): o original faz texture2D direto, o que
+     ESTICA qualquer textura que nao seja 1.6:2.2. Os videos da SOMA sao
+     4 em 9:16 e 2 em 16:9 — sem recorte, metade sairia deformada.
+   - Layout com semente fixa em vez de Math.random(): no original a
+     composicao muda a cada carregamento e cartoes caem fora da tela.
+   - Textura de POSTER, nao de video: medido que o bucket R2 nao manda
+     CORS, entao video de la nao pode virar textura. Ver trocaPorVideo(). */
+var PJ=[
+ {id:'expomix',   t:'EXPOMIX',        c:'2025 · Evento',    p:'pj-expomix.webp',
+  d:'Aftermovie do encontro que virou ponto de encontro da cidade.',
+  v:'https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/aftermovie-1.MP4'},
+ {id:'mari',      t:'MARI FERNANDEZ', c:'2024 · Show',      p:'pj-mari.webp',
+  d:'Palco principal, registro multicamera e corte no ritmo da plateia.',
+  v:'https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/mari-fernandez.MP4'},
+ {id:'bike-after',t:'BORA DE BIKE',   c:'2025 · Evento',    p:'pj-bike-after.webp',
+  d:'A cidade vista de cima e de dentro do peloton, no mesmo filme.',
+  v:'https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20After%20Movie%20Final%20Maio%20.MOV'},
+ {id:'fome',      t:'FOME DE MÚSICA', c:'2024 · Campanha',  p:'pj-fome.webp',
+  d:'Campanha de verao construida para viver no feed e no telao.',
+  v:'https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/FOME%20DE%20M%C3%9ASICA%20-%20VER%C3%83O%20R2%20_v3.mp4'},
+ {id:'praia',     t:'NA PRAIA',       c:'2025 · Festival',  p:'pj-praia.webp',
+  d:'Acessibilidade em telao: o festival inteiro traduzido ao vivo.',
+  v:'https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Acessibilidade%20-%20Tel%C3%A3o%202025%20Na%20Praia.MOV'},
+ {id:'bike-final',T:'',t:'BORA DE BIKE — FINAL',c:'2024 · Evento',p:'pj-bike-final.webp',
+  d:'O corte final, fechando a temporada com a chegada em Brasilia.',
+  v:'https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/Bora%20de%20Bike%20-%20Final%20.MOV'},
+ /* Funn Arena — servidos do proprio site. A origem era HEVC 10 bits, que a
+    maioria dos navegadores nao toca; foram reencodados para H.264 e cairam
+    de 452MB somados para 30MB. O ano veio dos metadados do DaVinci (maio
+    de 2026), nao de chute. */
+ {id:'leo',t:'LEO FOGUETE',c:'2026 · Show',p:'pj-leo.webp',
+  d:'Do foco no palco ao plano aereo: a arena cheia em um mesmo corte.',
+  v:'pj-leo.mp4'},
+ {id:'dia2',t:'FUNN ARENA — DIA 2',c:'2026 · Festival',p:'pj-dia2.webp',
+  d:'Segundo dia de arena: o registro que continua depois que a festa vira rotina.',
+  v:'pj-dia2.mp4'},
+ {id:'zevaqueiro',t:'ZÉ VAQUEIRO',c:'2026 · Campanha',p:'pj-zevaqueiro.webp',
+  d:'Chamada vertical do Funn Arena, cortada para viver no feed.',
+  v:'pj-zevaqueiro.mp4'}
+];
+
+(function(){
+var cv=document.getElementById('pjGL');
+if(!cv)return;
+var gl=null;
+try{gl=cv.getContext('webgl',{antialias:true,alpha:false})}catch(e){}
+if(!gl){                                  /* sem WebGL: some a secao inteira */
+  var s=document.getElementById('projetos');if(s)s.style.display='none';return;
+}
+
+/* ── matrizes (coluna-maior, como o WebGL espera) ─────────────────── */
+function mMul(a,b){var o=new Float32Array(16);
+  for(var c=0;c<4;c++)for(var r=0;r<4;r++)
+    o[c*4+r]=a[r]*b[c*4]+a[4+r]*b[c*4+1]+a[8+r]*b[c*4+2]+a[12+r]*b[c*4+3];
+  return o}
+function mPersp(fov,asp,n,f){var t=1/Math.tan(fov/2),o=new Float32Array(16);
+  o[0]=t/asp;o[5]=t;o[10]=(f+n)/(n-f);o[11]=-1;o[14]=2*f*n/(n-f);return o}
+/* matriz MUNDO da camera (nao a view): guardo esta porque o raio do
+   mouse e lancado no espaco da camera e trazido para o mundo por ela */
+function mCam(ex,ey,ez,tx,ty,tz){
+  var zx=ex-tx,zy=ey-ty,zz=ez-tz,l=Math.sqrt(zx*zx+zy*zy+zz*zz)||1;
+  zx/=l;zy/=l;zz/=l;
+  var xx=zz,xy=0,xz=-zx;                    /* cima(0,1,0) x z */
+  l=Math.sqrt(xx*xx+xz*xz)||1;xx/=l;xz/=l;
+  var yx=zy*xz-zz*xy,yy=zz*xx-zx*xz,yz=zx*xy-zy*xx;
+  return new Float32Array([xx,xy,xz,0, yx,yy,yz,0, zx,zy,zz,0, ex,ey,ez,1]);
+}
+/* inversa de matriz rigida (rotacao+translacao): transposta da rotacao
+   e translacao projetada nos eixos. Evita a inversa geral 4x4. */
+function mInv(m){var o=new Float32Array(16);
+  o[0]=m[0];o[1]=m[4];o[2]=m[8];
+  o[4]=m[1];o[5]=m[5];o[6]=m[9];
+  o[8]=m[2];o[9]=m[6];o[10]=m[10];
+  var x=m[12],y=m[13],z=m[14];
+  o[12]=-(m[0]*x+m[1]*y+m[2]*z);
+  o[13]=-(m[4]*x+m[5]*y+m[6]*z);
+  o[14]=-(m[8]*x+m[9]*y+m[10]*z);
+  o[15]=1;return o}
+function mModelo(px,py,pz,rx,ry,rz){
+  var cx=Math.cos(rx),sx=Math.sin(rx),cy=Math.cos(ry),sy=Math.sin(ry),
+      cz=Math.cos(rz),sz=Math.sin(rz);
+  return new Float32Array([
+    cy*cz, cx*sz+sx*sy*cz, sx*sz-cx*sy*cz, 0,
+   -cy*sz, cx*cz-sx*sy*sz, sx*cz+cx*sy*sz, 0,
+    sy,   -sx*cy,          cx*cy,          0,
+    px,    py,             pz,             1]);
+}
+
+/* ── geometria: plano dividido, para a inflacao deformar liso ─────── */
+function plano(w,hh,seg){
+  var pos=[],uv=[],idx=[],x,y;
+  for(y=0;y<=seg;y++)for(x=0;x<=seg;x++){
+    var u=x/seg,v=y/seg;
+    pos.push((u-.5)*w,(v-.5)*hh,0);uv.push(u,v);
+  }
+  for(y=0;y<seg;y++)for(x=0;x<seg;x++){
+    var a=y*(seg+1)+x,b=a+1,c=a+seg+1,d=c+1;
+    idx.push(a,b,c,b,d,c);
+  }
+  return{pos:new Float32Array(pos),uv:new Float32Array(uv),idx:new Uint16Array(idx),n:idx.length}
+}
+
+/* As duas precisoes precisam BATER. O vertice assume highp por padrao; se
+   o fragmento declarar mediump, os uniforms comuns (uHover) ficam com
+   precisao diferente nos dois e o link falha. Por isso highp explicito
+   nos dois lados, em vez de contar com o padrao. */
+var VS=[
+'precision highp float;',
+'attribute vec3 aPos;attribute vec2 aUv;',
+'uniform mat4 uProj,uView,uModel;uniform float uTime,uHover,uEsc;',
+'varying vec2 vUv;',
+'void main(){',
+/* A escala entra AQUI, no vertice, e nao na matriz: a matriz precisa
+   continuar rigida porque o raycast usa a inversa barata (transposta da
+   rotacao). Com escala embutida nela, aquela inversa estaria errada. */
+' vUv=aUv;vec3 p=aPos*uEsc;',
+' float d=distance(aUv,vec2(0.5));',
+' float bulge=smoothstep(0.8,0.0,d);',   /* 1 no centro, 0 na borda */
+' p.z+=bulge*uHover*0.4*uEsc;',          /* infla na direcao da camera */
+' p.z+=sin(uTime*1.5+p.y*2.0)*0.01;',    /* respiro constante */
+' gl_Position=uProj*uView*uModel*vec4(p,1.0);',
+'}'].join('\n');
+
+var FS=[
+'precision highp float;',
+'uniform sampler2D uTex;uniform float uHover,uOpac;uniform vec2 uCober;',
+'varying vec2 vUv;',
+'void main(){',
+' vec2 c=vec2(0.5),p=vUv-c;',
+' float r=length(p);',
+' vec2 lente=c+p*(1.0-0.2*uHover*(1.0-r));',   /* aumento no centro */
+' vec2 uv=(lente-c)*uCober+c;',                /* recorte cover */
+' vec4 col=texture2D(uTex,uv);',
+' gl_FragColor=vec4(col.rgb,uOpac);',
+'}'].join('\n');
+
+function some(porque){                     /* falhou: esconde e DIZ o motivo */
+  console.warn('[projetos] '+porque);
+  var s=document.getElementById('projetos');if(s)s.style.display='none';
+}
+function shad(k,src){var s=gl.createShader(k);gl.shaderSource(s,src);gl.compileShader(s);
+  if(!gl.getShaderParameter(s,gl.COMPILE_STATUS)){
+    console.warn('[projetos] shader:',gl.getShaderInfoLog(s));return null}
+  return s}
+var vs=shad(gl.VERTEX_SHADER,VS),fs2=shad(gl.FRAGMENT_SHADER,FS);
+if(!vs||!fs2){some('shader nao compilou');return}
+var pr=gl.createProgram();gl.attachShader(pr,vs);gl.attachShader(pr,fs2);gl.linkProgram(pr);
+if(!gl.getProgramParameter(pr,gl.LINK_STATUS)){
+  some('link: '+gl.getProgramInfoLog(pr));return}
+gl.useProgram(pr);
+var A={pos:gl.getAttribLocation(pr,'aPos'),uv:gl.getAttribLocation(pr,'aUv')};
+var U={};['uProj','uView','uModel','uTime','uHover','uTex','uOpac','uCober','uEsc']
+  .forEach(function(n){U[n]=gl.getUniformLocation(pr,n)});
+
+function malha(g){
+  var o={n:g.n};
+  o.pos=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,o.pos);
+  gl.bufferData(gl.ARRAY_BUFFER,g.pos,gl.STATIC_DRAW);
+  o.uv=gl.createBuffer();gl.bindBuffer(gl.ARRAY_BUFFER,o.uv);
+  gl.bufferData(gl.ARRAY_BUFFER,g.uv,gl.STATIC_DRAW);
+  o.idx=gl.createBuffer();gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,o.idx);
+  gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,g.idx,gl.STATIC_DRAW);
+  return o}
+/* CADA CARTAO TEM A FORMA DO SEU VIDEO.
+   O original usa um unico plano 1.6x2.2 e um texture2D direto, que
+   ESTICA qualquer coisa fora dessa proporcao. Espremer os 16:9 da SOMA
+   num retrato custava 59% da largura do quadro — o enquadramento do
+   diretor ia embora. Aqui a proporcao vem do proprio poster e todos os
+   cartoes ficam com a MESMA AREA (3.52, a do cartao original), entao
+   nenhum domina a composicao por acidente. */
+var AREA=1.6*2.2;
+var gCanto=malha(plano(.07,.07,1));
+
+function desenha(m,mat){
+  gl.bindBuffer(gl.ARRAY_BUFFER,m.pos);
+  gl.enableVertexAttribArray(A.pos);gl.vertexAttribPointer(A.pos,3,gl.FLOAT,false,0,0);
+  gl.bindBuffer(gl.ARRAY_BUFFER,m.uv);
+  gl.enableVertexAttribArray(A.uv);gl.vertexAttribPointer(A.uv,2,gl.FLOAT,false,0,0);
+  gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,m.idx);
+  gl.uniformMatrix4fv(U.uModel,false,mat);
+  gl.drawElements(gl.TRIANGLES,m.n,gl.UNSIGNED_SHORT,0);
+}
+
+/* ── texturas ─────────────────────────────────────────────────────── */
+gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL,true);
+function texVazia(r,g2,b){
+  var t=gl.createTexture();gl.bindTexture(gl.TEXTURE_2D,t);
+  gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,1,1,0,gl.RGBA,gl.UNSIGNED_BYTE,
+    new Uint8Array([r,g2,b,255]));
+  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);
+  return t}
+var texBranca=texVazia(255,255,255);
+
+/* Aqui entraria a textura de video. Hoje nao da: medido que o bucket R2
+   responde sem Access-Control-Allow-Origin, entao <video crossOrigin>
+   falha com erro 4 e texImage2D recusaria a fonte. Ligando o CORS no
+   Cloudflare, basta criar o <video crossOrigin="anonymous"> e chamar
+   texImage2D(..., video) a cada quadro no lugar do poster. */
+function carregaPoster(c,url){
+  var im=new Image();
+  im.onerror=function(){console.warn('[projetos] poster nao carregou:',url)};
+  im.onload=function(){
+    gl.bindTexture(gl.TEXTURE_2D,c.tex);
+    gl.texImage2D(gl.TEXTURE_2D,0,gl.RGBA,gl.RGBA,gl.UNSIGNED_BYTE,im);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_S,gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_WRAP_T,gl.CLAMP_TO_EDGE);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MIN_FILTER,gl.LINEAR);
+    gl.texParameteri(gl.TEXTURE_2D,gl.TEXTURE_MAG_FILTER,gl.LINEAR);
+    /* o cartao nasce com a forma do poster, mantendo a area fixa */
+    var pa=im.naturalWidth/im.naturalHeight;
+    c.h=Math.sqrt(AREA/pa); c.w=pa*c.h;
+    c.g=malha(plano(c.w,c.h,32));
+    c.cober=[1,1];          /* forma igual: nao sobra nada para recortar */
+    c.pronto=true;
+  };
+  im.src=url;
+}
+
+/* ── cartoes ──────────────────────────────────────────────────────── */
+/* semente fixa: o original sorteia a cada carregamento e cartoes caem
+   fora da tela. Composicao estavel tambem deixa o layout verificavel. */
+function sem(i){var x=Math.sin(i*127.1+31.7)*43758.5453;return x-Math.floor(x)}
+var cartoes=PJ.map(function(p,i){
+  /* Espiral entrando na profundidade, como no original (angulo i*1.5,
+     raio sorteado, z recuando por indice). Os numeros sao menores que
+     os de la porque aquilo e uma pagina inteira com a camera voando
+     ate cada cartao; aqui e uma secao, e tudo precisa caber de uma vez. */
+  /* ANGULO AUREO (137.5°), nao o 1.5 rad do original.
+     Duas medicoes levaram aqui. Primeiro: o original usa so o cosseno no
+     x e sorteia o y; com isso os cartoes 1, 3 e 5 caiam quase no mesmo x
+     e se escondiam — dois deles davam 1 acerto de mouse em 286 pontos.
+     Passei a usar seno E cosseno. Sobrou um segundo problema: 6 cartoes
+     a 1.5 rad somam 7.5 rad, ou 1.19 VOLTA, entao o cartao 5 reaparece a
+     16° do cartao 1 e fica atras dele.
+     O angulo aureo e exatamente a solucao desse problema — nenhuma
+     quantidade de itens repete posicao. Com 6 da 0°, 137°, 275°, 52°,
+     190° e 327°: todos separados. */
+  /* O raio cresce com a RAIZ do indice, como numa espiral de filotaxia de
+     verdade. Com raio fixo, o angulo aureo distribui bem o ANGULO mas
+     empilha tudo no mesmo anel: ao passar de 6 para 9 projetos, so 2
+     ficaram alcancaveis pelo mouse e a galeria ocupava 11%-60% da largura.
+     Com raiz, cada projeto novo se acomoda mais para fora sozinho. */
+  var np=Math.max(1,PJ.length-1);
+  var ang=i*2.39996, raio=(1.0+2.15*Math.sqrt(i/np))*(0.86+sem(i)*0.30);
+  /* AJUSTE PONTUAL. A espiral resolve o caso geral, mas com 9 projetos dois
+     cartoes cairam mal e so eles precisam sair do lugar — mexer no
+     espalhamento global espalhava TODOS e abria buracos.
+     Medido varrendo o quadro: o zevaqueiro sobrava so 1.4% da tela, virado
+     uma tira atras do expomix, e o leo encostava no mari. As tres primeiras
+     linhas do quadro estavam vazias, entao os dois sobem para la. */
+  var desloca={6:{x:0.38,y:1.02}, 8:{x:0.34,y:2.62,z:2.1},
+                3:{x:-0.12,y:1.75,z:1.0}}[i];
+  var c={proj:p,i:i,
+    /* A profundidade e repartida pelo TOTAL de projetos, nao um passo fixo
+       por indice. Com passo fixo, cada projeto novo empurra o ultimo cartao
+       para mais longe: a area aparente cai com o quadrado da distancia,
+       entao ele encolheria ate sumir. Assim o envelope de profundidade
+       continua o mesmo com 6 ou com 12 projetos. */
+    /* o ajuste fica SEPARADO da espiral: somado depois da escala, em
+       passo(). Somado aqui, ele era multiplicado pelo escY — que no
+       celular vale 1.25 — e um empurrao calibrado no desktop virava 25%
+       maior na tela estreita, jogando o cartao para fora do quadro. */
+    aj:{x:(desloca?desloca.x:0), y:(desloca?desloca.y:0)},
+    base:{x:Math.cos(ang)*raio*1.5,
+          y:Math.sin(ang)*raio*0.95,
+          z:-(PJ.length>1 ? i/(PJ.length-1) : 0)*6.6+(desloca&&desloca.z?desloca.z:0),
+          rz:(sem(i+80)-.5)*.1},
+    pos:{x:0,y:0,z:0}, rot:{x:0,y:0,z:0},
+    /* opacidade ja em 1, como no original (uOpacity:{value:1} nos cartoes
+       principais). Se comecasse em 0, o lerp de .05 levaria ~1s so para
+       aparecer — e num quadro lento a secao abriria vazia. */
+    hover:0, opac:1, cober:[1,1], pronto:false, tex:texVazia(10,11,14),
+    g:null, w:1.6, h:2.2};   /* forma real chega junto com o poster */
+  c.pos.x=c.base.x+c.aj.x;c.pos.y=c.base.y+c.aj.y;c.pos.z=c.base.z;c.rot.z=c.base.rz;
+  carregaPoster(c,p.p);
+  return c;
+});
+
+/* ── estado ───────────────────────────────────────────────────────── */
+var modo='disperso', ativo=0, sobre=-1, tempo=0;
+var mouse={x:0,y:0}, camPos={x:0,y:0,z:8.5}, olhaPara={x:0,y:0,z:0};
+var arr={ativo:false,x0:0,moveu:0};
+var hud=document.querySelector('.pj-hud'),
+    elNum=document.getElementById('pjNum'), elTot=document.getElementById('pjTot'),
+    elCat=document.getElementById('pjCat'), elTit=document.getElementById('pjTit'),
+    elDes=document.getElementById('pjDes');
+if(elTot)elTot.textContent=('0'+PJ.length).slice(-2);
+
+var mostrado=-1;
+function legenda(i){
+  if(i===mostrado||!PJ[i])return;
+  mostrado=i;
+  if(hud)hud.classList.add('troca');
+  setTimeout(function(){
+    var p=PJ[i];
+    if(elNum)elNum.textContent=('0'+(i+1)).slice(-2);
+    if(elCat)elCat.textContent=p.c;
+    if(elTit)elTit.textContent=p.t;
+    if(elDes)elDes.textContent=p.d;
+    if(hud)hud.classList.remove('troca');
+  },200);
+}
+legenda(0);
+
+/* ── medidas ──────────────────────────────────────────────────────── */
+var lg=1,al=1,proj=null,escX=1,escY=1,esc=1,zBase=7.6,alvoY=-0.42,medido=false;
+function medir(){
+  var r=cv.getBoundingClientRect();
+  var d=Math.min(devicePixelRatio||1,1.5);   /* teto do original */
+  lg=Math.max(1,r.width);al=Math.max(1,r.height);
+  cv.width=Math.round(lg*d);cv.height=Math.round(al*d);
+  gl.viewport(0,0,cv.width,cv.height);
+  var a=lg/al;
+  proj=mPersp(50*Math.PI/180,a,.1,100);
+  /* ENQUADRAMENTO POR PROPORCAO DA TELA.
+     A altura e sempre o lado apertado (a camera enquadra por ela), entao
+     o que sobra ou falta e SEMPRE largura. Numa tela 2.3:1 a area visivel
+     e mais que o dobro da de uma 1:1, e a mesma espiral deixava faixas
+     pretas enormes nas laterais; numa tela em pe, dois cartoes saiam
+     inteiros do quadro. Por isso a regra vai para os DOIS lados:
+
+       escX  espalha na horizontal, acompanhando a largura visivel
+       esc   aumenta o proprio cartao, para o vazio nao virar so distancia
+             entre cartoes pequenos
+       escY  e zBase so agem em tela em pe, onde falta largura */
+  if(a>=1){
+    /* Reta ancorada em duas telas MEDIDAS, nao chutada: numa 1.06 a
+       espiral ocupa a largura toda com escX 1.05; numa 2.31, com 1.50 ela
+       cobria so 24%-78% (24% de preto de cada lado), e precisa de ~2.55. */
+    escX = Math.max(1, 1.2*a-0.222);
+    /* Espalhar sozinho nao preenche: medido, a largura foi de 54% para
+       86% do quadro e a densidade so subiu de 19% para 21% — o vazio
+       apenas mudou de lugar, das laterais para entre os cartoes. Quem
+       preenche de fato e o TAMANHO do cartao. */
+    esc  = Math.min(1.85, 1+0.62*(a-1.05));
+    escY = Math.min(1.18, 0.9+0.12*a);     /* usa a altura tambem */
+    zBase = 7.6; alvoY = -0.42;
+  }else{
+    /* Tela em pe: falta largura e SOBRA altura. Apertar demais o x (era
+       .30+.44a, dando .50) colapsava a separacao horizontal e um cartao
+       sumia inteiro atras de outro — 5 de 6 alcancaveis, com 48% de
+       densidade, ou seja, empilhados. A saida e trocar aperto horizontal
+       por espalhamento VERTICAL, e deixar os cartoes vazarem um pouco
+       pelas laterais, que num mosaico e leitura normal. */
+    escX = .62+.30*a;
+    escY = 1.25;
+    esc  = .92;
+    zBase= 7.6+(1-a)*3.6;
+    /* No celular a legenda ocupa mais altura (o titulo quebra em duas
+       linhas), e um cartao caia por cima dela. Olhar mais para baixo
+       empurra a composicao para cima e libera a faixa do texto. */
+    alvoY= -1.2;
+  }
+  /* Na PRIMEIRA medida os cartoes vao direto para o lugar. Sem isto eles
+     nascem na posicao sem escala e deslizam ate a escalada — numa tela
+     larga sao ~2 unidades de arrastao logo na abertura, que parece bug. */
+  if(!medido){
+    medido=true;
+    for(var i=0;i<cartoes.length;i++){
+      var c=cartoes[i];
+      c.pos.z=c.base.z;
+      c.pos.x=prendeNaBorda(c.base.x*escX+c.aj.x, c.pos.z, c);
+      c.pos.y=c.base.y*escY+c.aj.y;
+    }
+    camPos.z=zBase;olhaPara.y=alvoY;
+  }
+}
+medir();addEventListener('resize',medir);
+
+/* ── raio do mouse: espaco da camera -> mundo -> local do cartao ──── */
+var camMundo=mCam(camPos.x,camPos.y,camPos.z,0,0,0);
+function aponta(){
+  if(sobre>=0&&modo==='disperso')return sobre;
+  return -1;
+}
+function raycast(){
+  var tg=Math.tan(25*Math.PI/180);           /* metade de fov 50 */
+  var dx=mouse.x*tg*(lg/al), dy=mouse.y*tg, dz=-1;
+  /* direcao para o mundo pela matriz da camera (so rotacao) */
+  var wx=camMundo[0]*dx+camMundo[4]*dy+camMundo[8]*dz;
+  var wy=camMundo[1]*dx+camMundo[5]*dy+camMundo[9]*dz;
+  var wz=camMundo[2]*dx+camMundo[6]*dy+camMundo[10]*dz;
+  var ox=camMundo[12],oy=camMundo[13],oz=camMundo[14];
+  var achou=-1,perto=1e9;
+  for(var i=0;i<cartoes.length;i++){
+    var c=cartoes[i];
+    if(!c.g)continue;                        /* poster ainda nao chegou */
+    if(c.opac<0.35)continue;                 /* nao mira o que esta sumindo */
+    if(modo==='detalhe'&&i!==ativo)continue;
+    var mm=mModelo(c.pos.x,c.pos.y,c.pos.z,c.rot.x,c.rot.y,c.rot.z);
+    var inv=mInv(mm);
+    var lx=inv[0]*ox+inv[4]*oy+inv[8]*oz+inv[12];
+    var ly=inv[1]*ox+inv[5]*oy+inv[9]*oz+inv[13];
+    var lz=inv[2]*ox+inv[6]*oy+inv[10]*oz+inv[14];
+    var ldx=inv[0]*wx+inv[4]*wy+inv[8]*wz;
+    var ldy=inv[1]*wx+inv[5]*wy+inv[9]*wz;
+    var ldz=inv[2]*wx+inv[6]*wy+inv[10]*wz;
+    if(Math.abs(ldz)<1e-6)continue;
+    var t=-lz/ldz;
+    if(t<0)continue;
+    var px=lx+ldx*t, py=ly+ldy*t;
+    /* a escala vive no vertice, nao na matriz: o limite cresce junto */
+    var ee=(modo==='detalhe')?1:esc;
+    if(Math.abs(px)<=c.w*ee/2&&Math.abs(py)<=c.h*ee/2&&t<perto){perto=t;achou=i}
+  }
+  return achou;
+}
+
+/* ── laco ─────────────────────────────────────────────────────────── */
+/* LIMITE DE BORDA. O cartao mais externo da espiral (maior raio) chegava
+   a x 3.7 numa tela onde cabem ~2 de meia-largura: ficava quase todo fora
+   do quadro. O teto e calculado na profundidade DELE — quanto mais fundo,
+   mais largo o campo — e so morde quem passaria da borda.
+
+   Usado no laco E na posicao inicial. Só no laco nao bastava: a posicao
+   inicial e fixada em medir(), entao no primeiro quadro os cartoes
+   nasciam fora do lugar e so se ajeitavam quando o laco rodava. */
+function prendeNaBorda(tx,tz,c){
+  var meiaLarg=(zBase+Math.abs(tz))*Math.tan(25*Math.PI/180)*(lg/al);
+  var teto=meiaLarg-c.w*esc*0.30;
+  if(teto<=0.4)return tx;
+  return tx>teto ? teto : (tx<-teto ? -teto : tx);
+}
+function passo(dt){
+  tempo+=dt;
+  var mx=mouse.x*.3, my=mouse.y*.3;
+  for(var i=0;i<cartoes.length;i++){
+    var c=cartoes[i], al2=1, tx,ty,tz;
+    if(modo==='detalhe'){
+      var e=i-ativo;
+      tx=e*2.6; ty=0; tz=-Math.abs(e)*1.5;
+      al2 = Math.abs(e)<=2 ? 1 : 0;
+    }else{
+      tx=c.base.x*escX+c.aj.x; ty=c.base.y*escY+c.aj.y; tz=c.base.z; al2=1;
+      tx=prendeNaBorda(tx,tz,c);
+    }
+    c.pos.x+=(tx-c.pos.x)*.05;                /* lerp 0.05, como no original */
+    c.pos.y+=(ty-c.pos.y)*.05;
+    c.pos.z+=(tz-c.pos.z)*.05;
+    c.rot.x+=(-my*.5-c.rot.x)*.05;            /* inclina na direcao do mouse */
+    c.rot.y+=(mx*.5-c.rot.y)*.05;
+    c.rot.z+=((modo==='detalhe'?0:c.base.rz)-c.rot.z)*.05;
+    c.opac+=(al2-c.opac)*.05;
+    var alvoH=(i===sobre)?1:0;
+    c.hover+=(alvoH-c.hover)*.1;              /* hover 0.1, como no original */
+  }
+  /* camera: recua na visao dispersa, aproxima no detalhe */
+  var cz = modo==='detalhe' ? 7 : zBase;
+  var cx = modo==='detalhe' ? 0 : mouse.x*.45;
+  var cy = modo==='detalhe' ? 0 : mouse.y*.28;
+  camPos.x+=(cx-camPos.x)*.05;
+  camPos.y+=(cy-camPos.y)*.05;
+  camPos.z+=(cz-camPos.z)*.05;
+  /* na visao dispersa o olhar cai um pouco: empurra os cartoes para cima
+     no quadro e os tira de cima da legenda, que ocupa a faixa de baixo */
+  var az = modo==='detalhe' ? 0 : cartoes[ativo].pos.z*.35;
+  var ay = modo==='detalhe' ? 0 : alvoY;
+  olhaPara.x+=(0-olhaPara.x)*.05;
+  olhaPara.y+=(ay-olhaPara.y)*.05;
+  olhaPara.z+=(az-olhaPara.z)*.05;
+  camMundo=mCam(camPos.x,camPos.y,camPos.z,olhaPara.x,olhaPara.y,olhaPara.z);
+}
+
+function pinta(){
+  var view=mInv(camMundo);
+  gl.clearColor(0,0,0,1);
+  gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+  gl.enable(gl.DEPTH_TEST);
+  gl.enable(gl.BLEND);gl.blendFunc(gl.SRC_ALPHA,gl.ONE_MINUS_SRC_ALPHA);
+  gl.uniformMatrix4fv(U.uProj,false,proj);
+  gl.uniformMatrix4fv(U.uView,false,view);
+  gl.uniform1f(U.uTime,tempo);
+  gl.uniform1i(U.uTex,0);
+  gl.activeTexture(gl.TEXTURE0);
+  /* de tras para frente: com transparencia a ordem importa */
+  var ordem=cartoes.slice().sort(function(a,b){return a.pos.z-b.pos.z});
+  for(var i=0;i<ordem.length;i++){
+    var c=ordem[i];
+    if(!c.g||c.opac<.01)continue;
+    var mm=mModelo(c.pos.x,c.pos.y,c.pos.z,c.rot.x,c.rot.y,c.rot.z);
+    gl.bindTexture(gl.TEXTURE_2D,c.tex);
+    gl.uniform1f(U.uHover,c.hover);
+    gl.uniform1f(U.uOpac,c.opac);
+    gl.uniform2f(U.uCober,c.cober[0],c.cober[1]);
+    /* no detalhe o cartao ja ocupa a tela: nao aplica o aumento */
+    var ee=(modo==='detalhe')?1:esc;
+    gl.uniform1f(U.uEsc,ee);
+    desenha(c.g,mm);
+    /* alcas de canto: so no cartao ativo do modo detalhe, como no original.
+       Ficam um respiro FORA da borda, como uma caixa de selecao — no
+       original sao 0.05 alem do canto (0.85 num cartao de meia-largura .8) */
+    if(modo==='detalhe'&&c.i===ativo){
+      gl.bindTexture(gl.TEXTURE_2D,texBranca);
+      gl.uniform1f(U.uHover,0);
+      gl.uniform1f(U.uOpac,c.opac);
+      gl.uniform2f(U.uCober,1,1);
+      gl.uniform1f(U.uEsc,1);
+      var qx=c.w/2+.05, qy=c.h/2+.05;
+      for(var k=0;k<4;k++){
+        var loc=mModelo(k%2?qx:-qx, k<2?qy:-qy, .02,0,0,0);
+        desenha(gCanto,mMul(mm,loc));
+      }
+    }
+  }
+}
+
+/* so gasta GPU quando a secao esta a vista */
+var secao=document.getElementById('projetos'), visivel=false;
+function checaVis(){
+  var r=secao.getBoundingClientRect();
+  visivel = r.bottom>-200 && r.top<(innerHeight||0)+200;
+}
+var ultimo=0;
+function laco(ts){
+  requestAnimationFrame(laco);
+  var dt=Math.min(.05,(ts-ultimo)/1000||.016);ultimo=ts;
+  checaVis();
+  if(!visivel)return;
+  passo(dt);pinta();
+}
+requestAnimationFrame(laco);
+
+/* ── interacao ────────────────────────────────────────────────────── */
+/* No touchend a lista `touches` esta VAZIA — o dedo que saiu so aparece
+   em `changedTouches`. Sem esse segundo caminho o toque para abrir lia
+   coordenada zerada e o raycast mirava o canto da tela. */
+function ponto(ev){
+  if(ev.clientX!=null)return{x:ev.clientX,y:ev.clientY};
+  var t=(ev.touches&&ev.touches[0])||(ev.changedTouches&&ev.changedTouches[0]);
+  return t?{x:t.clientX,y:t.clientY}:null;
+}
+function normaliza(ev){
+  var p=ponto(ev);if(!p)return;
+  var r=cv.getBoundingClientRect();
+  mouse.x=(p.x-r.left)/r.width*2-1;
+  mouse.y=-((p.y-r.top)/r.height*2-1);
+}
+cv.addEventListener('mousemove',function(ev){
+  normaliza(ev);
+  var antes=sobre;
+  sobre=raycast();
+  cv.classList.toggle('emcima',sobre>=0);
+  cv.dataset.sobre=sobre;   /* qual cartao esta sob o cursor agora */
+  if(sobre>=0&&sobre!==antes&&modo==='disperso'){ativo=sobre;legenda(sobre)}
+});
+cv.addEventListener('mouseleave',function(){sobre=-1;cv.classList.remove('emcima')});
+
+function pega(ev){
+  var p=ponto(ev);if(!p)return;
+  arr.ativo=true;arr.moveu=0;arr.x0=p.x;
+  cv.classList.add('pegando');
+}
+function solta(ev){
+  if(!arr.ativo)return;
+  arr.ativo=false;cv.classList.remove('pegando');
+  var p=ponto(ev);
+  var d=(p?p.x:arr.x0)-arr.x0;
+  if(Math.abs(d)>50){navega(d>0?-1:1);return}   /* limiar 50px, do original */
+  if(Math.abs(d)<5){
+    if(modo==='disperso'){
+      normaliza(ev);var alvo=raycast();
+      if(alvo>=0){ativo=alvo;modo='detalhe';legenda(alvo)}
+    }else{
+      normaliza(ev);
+      if(raycast()===ativo)abreVideo(ativo);
+    }
+  }
+}
+cv.addEventListener('mousedown',pega);
+cv.addEventListener('touchstart',pega,{passive:true});
+addEventListener('mouseup',solta);
+cv.addEventListener('touchend',solta);
+cv.addEventListener('touchmove',function(ev){normaliza(ev)},{passive:true});
+
+function navega(d){
+  if(modo!=='detalhe')modo='detalhe';
+  ativo=(ativo+d+PJ.length)%PJ.length;
+  legenda(ativo);
+}
+var bp=document.getElementById('pjPrev'),bn=document.getElementById('pjNext');
+if(bp)bp.addEventListener('click',function(){navega(-1)});
+if(bn)bn.addEventListener('click',function(){navega(1)});
+addEventListener('keydown',function(e){
+  if(!visivel)return;
+  if(e.key==='ArrowLeft')navega(-1);
+  else if(e.key==='ArrowRight')navega(1);
+  else if(e.key==='Escape'){
+    if(lb&&lb.classList.contains('abre'))fechaVideo();
+    else if(modo==='detalhe')modo='disperso';
+  }
+});
+
+/* ── lightbox do video (DOM, sem CORS) ────────────────────────────── */
+var lb=document.getElementById('pjLb'),vid=document.getElementById('pjVid'),
+    bx=document.getElementById('pjX');
+function abreVideo(i){
+  if(!lb||!vid)return;
+  vid.src=PJ[i].v;lb.classList.add('abre');lb.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+  if(window.lenis&&window.lenis.stop)window.lenis.stop();
+  var t=vid.play();if(t&&t.catch)t.catch(function(){});
+}
+function fechaVideo(){
+  if(!lb||!vid)return;
+  vid.pause();vid.removeAttribute('src');vid.load();
+  lb.classList.remove('abre');lb.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+  if(window.lenis&&window.lenis.start)window.lenis.start();
+}
+if(bx)bx.addEventListener('click',fechaVideo);
+if(lb)lb.addEventListener('click',function(e){if(e.target===lb)fechaVideo()});
+})();
+
+/* ── nav ──────────────────────────────────────────────────────────── */
+var nav=document.getElementById('nav'),menu=document.getElementById('menu');
+document.getElementById('navB').addEventListener('click',function(){menu.classList.add('on')});
+document.getElementById('menuX').addEventListener('click',function(){menu.classList.remove('on')});
+menu.addEventListener('click',function(e){if(e.target.tagName==='A')menu.classList.remove('on')});
+
+/* ancoras: rolagem suave com recuo do nav fixo */
+document.addEventListener('click',function(e){
+  var a=e.target.closest?e.target.closest('a[href^="#"]'):null;
+  if(!a)return;var href=a.getAttribute('href');
+  if(!href||href.length<2)return;
+  var alvo;try{alvo=document.querySelector(href)}catch(_){return}
+  if(!alvo)return;e.preventDefault();
+  if(lenis)lenis.scrollTo(alvo,{offset:-70});
+  else alvo.scrollIntoView({behavior:'smooth'});
+});
+
+/* ── acordeoes: servicos e FAQ ────────────────────────────────────── */
+function acordeao(sel,itemSel){
+  var lista=document.querySelector(sel);if(!lista)return;
+  [].forEach.call(lista.querySelectorAll(itemSel),function(it){
+    var h=it.querySelector('button');if(!h)return;
+    h.addEventListener('click',function(){
+      /* 'aberto', nao 'on': o sistema de revelacao usa .on para "ja
+         apareceu". Enquanto o acordeao usava o mesmo nome, fechar os
+         irmaos apagava a revelacao deles e as linhas SUMIAM da tela. */
+      var estaAberto=it.classList.contains('aberto');
+      [].forEach.call(lista.querySelectorAll(itemSel),function(o){o.classList.remove('aberto')});
+      if(!estaAberto)it.classList.add('aberto');
+    });
+  });
+}
+acordeao('#svList','.sv-i');
+acordeao('#fqList','.fq-i');
+
+/* ── CONTADOR DE ROLETE (digitos 0-9 rolando), como na referencia ──── */
+var rols=[].slice.call(document.querySelectorAll('.rol'));
+rols.forEach(function(el){
+  var alvo=String(el.dataset.t||'0');
+  el.innerHTML='';
+  for(var i=0;i<alvo.length;i++){
+    var col=document.createElement('span');
+    col.style.cssText='display:inline-block;height:1em;overflow:hidden;vertical-align:bottom';
+    var reel=document.createElement('i');
+    reel.style.cssText='display:block;transition:transform 1.6s cubic-bezier(.16,1,.3,1)';
+    for(var d=0;d<=9;d++){
+      var s=document.createElement('span');
+      s.style.cssText='display:block;height:1em;line-height:1em';
+      s.textContent=d;reel.appendChild(s);
+    }
+    col.appendChild(reel);el.appendChild(col);
+    reel._alvo=+alvo[i];
+  }
+});
+var blocoNums=document.getElementById('numBlk'),rolado=false;
+function giraRoletes(vh){
+  if(rolado||!blocoNums)return;
+  var r=blocoNums.getBoundingClientRect();
+  if(r.top>vh*0.85||r.bottom<0)return;
+  rolado=true;
+  rols.forEach(function(el){
+    [].forEach.call(el.querySelectorAll('i'),function(reel,i){
+      setTimeout(function(){reel.style.transform='translateY(-'+(reel._alvo*10)+'%)'},i*110);
+    });
+  });
+}
+
+/* ── revelacoes + zoom continuo, decididos por GEOMETRIA ──────────── */
+var revs=[].slice.call(document.querySelectorAll('[data-r]'));
+function checaRevs(vh){
+  for(var i=revs.length-1;i>=0;i--){
+    var r=revs[i].getBoundingClientRect();
+    if(r.width===0&&r.height===0)continue;
+    if(r.top<vh*0.93&&r.bottom>0){revs[i].classList.add('on');revs.splice(i,1)}
+  }
+}
+var lns=[].slice.call(document.querySelectorAll('.hr-st .ln'));
+function checaHero(vh){
+  if(!heroLiberado)return;   /* espera a queima abrir o meio da tela */
+  for(var i=lns.length-1;i>=0;i--){
+    var r=lns[i].getBoundingClientRect();
+    if(r.top<vh*0.98){lns[i].classList.add('on');lns.splice(i,1)}
+  }
+}
+var scs=[].slice.call(document.querySelectorAll('[data-sc]'));
+function moveSc(vh){
+  for(var i=0;i<scs.length;i++){
+    var el=scs[i],cx2=el.parentElement||el,r=cx2.getBoundingClientRect();
+    if(r.bottom<-120||r.top>vh+120)continue;
+    var p=1-((r.top+r.height/2)/(vh+r.height));
+    if(p<0)p=0;if(p>1)p=1;
+    /* "pan": a imagem desliza dentro da moldura em vez de dar zoom. Usa a
+       folga de 20% de altura que o CSS deixa, entao nunca mostra borda. */
+    if(el.getAttribute('data-sc')==='pan'){
+      el.style.transform='translate3d(0,'+((0.5-p)*19).toFixed(3)+'%,0)';
+    }else{
+      /* o zoom pode carregar parallax junto: quem tem data-sc e ignorado
+         por movePx justamente para os dois nao brigarem pelo transform */
+      var dpx=el.getAttribute('data-px');
+      var desl=dpx?' translate3d(0,'+((0.5-p)*parseFloat(dpx)).toFixed(2)+'px,0)':'';
+      el.style.transform='scale('+(1.16-0.16*Math.min(1,p*1.6)).toFixed(4)+')'+desl;
+    }
+  }
+}
+
+/* ── RISCOS A MAO SOBRE O TEXTO ───────────────────────────────────────
+   Cada [data-rsc] ganha um SVG desenhado com a MEDIDA REAL do trecho. Isso
+   importa por dois motivos: o traco nao estica (um viewBox esticado
+   deformaria a espessura) e, quando a frase quebra em duas linhas, sai um
+   traco por linha em vez de um risco atravessado no meio do paragrafo.
+
+   O contorno se desenha sozinho quando entra em quadro (dasharray indo do
+   comprimento total a zero). Sem gate por reduced-motion, de proposito. */
+var marcas=[].slice.call(document.querySelectorAll('.rsc[data-rsc]'));
+
+function ruido(s){var x=Math.sin(s*127.1+31.7)*43758.5453;return x-Math.floor(x)}
+
+/* sublinhado ondulado */
+function dOnda(w,h,s){
+  var y=h*0.96, amp=Math.max(1.6,h*0.075), n=Math.max(3,Math.round(w/34)), seg=w/n;
+  var d='M0,'+y.toFixed(1);
+  for(var i=0;i<n;i++){
+    var x0=seg*i, x1=seg*(i+1), lado=(i%2?1:-1);
+    var a=amp*(0.7+ruido(s+i)*0.7);
+    d+=' Q'+(x0+seg*0.5).toFixed(1)+','+(y+lado*a*1.9).toFixed(1)+' '+x1.toFixed(1)+','+y.toFixed(1);
+  }
+  return d;
+}
+/* risco reto, mas torto o bastante para nao parecer borda de CSS */
+function dRisco(w,h,s){
+  var y=h*0.94, w1=1.8+ruido(s)*1.6, w2=1.4+ruido(s+3)*1.8;
+  return 'M0,'+(y+w1).toFixed(1)+
+         ' C'+(w*0.32).toFixed(1)+','+(y-w2).toFixed(1)+
+         ' '+(w*0.68).toFixed(1)+','+(y+w2*1.4).toFixed(1)+
+         ' '+w.toFixed(1)+','+(y-w1*0.5).toFixed(1);
+}
+/* elipse a mao: comeca e termina em pontos diferentes, com sobreposicao */
+function dCirculo(w,h,s){
+  var cx=w/2, cy=h/2, rx=w/2+h*0.16, ry=h*0.74;
+  var j=function(k){return (ruido(s+k)-0.5)*h*0.13};
+  return 'M'+(cx+rx*0.42+j(1)).toFixed(1)+','+(cy-ry*0.92+j(2)).toFixed(1)+
+    ' C'+(cx+rx*0.98).toFixed(1)+','+(cy-ry*0.72).toFixed(1)+
+    ' '+(cx+rx*1.04).toFixed(1)+','+(cy+ry*0.42).toFixed(1)+
+    ' '+(cx+rx*0.24).toFixed(1)+','+(cy+ry*0.94).toFixed(1)+
+    ' C'+(cx-rx*0.52).toFixed(1)+','+(cy+ry*1.06).toFixed(1)+
+    ' '+(cx-rx*1.06).toFixed(1)+','+(cy+ry*0.34).toFixed(1)+
+    ' '+(cx-rx*0.88+j(3)).toFixed(1)+','+(cy-ry*0.42).toFixed(1)+
+    ' C'+(cx-rx*0.72).toFixed(1)+','+(cy-ry*0.98).toFixed(1)+
+    ' '+(cx-rx*0.08).toFixed(1)+','+(cy-ry*1.08).toFixed(1)+
+    ' '+(cx+rx*0.62+j(4)).toFixed(1)+','+(cy-ry*0.84+j(5)).toFixed(1);
+}
+
+function desenha(el,idx){
+  /* o host e o PARAGRAFO, nao o span — ver a nota no CSS */
+  var host=el.closest('.fala')||el.parentElement;
+  [].slice.call(host.querySelectorAll('svg.risco[data-de="'+idx+'"]'))
+    .forEach(function(s){s.remove()});
+  var tipo=el.getAttribute('data-rsc');
+  var hr=host.getBoundingClientRect();
+  /* getClientRects da UM retangulo por linha: e o que permite marcar uma
+     frase que quebrou sem o traco cortar o paragrafo inteiro */
+  var linhas=el.getClientRects();
+  if(!linhas.length)return;
+  for(var i=0;i<linhas.length;i++){
+    var r=linhas[i];
+    var w=Math.max(8,r.width), ht=Math.max(8,r.height);
+    var svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('class','risco');
+    svg.setAttribute('data-de',idx);
+    svg.setAttribute('width',w);svg.setAttribute('height',ht);
+    svg.setAttribute('viewBox','0 0 '+w.toFixed(1)+' '+ht.toFixed(1));
+    svg.style.left=(r.left-hr.left)+'px';
+    svg.style.top=(r.top-hr.top)+'px';
+    svg.setAttribute('aria-hidden','true');
+    var p=document.createElementNS('http://www.w3.org/2000/svg','path');
+    var s=idx*7+i*3+1;
+    p.setAttribute('d', tipo==='circulo'?dCirculo(w,ht,s)
+                     : tipo==='risco'  ?dRisco(w,ht,s)
+                                       :dOnda(w,ht,s));
+    svg.appendChild(p);host.appendChild(svg);
+    var L=p.getTotalLength();
+    p.style.strokeDasharray=L;
+    p.style.strokeDashoffset=el.classList.contains('tracado')?0:L;
+    p.style.transitionDelay=(i*0.16+idx*0.1)+'s';
+  }
+}
+function montaMarcas(){marcas.forEach(desenha)}
+if(document.fonts&&document.fonts.ready)document.fonts.ready.then(montaMarcas);
+else addEventListener('load',montaMarcas);
+montaMarcas();
+var reMarca;
+addEventListener('resize',function(){clearTimeout(reMarca);reMarca=setTimeout(montaMarcas,180)});
+
+function checaMarcas(vh){
+  for(var i=0;i<marcas.length;i++){
+    var el=marcas[i];
+    if(el.classList.contains('tracado'))continue;
+    var r=el.getBoundingClientRect();
+    if(r.top<vh*0.86&&r.bottom>0){
+      el.classList.add('tracado');
+      var host=el.closest('.fala')||el.parentElement;
+      var idx=marcas.indexOf(el);
+      [].slice.call(host.querySelectorAll('svg.risco[data-de="'+idx+'"] path'))
+        .forEach(function(p){p.style.strokeDashoffset=0});
+    }
+  }
+}
+
+/* ── FITA CONDUZIDA PELO SCROLL ───────────────────────────────────────
+   O laco automatico virou deslocamento derivado de scrollY. O modulo pela
+   METADE da largura e o que faz emendar sem salto: as duas copias do texto
+   sao identicas, entao voltar meia largura cai exatamente no mesmo ponto. */
+var fita=document.querySelector('.tk'), fitaIn=document.querySelector('.tk-i');
+function moveFita(vh){
+  if(!fita||!fitaIn)return;
+  var r=fita.getBoundingClientRect();
+  if(r.bottom<-200||r.top>vh+200)return;
+  var meia=fitaIn.scrollWidth/2;
+  if(meia<1)return;
+  var d=(scrollY*0.36)%meia;
+  fitaIn.style.transform='translate3d('+(-d).toFixed(1)+'px,0,0)';
+
+}
+
+/* ── NO CHAO DO EVENTO: cor conforme a secao toma a tela ──────────────
+   "cheia" e medido de verdade: quanto da ALTURA DA JANELA a secao esta
+   ocupando agora. 1 = ela e a tela inteira. A cor so comeca a entrar
+   depois de 55% de ocupacao, entao a virada acontece quando a secao
+   realmente domina o quadro, e nao no instante em que ela aparece. */
+var raiz=document.getElementById('raiz');
+var rzFoto=document.querySelector('.rz-foto'), rzTxt=document.querySelector('.rz-txt');
+
+/* ── REVELACAO EM FATIAS, GERAL ──────────────────────────────────────
+   Qualquer elemento com [data-fatia] e cortado em 40 FAIXAS HORIZONTAIS
+   que esticam o x a partir da borda esquerda, escalonadas de 0.01s. E o
+   desenho do KineticTextMotion: la cada divisao e um plano de largura
+   cheia e altura titleHeight/40, com pivo em tOffsetX -1.
+
+   O corte e no ELEMENTO inteiro, nao por linha: assim funciona igual para
+   uma frase de duas linhas, uma com <br> ou uma com trecho colorido —
+   cada copia carrega o innerHTML original e mantem a formatacao.
+
+   A copia legivel fica no DOM (invisivel) e as 40 sao aria-hidden. */
+var FATIAS=40;
+var fatiados=[].slice.call(document.querySelectorAll('[data-fatia]'));
+fatiados.forEach(function(el){
+  var dentro=el.innerHTML;
+  el.innerHTML='';
+  el.classList.add('fatiado');
+  var base=document.createElement('span');
+  base.className='base'; base.innerHTML=dentro;   /* tamanho real + leitura */
+  el.appendChild(base);
+  for(var i=0;i<FATIAS;i++){
+    var f=document.createElement('i');
+    f.setAttribute('aria-hidden','true');
+    f.innerHTML=dentro;
+    var e0=(i*100/FATIAS), e1=((i+1)*100/FATIAS);
+    /* sangria durante a animacao. Ela sozinha NAO resolve a costura: a
+       faixa tem ~1.4px de altura, entao 0.08% dava 0.05px. Quem resolve o
+       estado final e a troca pelo texto inteiro (ver fatias-fim). */
+    var s0=Math.max(0,e0-0.6), s1=Math.min(100,e1+0.6);
+    f.style.clipPath='inset('+s0.toFixed(3)+'% 0 '+(100-s1).toFixed(3)+'% 0)';
+    f.style.setProperty('--i',i);
+    el.appendChild(f);
+  }
+});
+function checaFatias(vh){
+  for(var i=0;i<fatiados.length;i++){
+    var el=fatiados[i], r=el.getBoundingClientRect();
+    var dentro=r.top<vh*0.86 && r.bottom>0;
+    if(dentro===el.classList.contains('fatias-on'))continue;
+    el.classList.toggle('fatias-on',dentro);
+    clearTimeout(el._t);
+    if(dentro){
+      /* 0.39s de atraso da ultima faixa + 0.8s de duracao */
+      el._t=setTimeout(function(e){return function(){e.classList.add('fatias-fim')}}(el),1260);
+    }else{
+      el.classList.remove('fatias-fim');
+    }
+  }
+}
+
+function moveRaiz(vh){
+  if(!raiz)return;
+  var r=raiz.getBoundingClientRect();
+  if(r.bottom<-100||r.top>vh+100){
+    raiz.style.setProperty('--cor',0);
+    raiz.style.setProperty('--txt',0);
+    return;
+  }
+
+  /* p = 0 quando a secao entra por baixo, 1 quando sai por cima */
+  var p=(vh-r.top)/(vh+r.height);
+  if(p<0)p=0; if(p>1)p=1;
+
+  /* A FOTO fica para tras: deslocada para cima na entrada e para baixo na
+     saida, o que REDUZ o quanto ela anda na tela em relacao a pagina.
+     Menos deslocamento aparente = mais longe. 40% da altura da moldura de
+     curso total, dentro da folga de 50% que o CSS reservou. */
+  var H=r.height;
+  if(rzFoto)rzFoto.style.transform='translate3d(0,'+((p-0.5)*0.40*H).toFixed(1)+'px,0)';
+  /* O TEXTO faz o contrario e anda MAIS que a pagina: vem para a frente.
+     E a diferenca entre os dois planos que o olho le como profundidade —
+     mover os dois juntos seria o mesmo que nao mover nada. */
+  if(rzTxt)rzTxt.style.transform='translate3d(0,calc(-50% + '+((0.5-p)*0.13*H).toFixed(1)+'px),0)';
+
+  var visivel=(Math.min(r.bottom,vh)-Math.max(r.top,0))/vh;
+  if(visivel<0)visivel=0; if(visivel>1)visivel=1;
+  /* o TEXTO assenta antes (a partir de 28% de ocupacao) e a COR vem
+     depois (a partir de 55%): primeiro a frase, depois o mundo colorindo */
+  var kt=(visivel-0.28)/0.34;
+  if(kt<0)kt=0; if(kt>1)kt=1;
+  kt=kt*kt*(3-2*kt);
+  raiz.style.setProperty('--txt',kt.toFixed(3));
+
+  var k=(visivel-0.55)/0.42;
+  if(k<0)k=0; if(k>1)k=1;
+  k=k*k*(3-2*k);                       /* suaviza as pontas */
+  raiz.style.setProperty('--cor',k.toFixed(3));
+  raiz.classList.toggle('acesa',k>0.5);
+}
+
+/* ── CLIENTES: entrada em Blur Rise ──────────────────────────────────
+   Uma classe no container dispara as 15, cada uma com o proprio atraso
+   (--n * .055s). Reverte ao sair, como o resto da secao de baixo. */
+var cliGrade=document.getElementById('cliGrade');
+function checaClientes(vh){
+  if(!cliGrade)return;
+  var r=cliGrade.getBoundingClientRect();
+  cliGrade.classList.toggle('subiu', r.top<vh*0.88 && r.bottom>0);
+}
+
+/* ── EMENDA LÍQUIDA ENTRE SEÇÕES ─────────────────────────────────────
+   Velocidade do scroll -> suavizacao -> mola -> profundidade da curva.
+   As constantes sao as do preset "cinematic" do modulo de referencia.
+
+   A mola e integrada a mao (o modulo usa framer-motion): aceleracao =
+   (rigidez*(alvo - x) - amortecimento*v) / massa. Precisa rodar TODO
+   quadro, nao so quando ha scroll — senao a curva congela esticada em vez
+   de voltar. */
+var MORF={rigidez:95, amortecimento:24, massa:1, sensibilidade:1.1,
+          suavizacao:.18, repique:.10, desloc:10, profundidade:73,
+          larguraCurva:72, tensao:78, atrasoAssenta:70};
+var morfConta=0;
+var morfs=[].slice.call(document.querySelectorAll('.morf')).map(function(el){
+  var svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+  svg.setAttribute('viewBox','0 0 1000 340');
+  svg.setAttribute('preserveAspectRatio','none');
+  var fundo=document.createElementNS('http://www.w3.org/2000/svg','rect');
+  fundo.setAttribute('x','0');fundo.setAttribute('y','-40');
+  fundo.setAttribute('width','1000');fundo.setAttribute('height','420');
+  fundo.setAttribute('fill',el.dataset.baixo||'#050609');
+  var forma=document.createElementNS('http://www.w3.org/2000/svg','path');
+  forma.setAttribute('fill',el.dataset.cima||'#0D0F13');
+  /* a aresta e o unico elemento realmente visivel aqui (as duas cores da
+     costura tem 1.09:1 entre si). Degrade em vez de cor chapada: acesa no
+     centro, onde a curva mergulha, e dissolvida nas pontas — assim ela le
+     como luz na emenda e nao como uma borda desenhada. */
+  var idg='morfLuz'+(++morfConta);
+  var defs=document.createElementNS('http://www.w3.org/2000/svg','defs');
+  var grad=document.createElementNS('http://www.w3.org/2000/svg','linearGradient');
+  grad.setAttribute('id',idg);grad.setAttribute('x1','0');grad.setAttribute('x2','1');
+  [['0','0'],['.22','.10'],['.5','.38'],['.78','.10'],['1','0']].forEach(function(p){
+    var s=document.createElementNS('http://www.w3.org/2000/svg','stop');
+    s.setAttribute('offset',p[0]);s.setAttribute('stop-color','#fff');
+    s.setAttribute('stop-opacity',p[1]);grad.appendChild(s);
+  });
+  defs.appendChild(grad);svg.appendChild(defs);
+  var aresta=document.createElementNS('http://www.w3.org/2000/svg','path');
+  aresta.setAttribute('class','aresta');
+  aresta.setAttribute('stroke','url(#'+idg+')');
+  svg.appendChild(fundo);svg.appendChild(forma);svg.appendChild(aresta);
+  el.appendChild(svg);
+  return {el:el, forma:forma, aresta:aresta, x:0, v:0, alvo:0, suave:0, dir:1, parado:0};
+});
+var morfScrollAnterior=(window.scrollY||0), _ant=0;
+function moveMorf(vh,dt){
+  if(!morfs.length)return;
+  var y=window.scrollY||0, d=y-morfScrollAnterior; morfScrollAnterior=y;
+  for(var i=0;i<morfs.length;i++){
+    var m=morfs[i], r=m.el.getBoundingClientRect();
+    if(r.bottom<-400||r.top>vh+400){ m.x=0;m.v=0;m.alvo=0;m.suave=0; continue; }
+
+    if(d!==0){
+      m.dir=d>0?1:-1;
+      var bruta=d/42*MORF.sensibilidade;                 /* 42 = o divisor do modulo */
+      m.suave=m.suave+(bruta-m.suave)*MORF.suavizacao;
+      m.alvo=Math.max(-1,Math.min(1,m.suave));
+      m.parado=0;
+    }else{
+      m.parado+=dt*1000;
+      /* passado o atraso, a mola recebe um repique contrario e depois zero:
+         e o que da o "volta e balanca" em vez de um retorno morto */
+      if(m.parado>MORF.atrasoAssenta) m.alvo=(m.parado<MORF.atrasoAssenta+55)? -m.dir*MORF.repique : 0;
+    }
+    var a=(MORF.rigidez*(m.alvo-m.x)-MORF.amortecimento*m.v)/MORF.massa;
+    m.v+=a*dt; m.x+=m.v*dt;
+    if(m.x>1.2)m.x=1.2; if(m.x<-1.2)m.x=-1.2;
+
+    /* geometria, igual a do modulo */
+    var prof=m.x*MORF.profundidade;
+    var centroY=170+m.x*MORF.desloc;
+    var curvaY=centroY+prof;
+    var recuo=Math.max(40,Math.min(475,(MORF.larguraCurva/100)*500+(130+(20-130)*(MORF.tensao/100))));
+    var levanta=prof*(0.18+(0.03-0.18)*(MORF.tensao/100));
+    var bordaY=centroY+levanta;
+    var curva='C '+(1000-recuo)+' '+curvaY.toFixed(1)+', '+recuo+' '+curvaY.toFixed(1)+', 0 '+bordaY.toFixed(1);
+    m.forma.setAttribute('d','M 0 0 H 1000 V '+bordaY.toFixed(1)+' '+curva+' Z');
+    m.aresta.setAttribute('d','M 1000 '+bordaY.toFixed(1)+' '+curva);
+  }
+}
+
+/* ── PARALLAX GERAL ───────────────────────────────────────────────────
+   data-px = quantos pixels o elemento se desloca do topo ao fim da
+   travessia pela tela. POSITIVO sobe mais rapido que o scroll (parece
+   estar na frente); NEGATIVO fica para tras (parece ao fundo). Camadas
+   com sinais opostos e o que cria a sensacao de profundidade — mover
+   tudo junto e o mesmo que nao mover nada.
+
+   Nao usar em elemento com data-r: o sistema de revelacao escreve no
+   mesmo transform e um apagaria o outro. Por isso o parallax vai sempre
+   num pai ou num filho, nunca no proprio alvo revelado. */
+var pxs=[].slice.call(document.querySelectorAll('[data-px]'));
+pxs.forEach(function(el){el.style.willChange='transform'});
+var mqPeq=matchMedia('(max-width:820px)');
+function movePx(vh){
+  for(var i=0;i<pxs.length;i++){
+    var el=pxs[i],r=el.getBoundingClientRect();
+    if(el.hasAttribute('data-sc'))continue;   /* quem tem zoom e tratado la */
+    if(r.bottom<-260||r.top>vh+260)continue;
+    var p=((r.top+r.height/2)-vh/2)/vh;    /* 0 no centro da tela */
+    if(p>1)p=1;if(p<-1)p=-1;
+    var f=parseFloat(el.getAttribute('data-px'))||0;
+    /* No celular a folga da secao cai de 144px para 76px e, num layout
+       empilhado, a foto tem so 38px ate o texto de baixo. Como os dois
+       correm em sentidos opostos, o vao fecha pelos dois lados — entao
+       quem precisa de curso menor ali declara data-px-m. */
+    if(mqPeq.matches){var fm=el.getAttribute('data-px-m');
+      if(fm!==null)f=parseFloat(fm)||0;}
+    el.style.transform='translate3d(0,'+(p*f).toFixed(2)+'px,0)';
+  }
+}
+
+/* processo: as etapas acendem conforme o scroll atravessa o bloco */
+var pcBloco=document.getElementById('pcList');
+var pcEls=[].slice.call(document.querySelectorAll('.pc-i'));
+function movePc(vh){
+  if(!pcBloco)return;
+  var r=pcBloco.getBoundingClientRect();
+  if(r.bottom<-120||r.top>vh+120)return;
+  var p=(vh*0.82-r.top)/(r.height+vh*0.25);
+  if(p<0)p=0;if(p>1)p=1;
+  var n=p*pcEls.length;
+  for(var i=0;i<pcEls.length;i++){
+    var f=n-i;f=f<0?0:(f>1?1:f);
+    pcEls[i].style.setProperty('--lit',f.toFixed(3));
+  }
+}
+/* videos: carregam quando chegam perto */
+var vids=[].slice.call(document.querySelectorAll('video[data-src]'));
+/* No celular o hero e so o poster, por decisao anterior de poupar dados.
+   A versao leve do video (hero-napraia-m.mp4, 2.4MB contra 5.8MB) ja esta
+   codificada e ligada em data-src-m: para passar a tocar tambem no
+   celular, basta remover este bloco. */
+if(matchMedia('(max-width:768px)').matches){
+  var hv=document.getElementById('heroVid');
+  if(hv)hv.removeAttribute('data-src');
+}
+function checaVids(vh){
+  for(var i=0;i<vids.length;i++){
+    var v=vids[i],r=v.getBoundingClientRect();
+    if(r.top<vh+300&&r.bottom>-300){
+      /* data-src-m: versao mais leve para tela estreita. A escolha e feita
+         uma vez, na hora de carregar — trocar a fonte depois reiniciaria
+         o video no meio. */
+      if(!v.src&&v.dataset.src){
+        v.src=(innerWidth<=760&&v.dataset.srcM)?v.dataset.srcM:v.dataset.src;
+        v.load();
+      }
+      if(v.paused){var q=v.play();if(q&&q.catch)q.catch(function(){})}
+    }else if(!v.paused){try{v.pause()}catch(_){}}
+  }
+}
+
+/* ── SHOWREEL PRESO: cresce enquanto voce atravessa ──────────────────── */
+var pinTr=document.querySelector('.pin-tr');
+/* ── SHOWREEL: amplia a palavra ate o video tomar a tela ─────────────
+   A escala cresce em CUBO, nao linear: no comeco a palavra mal se mexe e
+   no fim dispara. Zoom linear parece elevador; este parece mergulho.
+
+   A palavra e o furo, entao ampliar abre o furo. So que o centro de
+   "SHOWREEL" cai entre o W e o R — area TAPADA. Ampliar dali abriria o
+   quadro pelas beiradas e deixaria um tampao no meio. Por isso a tapa
+   ainda se apaga no trecho final: e o que garante o video limpo. */
+var srLetra=document.getElementById('srLetra'), srTapa=document.querySelector('.sr-tapa'),
+    srLeg=document.getElementById('srLeg');
+function movePin(){
+  if(!pinTr||!srLetra)return;
+  var curso=pinTr.offsetHeight-innerHeight;
+  if(curso<=0)return;
+  var p=(-pinTr.getBoundingClientRect().top)/curso;
+  p=p<0?0:(p>1?1:p);
+  /* quarta potencia, nao cubo: com cubo a palavra ja passava da largura
+     da tela em 25% do percurso e mal dava tempo de ler SHOWREEL. Assim ela
+     fica legivel ate cerca de um terco e so entao mergulha. */
+  var s=1+Math.pow(p,4)*60;
+  /* ORIGEM MEDIDA. Rasterizei a palavra na fonte real e varri os 2879
+     pontos que caem na tinta, avaliando em cada um qual a MENOR abertura
+     ao longo de todo o mergulho. (532,168) dava 30% no pior instante e
+     terminava o mergulho com 29% de tapa ainda na tela; (658,107) da 43%
+     no pior instante e fecha em 100% de furo. E o melhor ponto que existe
+     nesta palavra — nao um chute. */
+  srLetra.setAttribute('transform',
+    'translate(658 107) scale('+s.toFixed(3)+') translate(-658 -107)');
+  /* A TAPA RECUA JUNTO COM O MERGULHO, nao no fim. Antes ela so comecava a
+     sair em p=0.66; ate la a tela ficava de 38% a 85% preta e a camera
+     atravessava esse breu. Nenhuma origem resolve isso sozinha: no meio do
+     caminho a janela ja e maior que qualquer haste da letra, entao sobra
+     tapa de todo jeito. Comecando a dissolver em 0.28 — depois de dar
+     tempo de LER a palavra — o preto so diminui dai em diante. */
+  var fade=p<0.28?1:Math.max(0,1-(p-0.28)/0.44);
+  if(srTapa)srTapa.style.opacity=fade.toFixed(3);
+  if(srLeg)srLeg.style.opacity=(p<0.12?1:Math.max(0,1-(p-0.12)/0.2)).toFixed(3);
+}
+
+/* ── BARRA DE PROGRESSO ──────────────────────────────────────────────── */
+var progI=document.querySelector('#prog i');
+function moveProg(){
+  if(!progI)return;
+  var H=document.documentElement.scrollHeight-innerHeight;
+  progI.style.width=(H>0?(scrollY/H)*100:0).toFixed(2)+'%';
+}
+
+/* ── BOTOES MAGNETICOS: puxam de leve na direcao do cursor ───────────── */
+[].forEach.call(document.querySelectorAll('.mag'),function(b){
+  b.addEventListener('pointermove',function(e){
+    var r=b.getBoundingClientRect();
+    var dx=(e.clientX-(r.left+r.width/2))*.28,
+        dy=(e.clientY-(r.top+r.height/2))*.28;
+    b.style.transform='translate('+dx.toFixed(1)+'px,'+dy.toFixed(1)+'px)';
+  });
+  b.addEventListener('pointerleave',function(){b.style.transform=''});
+});
+
+/* TRES fontes chamam a rede: se o rAF for estrangulado, scroll e
+   intervalo cobrem — o conteudo nunca fica preso escondido. */
+function rede(){
+  var vh=innerHeight||1;
+  var _ag=performance.now(), _dt=Math.min(.05,(_ag-(_ant||_ag))/1000)||.016; _ant=_ag;
+  checaRevs(vh);checaHero(vh);checaMarcas(vh);checaFatias(vh);checaClientes(vh);moveMorf(vh,_dt);moveSc(vh);movePx(vh);moveFita(vh);moveRaiz(vh);movePc(vh);giraRoletes(vh);checaVids(vh);
+  movePin();moveProg();
+  if(nav)nav.classList.toggle('stuck',scrollY>60);
+}
+addEventListener('scroll',rede,{passive:true});
+setInterval(rede,320);
+addEventListener('load',rede);
+(function laco(t){if(lenis)lenis.raf(t);rede();requestAnimationFrame(laco)})();
+rede();
+})();
+</script>
+</body>
+</html>

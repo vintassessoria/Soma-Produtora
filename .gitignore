@@ -34,3 +34,6 @@ Desktop.ini
 node_modules/
 .env
 .env.local
+
+# ── Scratch do assistente ──────────────────────────────────────────────────────
+*-tmp.cjs

@@ -1,0 +1,643 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#030706">
+<title>SOMA — Hero Globo & Terreno</title>
+
+<!-- ============================================================
+  HERO — inspirado na imagem de referência enviada pelo cliente.
+  Elementos:
+    1) Starfield atrás com twinkle sutil
+    2) Globo wireframe rotacionando no topo com distorção sinoidal
+       (efeito "derretido" igual à referência)
+    3) Terreno montanhoso wireframe denso no bottom, com glow verde
+    4) Overlay de tipografia no seu estilo (4 linhas, mix peso/cor)
+    5) CTAs primary/ghost + marquee "BRASIL — EUA — EUROPA"
+  Tudo em Canvas 2D (sem WebGL, sem libs), mobile simplificado,
+  pausa off-screen, honra prefers-reduced-motion.
+============================================================ -->
+
+<style>
+  :root{
+    --bg:#020604;
+    --fg:#f4f4f4;
+    --mut:#8a8a8a;
+    --G:#6bf019;
+    --Gd:#4cc014;
+    --Ef:cubic-bezier(.2,.8,.2,1);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html,body{background:var(--bg);color:var(--fg);overflow-x:hidden}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",system-ui,sans-serif;
+    font-weight:400;line-height:1.5;
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  }
+
+  /* =============================== HERO =============================== */
+  .hero{
+    position:relative;width:100%;min-height:100vh;
+    display:flex;align-items:flex-end;
+    overflow:hidden;isolation:isolate;
+    padding:0 clamp(20px,5vw,120px) clamp(60px,10vh,100px);
+    background:
+      radial-gradient(ellipse 85% 50% at 50% 110%,rgba(107,240,25,.10) 0%,transparent 65%),
+      radial-gradient(ellipse 60% 30% at 50% -10%,rgba(107,240,25,.06) 0%,transparent 70%),
+      linear-gradient(180deg,#010302 0%,#030706 45%,#061008 85%,#030706 100%);
+  }
+
+  /* CAMADA 1 — canvas único com stars + globe + terrain */
+  #heroCanvas{
+    position:absolute;inset:0;width:100%;height:100%;
+    pointer-events:none;z-index:1;
+    transform:translateZ(0);backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+    opacity:0;transition:opacity 1.4s var(--Ef);
+  }
+  #heroCanvas.ready{opacity:1}
+
+  /* CAMADA 2 — vignette pra suavizar borda + fundir com resto do site */
+  .hero-vignette{
+    position:absolute;inset:0;z-index:2;pointer-events:none;
+    background:
+      linear-gradient(180deg,rgba(3,7,6,.75) 0%,transparent 20%,transparent 62%,rgba(3,7,6,.55) 100%),
+      radial-gradient(ellipse 140% 100% at 50% 50%,transparent 40%,rgba(3,7,6,.6) 100%);
+  }
+
+  /* =============================== CONTEÚDO =============================== */
+  .hero-inner{
+    position:relative;z-index:3;max-width:1400px;width:100%;margin:0 auto;
+    will-change:transform;
+  }
+
+  .hero-kicker{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:10px;letter-spacing:.45em;text-transform:uppercase;color:var(--mut);
+    padding:7px 16px;border:1px solid rgba(255,255,255,.12);border-radius:999px;
+    background:rgba(255,255,255,.02);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    margin-bottom:clamp(20px,3vh,40px);font-weight:500;
+    opacity:0;transform:translateY(18px);
+    animation:heroFade .9s var(--Ef) .2s forwards;
+  }
+  .hero-kicker::before{
+    content:"";width:6px;height:6px;border-radius:50%;background:var(--G);
+    box-shadow:0 0 10px var(--G);
+    animation:kickerPulse 2s ease-in-out infinite;
+  }
+  @keyframes kickerPulse{
+    0%,100%{opacity:.6;transform:scale(1)}
+    50%{opacity:1;transform:scale(1.3)}
+  }
+
+  /* Tipografia igual a referência: 4 linhas com pesos/cores/tamanhos variados */
+  .hero-title{
+    font-weight:800;letter-spacing:-.03em;line-height:.95;
+    margin-bottom:clamp(22px,3.5vh,44px);
+    max-width:920px;
+  }
+  .hero-title .ln{display:block;overflow:hidden;padding-bottom:.04em}
+  .hero-title .ln > span{display:block;opacity:0;transform:translateY(110%)}
+
+  /* Linha 1: "Não é só" — grande, branco, bold */
+  .hero-title .l1{font-size:clamp(40px,8.4vw,130px);line-height:.92}
+  .hero-title .l1 > span{animation:titleReveal 1.1s var(--Ef) .45s forwards}
+
+  /* Linha 2: "vídeo." — médio, branco, light italic */
+  .hero-title .l2{font-size:clamp(30px,6vw,86px);font-weight:400;font-style:italic;margin-top:.12em;color:rgba(255,255,255,.88)}
+  .hero-title .l2 > span{animation:titleReveal 1.1s var(--Ef) .6s forwards}
+
+  /* Linha 3: "É impacto" — grande, verde, bold italic */
+  .hero-title .l3{
+    font-size:clamp(42px,9vw,140px);line-height:.92;font-style:italic;
+    color:var(--G);
+    text-shadow:0 0 40px rgba(107,240,25,.55),0 0 90px rgba(107,240,25,.25);
+  }
+  .hero-title .l3 > span{animation:titleReveal 1.1s var(--Ef) .78s forwards}
+
+  /* Linha 4: "permanente." — grande, branco, bold */
+  .hero-title .l4{font-size:clamp(40px,8.4vw,130px);line-height:.92;margin-top:.04em}
+  .hero-title .l4 > span{animation:titleReveal 1.1s var(--Ef) .95s forwards}
+
+  @keyframes titleReveal{
+    0%{opacity:0;transform:translateY(110%)}
+    100%{opacity:1;transform:translateY(0)}
+  }
+
+  .hero-sub{
+    font-size:clamp(14px,1.4vw,18px);line-height:1.6;color:rgba(255,255,255,.55);
+    max-width:520px;font-weight:300;
+    margin-bottom:clamp(30px,4.5vh,48px);
+    opacity:0;transform:translateY(20px);
+    animation:heroFade .9s var(--Ef) 1.25s forwards;
+  }
+
+  @keyframes heroFade{
+    0%{opacity:0;transform:translateY(20px)}
+    100%{opacity:1;transform:translateY(0)}
+  }
+
+  /* =============================== CTAs =============================== */
+  .hero-ctas{
+    display:flex;align-items:center;gap:14px;flex-wrap:wrap;
+    opacity:0;transform:translateY(20px);
+    animation:heroFade .9s var(--Ef) 1.45s forwards;
+  }
+  .btn{
+    display:inline-flex;align-items:center;gap:10px;
+    font-size:12px;font-weight:600;letter-spacing:.22em;text-transform:uppercase;
+    padding:16px 32px;border-radius:999px;text-decoration:none;cursor:pointer;
+    border:1px solid transparent;position:relative;overflow:hidden;
+    transition:transform .35s var(--Ef),background .35s,color .35s,
+               box-shadow .45s var(--Ef),border-color .35s;
+  }
+  .btn svg{width:14px;height:14px;transition:transform .35s var(--Ef)}
+  .btn:hover svg{transform:translateX(4px)}
+  .btn:active{transform:scale(.97)}
+
+  .btn-primary{
+    background:var(--G);color:#000;
+    box-shadow:0 0 0 rgba(107,240,25,.4),0 10px 26px rgba(107,240,25,.18);
+  }
+  .btn-primary::after{
+    content:"";position:absolute;inset:-2px;border-radius:999px;z-index:-1;
+    background:radial-gradient(circle at 50% 120%,rgba(107,240,25,.8) 0%,transparent 60%);
+    opacity:0;transition:opacity .4s;filter:blur(14px);
+  }
+  .btn-primary:hover{
+    transform:translateY(-2px);background:#7dff22;
+    box-shadow:0 0 28px rgba(107,240,25,.38),0 14px 38px rgba(107,240,25,.28);
+  }
+  .btn-primary:hover::after{opacity:1}
+
+  .btn-ghost{
+    background:rgba(255,255,255,.02);color:#fff;
+    border-color:rgba(255,255,255,.22);
+    backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  }
+  .btn-ghost:hover{
+    border-color:var(--G);color:var(--G);
+    background:rgba(107,240,25,.05);transform:translateY(-2px);
+    box-shadow:0 10px 28px rgba(107,240,25,.14);
+  }
+
+  /* =============================== MARQUEE BOTTOM =============================== */
+  .hero-locations{
+    position:absolute;bottom:clamp(18px,3vh,30px);left:0;width:100%;
+    text-align:center;z-index:3;pointer-events:none;
+    opacity:0;animation:heroFade 1s var(--Ef) 1.75s forwards;
+  }
+  .hero-locations span{
+    display:inline-block;font-size:11px;letter-spacing:.55em;text-transform:uppercase;
+    color:var(--G);font-weight:500;padding:0 20px;
+    text-shadow:0 0 12px rgba(107,240,25,.35);
+  }
+  .hero-locations em{font-style:normal;opacity:.4;margin:0 14px}
+
+  /* =============================== MOBILE =============================== */
+  @media(max-width:768px){
+    .hero{min-height:100svh;padding:0 22px 60px;align-items:flex-end}
+    .hero-title .l1{font-size:clamp(34px,11vw,56px)}
+    .hero-title .l2{font-size:clamp(24px,8vw,42px)}
+    .hero-title .l3{font-size:clamp(36px,12vw,62px)}
+    .hero-title .l4{font-size:clamp(34px,11vw,56px)}
+    .hero-sub{font-size:14px}
+    .btn{padding:13px 24px;font-size:11px;letter-spacing:.18em}
+  }
+  @media(max-width:420px){
+    .hero-ctas{flex-direction:column;align-items:stretch;width:100%}
+    .btn{justify-content:center}
+    .hero-locations span{font-size:10px;letter-spacing:.4em}
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation-duration:.01s!important;transition-duration:.01s!important}
+  }
+
+  /* teste de scroll */
+  .fake-next{
+    padding:200px 40px;background:#030706;text-align:center;color:var(--mut);
+    font-size:13px;letter-spacing:.2em;text-transform:uppercase;
+  }
+  .fake-next a{color:var(--G);text-decoration:none;border-bottom:1px solid transparent;transition:.3s}
+  .fake-next a:hover{border-bottom-color:var(--G)}
+</style>
+</head>
+<body>
+
+<section class="hero" id="hero">
+  <canvas id="heroCanvas" aria-hidden="true"></canvas>
+  <div class="hero-vignette" aria-hidden="true"></div>
+
+  <div class="hero-inner" id="heroInner">
+    <span class="hero-kicker">Produtora Audiovisual · Brasília</span>
+
+    <h1 class="hero-title">
+      <span class="ln l1"><span>Não é só</span></span>
+      <span class="ln l2"><span>vídeo.</span></span>
+      <span class="ln l3"><span>É impacto</span></span>
+      <span class="ln l4"><span>permanente.</span></span>
+    </h1>
+
+    <p class="hero-sub">Criamos experiências visuais de alto nível para empresas que querem se destacar no Brasil e no mundo.</p>
+
+    <div class="hero-ctas">
+      <a href="#portfolio" class="btn btn-primary">
+        Ver Projetos
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="10 4 14 8 10 12"/></svg>
+      </a>
+      <a href="#cta" class="btn btn-ghost">
+        Falar com a SOMA
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="2" y1="8" x2="14" y2="8"/><polyline points="10 4 14 8 10 12"/></svg>
+      </a>
+    </div>
+  </div>
+
+  <div class="hero-locations"><span>Brasil <em>—</em> EUA <em>—</em> Europa</span></div>
+</section>
+
+<section class="fake-next">
+  <p>Fim da demo do hero.</p>
+  <p><a href="../index.html">← Voltar para o site real</a></p>
+</section>
+
+<script>
+/* ================================================================
+   HERO CANVAS — tudo em uma única superfície 2D:
+     - STARFIELD com twinkle
+     - GLOBO WIREFRAME rotacionando com distorção sinoidal
+     - TERRENO MONTANHOSO com wireframe + glow
+   Performance: DPR cap, frame cap no mobile, IntersectionObserver,
+   parallax de mouse e scroll, fallback pra prefers-reduced-motion.
+================================================================ */
+
+(function(){
+  'use strict';
+  var canvas = document.getElementById('heroCanvas');
+  if(!canvas || !canvas.getContext) return;
+  var ctx = canvas.getContext('2d', { alpha: true });
+
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var W=0, H=0, dpr=1, mobile=false;
+  var raf=null, t0=null, lastDraw=0, FRAME_CAP=0;
+  var visible=true;
+
+  /* parallax mouse */
+  var mx=0, my=0, tiltX=0, tiltY=0;
+
+  /* ================= STARFIELD ================= */
+  var stars = [];
+  function initStars(){
+    stars.length = 0;
+    var count = mobile ? 80 : 160;
+    for(var i=0;i<count;i++){
+      stars.push({
+        x: Math.random(),   /* 0..1 normalizado */
+        y: Math.random() * 0.65,  /* só na metade superior */
+        r: Math.random() * 1.2 + 0.2,
+        base: 0.25 + Math.random() * 0.55,
+        phase: Math.random() * Math.PI * 2,
+        speed: 0.5 + Math.random() * 1.5
+      });
+    }
+  }
+  function drawStars(t){
+    for(var i=0;i<stars.length;i++){
+      var s = stars[i];
+      var alpha = s.base + Math.sin(t * s.speed + s.phase) * 0.25;
+      alpha = Math.max(0.05, Math.min(1, alpha));
+      ctx.fillStyle = 'rgba(' + (200 + Math.random()*0|0) + ',255,230,' + alpha.toFixed(3) + ')';
+      /* suavizar sem Math.random em fill: usamos branco+verde muito sutil */
+      ctx.fillStyle = 'rgba(220,255,220,' + alpha.toFixed(3) + ')';
+      ctx.beginPath();
+      ctx.arc(s.x * W, s.y * H, s.r, 0, Math.PI * 2);
+      ctx.fill();
+    }
+  }
+
+  /* ================= GLOBO WIREFRAME ================= */
+  /* Sphere gerada por paralelos (latitude) e meridianos (longitude).
+     Cada vértice sofre distorção sinoidal no raio pra criar o efeito
+     "derretido" igual à referência. */
+  var GLOBE_LAT = 18;  /* desktop */
+  var GLOBE_LON = 28;
+  var GLOBE_LAT_M = 12;
+  var GLOBE_LON_M = 18;
+
+  var globeVerts = [];  /* cache: [ [lat][lon] -> {x,y,z,depth} ] */
+  function buildGlobeCache(){
+    var latN = mobile ? GLOBE_LAT_M : GLOBE_LAT;
+    var lonN = mobile ? GLOBE_LON_M : GLOBE_LON;
+    globeVerts = new Array(latN + 1);
+    for(var i=0;i<=latN;i++){
+      globeVerts[i] = new Array(lonN + 1);
+      for(var j=0;j<=lonN;j++){
+        globeVerts[i][j] = { sx:0, sy:0, depth:0 };
+      }
+    }
+  }
+
+  function drawGlobe(t){
+    var latN = mobile ? GLOBE_LAT_M : GLOBE_LAT;
+    var lonN = mobile ? GLOBE_LON_M : GLOBE_LON;
+
+    /* posição e tamanho do globo */
+    var cx = W * 0.72;          /* à direita centro (como referência) */
+    var cy = H * 0.28;          /* topo */
+    var radius = Math.min(W, H) * (mobile ? 0.22 : 0.22);
+
+    /* rotação lenta no eixo Y + oscilação leve no X */
+    var rotY = t * 0.35 + tiltX * 0.4;
+    var rotX = 0.4 + Math.sin(t * 0.2) * 0.06 + tiltY * 0.25;
+    var cY = Math.cos(rotY), sY = Math.sin(rotY);
+    var cX = Math.cos(rotX), sX = Math.sin(rotX);
+
+    /* projetar todos os vértices com distorção */
+    for(var i=0;i<=latN;i++){
+      var phi = (i / latN) * Math.PI;           /* 0..PI */
+      for(var j=0;j<=lonN;j++){
+        var theta = (j / lonN) * Math.PI * 2;   /* 0..2PI */
+        /* distorção: onda no raio baseada em theta, phi e tempo */
+        var dist = 1 + 0.08 * Math.sin(theta * 3 + t * 1.1)
+                     + 0.06 * Math.sin(phi * 4 - t * 0.9)
+                     + 0.05 * Math.cos(theta * 2 + phi * 3 + t * 0.7);
+        var r = radius * dist;
+        /* ponto na esfera */
+        var x = r * Math.sin(phi) * Math.cos(theta);
+        var y = r * Math.cos(phi);
+        var z = r * Math.sin(phi) * Math.sin(theta);
+        /* rotação Y */
+        var xr = x * cY + z * sY;
+        var zr = -x * sY + z * cY;
+        /* rotação X */
+        var yr = y * cX - zr * sX;
+        var zr2 = y * sX + zr * cX;
+        /* projeção perspectiva */
+        var fov = radius * 4;
+        var d = fov + zr2;
+        var sx = cx + xr * fov / d;
+        var sy = cy + yr * fov / d;
+        /* depth normalizado 0 (atrás) → 1 (frente) */
+        var depth = 0.5 + zr2 / (radius * 2);
+        globeVerts[i][j].sx = sx;
+        globeVerts[i][j].sy = sy;
+        globeVerts[i][j].depth = depth;
+      }
+    }
+
+    /* desenhar malha com fade back-face */
+    if(!mobile){
+      ctx.shadowColor = 'rgba(107,240,25,.7)';
+      ctx.shadowBlur = 8;
+    }
+    ctx.lineWidth = mobile ? 0.7 : 0.9;
+
+    /* paralelos (linhas horizontais) */
+    for(var ii=0;ii<=latN;ii++){
+      ctx.beginPath();
+      for(var jj=0;jj<=lonN;jj++){
+        var v = globeVerts[ii][jj];
+        /* só desenha segmento se ambos vértices estão na frente */
+        var v2 = globeVerts[ii][(jj + 1) % (lonN + 1)];
+        if(jj === 0){
+          ctx.moveTo(v.sx, v.sy);
+        } else {
+          /* alpha por profundidade */
+          var a = Math.max(0.05, Math.min(0.9, v.depth * 0.8 + 0.1));
+          ctx.lineTo(v.sx, v.sy);
+        }
+      }
+      var avg = (globeVerts[ii][0].depth + globeVerts[ii][lonN].depth) * 0.5;
+      var stroke = Math.max(0.1, Math.min(0.85, avg * 0.9));
+      ctx.strokeStyle = 'rgba(107,240,25,' + stroke.toFixed(3) + ')';
+      ctx.stroke();
+    }
+
+    /* meridianos (linhas verticais) */
+    for(var jj2=0;jj2<=lonN;jj2+=1){
+      ctx.beginPath();
+      var avgD = 0;
+      for(var ii2=0;ii2<=latN;ii2++){
+        var vv = globeVerts[ii2][jj2];
+        avgD += vv.depth;
+        if(ii2 === 0) ctx.moveTo(vv.sx, vv.sy);
+        else ctx.lineTo(vv.sx, vv.sy);
+      }
+      avgD /= (latN + 1);
+      var stroke2 = Math.max(0.08, Math.min(0.8, avgD * 0.85));
+      ctx.strokeStyle = 'rgba(107,240,25,' + stroke2.toFixed(3) + ')';
+      ctx.stroke();
+    }
+
+    ctx.shadowBlur = 0;
+  }
+
+  /* ================= TERRENO MONTANHOSO ================= */
+  var T_COLS = 0, T_ROWS = 0;
+  function setTerrainRes(){
+    T_COLS = mobile ? 28 : 60;
+    T_ROWS = mobile ? 16 : 32;
+  }
+
+  function waveHeight(gx, gz, t){
+    var nx = (gx / T_COLS) * 2 - 1;    /* -1..+1 */
+    var nz =  gz / T_ROWS;             /*  0..+1 */
+    var h =
+      Math.sin(nx * Math.PI * 1.8  + t * 0.5)  * 0.55 +
+      Math.sin(nz * Math.PI * 2.1  - t * 0.4)  * 0.42 +
+      Math.sin((nx * 1.3 + nz * 1.5) * Math.PI * 2.3 + t * 0.8) * 0.33 +
+      Math.sin(nx * Math.PI * 4.2  - t * 0.95) * 0.20 +
+      Math.sin(nz * Math.PI * 3.5  + t * 0.6)  * 0.14 +
+      Math.sin((nx - nz) * Math.PI * 3.0 + t * 0.35) * 0.09;
+    /* sharpening — picos viram montanhas */
+    return h * (0.9 + Math.abs(h) * 0.45);
+  }
+
+  function drawTerrain(t){
+    var cx = W * 0.5;
+    var cy = H * 0.92;                       /* base perto do bottom */
+    var gW = W * (mobile ? 2.4 : 2.2);       /* grade larga pra preencher */
+    var gD = H * (mobile ? 1.5 : 1.8);
+    var amp = H * (mobile ? 0.32 : 0.42);
+    var TILT = 0.72;
+    var cT = Math.cos(TILT), sT = Math.sin(TILT);
+    var fov = W * 1.15;
+
+    /* pré-projetar */
+    var pts = new Array(T_ROWS + 1);
+    for(var iz=0;iz<=T_ROWS;iz++){
+      pts[iz] = new Array(T_COLS + 1);
+      for(var ix=0;ix<=T_COLS;ix++){
+        var x3 = (ix / T_COLS - 0.5) * gW;
+        var y3 = waveHeight(ix, iz, t) * amp;
+        var z3 = (iz / T_ROWS) * gD;
+        /* rotação X (tilt) */
+        var ry = y3 * cT - z3 * sT;
+        var rz = y3 * sT + z3 * cT;
+        var d = fov + rz;
+        pts[iz][ix] = {
+          px: cx + x3 * fov / d,
+          py: cy - ry * fov / d
+        };
+      }
+    }
+
+    if(!mobile){
+      ctx.shadowColor = 'rgba(107,240,25,.85)';
+      ctx.shadowBlur = 12;
+    }
+
+    /* horizontais (picos/vales) */
+    for(var iz2=0;iz2<=T_ROWS;iz2++){
+      var fade = 1 - (iz2 / T_ROWS) * 0.65;
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(107,240,25,' + (0.18 + fade * 0.55).toFixed(3) + ')';
+      ctx.lineWidth = (mobile ? 0.8 : 0.95) + fade * 0.9;
+      for(var ix2=0;ix2<=T_COLS;ix2++){
+        var p = pts[iz2][ix2];
+        if(ix2 === 0) ctx.moveTo(p.px, p.py);
+        else          ctx.lineTo(p.px, p.py);
+      }
+      ctx.stroke();
+    }
+
+    /* verticais (profundidade) */
+    if(!mobile) ctx.shadowBlur = 5;
+    for(var ix3=0;ix3<=T_COLS;ix3++){
+      var xFade = 1 - Math.abs((ix3 / T_COLS) * 2 - 1) * 0.55;
+      ctx.beginPath();
+      ctx.strokeStyle = 'rgba(107,240,25,' + (0.09 + xFade * 0.28).toFixed(3) + ')';
+      ctx.lineWidth = (mobile ? 0.55 : 0.7) * xFade;
+      for(var iz3=0;iz3<=T_ROWS;iz3++){
+        var p2 = pts[iz3][ix3];
+        if(iz3 === 0) ctx.moveTo(p2.px, p2.py);
+        else          ctx.lineTo(p2.px, p2.py);
+      }
+      ctx.stroke();
+    }
+
+    ctx.shadowBlur = 0;
+  }
+
+  /* ================= LOOP ================= */
+  function tick(now){
+    if(!visible){ raf=null; return; }
+    if(t0 === null){ t0 = now; lastDraw = now; }
+    if(FRAME_CAP > 0 && (now - lastDraw) < FRAME_CAP){
+      raf = requestAnimationFrame(tick); return;
+    }
+    lastDraw = now;
+    var t = (now - t0) * 0.001;
+
+    /* lerp parallax */
+    tiltX += (mx - tiltX) * 0.06;
+    tiltY += (my - tiltY) * 0.06;
+
+    ctx.clearRect(0, 0, W, H);
+
+    /* ordem: stars (atrás) → terreno → globo (frente) */
+    drawStars(t);
+    drawTerrain(t);
+    drawGlobe(t);
+
+    raf = requestAnimationFrame(tick);
+  }
+
+  /* ================= RESIZE / INIT ================= */
+  function resize(){
+    mobile = window.innerWidth < 768;
+    dpr = Math.min(window.devicePixelRatio || 1, mobile ? 1.5 : 2);
+    W = canvas.clientWidth  = canvas.parentElement.clientWidth;
+    H = canvas.clientHeight = canvas.parentElement.clientHeight;
+    canvas.width  = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    FRAME_CAP = mobile ? 24 : 0;
+    setTerrainRes();
+    buildGlobeCache();
+    initStars();
+  }
+
+  var rTimer = null;
+  function onResize(){
+    if(rTimer) clearTimeout(rTimer);
+    rTimer = setTimeout(resize, 150);
+  }
+
+  /* ================= EVENTOS ================= */
+  function onMouseMove(e){
+    var rect = canvas.getBoundingClientRect();
+    var nx = ((e.clientX - rect.left) / rect.width)  * 2 - 1;
+    var ny = ((e.clientY - rect.top)  / rect.height) * 2 - 1;
+    mx = nx;
+    my = ny;
+  }
+  function onTouchMove(e){
+    if(!e.touches||!e.touches[0])return;
+    var rect = canvas.getBoundingClientRect();
+    mx = ((e.touches[0].clientX - rect.left) / rect.width)  * 2 - 1;
+    my = ((e.touches[0].clientY - rect.top)  / rect.height) * 2 - 1;
+  }
+
+  /* parallax de scroll no conteúdo */
+  var heroInner = document.getElementById('heroInner');
+  var heroSec = document.getElementById('hero');
+  var scrollTicking = false;
+  function onScroll(){
+    if(!scrollTicking){
+      scrollTicking = true;
+      requestAnimationFrame(function(){
+        scrollTicking = false;
+        var y = window.scrollY;
+        var h = window.innerHeight;
+        var p = Math.min(1, Math.max(0, y / (h * 0.85)));
+        if(heroInner){
+          heroInner.style.transform = 'translate3d(0,' + (p * 50) + 'px,0)';
+          heroInner.style.opacity = (1 - p * 0.6).toFixed(3);
+        }
+      });
+    }
+  }
+
+  function setVisible(v){
+    visible = v;
+    if(v && !raf){ lastDraw = 0; raf = requestAnimationFrame(tick); }
+    else if(!v && raf){ cancelAnimationFrame(raf); raf = null; }
+  }
+
+  /* ================= START ================= */
+  function start(){
+    resize();
+    requestAnimationFrame(function(){ canvas.classList.add('ready'); });
+
+    if('IntersectionObserver' in window){
+      new IntersectionObserver(function(ents){ setVisible(ents[0].isIntersecting); }, { threshold:0 })
+        .observe(heroSec);
+    }
+
+    window.addEventListener('resize', onResize, { passive:true });
+    window.addEventListener('scroll', onScroll, { passive:true });
+    if(!mobile){
+      window.addEventListener('mousemove', onMouseMove, { passive:true });
+    } else {
+      window.addEventListener('touchmove', onTouchMove, { passive:true });
+    }
+
+    if(!reduced){
+      raf = requestAnimationFrame(tick);
+    } else {
+      /* frame estático */
+      t0 = performance.now();
+      tick(t0);
+      cancelAnimationFrame(raf); raf = null;
+    }
+  }
+
+  if(document.readyState === 'complete') start();
+  else window.addEventListener('load', start, { once:true });
+})();
+</script>
+
+</body>
+</html>

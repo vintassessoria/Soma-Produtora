@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funn Arena - Deconstructed Intro</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;600&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+</head>
+<body>
+    <div class="video-container">
+        <div class="background">
+            <img src="background.png" alt="background" id="bg-img">
+            <div class="overlay"></div>
+            <div class="smoke"></div>
+        </div>
+
+        <div class="content">
+            <div class="logo-assembly">
+                <!-- Sliced layers of the same logo -->
+                <div class="slice stars"><img src="logo.png"></div>
+                <div class="slice funn"><img src="logo.png"></div>
+                <div class="slice arena"><img src="logo.png"></div>
+                <div class="slice hat"><img src="logo.png"></div>
+                <div class="slice footer"><img src="logo.png"></div>
+                
+                <!-- Complete logo for the final glow -->
+                <div class="logo-full"><img src="logo.png"></div>
+                <div class="flash"></div>
+            </div>
+        </div>
+
+        <div class="ui">
+            <button id="play-btn">BUILD LOGO</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

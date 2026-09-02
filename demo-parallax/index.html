@@ -1,0 +1,577 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>SOMA — Demo Parallax 3D</title>
+<style>
+  :root{
+    --bg:#0a0a0a; --fg:#f4f4f4; --G:#6bf019; --Gd:#4cc014; --mut:#8a8a8a;
+    --Ef:cubic-bezier(.2,.8,.2,1);
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:auto}
+  body{
+    background:var(--bg);color:var(--fg);
+    font-family:-apple-system,BlinkMacSystemFont,"Inter","Segoe UI",system-ui,sans-serif;
+    font-weight:400;line-height:1.5;overflow-x:hidden;
+    -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;
+  }
+
+  /* ========== SMOOTH SCROLL WRAPPER ========== */
+  /* Uma camada fixa onde o conteúdo "translada" com lerp.
+     Dá o efeito "buttery smooth" estilo Lenis/Locomotive. */
+  .smooth-wrap{position:fixed;top:0;left:0;width:100%;will-change:transform;z-index:1}
+  .smooth-spacer{position:relative;z-index:0}
+
+  /* Helper: tudo que tem data-parallax roda na mão */
+  [data-parallax]{will-change:transform}
+  [data-fade]{opacity:0;transform:translateY(40px);transition:opacity .9s var(--Ef),transform .9s var(--Ef)}
+  [data-fade].on{opacity:1;transform:none}
+
+  /* ========== HERO — CÂMERA INDO PRA FRENTE ========== */
+  .hero{
+    height:100vh;min-height:680px;position:relative;
+    display:flex;align-items:center;justify-content:center;
+    perspective:1200px;perspective-origin:50% 45%;
+    overflow:hidden;
+  }
+  .hero-bg{
+    position:absolute;inset:0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 120%,rgba(107,240,25,.28) 0%,transparent 60%),
+      radial-gradient(ellipse 60% 40% at 50% 0%,rgba(107,240,25,.08) 0%,transparent 70%),
+      linear-gradient(180deg,#050505 0%,#0a0a0a 50%,#000 100%);
+  }
+  /* grid wireframe 3D no fundo */
+  .hero-grid{
+    position:absolute;left:50%;bottom:0;
+    width:240vw;height:120vh;
+    background-image:
+      linear-gradient(rgba(107,240,25,.22) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(107,240,25,.22) 1px,transparent 1px);
+    background-size:60px 60px;
+    transform:translate(-50%,20%) rotateX(65deg);
+    transform-origin:50% 100%;
+    mask:linear-gradient(to top,black 0%,black 30%,transparent 90%);
+    -webkit-mask:linear-gradient(to top,black 0%,black 30%,transparent 90%);
+    animation:gridMove 14s linear infinite;
+  }
+  @keyframes gridMove{
+    0%{background-position:0 0}
+    100%{background-position:0 60px}
+  }
+  /* corredor de "anéis" que se aproximam */
+  .hero-rings{position:absolute;inset:0;transform-style:preserve-3d;pointer-events:none}
+  .hero-ring{
+    position:absolute;left:50%;top:50%;
+    width:56vmin;height:56vmin;margin:-28vmin 0 0 -28vmin;
+    border:1.5px solid rgba(107,240,25,.55);
+    border-radius:50%;
+    box-shadow:0 0 60px rgba(107,240,25,.25),inset 0 0 60px rgba(107,240,25,.12);
+  }
+
+  .hero-inner{
+    position:relative;z-index:3;text-align:center;
+    transform-style:preserve-3d;
+    transform:translateZ(var(--z,0px));
+    padding:0 24px;
+  }
+  .hero-kicker{
+    display:inline-block;font-size:13px;letter-spacing:.42em;text-transform:uppercase;
+    color:var(--G);padding:9px 18px;border:1px solid rgba(107,240,25,.35);
+    border-radius:999px;background:rgba(107,240,25,.05);backdrop-filter:blur(10px);
+    margin-bottom:32px;font-weight:500;
+  }
+  .hero-title{
+    font-size:clamp(56px,11vw,184px);line-height:.92;font-weight:800;
+    letter-spacing:-.045em;margin-bottom:28px;
+    background:linear-gradient(180deg,#fff 0%,#fff 60%,#a0a0a0 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 0 40px rgba(107,240,25,.12);
+  }
+  .hero-title span{
+    color:var(--G);-webkit-text-fill-color:var(--G);
+    text-shadow:0 0 40px rgba(107,240,25,.6),0 0 80px rgba(107,240,25,.3);
+  }
+  .hero-sub{font-size:clamp(15px,1.6vw,20px);color:var(--mut);max-width:560px;margin:0 auto;font-weight:300}
+
+  .hero-scroll{
+    position:absolute;bottom:32px;left:50%;transform:translateX(-50%);z-index:4;
+    color:var(--mut);font-size:11px;letter-spacing:.35em;text-transform:uppercase;
+    display:flex;flex-direction:column;align-items:center;gap:12px;
+    animation:heroScrollFade 2.4s var(--Ef) infinite;
+  }
+  .hero-scroll svg{width:14px;height:22px}
+  @keyframes heroScrollFade{
+    0%,100%{opacity:.4;transform:translate(-50%,0)}
+    50%{opacity:1;transform:translate(-50%,6px)}
+  }
+
+  /* ========== MANIFESTO — PARALLAX DE CAMADAS ========== */
+  .manifesto{
+    min-height:120vh;position:relative;padding:20vh 0;overflow:hidden;
+    background:linear-gradient(180deg,#000 0%,#0a0a0a 100%);
+  }
+  .mf-bg-text{
+    position:absolute;top:50%;left:-5%;
+    font-size:clamp(200px,32vw,520px);font-weight:900;
+    color:rgba(255,255,255,.025);letter-spacing:-.05em;
+    line-height:.8;pointer-events:none;user-select:none;white-space:nowrap;
+  }
+  .mf-inner{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:0 40px}
+  .mf-label{
+    font-size:12px;letter-spacing:.5em;text-transform:uppercase;color:var(--G);
+    margin-bottom:40px;font-weight:500;
+  }
+  .mf-head{
+    font-size:clamp(40px,6.2vw,96px);font-weight:700;letter-spacing:-.03em;line-height:1.02;
+    max-width:18ch;margin-bottom:60px;
+  }
+  .mf-head em{color:var(--G);font-style:normal;font-weight:800}
+  .mf-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;max-width:920px}
+  .mf-card{
+    padding:32px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.06);
+    border-radius:16px;backdrop-filter:blur(18px);
+    transition:border-color .4s,background .4s,transform .4s var(--Ef);
+  }
+  .mf-card:hover{border-color:rgba(107,240,25,.35);background:rgba(107,240,25,.04);transform:translateY(-4px)}
+  .mf-card h3{font-size:20px;font-weight:600;margin-bottom:12px}
+  .mf-card p{color:var(--mut);font-size:15px;line-height:1.6}
+
+  /* ========== PORTFOLIO — HORIZONTAL 3D ========== */
+  .portfolio{
+    min-height:100vh;position:relative;padding:15vh 0;overflow:hidden;
+    background:#060606;perspective:1400px;perspective-origin:50% 50%;
+  }
+  .pf-head{max-width:1280px;margin:0 auto 60px;padding:0 40px;position:relative;z-index:3}
+  .pf-head .label{font-size:12px;letter-spacing:.5em;text-transform:uppercase;color:var(--G);font-weight:500;margin-bottom:24px;display:block}
+  .pf-head h2{font-size:clamp(38px,5.4vw,82px);font-weight:700;letter-spacing:-.03em;line-height:1.02}
+  .pf-head h2 b{color:var(--G);font-weight:800}
+
+  .pf-track{
+    display:flex;gap:32px;padding:0 12vw;will-change:transform;
+    transform-style:preserve-3d;
+  }
+  .pf-card{
+    flex:0 0 440px;aspect-ratio:4/5;position:relative;
+    border-radius:20px;overflow:hidden;cursor:pointer;
+    transform-style:preserve-3d;
+    transition:transform .7s var(--Ef),box-shadow .5s;
+    box-shadow:0 40px 80px rgba(0,0,0,.5);
+  }
+  .pf-card::before{
+    content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 40%,rgba(0,0,0,.85) 100%);z-index:2;
+  }
+  .pf-card .thumb{
+    position:absolute;inset:0;background-size:cover;background-position:center;
+    transition:transform .9s var(--Ef);
+  }
+  .pf-card:hover .thumb{transform:scale(1.1)}
+  .pf-card .meta{position:absolute;bottom:0;left:0;right:0;padding:28px;z-index:3;color:#fff}
+  .pf-card .cat{font-size:11px;letter-spacing:.3em;color:var(--G);margin-bottom:8px;text-transform:uppercase}
+  .pf-card .title{font-size:22px;font-weight:700;line-height:1.2}
+
+  /* gradient thumbs for demo */
+  .pf-card:nth-child(1) .thumb{background:linear-gradient(135deg,#003d1a,#6bf019)}
+  .pf-card:nth-child(2) .thumb{background:linear-gradient(135deg,#1a0033,#a864ff)}
+  .pf-card:nth-child(3) .thumb{background:linear-gradient(135deg,#330900,#ff6414)}
+  .pf-card:nth-child(4) .thumb{background:linear-gradient(135deg,#002233,#14c8ff)}
+  .pf-card:nth-child(5) .thumb{background:linear-gradient(135deg,#330025,#ff14a0)}
+  .pf-card:nth-child(6) .thumb{background:linear-gradient(135deg,#1a3300,#a0ff14)}
+
+  /* ========== STACK 3D (Equipe) ========== */
+  .stack{
+    min-height:220vh;position:relative;
+    background:linear-gradient(180deg,#060606 0%,#000 100%);
+  }
+  .stack-sticky{
+    position:sticky;top:0;height:100vh;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+    perspective:1600px;perspective-origin:50% 50%;
+  }
+  .stack-head{
+    position:absolute;top:10vh;left:50%;transform:translateX(-50%);
+    text-align:center;z-index:2;width:100%;padding:0 24px;
+  }
+  .stack-head .label{font-size:12px;letter-spacing:.5em;text-transform:uppercase;color:var(--G);margin-bottom:20px;display:block}
+  .stack-head h2{font-size:clamp(36px,5vw,72px);font-weight:700;letter-spacing:-.03em}
+
+  .stack-cards{
+    position:relative;width:min(380px,85vw);height:min(520px,70vh);
+    transform-style:preserve-3d;
+  }
+  .stack-card{
+    position:absolute;inset:0;border-radius:24px;overflow:hidden;
+    background:#111;border:1px solid rgba(107,240,25,.18);
+    box-shadow:0 40px 120px rgba(0,0,0,.7),inset 0 0 0 1px rgba(255,255,255,.04);
+    display:flex;flex-direction:column;justify-content:flex-end;padding:32px;
+    will-change:transform,opacity;
+  }
+  .stack-card::before{
+    content:"";position:absolute;inset:0;background-size:cover;background-position:center;opacity:.7;
+    mask:linear-gradient(180deg,black 0%,black 40%,transparent 100%);
+    -webkit-mask:linear-gradient(180deg,black 0%,black 40%,transparent 100%);
+  }
+  .stack-card:nth-child(1)::before{background:linear-gradient(135deg,#002211,#6bf019)}
+  .stack-card:nth-child(2)::before{background:linear-gradient(135deg,#001a33,#14aaff)}
+  .stack-card:nth-child(3)::before{background:linear-gradient(135deg,#2a0033,#c864ff)}
+  .stack-card:nth-child(4)::before{background:linear-gradient(135deg,#330011,#ff5555)}
+  .stack-card .role{font-size:11px;letter-spacing:.4em;color:var(--G);margin-bottom:12px;text-transform:uppercase;position:relative;z-index:2}
+  .stack-card .name{font-size:28px;font-weight:700;line-height:1.1;color:#fff;position:relative;z-index:2}
+  .stack-card .bio{margin-top:12px;font-size:14px;color:var(--mut);max-width:90%;position:relative;z-index:2;line-height:1.5}
+
+  /* ========== CTA ZOOM PULLBACK ========== */
+  .cta{
+    height:150vh;position:relative;
+    background:linear-gradient(180deg,#000 0%,#020a02 100%);
+  }
+  .cta-sticky{
+    position:sticky;top:0;height:100vh;overflow:hidden;
+    display:flex;align-items:center;justify-content:center;
+    perspective:1400px;
+  }
+  .cta-big{
+    font-size:clamp(120px,28vw,440px);font-weight:900;letter-spacing:-.06em;line-height:.85;
+    background:linear-gradient(180deg,var(--G) 0%,#2fc004 100%);
+    -webkit-background-clip:text;background-clip:text;color:transparent;
+    text-shadow:0 0 100px rgba(107,240,25,.3);
+    will-change:transform,opacity;
+    transform-origin:50% 50%;
+  }
+  .cta-sub{
+    position:absolute;bottom:10vh;left:50%;transform:translateX(-50%);
+    text-align:center;color:var(--mut);font-size:14px;letter-spacing:.3em;text-transform:uppercase;
+    opacity:0;transition:opacity 1s var(--Ef) .3s;
+  }
+  .cta-sub.on{opacity:1}
+  .cta-sub a{color:var(--G);text-decoration:none;font-weight:600;border-bottom:1px solid transparent;transition:border-color .3s}
+  .cta-sub a:hover{border-bottom-color:var(--G)}
+
+  /* ========== FOOTER ========== */
+  footer{
+    padding:80px 40px 48px;background:#000;text-align:center;
+    color:var(--mut);font-size:13px;letter-spacing:.1em;
+  }
+  footer a{color:var(--G);text-decoration:none}
+
+  /* ========== MOBILE ========== */
+  @media(max-width:768px){
+    .hero{min-height:560px}
+    .hero-inner{padding:0 20px}
+    .mf-inner{padding:0 20px}
+    .mf-grid{grid-template-columns:1fr;gap:16px}
+    .mf-card{padding:24px}
+    .pf-head{padding:0 20px;margin-bottom:40px}
+    .pf-track{padding:0 20px;gap:20px}
+    .pf-card{flex:0 0 280px}
+    .stack-head{top:6vh}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .hero-grid,.hero-ring,.hero-scroll,.cta-big{animation:none!important}
+    .smooth-wrap{position:static!important;transform:none!important}
+    .smooth-spacer{height:auto!important}
+  }
+</style>
+</head>
+<body>
+
+<div class="smooth-wrap" id="smoothWrap">
+
+  <!-- ========== HERO ========== -->
+  <section class="hero" id="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-grid" data-parallax="grid"></div>
+    <div class="hero-rings">
+      <div class="hero-ring" data-ring="0"></div>
+      <div class="hero-ring" data-ring="1"></div>
+      <div class="hero-ring" data-ring="2"></div>
+      <div class="hero-ring" data-ring="3"></div>
+      <div class="hero-ring" data-ring="4"></div>
+    </div>
+    <div class="hero-inner" data-parallax="hero-inner">
+      <span class="hero-kicker">SOMA PRODUTORA</span>
+      <h1 class="hero-title">FAZEMOS<br><span>MOMENTOS</span><br>VIRAREM<br>ETERNOS</h1>
+      <p class="hero-sub">Produção audiovisual, cinema publicitário e conteúdo que transforma marcas em histórias.</p>
+    </div>
+    <div class="hero-scroll">
+      <span>Role para descobrir</span>
+      <svg viewBox="0 0 14 22" fill="none"><rect x="1" y="1" width="12" height="20" rx="6" stroke="currentColor"/><circle cx="7" cy="7" r="1.5" fill="currentColor"/></svg>
+    </div>
+  </section>
+
+  <!-- ========== MANIFESTO ========== -->
+  <section class="manifesto">
+    <div class="mf-bg-text" data-parallax="mf-bg">MANIFESTO</div>
+    <div class="mf-inner">
+      <span class="mf-label" data-fade>01 — Nosso jeito</span>
+      <h2 class="mf-head" data-fade>Produzimos <em>imagem</em> com <em>propósito</em>. Contamos histórias que ficam.</h2>
+      <div class="mf-grid">
+        <div class="mf-card" data-fade>
+          <h3>Conteúdo que move</h3>
+          <p>Cada frame pensado pra gerar emoção real. Não é estética vazia — é narrativa com intenção.</p>
+        </div>
+        <div class="mf-card" data-fade>
+          <h3>Processo que entrega</h3>
+          <p>Do pré ao entregável final, uma equipe enxuta cuidando do que importa: a ideia e o resultado.</p>
+        </div>
+        <div class="mf-card" data-fade>
+          <h3>Marca com voz</h3>
+          <p>Cada cliente é único. Descobrimos o tom, o ritmo e a linguagem que fazem sentido pra sua história.</p>
+        </div>
+        <div class="mf-card" data-fade>
+          <h3>Qualidade cinematográfica</h3>
+          <p>Equipamento top, pós-produção meticulosa, e um olhar autoral que separa o medíocre do memorável.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== PORTFOLIO ========== -->
+  <section class="portfolio" id="portfolio">
+    <div class="pf-head">
+      <span class="label" data-fade>02 — Portfolio</span>
+      <h2 data-fade>Projetos que <b>respiram</b> na tela</h2>
+    </div>
+    <div class="pf-track" id="pfTrack">
+      <div class="pf-card"><div class="thumb"></div><div class="meta"><div class="cat">Aftermovie</div><div class="title">Festival Na Praia 2025</div></div></div>
+      <div class="pf-card"><div class="thumb"></div><div class="meta"><div class="cat">Publicidade</div><div class="title">Banco do Brasil — Copa</div></div></div>
+      <div class="pf-card"><div class="thumb"></div><div class="meta"><div class="cat">Documentário</div><div class="title">Arena BRB — Bastidores</div></div></div>
+      <div class="pf-card"><div class="thumb"></div><div class="meta"><div class="cat">Branded Content</div><div class="title">CBF — Seleção</div></div></div>
+      <div class="pf-card"><div class="thumb"></div><div class="meta"><div class="cat">Reportagem</div><div class="title">Record — Especial</div></div></div>
+      <div class="pf-card"><div class="thumb"></div><div class="meta"><div class="cat">Evento</div><div class="title">Expomix Brasil 2026</div></div></div>
+    </div>
+  </section>
+
+  <!-- ========== STACK 3D (Equipe) ========== -->
+  <section class="stack" id="stack">
+    <div class="stack-sticky">
+      <div class="stack-head">
+        <span class="label">03 — Equipe</span>
+        <h2>O time por trás das câmeras</h2>
+      </div>
+      <div class="stack-cards" id="stackCards">
+        <div class="stack-card"><div class="role">CEO · Direção</div><div class="name">Davi Bispo</div><div class="bio">12 anos dirigindo projetos autorais, com passagem por Record, BB e grandes festivais.</div></div>
+        <div class="stack-card"><div class="role">Diretor de Fotografia</div><div class="name">Ana Cunha</div><div class="bio">Olhar cinematográfico premiado, especialista em luz natural e cor autoral.</div></div>
+        <div class="stack-card"><div class="role">Pós-produção</div><div class="name">Lucas Pereira</div><div class="bio">Edição, color e finalização — o cara que transforma material bruto em cinema.</div></div>
+        <div class="stack-card"><div class="role">Produção</div><div class="name">Marina Rocha</div><div class="bio">A engrenagem que faz tudo acontecer — do set à entrega final.</div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ========== CTA ========== -->
+  <section class="cta" id="cta">
+    <div class="cta-sticky">
+      <div class="cta-big" id="ctaBig">VAMOS?</div>
+      <div class="cta-sub" id="ctaSub">contato@somaprodutora.com.br · <a href="#">+55 61 98765-4321</a></div>
+    </div>
+  </section>
+
+  <footer>
+    © 2026 SOMA PRODUTORA · DEMO PARALLAX 3D · <a href="../index.html">Voltar ao site</a>
+  </footer>
+
+</div><!-- /.smooth-wrap -->
+
+<div class="smooth-spacer" id="smoothSpacer"></div>
+
+<script>
+(function(){
+  'use strict';
+
+  var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var mobile = window.innerWidth < 768;
+
+  // ========== SMOOTH SCROLL (lerp) ==========
+  // Aplica translateY no wrapper fixo, com easing.
+  var wrap = document.getElementById('smoothWrap');
+  var spacer = document.getElementById('smoothSpacer');
+  var current = 0;
+  var target = 0;
+  var ease = mobile ? 0.13 : 0.09; // mobile mais responsivo (menos lag percebido)
+
+  function setSpacerHeight(){
+    spacer.style.height = wrap.offsetHeight + 'px';
+  }
+
+  function onScroll(){
+    target = window.scrollY;
+  }
+
+  function lerp(a,b,n){ return a + (b - a) * n; }
+
+  function rafLoop(){
+    current = lerp(current, target, ease);
+    if(Math.abs(target - current) < 0.1) current = target;
+    wrap.style.transform = 'translate3d(0,' + (-current) + 'px,0)';
+    updateEffects(current);
+    requestAnimationFrame(rafLoop);
+  }
+
+  // ========== PARALLAX / SCROLL EFFECTS ==========
+  var heroInner = document.querySelector('[data-parallax="hero-inner"]');
+  var heroGrid  = document.querySelector('[data-parallax="grid"]');
+  var heroRings = document.querySelectorAll('[data-ring]');
+  var mfBg      = document.querySelector('[data-parallax="mf-bg"]');
+  var pfTrack   = document.getElementById('pfTrack');
+  var stackSec  = document.getElementById('stack');
+  var stackCards= document.querySelectorAll('.stack-card');
+  var ctaSec    = document.getElementById('cta');
+  var ctaBig    = document.getElementById('ctaBig');
+  var ctaSub    = document.getElementById('ctaSub');
+
+  var vh = window.innerHeight;
+
+  function updateEffects(y){
+    // --- HERO: câmera avança (translateZ + opacity) ---
+    if(heroInner && y < vh * 1.2){
+      var p = y / vh; // 0 .. 1 quando sai
+      var z = p * 900;
+      var op = Math.max(0, 1 - p * 1.4);
+      heroInner.style.transform = 'translateZ(' + z + 'px)';
+      heroInner.style.opacity = op;
+    }
+    if(heroGrid){
+      heroGrid.style.transform = 'translate(-50%,' + (20 - y*0.05) + '%) rotateX(65deg)';
+    }
+    heroRings.forEach(function(r, i){
+      if(y > vh * 1.5) return;
+      var speed = 1 + i * 0.35;
+      var tz = -800 + ((y * speed + i * 400) % 1600);
+      var scale = 0.5 + (tz + 800) / 1600 * 1.2;
+      var op = Math.min(1, Math.max(0, (tz + 400) / 400));
+      r.style.transform = 'translateZ(' + tz + 'px) scale(' + scale + ')';
+      r.style.opacity = op * 0.7;
+    });
+
+    // --- MANIFESTO: background text desliza lateral ---
+    if(mfBg){
+      var rect = mfBg.parentElement.getBoundingClientRect();
+      var mfY = y - (rect.top + y);
+      // simplificado: usa y global
+      mfBg.style.transform = 'translateX(' + (-y * 0.25) + 'px)';
+    }
+
+    // --- PORTFOLIO: horizontal scroll 3D ---
+    if(pfTrack){
+      var pfSec = pfTrack.parentElement;
+      var pfTop = pfSec.offsetTop;
+      var pfH = pfSec.offsetHeight;
+      if(y > pfTop - vh && y < pfTop + pfH){
+        var progress = Math.max(0, Math.min(1, (y - pfTop + vh * 0.6) / (pfH + vh * 0.4)));
+        var trackW = pfTrack.scrollWidth - window.innerWidth + 120;
+        var translateX = -progress * trackW;
+        // cards individuais: tilt 3D baseado na posição no eixo
+        var cards = pfTrack.children;
+        for(var i=0;i<cards.length;i++){
+          var cardRect = cards[i].getBoundingClientRect();
+          var centerDist = (cardRect.left + cardRect.width/2) - window.innerWidth/2;
+          var rotY = Math.max(-28, Math.min(28, -centerDist / 40));
+          var sc = 1 - Math.abs(centerDist) / (window.innerWidth * 2.2);
+          cards[i].style.transform = 'rotateY(' + rotY + 'deg) scale(' + sc.toFixed(3) + ')';
+        }
+        pfTrack.style.transform = 'translate3d(' + translateX + 'px,0,0)';
+      }
+    }
+
+    // --- STACK 3D (equipe) ---
+    if(stackSec){
+      var stackTop = stackSec.offsetTop;
+      var stackH = stackSec.offsetHeight - vh;
+      if(y > stackTop - vh && y < stackTop + stackH + vh){
+        var sp = Math.max(0, Math.min(1, (y - stackTop) / stackH));
+        var total = stackCards.length;
+        for(var j=0;j<total;j++){
+          var cardP = sp * total - j;
+          var clamped = Math.max(-0.5, Math.min(1, cardP));
+          // cards entram com z positivo (longe) e vêm pra frente (z=0), depois recuam escurecidos
+          var tz, sc, op, ry;
+          if(clamped < 0){
+            // ainda não chegou: atrás
+            tz = -400 + clamped * 400;
+            sc = 0.8 + clamped * 0.2;
+            op = 0.3 + clamped * 0.6;
+            ry = clamped * -8;
+          } else if(clamped <= 0.5){
+            // entrando em foco
+            tz = clamped * 100;
+            sc = 1;
+            op = 1;
+            ry = 0;
+          } else {
+            // saindo pra trás
+            var out = (clamped - 0.5) * 2; // 0..1
+            tz = -out * 600;
+            sc = 1 - out * 0.25;
+            op = 1 - out * 1.1;
+            ry = out * 12;
+          }
+          stackCards[j].style.transform = 'translate3d(0,' + (clamped * -10) + 'px,' + tz + 'px) rotateY(' + ry + 'deg) scale(' + sc + ')';
+          stackCards[j].style.opacity = Math.max(0, op);
+          stackCards[j].style.zIndex = total - Math.abs(clamped * 2 | 0);
+        }
+      }
+    }
+
+    // --- CTA zoom pullback ---
+    if(ctaSec && ctaBig){
+      var ctaTop = ctaSec.offsetTop;
+      var ctaH = ctaSec.offsetHeight - vh;
+      if(y > ctaTop - vh && y < ctaTop + ctaH + vh){
+        var cp = Math.max(0, Math.min(1, (y - ctaTop + vh * 0.2) / ctaH));
+        // começa gigante, recua; scale 0.2 → 1, opacity 0 → 1 → 1
+        var scl = 0.25 + cp * 1.1;
+        var opc = Math.min(1, cp * 2.2);
+        ctaBig.style.transform = 'scale(' + scl + ')';
+        ctaBig.style.opacity = opc;
+        if(cp > 0.55){
+          ctaSub.classList.add('on');
+        } else {
+          ctaSub.classList.remove('on');
+        }
+      }
+    }
+  }
+
+  // ========== FADE-IN OBSERVER ==========
+  var fadeEls = document.querySelectorAll('[data-fade]');
+  if('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          e.target.classList.add('on');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.15 });
+    fadeEls.forEach(function(el){ io.observe(el); });
+  } else {
+    fadeEls.forEach(function(el){ el.classList.add('on'); });
+  }
+
+  // ========== INIT ==========
+  if(reduced){
+    // sem smooth scroll: documento normal
+    wrap.style.position = 'static';
+    wrap.style.transform = 'none';
+    spacer.style.height = '0';
+    fadeEls.forEach(function(el){ el.classList.add('on'); });
+    return;
+  }
+
+  setSpacerHeight();
+  window.addEventListener('resize', function(){
+    vh = window.innerHeight;
+    mobile = window.innerWidth < 768;
+    setSpacerHeight();
+  }, { passive: true });
+
+  window.addEventListener('scroll', onScroll, { passive: true });
+
+  // garantir cálculo inicial
+  onScroll();
+  requestAnimationFrame(rafLoop);
+})();
+</script>
+</body>
+</html>

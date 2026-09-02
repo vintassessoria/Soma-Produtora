@@ -1,0 +1,151 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #fff;
+    color: #000;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    width: 100vw;
+}
+
+.video-container {
+    width: 1080px;
+    height: 1920px;
+    position: relative;
+    overflow: hidden;
+    background: #fff;
+    transform-origin: center;
+    max-height: 90vh;
+    aspect-ratio: 1080 / 1920;
+    perspective: 2500px;
+}
+
+@media (max-height: 1920px) {
+    .video-container {
+        transform: scale(calc(100vh / 2000));
+    }
+}
+
+.white-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: #fff;
+    z-index: 1;
+}
+
+#particle-canvas {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 5;
+    pointer-events: none;
+}
+
+.content {
+    position: relative;
+    z-index: 10;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-style: preserve-3d;
+}
+
+.logo-assembly {
+    position: relative;
+    width: 90%;
+    height: 60%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transform-style: preserve-3d;
+}
+
+.slice {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    filter: invert(1); 
+    transform-style: preserve-3d;
+}
+
+.slice img, .logo-full img {
+    width: 100%;
+    height: auto;
+    /* Prevent pixel gaps */
+    backface-visibility: hidden;
+}
+
+/* 
+   REFINED LOGICAL CLIP-PATHS 
+   Based on the visual structure of the Funn Arena logo
+*/
+
+/* Stars: Just the top three stars */
+.stars { clip-path: inset(0% 25% 78% 25%); }
+
+/* Typography: The main arched text "FUNN ARENA" */
+.typography { clip-path: inset(21% 10% 43% 10%); }
+
+/* Hat (Boné): The cowboy hat in the center */
+.hat { clip-path: inset(57% 35% 20% 35%); }
+
+/* Flourishes: The decorative scrolls on the sides */
+.flourishes-left { clip-path: inset(30% 65% 15% 0%); }
+.flourishes-right { clip-path: inset(30% 0% 15% 65%); }
+
+/* Banner: The bottom ribbon with "RODEIO..." */
+.banner { clip-path: inset(80% 10% 0% 10%); }
+
+.logo-full {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    opacity: 0;
+    filter: invert(1);
+    transform-style: preserve-3d;
+}
+
+.ui {
+    position: absolute;
+    bottom: 100px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+}
+
+#play-btn {
+    background: #000;
+    border: none;
+    color: #fff;
+    padding: 15px 40px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 18px;
+    letter-spacing: 2px;
+    border-radius: 50px;
+}
