@@ -841,7 +841,7 @@ html.lenis{scroll-behavior:auto!important}
     <a href="#equipe">Equipe</a>
     <a href="#contato">Contato</a>
   </div>
-  <button class="nv-b" id="navB" aria-label="Abrir menu"><span></span><span></span></button>
+  <button class="nv-b" id="navB" aria-label="Abrir menu" aria-expanded="false"><span></span><span></span></button>
 </nav>
 <div id="menu">
   <img src="logomarca.png" alt="" aria-hidden="true" style="height:40px;width:auto;margin-bottom:26px" width="592" height="549">
@@ -2033,8 +2033,23 @@ if(lb)lb.addEventListener('click',function(e){if(e.target===lb)fechaVideo()});
 
 /* ── nav ──────────────────────────────────────────────────────────── */
 var nav=document.getElementById('nav'),menu=document.getElementById('menu');
-document.getElementById('navB').addEventListener('click',function(){menu.classList.add('on')});
-document.getElementById('menuX').addEventListener('click',function(){menu.classList.remove('on')});
+/* ── MENU DO CELULAR ──────────────────────────────────────────────────
+   Faltavam tres coisas e as tres apareciam como navegacao estranha:
+     1. tocar num link NAO fechava o menu — a pagina saltava para a secao
+        e o overlay continuava cobrindo tudo;
+     2. o botao so abria, nunca fechava;
+     3. a pagina rolava por tras do menu aberto.
+   O travamento passa pelo Lenis, que e quem comanda o scroll aqui; a
+   classe lenis-stopped ja traz o overflow:hidden. */
+var navB=document.getElementById('navB');
+function abreMenu(){menu.classList.add('on');navB.setAttribute('aria-expanded','true');
+  if(window.lenis&&lenis.stop)lenis.stop();}
+function fechaMenu(){menu.classList.remove('on');navB.setAttribute('aria-expanded','false');
+  if(window.lenis&&lenis.start)lenis.start();}
+navB.addEventListener('click',function(){menu.classList.contains('on')?fechaMenu():abreMenu()});
+document.getElementById('menuX').addEventListener('click',fechaMenu);
+[].slice.call(menu.querySelectorAll('a')).forEach(function(a){a.addEventListener('click',fechaMenu)});
+addEventListener('keydown',function(e){if(e.key==='Escape'&&menu.classList.contains('on'))fechaMenu()});
 menu.addEventListener('click',function(e){if(e.target.tagName==='A')menu.classList.remove('on')});
 
 /* ancoras: rolagem suave com recuo do nav fixo */
@@ -2599,14 +2614,25 @@ function movePc(vh){
 }
 /* videos: carregam quando chegam perto */
 var vids=[].slice.call(document.querySelectorAll('video[data-src]'));
-/* No celular o hero e so o poster, por decisao anterior de poupar dados.
-   A versao leve do video (hero-napraia-m.mp4, 2.4MB contra 5.8MB) ja esta
-   codificada e ligada em data-src-m: para passar a tocar tambem no
-   celular, basta remover este bloco. */
-if(matchMedia('(max-width:768px)').matches){
-  var hv=document.getElementById('heroVid');
-  if(hv)hv.removeAttribute('data-src');
-}
+/* O hero TOCA no celular tambem. Antes um bloco aqui removia o data-src
+   abaixo de 768px e deixava so o poster, para poupar dados — o que fazia o
+   visitante de celular achar que o video nao existia. A versao leve
+   (hero-napraia-m.mp4, 2.4MB contra 5.8MB) e escolhida logo abaixo, entao
+   o custo em dados ja estava resolvido por outro caminho. */
+/* ── HERO: a fonte entra IMEDIATAMENTE ────────────────────────────────
+   Ela so era atribuida dentro de checaVids, que roda no laco de scroll.
+   O hero esta em quadro desde o primeiro instante, entao nao ha motivo
+   para depender do laco — e se ele atrasa (aba aberta em segundo plano,
+   celular economizando bateria), o visitante fica olhando o poster
+   parado achando que o video nao existe. */
+(function(){
+  var v=document.getElementById('heroVid');
+  if(!v||v.src||!v.dataset.src)return;
+  v.src=(innerWidth<=760&&v.dataset.srcM)?v.dataset.srcM:v.dataset.src;
+  v.load();
+  var p=v.play(); if(p&&p.catch)p.catch(function(){});
+})();
+
 function checaVids(vh){
   for(var i=0;i<vids.length;i++){
     var v=vids[i],r=v.getBoundingClientRect();
