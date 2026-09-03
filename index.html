@@ -2021,7 +2021,15 @@ addEventListener('keydown',function(e){
 /* ── lightbox do video (DOM, sem CORS) ────────────────────────────── */
 var lb=document.getElementById('pjLb'),vid=document.getElementById('pjVid'),
     bx=document.getElementById('pjX');
+/* Clicar num card leva para a PAGINA do projeto, nao para um lightbox.
+   O lightbox mostrava so o filme; a pagina tem contexto — do que se trata,
+   ficha tecnica e os outros trabalhos —, tem URL propria para compartilhar
+   e og:image proprio para o link aparecer certo no WhatsApp e no Instagram.
+   O lightbox segue no arquivo como reserva: se a pagina do projeto faltar,
+   o clique ainda abre o filme em vez de dar 404. */
 function abreVideo(i){
+  var id=PJ[i]&&PJ[i].id;
+  if(id){location.href='projeto-'+id+'.html';return}
   if(!lb||!vid)return;
   vid.src=PJ[i].v;lb.classList.add('abre');lb.setAttribute('aria-hidden','false');
   document.body.style.overflow='hidden';
