@@ -42,8 +42,20 @@ img,video{display:block;max-width:100%}
 .pv-cat{margin-top:14px;font-size:clamp(13px,1.2vw,16px);color:var(--acc);font-weight:600}
 
 /* ── SOBRE O PROJETO ─────────────────────────────────────────────────── */
-.pv-sobre{padding:var(--sec) 0;display:grid;gap:clamp(24px,4vw,64px);
-  grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);align-items:start}
+/* A coluna do titulo acompanha o TEXTO dele, nao uma fracao da tela.
+   Com 1fr ela ficava com 856px para um titulo de 413px: sobravam 443px e o
+   vao ate o texto chegava a 507px, desligando as duas colunas uma da outra.
+   O limite no paragrafo e em px, nao em ch: ch resolve no tipo herdado e
+   nao no tamanho real do paragrafo — armadilha que ja mordeu neste site. */
+.pv-sobre{padding:var(--sec) 0;display:grid;gap:clamp(20px,3vw,56px);
+  grid-template-columns:minmax(0,auto) minmax(0,1fr);align-items:start}
+.pv-sobre>div{max-width:760px}
+/* O limite vai no PARAGRAFO e em em, nao no contêiner e em px: assim ele
+   acompanha o tipo, que e fluido. Com 720px fixos a linha dava 69
+   caracteres a 1920 e 80 a 1280, porque a fonte encolhe e a caixa nao.
+   34em rende ~68 em qualquer largura. E em no max-width resolve no tipo do
+   PROPRIO elemento — por isso funciona aqui e ch nao funcionaria. */
+.pv-sobre p{max-width:34em}
 .pv-sobre h2{font-size:clamp(26px,3.4vw,48px);font-weight:800;line-height:.98;
   letter-spacing:-.045em;text-transform:uppercase}
 .pv-sobre p{font-size:clamp(17px,1.4vw,21px);font-weight:500;line-height:1.5;
