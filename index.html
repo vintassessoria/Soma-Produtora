@@ -857,9 +857,13 @@ html.lenis{scroll-behavior:auto!important}
          largura (o fundo fica a 62% de opacidade sob um degrade, entao
          resolucao cheia seria banda jogada fora) e sem trilha de audio,
          que num hero mudo e peso morto. -->
+    <!-- O showreel vertical (9:16). No celular ele preenche a tela; no
+         desktop o cover mostra uma faixa de 35% da altura do quadro, o que
+         funciona porque aqui o video e FUNDO, a 62% de opacidade sob um
+         degrade e o titulo — nao uma composicao para se ler. -->
     <video id="heroVid" muted loop playsinline preload="auto"
-      poster="hero-napraia-poster.webp"
-      data-src="hero-napraia.mp4" data-src-m="hero-napraia-m.mp4"></video>
+      poster="showreel-v-poster.webp"
+      data-src="showreel-v.mp4" data-src-m="showreel-v-m.mp4"></video>
   </div>
   <!-- abertura: a camada queima e revela o hero (shader) -->
   <canvas id="burn" aria-hidden="true"></canvas>
@@ -1141,9 +1145,13 @@ void main(){
 <!-- ══════ SHOWREEL ══════ -->
 <div class="pin-tr"><section class="pin-st" id="showreel">
   <div class="sr-janela">
+    <!-- No celular entra o corte vertical, que preenche a tela inteira.
+         No desktop segue o panoramico do R2: um 9:16 ali mostraria so 35%
+         da altura do quadro, e aqui o video e para ASSISTIR, nao fundo. -->
     <video id="reelVid" class="sr-video" muted loop playsinline preload="none"
       poster="hero-reel-poster.webp"
-      data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4"></video>
+      data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4"
+      data-src-m="showreel-v-m.mp4"></video>
 
     <!-- camada opaca com a palavra RECORTADA nela: o video so aparece
          por dentro das letras. Branco na mascara = tapa, preto = furo. -->
