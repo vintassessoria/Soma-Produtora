@@ -55,14 +55,9 @@ const esc = s => String(s)
 
 function pagina(pr) {
   const outros = P.filter(o => o.id !== pr.id);
-  const paras = pr.d.map(x => '<p>' + esc(x) + '</p>').join('\n        ');
-  const parte = pr.c.split('·').map(x => x.trim());
-  const ano = parte[0] || '';
-  const formato = parte[1] || '';
-  const ficha = [['Ano', ano], ['Formato', formato], ['Entregas', pr.f.join(', ')]]
-    .filter(x => x[1])
-    .map(x => '<div><dt>' + esc(x[0]) + '</dt><dd>' + esc(x[1]) + '</dd></div>')
-    .join('\n        ');
+  /* A secao "sobre o projeto" foi removida da pagina. Os textos em pr.d
+     continuam em uso na description e no og:description do cabecalho, que
+     e o que aparece quando o link e compartilhado. */
   const grade = outros.map(o =>
     '<li><a href="projeto-' + o.id + '.html">' +
     '<img src="' + o.p + '" alt="' + esc(o.t) + '" loading="lazy" decoding="async">' +
@@ -104,16 +99,6 @@ function pagina(pr) {
 '</header>',
 '',
 '<main>',
-'  <section class="wrap pv-sobre">',
-'    <div class="pv-esq"><h2>Sobre o projeto</h2></div>',
-'    <div class="pv-dir">',
-'      ' + paras,
-'      <dl class="pv-ficha">',
-'        ' + ficha,
-'      </dl>',
-'    </div>',
-'  </section>',
-'',
 '  <section class="wrap pv-player">',
 '    <video controls playsinline preload="metadata" poster="' + pr.p + '"' + (pr.vert ? ' class="vert"' : '') + '>',
 '      <source src="' + pr.v + '" type="video/mp4">',
