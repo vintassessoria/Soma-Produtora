@@ -56,7 +56,13 @@ const esc = s => String(s)
 function pagina(pr) {
   const outros = P.filter(o => o.id !== pr.id);
   const paras = pr.d.map(x => '<p>' + esc(x) + '</p>').join('\n        ');
-  const ficha = pr.f.map(x => '<span>' + esc(x) + '</span>').join('');
+  const parte = pr.c.split('·').map(x => x.trim());
+  const ano = parte[0] || '';
+  const formato = parte[1] || '';
+  const ficha = [['Ano', ano], ['Formato', formato], ['Entregas', pr.f.join(', ')]]
+    .filter(x => x[1])
+    .map(x => '<div><dt>' + esc(x[0]) + '</dt><dd>' + esc(x[1]) + '</dd></div>')
+    .join('\n        ');
   const grade = outros.map(o =>
     '<li><a href="projeto-' + o.id + '.html">' +
     '<img src="' + o.p + '" alt="' + esc(o.t) + '" loading="lazy" decoding="async">' +
@@ -99,10 +105,12 @@ function pagina(pr) {
 '',
 '<main>',
 '  <section class="wrap pv-sobre">',
-'    <h2>Sobre o projeto</h2>',
-'    <div>',
-'        ' + paras,
-'      <div class="pv-ficha">' + ficha + '</div>',
+'    <div class="pv-esq"><h2>Sobre o projeto</h2></div>',
+'    <div class="pv-dir">',
+'      ' + paras,
+'      <dl class="pv-ficha">',
+'        ' + ficha,
+'      </dl>',
 '    </div>',
 '  </section>',
 '',
