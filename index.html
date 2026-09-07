@@ -194,6 +194,14 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   aspect-ratio:4/3;overflow:hidden;border-radius:10px;background:var(--soft);
   padding:0;cursor:pointer}
 .pj-grade img{width:100%;height:100%;object-fit:cover;display:block}
+/* Com numero impar de projetos, o ultimo sobrava sozinho na fileira e
+   deixava um buraco ao lado. Ele passa a ocupar a linha inteira — 16/9 em
+   vez de 4/3 porque, esticado para o dobro da largura, o 4/3 dobraria a
+   altura e quebraria o ritmo das fileiras. E a proporcao natural de um
+   quadro de video. A regra so dispara quando o ultimo cai em posicao
+   impar, entao um decimo projeto a fecha sozinho. */
+.pj-grade li:last-child:nth-child(odd){grid-column:1 / -1}
+.pj-grade li:last-child:nth-child(odd) button{aspect-ratio:16/9}
 .pj-grade b{position:absolute;left:0;right:0;bottom:0;padding:10px;
   text-align:left;font-size:12px;font-weight:700;letter-spacing:-.02em;
   text-transform:uppercase;color:#fff;
