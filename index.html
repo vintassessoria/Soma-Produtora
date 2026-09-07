@@ -1515,6 +1515,52 @@ var PJ=[
 (function(){
 var cv=document.getElementById('pjGL');
 if(!cv)return;
+/* ── lightbox do video (DOM, sem CORS) ────────────────────────────── */
+var lb=document.getElementById('pjLb'),vid=document.getElementById('pjVid'),
+    bx=document.getElementById('pjX');
+/* Clicar num card abre o filme aqui mesmo, sobre a galeria. Chegou a
+   levar para uma pagina por projeto; voltou para o lightbox porque o
+   caminho mais curto ate o video e o que interessa aqui. */
+function abreVideo(i){
+  if(!lb||!vid)return;
+  vid.src=PJ[i].v;lb.classList.add('abre');lb.setAttribute('aria-hidden','false');
+  document.body.style.overflow='hidden';
+  if(window.lenis&&window.lenis.stop)window.lenis.stop();
+  var t=vid.play();if(t&&t.catch)t.catch(function(){});
+}
+function fechaVideo(){
+  if(!lb||!vid)return;
+  vid.pause();vid.removeAttribute('src');vid.load();
+  lb.classList.remove('abre');lb.setAttribute('aria-hidden','true');
+  document.body.style.overflow='';
+  if(window.lenis&&window.lenis.start)window.lenis.start();
+}
+/* A grade usa a MESMA lista da galeria, entao um projeto novo aparece nos
+   dois lugares sem duplicar dado. O toque chama o mesmo abreVideo. */
+var grade=document.getElementById('pjGrade');
+if(grade){
+  PJ.forEach(function(pr,i){
+    var li=document.createElement('li');
+    var b=document.createElement('button');
+    b.type='button';
+    b.setAttribute('aria-label','Abrir '+pr.t);
+    var im=document.createElement('img');
+    im.src=pr.p; im.alt=pr.t; im.loading='lazy'; im.decoding='async';
+    var rot=document.createElement('b'); rot.textContent=pr.t;
+    b.appendChild(im); b.appendChild(rot);
+    b.addEventListener('click',function(){abreVideo(i)});
+    li.appendChild(b); grade.appendChild(li);
+  });
+}
+if(bx)bx.addEventListener('click',fechaVideo);
+if(lb)lb.addEventListener('click',function(e){if(e.target===lb)fechaVideo()});
+
+/* No celular a galeria 3D nao aparece — quem mostra os projetos e a grade.
+   Sem esta saida, o navegador ainda criava o contexto WebGL, compilava os
+   shaders e baixava os 9 posters DE UMA VEZ na abertura (267KB), enquanto
+   a grade os pediria conforme a rolagem. A decisao e tomada na carga: se
+   a janela for esticada depois, basta recarregar. */
+if(matchMedia('(max-width:820px)').matches)return;
 var gl=null;
 try{gl=cv.getContext('webgl',{antialias:true,alpha:false})}catch(e){}
 if(!gl){                                  /* sem WebGL: some a secao inteira */
@@ -2070,45 +2116,7 @@ addEventListener('keydown',function(e){
   }
 });
 
-/* ── lightbox do video (DOM, sem CORS) ────────────────────────────── */
-var lb=document.getElementById('pjLb'),vid=document.getElementById('pjVid'),
-    bx=document.getElementById('pjX');
-/* Clicar num card abre o filme aqui mesmo, sobre a galeria. Chegou a
-   levar para uma pagina por projeto; voltou para o lightbox porque o
-   caminho mais curto ate o video e o que interessa aqui. */
-function abreVideo(i){
-  if(!lb||!vid)return;
-  vid.src=PJ[i].v;lb.classList.add('abre');lb.setAttribute('aria-hidden','false');
-  document.body.style.overflow='hidden';
-  if(window.lenis&&window.lenis.stop)window.lenis.stop();
-  var t=vid.play();if(t&&t.catch)t.catch(function(){});
-}
-function fechaVideo(){
-  if(!lb||!vid)return;
-  vid.pause();vid.removeAttribute('src');vid.load();
-  lb.classList.remove('abre');lb.setAttribute('aria-hidden','true');
-  document.body.style.overflow='';
-  if(window.lenis&&window.lenis.start)window.lenis.start();
-}
-/* A grade usa a MESMA lista da galeria, entao um projeto novo aparece nos
-   dois lugares sem duplicar dado. O toque chama o mesmo abreVideo. */
-var grade=document.getElementById('pjGrade');
-if(grade){
-  PJ.forEach(function(pr,i){
-    var li=document.createElement('li');
-    var b=document.createElement('button');
-    b.type='button';
-    b.setAttribute('aria-label','Abrir '+pr.t);
-    var im=document.createElement('img');
-    im.src=pr.p; im.alt=pr.t; im.loading='lazy'; im.decoding='async';
-    var rot=document.createElement('b'); rot.textContent=pr.t;
-    b.appendChild(im); b.appendChild(rot);
-    b.addEventListener('click',function(){abreVideo(i)});
-    li.appendChild(b); grade.appendChild(li);
-  });
-}
-if(bx)bx.addEventListener('click',fechaVideo);
-if(lb)lb.addEventListener('click',function(e){if(e.target===lb)fechaVideo()});
+
 })();
 
 /* ── nav ──────────────────────────────────────────────────────────── */
