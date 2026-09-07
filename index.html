@@ -594,6 +594,11 @@ footer{background:var(--dark);color:#fff;padding:clamp(50px,7vw,100px) var(--gut
 }
 [data-r="z"]{transform:scale(1.1)}
 [data-r].on{opacity:1;transform:none}
+/* will-change promove o elemento a uma camada propria de composicao. Util
+   DURANTE a animacao, desperdicio depois: eram 57 camadas vivas o tempo
+   todo, e num celular isso e memoria de video parada. Ao terminar, some. */
+[data-r].on{will-change:auto}
+.cli.subiu li{will-change:auto}
 [data-d="1"]{transition-delay:.09s}
 [data-d="2"]{transition-delay:.18s}
 [data-d="3"]{transition-delay:.27s}
@@ -823,6 +828,13 @@ html.lenis{scroll-behavior:auto!important}
    acontecer com o JS. Medido: o evento de mudanca da media query nao
    dispara em parte dos casos, e sem isto a grade de 4 mostrava 12. */
 @media(min-width:821px){.dup{display:none}}
+
+/* No celular o parallax nao roda (ver movePx/moveSc), entao a camada de
+   composicao que o will-change reserva para esses elementos e memoria de
+   video parada sem nenhum ganho. */
+@media(max-width:820px){
+  [data-sc],[data-px],.mag,.tk-i{will-change:auto}
+}
 
 @media(max-width:820px){
   .pc,.tm,.nb{display:flex;flex-wrap:nowrap;
@@ -2200,6 +2212,7 @@ function checaHero(vh){
 }
 var scs=[].slice.call(document.querySelectorAll('[data-sc]'));
 function moveSc(vh){
+  if(mqPeq.matches)return;
   for(var i=0;i<scs.length;i++){
     var el=scs[i],cx2=el.parentElement||el,r=cx2.getBoundingClientRect();
     if(r.bottom<-120||r.top>vh+120)continue;
@@ -2647,7 +2660,15 @@ var VEL_TRILHO=16;
 var pxs=[].slice.call(document.querySelectorAll('[data-px]'));
 pxs.forEach(function(el){el.style.willChange='transform'});
 var mqPeq=matchMedia('(max-width:820px)');
+/* ── PARALLAX: SO NO DESKTOP ──────────────────────────────────────────
+   Cada uma destas funcoes le a posicao dos elementos e escreve um
+   transform a CADA quadro, no meio do scroll. Num computador isso passa
+   despercebido; num celular e o que faz a rolagem engasgar, e o ganho
+   visual e pequeno numa tela estreita, onde o deslocamento mal aparece.
+   O que fica no celular: as revelacoes (que rodam uma vez e saem da
+   lista), os divisores e os trilhos. */
 function movePx(vh){
+  if(mqPeq.matches)return;
   for(var i=0;i<pxs.length;i++){
     var el=pxs[i],r=el.getBoundingClientRect();
     if(el.hasAttribute('data-sc'))continue;   /* quem tem zoom e tratado la */
@@ -2669,7 +2690,7 @@ function movePx(vh){
 var pcBloco=document.getElementById('pcList');
 var pcEls=[].slice.call(document.querySelectorAll('.pc-i'));
 function movePc(vh){
-  if(!pcBloco)return;
+  if(mqPeq.matches||!pcBloco)return;
   var r=pcBloco.getBoundingClientRect();
   if(r.bottom<-120||r.top>vh+120)return;
   var p=(vh*0.82-r.top)/(r.height+vh*0.25);
