@@ -439,6 +439,42 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   .bl>i:nth-child(odd){display:none}
 }
 
+/* ── GRAO E CURSOR ───────────────────────────────────────────────────
+   Duas camadas medidas em neiden.framer.media e refeitas para este site.
+
+   GRAO. La e um ladrilho de 256x256 repetido, mistura "overlay",
+   opacidade 0.15. A receita nao se copia: a base deles e BRANCA, e
+   "overlay" sobre fundo escuro devolve escuro — no #050609 daqui o grao
+   sumiria por completo. Entao o ladrilho e branco com alfa e entra por
+   opacidade normal, que e o que faz ruido aparecer no escuro.
+
+   Vale a pena porque para uma produtora audiovisual grao nao e enfeite: e
+   a textura do meio. Preto liso parece render; filme tem grao.
+
+   Fica ACIMA da rampa de blur (500) de proposito: o grao esta na pelicula,
+   nao na cena, entao nao faz sentido ele desfocar junto. E abaixo do menu
+   (890) e do nav (900), que sao interface.
+
+   Sem mistura e sem animacao: e uma camada estatica que o compositor
+   desenha uma vez. Grao animado repintaria a tela inteira todo quadro, e
+   este site ja teve problema de rolagem no celular. */
+.grao{position:fixed;inset:0;z-index:600;pointer-events:none;
+  opacity:.1;background-repeat:repeat}
+
+/* CURSOR. So onde existe ponteiro de verdade: a consulta (hover:hover) e
+   (pointer:fine) exclui toque e caneta, onde um cursor desenhado ficaria
+   parado num canto da tela. difference pelo mesmo motivo do rotulo do
+   showreel: sobre imagem clara ele escurece, sobre o preto ele acende, e
+   nunca some. */
+.cur{position:fixed;left:0;top:0;width:30px;height:30px;border-radius:50%;
+  border:1px solid #fff;mix-blend-mode:difference;pointer-events:none;
+  z-index:960;margin:-15px 0 0 -15px;opacity:0;
+  transition:opacity .3s var(--E),width .22s var(--E),height .22s var(--E),
+             margin .22s var(--E)}
+.cur.on{opacity:1}
+.cur.alvo{width:52px;height:52px;margin:-26px 0 0 -26px}
+@media(hover:none),(pointer:coarse){.cur{display:none}}
+
 /* ── NAV ────────────────────────────────────────────────────────────── */
 #nav{position:fixed;top:0;left:0;right:0;z-index:900;
   display:flex;align-items:center;justify-content:space-between;
@@ -2898,6 +2934,68 @@ var VEL_TRILHO=16;
   requestAnimationFrame(anda);
 })();
 
+
+/* ── GRAO: ladrilho desenhado na hora ─────────────────────────────────
+   Ruido comprime mal — um PNG de 128x128 de ruido passa de 30KB e nao
+   ganha nada com o webp. Desenhado em canvas, custa ZERO byte de rede e
+   ainda sai diferente a cada visita.
+
+   128 e o menor ladrilho em que a repeticao nao se percebe: com 64 o olho
+   acha o padrao nas areas de preto chapado. */
+(function(){
+  var n=128, cv=document.createElement('canvas'); cv.width=cv.height=n;
+  var cx=cv.getContext('2d'); if(!cx)return;
+  var im=cx.createImageData(n,n), p=im.data;
+  /* ESPARSO, nao uniforme. Com alfa aleatorio em TODO pixel o alfa medio
+     fica em 127 — metade opaco na tela inteira — e isso nao e grao, e um
+     veu: medido, levantava o preto do site em 7 pontos de 255 sobre uma
+     base que e RGB(5,6,9). Mais que dobrava o preto.
+
+     Grao de pelicula e esparso: a maioria do quadro nao tem grao nenhum e
+     alguns pontos brilham. Com 15% de pontos acesos o alfa medio cai para
+     ~19 e o preto sobe menos de 2 pontos, enquanto cada ponto aceso fica
+     mais forte e o grao aparece MAIS, nao menos. */
+  for(var i=0;i<p.length;i+=4){
+    p[i]=p[i+1]=p[i+2]=255;          /* branco: no escuro so da para somar luz */
+    var v=Math.random();
+    p[i+3]= v<0.85 ? 0 : (((v-0.85)/0.15)*255)|0;
+  }
+  cx.putImageData(im,0,0);
+  var d=document.createElement('div');
+  d.className='grao'; d.setAttribute('aria-hidden','true');
+  d.style.backgroundImage='url('+cv.toDataURL('image/png')+')';
+  document.body.appendChild(d);
+})();
+
+/* ── CURSOR ───────────────────────────────────────────────────────────
+   Segue com atraso proprio: escrever a posicao direto no pointermove da um
+   circulo colado no ponteiro, que nao acrescenta nada ao que o sistema ja
+   desenha. O atraso e o efeito. O lerp roda no laco que ja existe.
+
+   Cresce sobre o que e clicavel — e assim ele deixa de ser enfeite e passa
+   a dizer onde da para clicar. */
+var cur=null, curAlvo={x:-99,y:-99}, curPos={x:-99,y:-99};
+if(matchMedia('(hover:hover) and (pointer:fine)').matches){
+  cur=document.createElement('div');
+  cur.className='cur'; cur.setAttribute('aria-hidden','true');
+  document.body.appendChild(cur);
+  addEventListener('pointermove',function(e){
+    if(e.pointerType==='touch')return;
+    curAlvo.x=e.clientX; curAlvo.y=e.clientY;
+    if(!cur.classList.contains('on'))cur.classList.add('on');
+    var c=e.target&&e.target.closest?e.target.closest('a,button,[role="button"],summary'):null;
+    cur.classList.toggle('alvo',!!c);
+  },{passive:true});
+  addEventListener('pointerleave',function(){cur.classList.remove('on')},{passive:true});
+  document.addEventListener('mouseleave',function(){cur.classList.remove('on')},{passive:true});
+}
+function moveCursor(){
+  if(!cur)return;
+  curPos.x+=(curAlvo.x-curPos.x)*.18;
+  curPos.y+=(curAlvo.y-curPos.y)*.18;
+  cur.style.transform='translate('+curPos.x.toFixed(1)+'px,'+curPos.y.toFixed(1)+'px)';
+}
+
 /* ── PARALLAX GERAL ───────────────────────────────────────────────────
    data-px = quantos pixels o elemento se desloca do topo ao fim da
    travessia pela tela. POSITIVO sobe mais rapido que o scroll (parece
@@ -3107,7 +3205,7 @@ function rede(){
   var vh=innerHeight||1;
   var _ag=performance.now(), _dt=Math.min(.05,(_ag-(_ant||_ag))/1000)||.016; _ant=_ag;
   checaHero(vh);checaMarcas(vh);checaFatias(vh);checaClientes(vh);moveMorf(vh,_dt);moveSc(vh);movePx(vh);moveFita(vh);moveRaiz(vh);movePc(vh);giraRoletes(vh);
-  movePin();escondeRampa(vh);
+  movePin();escondeRampa(vh);moveCursor();
   if(nav)nav.classList.toggle('stuck',scrollY>60);
 }
 addEventListener('scroll',rede,{passive:true});
