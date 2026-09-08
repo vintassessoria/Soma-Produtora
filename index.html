@@ -1931,23 +1931,35 @@ var cartoes=PJ.map(function(p,i){
    isso e proposital, a variedade compoe a espiral. Enfileirados vira
    bagunca.
 
-   Aqui todos entram na MESMA caixa, 16:9 por serem filmes. A malha de cada
-   cartao ja nasceu com a forma do poster, entao a caixa e obtida esticando
-   os vertices por eixo — foi para isto que uEsc virou vec2 — e o recorte
-   "cover" do fragmento compensa a diferenca. A imagem enche a caixa sem
-   deformar: CORTA, nao estica.
+   Aqui todos entram na MESMA caixa. A malha de cada cartao ja nasceu com a
+   forma do poster, entao a caixa e obtida esticando os vertices por eixo —
+   foi para isto que uEsc virou vec2 — e o recorte "cover" do fragmento
+   compensa a diferenca. A imagem enche a caixa sem deformar: corta.
+
+   A CAIXA E 9:16, e isso nao e gosto: TODOS os videos de origem sao
+   verticais. Medido nos arquivos — aftermovie-1 e mari-fernandez em
+   1080x1920, leo, dia2 e zevaqueiro em 810x1440. Os posters 506x900 sao
+   recortes fieis disso. Eu tinha escolhido 16:9 de cabeca, e uma caixa
+   deitada jogava fora dois tercos de cada imagem e esticava o resto: a
+   faixa util caia para 506x284 e ia parar em ~1250px de largura na tela.
+   Era essa a perda de qualidade, nao o tamanho maior em si.
+
+   Com a caixa na orientacao da fonte, o recorte some (cober = 1,1) e a
+   imagem inteira e usada.
 
    O tamanho sai do que a camera enxerga, nao de um numero fixo. Com a
    camera em z=7 e meia-abertura de 25 graus, a meia-altura visivel no
-   plano dos cartoes e 7*tan(25) = 3.26. A caixa pede 1.05 disso, ou seja
-   ~52% da altura da tela contra os ~21% de antes.
+   plano dos cartoes e 7*tan(25) = 3.26. A caixa pede 1.35 disso: ~67% da
+   altura da tela, contra os ~21% de antes. Nessa medida um poster de
+   506x900 cai quase exatamente sobre os pixels do dispositivo, entao o
+   cartao cresce sem borrar.
 
    Em janela estreita quem manda e a largura, senao o cartao vazaria. */
 var TAN25=Math.tan(25*Math.PI/180);
 function caixaDet(){
   var vh=7*TAN25, vw=vh*(lg/al);
-  var w=vh*1.05*16/9, hh=vh*1.05;
-  if(w>vw*1.10){ w=vw*1.10; hh=w*9/16 }
+  var hh=vh*1.35, w=hh*9/16;
+  if(w>vw*1.10){ w=vw*1.10; hh=w*16/9 }
   return {w:w,h:hh};
 }
 /* recorte cover da imagem real dentro da caixa da fila */
