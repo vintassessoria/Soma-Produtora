@@ -2811,12 +2811,37 @@ var VEL_TRILHO=16;
       var t={el:el, pos:largura, parado:false, largura:largura};
       el.scrollLeft=largura;
       el.style.scrollSnapType='none';
-      function trava(){
-        if(t.parado)return; t.parado=true;
-        el.style.scrollSnapType='x proximity';
-      }
-      el.addEventListener('pointerdown',trava,{passive:true});
-      el.addEventListener('touchstart',trava,{passive:true});
+      /* TRAVA POR INTENCAO, NAO POR ENCOSTAR.
+         Antes qualquer touchstart no trilho travava E devolvia o
+         scroll-snap-type:x proximity que o CSS define. So que o dedo pousa
+         nestes trilhos o tempo todo enquanto a pessoa rola a PAGINA, e
+         ligar o encaixe naquele instante faz o navegador saltar para o
+         ponto de encaixe mais proximo. Como o passeio automatico para numa
+         posicao qualquer, o salto era de quase meia foto — a teleportada
+         lateral que aparecia do nada.
+
+         Agora o encaixe fica desligado de vez: o trilho para onde a pessoa
+         soltou, que e o comportamento previsivel. E a trava so acontece
+         quando o gesto e mesmo horizontal — se for vertical, quem manda e
+         a pagina e o trilho nem fica sabendo. */
+      function trava(){ t.parado=true }
+      var tx0=0,ty0=0,decidiu=false;
+      el.addEventListener('touchstart',function(e){
+        var p=e.touches[0]; if(!p)return;
+        tx0=p.clientX; ty0=p.clientY; decidiu=false;
+      },{passive:true});
+      el.addEventListener('touchmove',function(e){
+        if(decidiu||t.parado)return;
+        var p=e.touches[0]; if(!p)return;
+        var dx=Math.abs(p.clientX-tx0), dy=Math.abs(p.clientY-ty0);
+        if(dx<8&&dy<8)return;         /* ainda nao da para saber a direcao */
+        decidiu=true;
+        if(dx>dy)trava();             /* horizontal: e o trilho */
+      },{passive:true});
+      /* no desktop o ponteiro nao encosta por acidente durante a rolagem */
+      el.addEventListener('pointerdown',function(e){
+        if(e.pointerType!=='touch')trava();
+      },{passive:true});
       el.addEventListener('wheel',trava,{passive:true});
       el.addEventListener('keydown',trava);
       trilhos.push(t);
@@ -2850,13 +2875,21 @@ var VEL_TRILHO=16;
     if(mq.matches){
       for(var i=0;i<trilhos.length;i++){
         var t=trilhos[i]; if(t.parado)continue;
-        if(ts-rolando<500)continue;      /* a pagina esta sendo rolada */
         var r=t.el.getBoundingClientRect();
-        if(r.bottom<0||r.top>innerHeight)continue;   /* fora da tela: nao gasta */
+        var pausa=(ts-rolando<500)||r.bottom<0||r.top>innerHeight;
+        if(pausa){ t.perdido=true; continue }
+        /* SO AQUI a posicao e relida, uma vez por retomada. Sem isto, o
+           laco voltava escrevendo o valor de meio segundo atras e o trilho
+           saltava de volta — a segunda teleportada. Reler todo quadro
+           tambem forcaria layout durante a rolagem, que e justamente o que
+           esta pausa evita. */
+        if(t.perdido){ t.pos=t.el.scrollLeft; t.perdido=false }
         t.pos+=VEL_TRILHO*dt;
-        /* vive na faixa do meio: ao sair dela, recua um conjunto inteiro e
-           cai num ponto visualmente identico */
-        if(t.pos>=t.largura*2)t.pos-=t.largura;
+        /* vive na faixa do meio: ao sair dela, anda um conjunto inteiro e
+           cai num ponto visualmente identico. Os dois sentidos, porque
+           agora a pessoa pode ter arrastado para tras. */
+        while(t.pos>=t.largura*2)t.pos-=t.largura;
+        while(t.pos<t.largura)t.pos+=t.largura;
         t.el.scrollLeft=t.pos;
       }
     }
