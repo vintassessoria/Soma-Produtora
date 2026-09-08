@@ -383,48 +383,6 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   .dv-moldura{aspect-ratio:4/5;max-height:none}
 }
 
-/* ══════ REVELAR ═══════════════════════════════════════════════════════
-   Tres camadas: a grade de trabalho embaixo, uma tapa escura por cima, e a
-   frase acima de tudo. A tapa tem um FURO recortado por mascara, e o furo
-   segue o cursor — por isso a frase continua legivel enquanto o trabalho
-   aparece so onde a pessoa aponta.
-
-   A posicao do furo vive em duas variaveis CSS. Atualizar variavel nao
-   dispara calculo de layout, so repintura da propria camada: e por isso
-   que da para seguir o cursor a cada movimento sem engasgar.
-
-   Escolhi isto em vez do rastro de imagens no cursor, que e o efeito mais
-   comum de site de agencia: aquele nao existe no celular e ja virou
-   template. Este tem versao de toque — o furo desce com o scroll. */
-.rv{position:relative;height:100svh;min-height:520px;overflow:hidden;
-  background:var(--dark);display:grid;place-items:center}
-
-.rv-fundo{position:absolute;inset:0;display:grid;gap:4px;
-  grid-template-columns:repeat(4,1fr);grid-auto-rows:1fr}
-.rv-fundo img{width:100%;height:100%;object-fit:cover;display:block;
-  filter:grayscale(1) contrast(1.05)}
-
-.rv-tapa{position:absolute;inset:0;background:var(--dark);
-  --x:50%; --y:50%; --r:190px;
-  -webkit-mask-image:radial-gradient(circle var(--r) at var(--x) var(--y),
-    transparent 0 58%, #000 100%);
-          mask-image:radial-gradient(circle var(--r) at var(--x) var(--y),
-    transparent 0 58%, #000 100%);
-  transition:opacity .4s var(--E)}
-
-.rv-txt{position:relative;z-index:2;text-align:center;padding:0 var(--gut);
-  pointer-events:none}
-.rv-tit{font-size:clamp(30px,5.4vw,72px);font-weight:800;line-height:.98;
-  letter-spacing:-.045em;text-transform:uppercase;color:#fff;
-  text-shadow:0 2px 40px rgba(5,6,9,.85)}
-.rv-dica{margin-top:clamp(16px,2vw,26px);font-size:14px;
-  color:rgba(255,255,255,.55)}
-
-@media(max-width:820px){
-  .rv-fundo{grid-template-columns:repeat(3,1fr)}
-  .rv-tapa{--r:130px}
-}
-
 /* ── EMENDA LÍQUIDA ENTRE SEÇÕES (SectionMorph) ──────────────────────
    Um SVG na costura entre duas secoes: um retangulo da cor de baixo, e
    por cima um caminho da cor de cima cuja borda inferior e uma curva. A
@@ -687,8 +645,7 @@ footer{background:var(--dark);color:#fff;padding:clamp(50px,7vw,100px) var(--gut
    entao os dois lados nao tem como divergir depois. */
 .tk{overflow:hidden;border-top:1px solid var(--line);
   border-bottom:1px solid var(--line);padding:clamp(14px,2vw,26px) 0;
-  margin-top:var(--tkAr)}
-.tk + #sobre{padding-top:var(--tkAr)}
+  margin-block:var(--tkAr)}
 .tk-i{display:flex;width:max-content;will-change:transform}
 .tk-i span{display:inline-flex;align-items:center;gap:clamp(20px,2.8vw,44px);
   padding-right:clamp(20px,2.8vw,44px);white-space:nowrap;
@@ -1059,20 +1016,6 @@ void main(){
     <span>Aftermovie <em></em> Videoclipe <em></em> Branded Content <em></em> Campanha 360° <em></em> Direção Criativa <em></em></span>
   </div>
 </div>
-
-<!-- ══════ REVELAR ══════
-     A superficie e uma frase; o trabalho esta atras dela. Onde o cursor
-     passa, a camada escura abre e a grade de projetos aparece. No celular
-     nao ha cursor, entao quem abre e o scroll: a janela desce sozinha
-     conforme a pessoa rola. -->
-<section class="rv" id="revelar">
-  <div class="rv-fundo" id="rvFundo" aria-hidden="true"></div>
-  <div class="rv-tapa" id="rvTapa" aria-hidden="true"></div>
-  <div class="rv-txt">
-    <h2 class="rv-tit">O trabalho está<br><span class="acc">aqui atrás.</span></h2>
-    <p class="rv-dica" id="rvDica">Mova o cursor</p>
-  </div>
-</section>
 
 <div class="morf" data-cima="#0D0F13" data-baixo="#050609" aria-hidden="true"></div>
 <!-- ══════ SERVIÇOS ══════ -->
@@ -2788,60 +2731,6 @@ var VEL_TRILHO=16;
   requestAnimationFrame(anda);
 })();
 
-/* ── REVELAR: o furo segue o cursor, ou o scroll ──────────────────────
-   A grade sai da mesma lista PJ, mais as fotos de bastidores: sao imagens
-   que o site ja carrega em outras secoes, entao nao ha peso novo de
-   verdade — o navegador reaproveita o que ja esta em cache.
-
-   Escrever as variaveis --x e --y nao causa recalculo de layout, apenas
-   repintura da tapa. Por isso o movimento pode acompanhar o ponteiro sem
-   passar pelo laco de scroll. */
-var rvFundo=document.getElementById('rvFundo'),
-    rvTapa=document.getElementById('rvTapa'),
-    rvSec=document.getElementById('revelar'),
-    rvDica=document.getElementById('rvDica');
-
-if(rvFundo&&typeof PJ!=='undefined'){
-  var arte=PJ.map(function(p){return p.p})
-    .concat(['bastidores-1.webp','bastidores-2.webp','bastidores-4.webp']);
-  /* 12 celulas em 4 colunas no desktop, 3 no celular: a grade fica cheia
-     nos dois sem sobrar buraco */
-  arte.slice(0,12).forEach(function(src,i){
-    var im=document.createElement('img');
-    im.src=src; im.alt=''; im.loading='lazy'; im.decoding='async';
-    rvFundo.appendChild(im);
-  });
-}
-
-if(rvSec&&rvTapa){
-  var rvToque=matchMedia('(max-width:820px)');
-  if(!rvToque.matches){
-    rvSec.addEventListener('pointermove',function(e){
-      var r=rvSec.getBoundingClientRect();
-      rvTapa.style.setProperty('--x',(e.clientX-r.left)+'px');
-      rvTapa.style.setProperty('--y',(e.clientY-r.top)+'px');
-    },{passive:true});
-    /* sem cursor em cima, o furo volta ao centro e encolhe */
-    rvSec.addEventListener('pointerleave',function(){
-      rvTapa.style.setProperty('--x','50%');
-      rvTapa.style.setProperty('--y','50%');
-    },{passive:true});
-  }else if(rvDica){
-    rvDica.textContent='Role para revelar';
-  }
-}
-
-/* no celular quem abre e o scroll: a janela desce enquanto a secao passa */
-function moveRevelar(vh){
-  if(!rvSec||!rvTapa)return;
-  if(!matchMedia('(max-width:820px)').matches)return;
-  var r=rvSec.getBoundingClientRect();
-  if(r.bottom<0||r.top>vh)return;
-  var p=(vh-r.top)/(vh+r.height); p=p<0?0:(p>1?1:p);
-  rvTapa.style.setProperty('--x','50%');
-  rvTapa.style.setProperty('--y',(p*100).toFixed(1)+'%');
-}
-
 /* ── PARALLAX GERAL ───────────────────────────────────────────────────
    data-px = quantos pixels o elemento se desloca do topo ao fim da
    travessia pela tela. POSITIVO sobe mais rapido que o scroll (parece
@@ -3002,7 +2891,7 @@ function movePin(){
 function rede(){
   var vh=innerHeight||1;
   var _ag=performance.now(), _dt=Math.min(.05,(_ag-(_ant||_ag))/1000)||.016; _ant=_ag;
-  checaHero(vh);moveRevelar(vh);checaMarcas(vh);checaFatias(vh);checaClientes(vh);moveMorf(vh,_dt);moveSc(vh);movePx(vh);moveFita(vh);moveRaiz(vh);movePc(vh);giraRoletes(vh);
+  checaHero(vh);checaMarcas(vh);checaFatias(vh);checaClientes(vh);moveMorf(vh,_dt);moveSc(vh);movePx(vh);moveFita(vh);moveRaiz(vh);movePc(vh);giraRoletes(vh);
   movePin();
   if(nav)nav.classList.toggle('stuck',scrollY>60);
 }
