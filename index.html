@@ -1754,16 +1754,16 @@ function plano(w,hh,seg){
 var VS=[
 'precision highp float;',
 'attribute vec3 aPos;attribute vec2 aUv;',
-'uniform mat4 uProj,uView,uModel;uniform float uTime,uHover,uEsc;',
+'uniform mat4 uProj,uView,uModel;uniform float uTime,uHover;uniform vec2 uEsc;',
 'varying vec2 vUv;',
 'void main(){',
 /* A escala entra AQUI, no vertice, e nao na matriz: a matriz precisa
    continuar rigida porque o raycast usa a inversa barata (transposta da
    rotacao). Com escala embutida nela, aquela inversa estaria errada. */
-' vUv=aUv;vec3 p=aPos*uEsc;',
+' vUv=aUv;vec3 p=vec3(aPos.xy*uEsc,aPos.z);',
 ' float d=distance(aUv,vec2(0.5));',
 ' float bulge=smoothstep(0.8,0.0,d);',   /* 1 no centro, 0 na borda */
-' p.z+=bulge*uHover*0.4*uEsc;',          /* infla na direcao da camera */
+' p.z+=bulge*uHover*0.4*min(uEsc.x,uEsc.y);',          /* infla na direcao da camera */
 ' p.z+=sin(uTime*1.5+p.y*2.0)*0.01;',    /* respiro constante */
 ' gl_Position=uProj*uView*uModel*vec4(p,1.0);',
 '}'].join('\n');
@@ -1925,6 +1925,37 @@ var cartoes=PJ.map(function(p,i){
   return c;
 });
 
+/* ── CAIXA UNICA DA FILA ──────────────────────────────────────────────
+   No modo disperso cada cartao guarda AREA fixa e a proporcao do proprio
+   poster: um deitado sai largo e baixo, um em pe sai estreito e alto. Ali
+   isso e proposital, a variedade compoe a espiral. Enfileirados vira
+   bagunca.
+
+   Aqui todos entram na MESMA caixa, 16:9 por serem filmes. A malha de cada
+   cartao ja nasceu com a forma do poster, entao a caixa e obtida esticando
+   os vertices por eixo — foi para isto que uEsc virou vec2 — e o recorte
+   "cover" do fragmento compensa a diferenca. A imagem enche a caixa sem
+   deformar: CORTA, nao estica.
+
+   O tamanho sai do que a camera enxerga, nao de um numero fixo. Com a
+   camera em z=7 e meia-abertura de 25 graus, a meia-altura visivel no
+   plano dos cartoes e 7*tan(25) = 3.26. A caixa pede 1.05 disso, ou seja
+   ~52% da altura da tela contra os ~21% de antes.
+
+   Em janela estreita quem manda e a largura, senao o cartao vazaria. */
+var TAN25=Math.tan(25*Math.PI/180);
+function caixaDet(){
+  var vh=7*TAN25, vw=vh*(lg/al);
+  var w=vh*1.05*16/9, hh=vh*1.05;
+  if(w>vw*1.10){ w=vw*1.10; hh=w*9/16 }
+  return {w:w,h:hh};
+}
+/* recorte cover da imagem real dentro da caixa da fila */
+function coberDet(c,cd){
+  var ai=c.w/c.h, ab=cd.w/cd.h;
+  return [Math.min(1,ab/ai), Math.min(1,ai/ab)];
+}
+
 /* ── estado ───────────────────────────────────────────────────────── */
 var modo='disperso', ativo=0, sobre=-1, tempo=0;
 var mouse={x:0,y:0}, camPos={x:0,y:0,z:8.5}, olhaPara={x:0,y:0,z:0};
@@ -2048,9 +2079,13 @@ function raycast(){
     var t=-lz/ldz;
     if(t<0)continue;
     var px=lx+ldx*t, py=ly+ldy*t;
-    /* a escala vive no vertice, nao na matriz: o limite cresce junto */
-    var ee=(modo==='detalhe')?1:esc;
-    if(Math.abs(px)<=c.w*ee/2&&Math.abs(py)<=c.h*ee/2&&t<perto){perto=t;achou=i}
+    /* a escala vive no vertice, nao na matriz: o limite cresce junto.
+       Na fila o alvo e a CAIXA, nao a forma do poster — senao o clique
+       erraria justamente nos cartoes mais recortados. */
+    var hw,hh2;
+    if(modo==='detalhe'){var cd=caixaDet();hw=cd.w/2;hh2=cd.h/2}
+    else{hw=c.w*esc/2;hh2=c.h*esc/2}
+    if(Math.abs(px)<=hw&&Math.abs(py)<=hh2&&t<perto){perto=t;achou=i}
   }
   return achou;
 }
@@ -2076,8 +2111,12 @@ function passo(dt){
   for(var i=0;i<cartoes.length;i++){
     var c=cartoes[i], al2=1, tx,ty,tz;
     if(modo==='detalhe'){
-      var e=i-ativo;
-      tx=e*2.6; ty=0; tz=-Math.abs(e)*1.5;
+      var e=i-ativo, cd=caixaDet();
+      /* z ZERO para todos. Antes cada vizinho recuava 1.5, e recuo em
+         perspectiva ENCOLHE — era essa a segunda causa dos tamanhos
+         diferentes na fila, independente da forma. Coplanares, todos
+         medem o mesmo na tela. */
+      tx=e*(cd.w+0.55); ty=0; tz=0;
       al2 = Math.abs(e)<=2 ? 1 : 0;
     }else{
       tx=c.base.x*escX+c.aj.x; ty=c.base.y*escY+c.aj.y; tz=c.base.z; al2=1;
@@ -2130,10 +2169,14 @@ function pinta(){
     gl.bindTexture(gl.TEXTURE_2D,c.tex);
     gl.uniform1f(U.uHover,c.hover);
     gl.uniform1f(U.uOpac,c.opac);
-    gl.uniform2f(U.uCober,c.cober[0],c.cober[1]);
-    /* no detalhe o cartao ja ocupa a tela: nao aplica o aumento */
-    var ee=(modo==='detalhe')?1:esc;
-    gl.uniform1f(U.uEsc,ee);
+    var eex,eey,cb;
+    if(modo==='detalhe'){
+      var cd=caixaDet();
+      eex=cd.w/c.w; eey=cd.h/c.h;   /* estica a malha ate a caixa comum */
+      cb=coberDet(c,cd);            /* e recorta a imagem para caber */
+    }else{ eex=eey=esc; cb=c.cober }
+    gl.uniform2f(U.uCober,cb[0],cb[1]);
+    gl.uniform2f(U.uEsc,eex,eey);
     desenha(c.g,mm);
     /* alcas de canto: so no cartao ativo do modo detalhe, como no original.
        Ficam um respiro FORA da borda, como uma caixa de selecao — no
@@ -2143,8 +2186,9 @@ function pinta(){
       gl.uniform1f(U.uHover,0);
       gl.uniform1f(U.uOpac,c.opac);
       gl.uniform2f(U.uCober,1,1);
-      gl.uniform1f(U.uEsc,1);
-      var qx=c.w/2+.05, qy=c.h/2+.05;
+      gl.uniform2f(U.uEsc,1,1);
+      var cda=caixaDet();
+      var qx=cda.w/2+.05, qy=cda.h/2+.05;
       for(var k=0;k<4;k++){
         var loc=mModelo(k%2?qx:-qx, k<2?qy:-qy, .02,0,0,0);
         desenha(gCanto,mMul(mm,loc));
