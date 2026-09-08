@@ -523,7 +523,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 
 /* ── PROCESSO (numerado com prazo) ───────────────────────────────────── */
 .pc{border-top:1px solid var(--line)}
-.pc-i{display:grid;grid-template-columns:auto 1.1fr 1fr auto;
+.pc-i{display:grid;grid-template-columns:auto 1.1fr 1fr;
   gap:clamp(14px,2.6vw,40px);align-items:start;
   padding:clamp(20px,2.8vw,38px) 0;border-bottom:1px solid var(--line);
   --lit:0}
@@ -532,12 +532,9 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   opacity:calc(.4 + .6*var(--lit));transition:opacity .1s linear}
 .pc-d{font-size:15px;color:var(--mut);line-height:1.65;
   opacity:calc(.35 + .65*var(--lit));transition:opacity .1s linear}
-.pc-p{font-size:12.5px;
-  color:var(--mut);white-space:nowrap;text-align:right}
-.pc-p b{display:block;color:var(--ink);font-weight:400;margin-top:5px}
 @media(max-width:860px){
   .pc-i{grid-template-columns:auto 1fr;row-gap:8px}
-  .pc-d{grid-column:2}.pc-p{grid-column:2;text-align:left}
+  .pc-d{grid-column:2}
 }
 
 /* ── EQUIPE ─────────────────────────────────────────────────────────── */
@@ -626,18 +623,13 @@ footer{background:var(--dark);color:#fff;padding:clamp(50px,7vw,100px) var(--gut
 [data-sc]{will-change:transform}
 
 /* ██████ EFEITOS ADICIONAIS ███████████████████████████████████████████
-   Quatro tecnicas identificadas na referencia por evidencia ESTRUTURAL
-   (nao por assistir ao movimento, que o navegador nao me deixa ver):
-   o texto de acessibilidade anuncia "3D Carousel — item 1 of 6, use
-   arrow keys" e "Progress Bar"; ha textos duplicados (assinatura de fita
-   corrida), 3 trilhos horizontais e 2 elementos presos.
+   Tecnicas identificadas na referencia por evidencia ESTRUTURAL (nao por
+   assistir ao movimento, que o navegador nao me deixa ver): o texto de
+   acessibilidade anuncia "3D Carousel — item 1 of 6, use arrow keys"; ha
+   textos duplicados (assinatura de fita corrida), 3 trilhos horizontais e
+   2 elementos presos.
+   A barra de progresso de leitura existia aqui e foi retirada a pedido.
    ────────────────────────────────────────────────────────────────────── */
-
-/* (1) BARRA DE PROGRESSO DE LEITURA */
-#prog{position:fixed;top:0;left:0;height:2px;width:100%;z-index:950;
-  background:transparent;pointer-events:none}
-#prog i{display:block;height:100%;width:0;background:var(--acc);
-  box-shadow:0 0 12px rgba(107,240,25,.5)}
 
 /* (3) FITA TIPOGRAFICA — CONDUZIDA PELO SCROLL
    Sem animacao em laco: o deslocamento vem da posicao da pagina, entao a
@@ -901,7 +893,6 @@ html.lenis{scroll-behavior:auto!important}
 </head>
 <body>
 
-<div id="prog"><i></i></div>
 
 <nav id="nav">
   <a href="#" class="nv-logo" aria-label="SOMA Produtora"><img src="logotipo.png" alt="SOMA Produtora" fetchpriority="high" width="1031" height="362"></a>
@@ -1297,19 +1288,19 @@ void main(){
     <div class="pc-i" data-r="lx"><span class="pc-n">01</span>
       <span class="pc-t">Imersão</span>
       <p class="pc-d">Estudamos a marca, a audiência e o mercado antes de qualquer decisão.</p>
-      <span class="pc-p">Prazo<b>2 a 3 dias</b></span></div>
+      </div>
     <div class="pc-i" data-r="rx"><span class="pc-n">02</span>
       <span class="pc-t">Conceito</span>
       <p class="pc-d">A ideia central que vai orientar cada escolha visual, testada antes de virar design.</p>
-      <span class="pc-p">Prazo<b>3 a 5 dias</b></span></div>
+      </div>
     <div class="pc-i" data-r="lx"><span class="pc-n">03</span>
       <span class="pc-t">Produção</span>
       <p class="pc-d">Câmera de cinema e equipe experiente, do primeiro ao último take.</p>
-      <span class="pc-p">Prazo<b>1 a 3 semanas</b></span></div>
+      </div>
     <div class="pc-i" data-r="rx"><span class="pc-n">04</span>
       <span class="pc-t">Entrega</span>
       <p class="pc-d">Conteúdo finalizado e otimizado por plataforma. Sai quando está pronto.</p>
-      <span class="pc-p">Prazo<b>4 a 8 dias</b></span></div>
+      </div>
   </div>
 </section>
 
@@ -2884,13 +2875,6 @@ function movePin(){
   if(srLeg)srLeg.style.opacity=(p<0.12?1:Math.max(0,1-(p-0.12)/0.2)).toFixed(3);
 }
 
-/* ── BARRA DE PROGRESSO ──────────────────────────────────────────────── */
-var progI=document.querySelector('#prog i');
-function moveProg(){
-  if(!progI)return;
-  var H=document.documentElement.scrollHeight-innerHeight;
-  progI.style.width=(H>0?(scrollY/H)*100:0).toFixed(2)+'%';
-}
 
 /* ── BOTOES MAGNETICOS: puxam de leve na direcao do cursor ───────────── */
 [].forEach.call(document.querySelectorAll('.mag'),function(b){
@@ -2909,7 +2893,7 @@ function rede(){
   var vh=innerHeight||1;
   var _ag=performance.now(), _dt=Math.min(.05,(_ag-(_ant||_ag))/1000)||.016; _ant=_ag;
   checaHero(vh);checaMarcas(vh);checaFatias(vh);checaClientes(vh);moveMorf(vh,_dt);moveSc(vh);movePx(vh);moveFita(vh);moveRaiz(vh);movePc(vh);giraRoletes(vh);
-  movePin();moveProg();
+  movePin();
   if(nav)nav.classList.toggle('stuck',scrollY>60);
 }
 addEventListener('scroll',rede,{passive:true});
