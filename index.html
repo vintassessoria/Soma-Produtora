@@ -439,6 +439,33 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   .bl>i:nth-child(odd){display:none}
 }
 
+/* ── A RAMPA EM ONDA ─────────────────────────────────────────────────
+   Os gradientes acima dao um limite RETO — uma linha. Para ondular, o
+   limite precisa variar com o x, e gradiente linear em CSS nao faz isso.
+   As mascaras onduladas sao desenhadas em canvas (ver o JS) e substituem
+   os gradientes assim que ficam prontas; ate la vale o reto, entao nao ha
+   piscada de barra sem mascara.
+
+   O QUE SE MOVE E O ELEMENTO, NAO A MASCARA. Animar mask-position obriga a
+   repintar as oito camadas de backdrop-filter a cada quadro. Transform vai
+   para o compositor. Como a mascara se repete a cada 480px e a camada anda
+   exatamente 480px, a volta cai num ponto identico e a emenda nao aparece.
+
+   As camadas passam a nascer 480px para fora dos dois lados para que, no
+   meio do passeio, nunca sobre borda descoberta. O contain:strict da .bl
+   recorta o excedente.
+
+   No celular a onda fica PARADA: a forma continua ondulada, mas sem
+   animacao. Oito (la quatro) leituras de fundo por quadro, sem parar, num
+   aparelho que ja teve travada de rolagem, e risco que nao compensa. */
+.bl.onda>i{left:-480px;right:-480px;
+  animation:blOnda 18s linear infinite}
+@keyframes blOnda{from{transform:translateX(0)}to{transform:translateX(480px)}}
+@media(max-width:820px){
+  .bl.onda>i{left:0;right:0;animation:none}
+}
+
+
 /* ── GRAO E CURSOR ───────────────────────────────────────────────────
    Duas camadas medidas em neiden.framer.media e refeitas para este site.
 
@@ -2934,6 +2961,55 @@ var VEL_TRILHO=16;
   requestAnimationFrame(anda);
 })();
 
+
+
+/* ── MASCARAS ONDULADAS DA RAMPA ──────────────────────────────────────
+   Uma por camada, desenhada em canvas. Para cada coluna x, o limite sobe
+   ou desce conforme a soma de tres senos; para cada linha y, o alfa e a
+   mesma rampa de antes, so que medida a partir daquele limite deslocado.
+
+   Os tres senos usam periodos INTEIROS da largura do ladrilho (1, 2 e 3
+   voltas). Sem isso o ladrilho nao fecha com ele mesmo e a emenda aparece
+   como um corte vertical a cada 480px. Amplitudes decrescentes: o primeiro
+   da o balanco, os outros dois tiram a cara de seno puro.
+
+   Os limites de cada camada (0-8.75%, 8.75-17.5%, ...) sao os mesmos ja
+   medidos na referencia — a onda desloca o limite, nao muda a rampa. */
+(function(){
+  var bl=document.querySelector('.bl'); if(!bl)return;
+  var L=480, A=160, AMP=0.12;          /* ladrilho, altura, amplitude */
+  var cams=bl.children;
+  function onda(x){
+    var u=2*Math.PI*x/L;
+    return (Math.sin(u)*0.60 + Math.sin(2*u+1.7)*0.28 + Math.sin(3*u+0.4)*0.12);
+  }
+  var pronto=0;
+  for(var n=0;n<cams.length;n++){
+    var cv=document.createElement('canvas'); cv.width=L; cv.height=A;
+    var cx=cv.getContext('2d'); if(!cx)return;
+    var im=cx.createImageData(L,A), p=im.data;
+    var s0=(n*8.75)/100, s1=((n+1)*8.75)/100;
+    for(var x=0;x<L;x++){
+      var d=onda(x)*AMP;
+      for(var y=0;y<A;y++){
+        var t=((y/A)-s0-d)/(s1-s0);
+        t = t<0?0:(t>1?1:t);
+        var k=(y*L+x)*4;
+        p[k]=p[k+1]=p[k+2]=255; p[k+3]=(t*255)|0;
+      }
+    }
+    cx.putImageData(im,0,0);
+    var u='url('+cv.toDataURL('image/png')+')', s=cams[n].style;
+    s.webkitMaskImage=s.maskImage=u;
+    s.webkitMaskSize=s.maskSize=L+'px 100%';
+    s.webkitMaskRepeat=s.maskRepeat='repeat-x';
+    /* atraso negativo diferente por camada: sem isso as oito ondulam em
+       uniao e o conjunto parece uma fita so subindo e descendo */
+    s.animationDelay=(-n*1.6)+'s';
+    pronto++;
+  }
+  if(pronto===cams.length)bl.classList.add('onda');
+})();
 
 /* ── GRAO: ladrilho desenhado na hora ─────────────────────────────────
    Ruido comprime mal — um PNG de 128x128 de ruido passa de 30KB e nao
