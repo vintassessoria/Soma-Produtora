@@ -2005,9 +2005,32 @@ var cartoes=PJ.map(function(p,i){
 
    Em janela estreita quem manda e a largura, senao o cartao vazaria. */
 var TAN25=Math.tan(25*Math.PI/180);
+
+/* A FAIXA DA LEGENDA E RESERVADA, NAO DISPUTADA.
+   Ao crescer a caixa para 1.35 da meia-altura eu esqueci que o nome do
+   projeto mora no rodape do quadro: o cartao passou a cobrir a legenda.
+   Medido a 1440x900 — cartao de 146px a 754px, legenda comecando em 699:
+   55px por cima.
+
+   A reserva sai do PROPRIO elemento, nao de um numero chutado, porque a
+   altura da legenda muda com o tamanho do titulo e da descricao de cada
+   projeto. Vai do topo da legenda ate o fim do quadro, convertida para
+   unidades de mundo. */
+var reservaMundo=0, elHud=null;
+function mediReserva(){
+  if(!elHud)elHud=document.querySelector('.pj-hud');
+  if(!elHud||!cv){reservaMundo=0;return}
+  var rh=elHud.getBoundingClientRect(), rc=cv.getBoundingClientRect();
+  if(!rc.height){reservaMundo=0;return}
+  var px=rc.bottom-rh.top;
+  reservaMundo = px>0 ? (px/rc.height)*(2*7*TAN25) : 0;
+}
 function caixaDet(){
   var vh=7*TAN25, vw=vh*(lg/al);
-  var hh=vh*1.35, w=hh*9/16;
+  /* a altura util e a tela MENOS a faixa da legenda. O cartao so encolhe
+     se nao couber nela — na janela comum ele cabe e apenas sobe. */
+  var util=2*vh-reservaMundo;
+  var hh=Math.min(vh*1.35, util*0.94), w=hh*9/16;
   if(w>vw*1.10){ w=vw*1.10; hh=w*16/9 }
   return {w:w,h:hh};
 }
@@ -2168,6 +2191,8 @@ function prendeNaBorda(tx,tz,c){
 }
 function passo(dt){
   tempo+=dt;
+  /* uma leitura por quadro, e so no detalhe: o disperso nao usa a reserva */
+  if(modo==='detalhe')mediReserva();
   var mx=mouse.x*.3, my=mouse.y*.3;
   for(var i=0;i<cartoes.length;i++){
     var c=cartoes[i], al2=1, tx,ty,tz;
@@ -2177,7 +2202,9 @@ function passo(dt){
          perspectiva ENCOLHE — era essa a segunda causa dos tamanhos
          diferentes na fila, independente da forma. Coplanares, todos
          medem o mesmo na tela. */
-      tx=e*(cd.w+0.55); ty=0; tz=0;
+      /* centrado no espaco LIVRE, nao na tela: subir meia reserva poe o
+         cartao no meio do que sobra acima da legenda */
+      tx=e*(cd.w+0.55); ty=reservaMundo/2; tz=0;
       al2 = Math.abs(e)<=2 ? 1 : 0;
     }else{
       tx=c.base.x*escX+c.aj.x; ty=c.base.y*escY+c.aj.y; tz=c.base.z; al2=1;
