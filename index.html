@@ -599,16 +599,35 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 
      As nove voltam: em tres colunas nao sobra fileira, entao a mais escura
      nao precisa mais sair. */
-  /* 160svh, e nao os 130 de antes: a descida da marca precisa de curso.
-     MEDIDO — com 130 o trecho preso da so 244px para um percurso de 641,
-     o que sairia a 2.63x a rolagem, disparado. Com 160 sao 487px de curso
-     e a descida cai para 1.32x. Custa 23% de altura na secao; foi o menor
-     trilho em que o movimento nao fica violento. */
-  /* 185svh pelo mesmo motivo do desktop: com 160 a entrada de fora
-     levaria a marca a 1.86x. Assim ela fica em 1.31x, perto da velocidade
-     que ja tinha. */
+  /* 185svh. O trilho ja foi 130 e 160 no caminho: cada vez que a marca
+     ganhou percurso — primeiro a descida, depois a entrada vinda de fora
+     da tela — ele precisou crescer para o movimento nao acelerar. Com 130
+     a descida sairia a 2.63x a rolagem; com 185 e a entrada completa ela
+     fica em 1.31x. */
   .in-tr{height:185svh}
   .in-fluxo{grid-template-columns:repeat(3,1fr)}
+}
+
+/* ── A COLUNA CABE NO PERCURSO, EM VEZ DE SER CORTADA ────────────────
+   Ocupando a largura inteira, as celulas 9:16 ficavam 475x844 e a coluna
+   passava de 2500px. Mostrar tudo exigiria percorrer 1621px, e a qualquer
+   velocidade calma isso pediria uma secao gigante — foi por isso que, ao
+   desacelerar o fundo, sobraram fotos que nunca entravam em quadro.
+
+   A saida e encurtar a coluna, nao acelerar. Com a grade em 70vw e a linha
+   em 55svh a coluna cai para ~1500px, e ela INTEIRA passa a 0.48x da
+   rolagem — mais calmo que os 0.85 de antes, agora com as nove aparecendo.
+
+   70vw, e nao menos: em 60vw as celulas ficariam 9:16 exatas e nao haveria
+   corte nenhum, mas o mosaico ficaria bem mais estreito que a palavra. Em
+   70 ele da ~1008px contra os 1014 da palavra — casam — e o corte fica em
+   16% da altura da foto, que as mantem legiveis.
+
+   A linha em svh e proposital: a altura da coluna precisa acompanhar a
+   tela, senao num monitor baixo ela voltaria a nao caber no percurso. */
+@media(min-width:821px){
+  .in-fluxo{left:15vw;right:15vw;grid-auto-rows:55svh}
+  .in-fluxo img{aspect-ratio:auto;height:100%}
 }
 
 /* ── NAV ────────────────────────────────────────────────────────────── */
@@ -3267,22 +3286,15 @@ function moveAbertura(vh){
        0.85 do que a pessoa rola. Abaixo de 1 porque um fundo na mesma
        velocidade da pagina parece colado nela; um pouco mais devagar e o
        que cria a distancia. Este numero e o botao de ajuste. */
-    /* 0.45, e nao 0.85. No celular o mosaico cabe inteiro na tela e so
-       deriva 44px — 0.09 da rolagem — e e por isso que a secao le calma
-       la. No desktop a coluna e alta e o fluxo deslizava 765px, o que dava
-       a sensacao de corrido mesmo ja estando abaixo da velocidade da
-       pagina. Metade disso aproxima o desktop daquela calma.
+    /* PERCORRE A COLUNA INTEIRA. Antes o percurso era uma fracao do curso,
+       e por isso sobravam fotos que nunca entravam em quadro. Agora ele e
+       a propria sobra: a coluna passa do topo ao pe e as nove aparecem.
 
-       CUSTO: percorrendo menos, a janela mostra uma faixa menor da coluna,
-       e as fileiras de cima e de baixo aparecem so em parte. E o preco de
-       um fundo calmo com uma coluna alta — as duas coisas nao cabem
-       juntas. */
-    var percurso=curso*0.45;
-    if(percurso>sobra)percurso=sobra;      /* coluna curta: nao inventa curso */
-    /* a janela percorrida e centrada na sobra, senao o corte sairia todo
-       do pe da coluna e a ultima fileira nunca apareceria */
-    var base=-(sobra-percurso)/2;
-    inFluxo.style.transform='translate3d(0,'+(base-p*percurso).toFixed(1)+'px,0)';
+       Quem controla a VELOCIDADE deixou de ser este numero e passou a ser
+       a altura da coluna, definida no CSS — e por isso ela encolheu para
+       70vw x 55svh. Medido: 0.48x a rolagem, mais calmo que os 0.85 de
+       antes, com todas as fotos passando. */
+    inFluxo.style.transform='translate3d(0,'+(-p*sobra).toFixed(1)+'px,0)';
   }else{
     /* CABE INTEIRO NA TELA — o caso das tres colunas no celular. Sem isto
        o deslocamento daria zero e o fundo ficaria PARADO enquanto a
