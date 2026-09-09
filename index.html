@@ -488,6 +488,39 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .grao{position:fixed;inset:0;z-index:600;pointer-events:none;
   opacity:.062;background-repeat:repeat}
 
+/* ── ABERTURA: A MARCA SOBRE O TRABALHO ──────────────────────────────
+   Medido no rodape de orkan.framer.website. La as letras sao texto branco
+   COMUM — sem mascara, sem recorte de fundo, sem gradiente. Quem faz o
+   efeito sao os involucros: um painel sticky de tela cheia com
+   mix-blend-mode:difference. O conteudo passa por tras e a palavra inverte
+   o que estiver atras dela. Sobre imagem clara o branco vira a
+   complementar; sobre o preto volta a ser branco puro.
+
+   E a mesma familia de mistura do rotulo do showreel, entao a casa ja
+   conhece o gesto.
+
+   O que corre atras aqui sao os posters dos projetos. Nao e peso novo: sao
+   os mesmos arquivos que a galeria precisa mais abaixo, entao isto adianta
+   o download em vez de somar. E dizem, antes de qualquer texto, do que a
+   casa vive. */
+.in-tr{position:relative;height:200svh}
+.in-st{position:sticky;top:0;height:100svh;overflow:hidden;background:var(--dark)}
+.in-fluxo{position:absolute;left:0;right:0;top:0;
+  display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
+  will-change:transform}
+.in-fluxo img{width:100%;aspect-ratio:9/16;object-fit:cover;display:block;
+  filter:grayscale(1) contrast(1.08)}
+/* A MARCA E IRMA DO FLUXO E VEM DEPOIS DELE: a mistura so enxerga como
+   fundo o que ja foi desenhado. Antes dele, inverteria so o preto. */
+.in-marca{position:absolute;inset:0;display:grid;place-items:center;
+  mix-blend-mode:difference;pointer-events:none;padding:0 var(--gut)}
+.in-marca span{font-family:var(--FD);font-weight:800;color:#fff;
+  font-size:clamp(88px,22vw,320px);letter-spacing:-.055em;line-height:.78}
+@media(max-width:820px){
+  .in-tr{height:170svh}
+  .in-fluxo{grid-template-columns:repeat(2,1fr)}
+}
+
 /* ── NAV ────────────────────────────────────────────────────────────── */
 #nav{position:fixed;top:0;left:0;right:0;z-index:900;
   display:flex;align-items:center;justify-content:space-between;
@@ -1160,6 +1193,14 @@ void main(){
     <span>Aftermovie <em></em> Videoclipe <em></em> Branded Content <em></em> Campanha 360° <em></em> Direção Criativa <em></em></span>
   </div>
 </div>
+
+<!-- ══════ ABERTURA ══════
+     A marca em tamanho grande, presa na tela, enquanto o trabalho corre
+     por tras dela e inverte as letras. Faz a ponte do hero para o resto. -->
+<div class="in-tr"><section class="in-st" id="abertura" aria-label="SOMA Produtora">
+  <div class="in-fluxo" id="inFluxo" aria-hidden="true"></div>
+  <div class="in-marca"><span>SOMA</span></div>
+</section></div>
 
 <div class="morf" data-cima="#0D0F13" data-baixo="#050609" aria-hidden="true"></div>
 <!-- ══════ SERVIÇOS ══════ -->
@@ -3024,6 +3065,33 @@ var VEL_TRILHO=16;
   if(pronto===cams.length)bl.classList.add('onda');
 })();
 
+
+/* ── ABERTURA: o trabalho corre atras da marca ────────────────────────
+   O fluxo e mais alto que a tela; o scroll o desloca de cima ate o fim.
+   A conta usa a altura MEDIDA do elemento, nao um numero fixo: o numero
+   de colunas muda no celular e a altura de cada linha depende da largura
+   da tela, entao qualquer valor cravado erraria em algum tamanho. */
+var inFluxo=document.getElementById('inFluxo'),
+    inTr=document.querySelector('.in-tr');
+if(inFluxo&&typeof PJ!=='undefined'){
+  PJ.forEach(function(p){
+    var im=document.createElement('img');
+    im.src=p.p; im.alt=''; im.loading='lazy'; im.decoding='async';
+    inFluxo.appendChild(im);
+  });
+}
+function moveAbertura(vh){
+  if(!inTr||!inFluxo)return;
+  var r=inTr.getBoundingClientRect();
+  if(r.bottom<0||r.top>vh)return;          /* fora de quadro: nao gasta */
+  var curso=inTr.offsetHeight-vh;
+  if(curso<=0)return;
+  var p=(-r.top)/curso; p=p<0?0:(p>1?1:p);
+  var sobra=inFluxo.offsetHeight-vh;
+  if(sobra<0)sobra=0;
+  inFluxo.style.transform='translate3d(0,'+(-p*sobra).toFixed(1)+'px,0)';
+}
+
 /* ── GRAO: ladrilho desenhado na hora ─────────────────────────────────
    Ruido comprime mal — um PNG de 128x128 de ruido passa de 30KB e nao
    ganha nada com o webp. Desenhado em canvas, custa ZERO byte de rede e
@@ -3265,7 +3333,7 @@ function rede(){
   var vh=innerHeight||1;
   var _ag=performance.now(), _dt=Math.min(.05,(_ag-(_ant||_ag))/1000)||.016; _ant=_ag;
   checaHero(vh);checaMarcas(vh);checaFatias(vh);checaClientes(vh);moveMorf(vh,_dt);moveSc(vh);movePx(vh);moveFita(vh);moveRaiz(vh);movePc(vh);giraRoletes(vh);
-  movePin();escondeRampa(vh);
+  movePin();escondeRampa(vh);moveAbertura(vh);
   if(nav)nav.classList.toggle('stuck',scrollY>60);
 }
 addEventListener('scroll',rede,{passive:true});
