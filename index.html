@@ -626,7 +626,21 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
    A linha em svh e proposital: a altura da coluna precisa acompanhar a
    tela, senao num monitor baixo ela voltaria a nao caber no percurso. */
 @media(min-width:821px){
-  .in-fluxo{left:15vw;right:15vw;grid-auto-rows:55svh}
+  /* LARGURA CHEIA: o 70vw centrado deixava faixas pretas nas laterais.
+     Sem ele a celula volta a 475px de largura, e como a fonte e 9:16 a
+     altura da linha e quem decide o que se perde:
+
+       linha    proporcao  guarda da foto   taxa
+       55svh      0.96          59%        0.48x
+       62svh      0.85          66%        0.63x   <- aqui
+       70svh      0.75          75%        0.80x
+       94svh      0.56         100%        1.31x   (o "rapido demais")
+
+     62 e o ponto em que a rolagem continua mais calma que os 0.85 de antes
+     e ainda sobram dois tercos da foto. Subir a linha para preservar mais
+     imagem custa velocidade na mesma medida — sao a mesma escolha vista de
+     dois lados. */
+  .in-fluxo{grid-auto-rows:62svh}
   /* O CORTE PUXA PARA O ALTO, e nao para o centro. A celula e mais larga
      que a fonte 9:16, entao sobra altura e o navegador descarta 14.6% —
      metade em cima, metade embaixo, se ninguem disser o contrario. Nestas
