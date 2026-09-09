@@ -627,7 +627,13 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
    tela, senao num monitor baixo ela voltaria a nao caber no percurso. */
 @media(min-width:821px){
   .in-fluxo{left:15vw;right:15vw;grid-auto-rows:55svh}
-  .in-fluxo img{aspect-ratio:auto;height:100%}
+  /* O CORTE PUXA PARA O ALTO, e nao para o centro. A celula e mais larga
+     que a fonte 9:16, entao sobra altura e o navegador descarta 14.6% —
+     metade em cima, metade embaixo, se ninguem disser o contrario. Nestas
+     fotos a pessoa esta no terco superior do quadro, e era a cabeca que ia
+     embora. Em 15% quase nada sai do topo (2.2% da foto) e o resto sai do
+     pe, onde costuma haver chao. */
+  .in-fluxo img{aspect-ratio:auto;height:100%;object-position:center 15%}
 }
 
 /* ── NAV ────────────────────────────────────────────────────────────── */
