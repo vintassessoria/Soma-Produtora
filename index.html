@@ -909,10 +909,20 @@ footer{background:var(--dark);color:#fff;padding:clamp(50px,7vw,100px) var(--gut
    marcam a divisao no meio e se dissolvem antes da borda da tela. */
 .tk{position:relative;overflow:hidden;padding:clamp(14px,2vw,26px) 0;
   margin-block:var(--tkAr)}
-.tk::before,.tk::after{content:'';position:absolute;left:0;right:0;height:1px;
-  pointer-events:none;
-  background:linear-gradient(90deg,transparent,var(--line) 20%,
-    var(--line) 80%,transparent)}
+/* OS FILETES COMECAM NA MARGEM DO SITE, e nao na borda da tela. Medido: o
+   conteudo das secoes vive entre 90 e 1335 numa tela de 1425, enquanto a
+   fita e o mosaico sangram de 0 a 1425. Uma linha de ponta a ponta entre
+   dois textos recuados nao se encosta em nada — e o que fazia ela parecer
+   solta das duas secoes. Presa ao mesmo --gut, ela comeca e termina onde o
+   texto comeca e termina.
+
+   O esmaecimento ficou curto (6%): com a linha ja tendo inicio e fim
+   definidos pela margem, um degrade longo so borraria o alinhamento que se
+   quer mostrar. */
+.tk::before,.tk::after{content:'';position:absolute;
+  left:var(--gut);right:var(--gut);height:1px;pointer-events:none;
+  background:linear-gradient(90deg,transparent,var(--line) 6%,
+    var(--line) 94%,transparent)}
 .tk::before{top:0}
 .tk::after{bottom:0}
 .tk-i{display:flex;width:max-content;will-change:transform}
