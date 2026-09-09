@@ -463,7 +463,10 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   animation:blOnda 18s linear infinite}
 @keyframes blOnda{from{transform:translateX(0)}to{transform:translateX(480px)}}
 @media(max-width:820px){
-  .bl.onda>i{left:0;right:0;animation:none}
+  /* A onda ANDA no celular tambem, so que mais devagar: 26s contra 18s.
+     Sao quatro leituras de fundo por quadro em vez de oito, e um ciclo
+     mais longo pede menos quadro por volta. */
+  .bl.onda>i{animation-duration:26s}
 }
 
 
@@ -757,13 +760,15 @@ footer{background:var(--dark);color:#fff;padding:clamp(50px,7vw,100px) var(--gut
    chega desfocado e ganha nitidez ao assentar, como uma lente achando o
    ponto. 10px e a medida do site de referencia.
 
-   So no desktop: filtro num cartao inteiro e bem mais caro que nos spans
-   de uma letra, e este site ja teve travada de scroll no celular. */
-@media(min-width:821px){
-  [data-r]{filter:blur(10px);will-change:transform,opacity,filter;
-    transition:opacity .9s var(--Ef),transform 1.05s var(--Ef),filter .9s var(--Ef)}
-  [data-r].on{filter:none}
-}
+   No celular o raio cai para 6px. O custo de um filtro cresce com a AREA
+   borrada, e num cartao que ocupa a largura inteira da tela 10px pede bem
+   mais trabalho que no desktop — enquanto 6px ja entrega a lente achando
+   o ponto. Nao e versao capada: e a mesma ideia na medida que a tela
+   pede. */
+[data-r]{filter:blur(10px);will-change:transform,opacity,filter;
+  transition:opacity .9s var(--Ef),transform 1.05s var(--Ef),filter .9s var(--Ef)}
+[data-r].on{filter:none}
+@media(max-width:820px){ [data-r]{filter:blur(6px)} }
 
 .cli.subiu li{will-change:auto}
 [data-d="1"]{transition-delay:.09s}
@@ -2563,7 +2568,6 @@ function checaHero(vh){
 }
 var scs=[].slice.call(document.querySelectorAll('[data-sc]'));
 function moveSc(vh){
-  if(mqPeq.matches)return;
   for(var i=0;i<scs.length;i++){
     var el=scs[i],cx2=el.parentElement||el,r=cx2.getBoundingClientRect();
     if(r.bottom<-120||r.top>vh+120)continue;
@@ -3180,12 +3184,18 @@ var mqPeq=matchMedia('(max-width:820px)');
 /* ── PARALLAX: SO NO DESKTOP ──────────────────────────────────────────
    Cada uma destas funcoes le a posicao dos elementos e escreve um
    transform a CADA quadro, no meio do scroll. Num computador isso passa
-   despercebido; num celular e o que faz a rolagem engasgar, e o ganho
-   visual e pequeno numa tela estreita, onde o deslocamento mal aparece.
-   O que fica no celular: as revelacoes (que rodam uma vez e saem da
-   lista), os divisores e os trilhos. */
+   RODA NO CELULAR TAMBEM. Estas tres funcoes ficaram desligadas la por um
+   tempo, como remedio para a rolagem que engasgava. O remedio estava
+   errado: a travada vinha dos trilhos horizontais, que religavam o
+   scroll-snap ao primeiro toque e saltavam para o ponto de encaixe. Com
+   aquilo consertado, nao ha motivo para a tela pequena ser chapada — as
+   tres escrevem transform (ou uma variavel em elementos pequenos), que e
+   trabalho de composicao, nao de layout.
+
+   E desligar movePx no celular tinha um efeito colateral silencioso: a
+   variante data-px-m, calibrada justamente para o vao menor da tela
+   estreita, virava codigo inalcancavel. Agora ela volta a valer. */
 function movePx(vh){
-  if(mqPeq.matches)return;
   for(var i=0;i<pxs.length;i++){
     var el=pxs[i],r=el.getBoundingClientRect();
     if(el.hasAttribute('data-sc'))continue;   /* quem tem zoom e tratado la */
@@ -3207,7 +3217,7 @@ function movePx(vh){
 var pcBloco=document.getElementById('pcList');
 var pcEls=[].slice.call(document.querySelectorAll('.pc-i'));
 function movePc(vh){
-  if(mqPeq.matches||!pcBloco)return;
+  if(!pcBloco)return;
   var r=pcBloco.getBoundingClientRect();
   if(r.bottom<-120||r.top>vh+120)return;
   var p=(vh*0.82-r.top)/(r.height+vh*0.25);
