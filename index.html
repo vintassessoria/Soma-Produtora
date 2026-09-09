@@ -544,19 +544,21 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
    A caixa nao pode criar camada isolada, senao a palavra passaria a
    inverter o fundo dela em vez do mosaico. position:absolute sem z-index
    nao cria — por isso nao ha z-index aqui. */
-/* A MARCA SEGUE O SCROLL, e nao o painel.
-   Antes ela morava dentro do painel preso, entao ficava pregada no centro
-   da tela e eu precisava empurra-la por JS para ela cruzar o quadro. Agora
-   e irma do painel e mora no TRILHO: fica no meio dele e sobe com a
-   pagina, no ritmo da pagina. Entra quando a secao chega e sai quando a
-   secao vai embora, sem uma linha de script.
+/* A MARCA DESCE ENQUANTO A SECAO ESTA ABERTA.
+   Ela voltou para dentro do painel preso porque e o overflow:hidden dele
+   que a engole no pe da secao — solta no trilho ela nao teria onde sumir,
+   e presa e a unica forma de conduzir a trajetoria em vez de herdar a da
+   pagina.
+
+   Comeca um pouco acima do centro, atravessa e sai por baixo. O percurso
+   sai do JS; aqui so o repouso.
 
    inset:0 mais place-items:center centra sem transform DE PROPOSITO:
-   transform aqui criaria camada isolada e a palavra passaria a inverter o
-   fundo desta caixa — transparente — em vez do mosaico. Foi por isso que a
-   centralizacao nao usa translate.
+   transform nesta caixa criaria camada isolada e a palavra passaria a
+   inverter o fundo dela — transparente — em vez do mosaico. O deslocamento
+   vai na PALAVRA, onde mistura e transform convivem.
 
-   Vem DEPOIS do painel no documento por dois motivos que se somam: pinta
+   Vem depois do fluxo no documento por dois motivos que se somam: pinta
    por cima dele, e a mistura so enxerga como fundo o que ja foi desenhado. */
 .in-marca{position:absolute;inset:0;display:grid;place-items:center;
   pointer-events:none;padding:0 var(--gut)}
@@ -593,7 +595,12 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 
      As nove voltam: em tres colunas nao sobra fileira, entao a mais escura
      nao precisa mais sair. */
-  .in-tr{height:130svh}
+  /* 160svh, e nao os 130 de antes: a descida da marca precisa de curso.
+     MEDIDO — com 130 o trecho preso da so 244px para um percurso de 641,
+     o que sairia a 2.63x a rolagem, disparado. Com 160 sao 487px de curso
+     e a descida cai para 1.32x. Custa 23% de altura na secao; foi o menor
+     trilho em que o movimento nao fica violento. */
+  .in-tr{height:160svh}
   .in-fluxo{grid-template-columns:repeat(3,1fr)}
 }
 
@@ -1275,14 +1282,12 @@ void main(){
 <!-- ══════ ABERTURA ══════
      A marca em tamanho grande, presa na tela, enquanto o trabalho corre
      por tras dela e inverte as letras. Faz a ponte do hero para o resto. -->
-<div class="in-tr">
-  <section class="in-st" id="abertura" aria-label="SOMA Produtora">
-    <div class="in-fluxo" id="inFluxo" aria-hidden="true"></div>
-  </section>
-  <!-- A marca fica FORA do painel preso, irma dele: assim ela anda junto
-       com a pagina em vez de ficar pregada na tela. -->
+<div class="in-tr"><section class="in-st" id="abertura" aria-label="SOMA Produtora">
+  <div class="in-fluxo" id="inFluxo" aria-hidden="true"></div>
+  <!-- A marca volta para DENTRO do painel: e o recorte dele que a faz
+       sumir no pe da secao, e so presa da para conduzir a trajetoria. -->
   <div class="in-marca"><span class="in-pal">SOMA</span></div>
-</div>
+</section></div>
 
 <div class="morf" data-cima="#0D0F13" data-baixo="#050609" aria-hidden="true"></div>
 <!-- ══════ SERVIÇOS ══════ -->
@@ -3153,7 +3158,8 @@ var VEL_TRILHO=16;
    de colunas muda no celular e a altura de cada linha depende da largura
    da tela, entao qualquer valor cravado erraria em algum tamanho. */
 var inFluxo=document.getElementById('inFluxo'),
-    inTr=document.querySelector('.in-tr');
+    inTr=document.querySelector('.in-tr'),
+    inPal=document.querySelector('.in-pal');
 /* LISTA PROPRIA, e nao mais a PJ. A abertura e uma vitrine de imagem; a PJ
    e o indice dos projetos, onde cada poster e a capa de UM trabalho.
    Sobrescrever pj-expomix.webp por outra foto faria o card do Expomix na
@@ -3184,10 +3190,22 @@ function moveAbertura(vh){
   var curso=inTr.offsetHeight-vh;
   if(curso<=0)return;
   var p=(-r.top)/curso; p=p<0?0:(p>1?1:p);
-  /* A marca nao aparece mais aqui: ela saiu do painel preso e mora no
-     trilho, entao quem a move e a propria rolagem da pagina. O parallax
-     continua existindo como DIFERENCA — o mosaico anda a 0.85 dentro do
-     painel enquanto ela anda a 1 com a pagina. */
+  /* ── A DESCIDA DA MARCA ───────────────────────────────────────────
+     Do centro ate sumir embaixo sao meia tela mais meia palavra; ela ainda
+     comeca 45% disso ACIMA do centro, para ja estar em quadro quando a
+     secao abre e nao aparecer do nada no meio.
+
+     Desce enquanto a secao esta aberta e o recorte do painel a engole no
+     fim. Medido: 0.93x a rolagem no desktop, 1.32x no celular — abaixo do
+     limiar em que um movimento contrario a rolagem comeca a incomodar. */
+  if(inPal){
+    /* +10 de folga: sem ela o percurso para com a palavra RENTE a borda, e
+       um arredondamento de subpixel deixa um fio dela aparecendo. */
+    var meia=(vh+inPal.offsetHeight)/2+10;
+    var acima=meia*0.45;
+    inPal.style.transform='translate3d(0,'+(-acima+p*(meia+acima)).toFixed(1)+'px,0)';
+  }
+
   var alturaFluxo=inFluxo.offsetHeight, sobra=alturaFluxo-vh;
   if(sobra>0){
     /* VELOCIDADE PRESA A DA ROLAGEM. Antes o fluxo percorria a sobra
