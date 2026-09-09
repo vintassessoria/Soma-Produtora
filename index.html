@@ -3219,7 +3219,17 @@ function moveAbertura(vh){
        0.85 do que a pessoa rola. Abaixo de 1 porque um fundo na mesma
        velocidade da pagina parece colado nela; um pouco mais devagar e o
        que cria a distancia. Este numero e o botao de ajuste. */
-    var percurso=curso*0.85;
+    /* 0.45, e nao 0.85. No celular o mosaico cabe inteiro na tela e so
+       deriva 44px — 0.09 da rolagem — e e por isso que a secao le calma
+       la. No desktop a coluna e alta e o fluxo deslizava 765px, o que dava
+       a sensacao de corrido mesmo ja estando abaixo da velocidade da
+       pagina. Metade disso aproxima o desktop daquela calma.
+
+       CUSTO: percorrendo menos, a janela mostra uma faixa menor da coluna,
+       e as fileiras de cima e de baixo aparecem so em parte. E o preco de
+       um fundo calmo com uma coluna alta — as duas coisas nao cabem
+       juntas. */
+    var percurso=curso*0.45;
     if(percurso>sobra)percurso=sobra;      /* coluna curta: nao inventa curso */
     /* a janela percorrida e centrada na sobra, senao o corte sairia todo
        do pe da coluna e a ultima fileira nunca apareceria */
