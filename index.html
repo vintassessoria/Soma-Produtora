@@ -863,9 +863,19 @@ footer{background:var(--dark);color:#fff;padding:clamp(50px,7vw,100px) var(--gut
    base do hero, lia como rodape dele em vez de respiro entre as secoes.
    O mesmo token vai na margem de cima e no padding do Sobre logo abaixo,
    entao os dois lados nao tem como divergir depois. */
-.tk{overflow:hidden;border-top:1px solid var(--line);
-  border-bottom:1px solid var(--line);padding:clamp(14px,2vw,26px) 0;
+/* AS LINHAS NAO FECHAM MAIS UMA CAIXA. Eram duas bordas de 1px em toda a
+   largura, e sobre quase-preto uma linha a 15% de branco de ponta a ponta
+   le como moldura: a fita virava um bloco separado em vez de uma passagem.
+   Agora sao filetes que nascem e morrem em transparencia nas laterais —
+   marcam a divisao no meio e se dissolvem antes da borda da tela. */
+.tk{position:relative;overflow:hidden;padding:clamp(14px,2vw,26px) 0;
   margin-block:var(--tkAr)}
+.tk::before,.tk::after{content:'';position:absolute;left:0;right:0;height:1px;
+  pointer-events:none;
+  background:linear-gradient(90deg,transparent,var(--line) 20%,
+    var(--line) 80%,transparent)}
+.tk::before{top:0}
+.tk::after{bottom:0}
 .tk-i{display:flex;width:max-content;will-change:transform}
 .tk-i span{display:inline-flex;align-items:center;gap:clamp(20px,2.8vw,44px);
   padding-right:clamp(20px,2.8vw,44px);white-space:nowrap;
@@ -1157,6 +1167,34 @@ html.lenis{scroll-behavior:auto!important}
   .pj-x{padding:11px 14px;margin:-11px -14px}
   .dv-ig{padding-top:7px;padding-bottom:13px}
 }
+
+/* ── COSTURAS ENTRE SECOES ───────────────────────────────────────────
+   O site alterna tres tons de preto (--bg, --soft, --dark), e onde duas
+   secoes de tons diferentes se encostam aparece um degrau. Medido na
+   pagina: ate 14.9 pontos de luminancia de um lado para o outro. Pouco no
+   absoluto, muito sobre quase-preto — e o que faz a secao parecer descolada
+   da vizinha.
+
+   Tres emendas ja tinham divisor .morf. Estas quatro nao tinham:
+     #numeros -> #raiz      -14.9
+     #raiz    -> #processo  +14.9
+     #equipe  -> #faq        +8.9
+     #sobre   -> rodape     -14.9  (com o contato transparente no meio)
+
+   Nao pedem elemento novo: um gradiente no proprio fundo da secao,
+   partindo da cor da vizinha, dissolve a linha sem markup e sem custo de
+   pintura extra. 150px de passagem — curto o bastante para a faixa de cor
+   ainda existir, longo o bastante para o olho nao achar a emenda.
+
+   Fica no fim da folha de proposito: precisa vencer os fundos chapados
+   declarados la em cima (#raiz e o rodape tem a mesma especificidade). */
+#raiz{background:linear-gradient(var(--soft),var(--dark) 150px,
+  var(--dark) calc(100% - 150px),var(--soft))}
+#faq{background:linear-gradient(var(--bg),var(--soft) 150px,var(--soft))}
+#sobre{background:linear-gradient(var(--soft),
+  var(--soft) calc(100% - 150px),var(--bg))}
+footer{background:linear-gradient(var(--bg),var(--dark) 160px,var(--dark))}
+
 </style>
 </head>
 <body>
