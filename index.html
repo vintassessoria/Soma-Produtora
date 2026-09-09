@@ -3135,7 +3135,8 @@ var VEL_TRILHO=16;
    de colunas muda no celular e a altura de cada linha depende da largura
    da tela, entao qualquer valor cravado erraria em algum tamanho. */
 var inFluxo=document.getElementById('inFluxo'),
-    inTr=document.querySelector('.in-tr');
+    inTr=document.querySelector('.in-tr'),
+    inPal=document.querySelector('.in-pal');
 /* LISTA PROPRIA, e nao mais a PJ. A abertura e uma vitrine de imagem; a PJ
    e o indice dos projetos, onde cada poster e a capa de UM trabalho.
    Sobrescrever pj-expomix.webp por outra foto faria o card do Expomix na
@@ -3166,6 +3167,34 @@ function moveAbertura(vh){
   var curso=inTr.offsetHeight-vh;
   if(curso<=0)return;
   var p=(-r.top)/curso; p=p<0?0:(p>1?1:p);
+  /* ── A MARCA E O PLANO DA FRENTE ──────────────────────────────────
+     O mosaico anda a 0.85 da rolagem porque e fundo: o que esta longe se
+     desloca MENOS. A marca faz o contrario — anda MAIS que a pagina,
+     porque o que esta perto se desloca mais. Nao e contradicao com o
+     ajuste do fundo: e a mesma regra aplicada aos dois planos, e a
+     diferenca entre 0.85 e 1.25 e o que da a profundidade.
+
+     Ela entra por baixo, cruza o centro na metade do percurso e sai por
+     cima. Para sumir inteira dos dois lados o percurso precisa de uma tela
+     mais a altura da palavra; onde o trilho for curto demais para isso sem
+     ficar violento, o teto de 1.25 vence e ela apenas passeia. E o caso do
+     celular, onde a secao e curta de proposito.
+
+     O transform vai na PALAVRA, nunca na caixa: transform em ancestral
+     cria camada isolada, e ai ela inverteria o fundo da propria caixa —
+     transparente — em vez do mosaico. Na propria palavra convivem sem
+     problema, como ja acontece no rotulo do showreel. */
+  if(inPal){
+    var precisa=vh+inPal.offsetHeight+40;
+    /* teto 1.35, e nao 1.25: com 1.25 o percurso parava em 1125px onde a
+       conta pedia 1200, e a palavra ainda aparecia nas duas pontas — 75px
+       de sobra que estragavam justamente o que se queria. O teto so entra
+       em acao onde o trilho e curto demais; no desktop quem manda e a
+       conta, e o percurso fica exatamente no necessario. */
+    var percursoMarca=Math.min(precisa, curso*1.35);
+    inPal.style.transform='translate3d(0,'+((0.5-p)*percursoMarca).toFixed(1)+'px,0)';
+  }
+
   var alturaFluxo=inFluxo.offsetHeight, sobra=alturaFluxo-vh;
   if(sobra>0){
     /* VELOCIDADE PRESA A DA ROLAGEM. Antes o fluxo percorria a sobra
