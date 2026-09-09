@@ -527,8 +527,12 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .in-fluxo{position:absolute;left:0;right:0;top:0;
   display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
   will-change:transform}
+/* brightness(.6) nao e gosto: e o fator MEDIDO em que a palavra verde
+   para de virar roxo sob difference. Em 0.7 sobrariam 2.6% de pontos
+   roxos; em 0.5 as fotos escureciam sem necessidade. A 0.6 o mosaico fica
+   com luminancia media 58 de 255 — escuro, mas ainda lendo como imagem. */
 .in-fluxo img{width:100%;aspect-ratio:9/16;object-fit:cover;display:block;
-  filter:grayscale(1) contrast(1.08)}
+  filter:grayscale(1) contrast(1.08) brightness(.6)}
 /* A MARCA E IRMA DO FLUXO E VEM DEPOIS DELE: a mistura so enxerga como
    fundo o que ja foi desenhado. Antes dele, inverteria so o preto.
 
@@ -542,14 +546,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
    nao cria — por isso nao ha z-index aqui. */
 .in-marca{position:absolute;inset:0;display:grid;place-items:center;
   pointer-events:none;padding:0 var(--gut)}
-/* encolhe ate a largura da palavra, e e isso que da a medida do filete */
-.in-bloco{display:inline-block}
 .in-pal{display:block;mix-blend-mode:difference}
-/* O VERDE DA CASA, na largura exata da palavra. Fica embaixo dela como
-   assinatura, nao atravessando: linha cortando texto e ruido, linha
-   apoiando texto e marca. */
-.in-risco{display:block;width:100%;height:3px;background:var(--acc);
-  margin-top:clamp(14px,2.2vh,30px)}
 /* PESO 400, e nao 800: a Velta tem um estilo so. Pedir um peso que o
    arquivo nao tem faz o navegador ENGROSSAR o desenho por conta propria, e
    negrito sintetico numa fonte de display engorda as hastes e fecha os
@@ -558,7 +555,16 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
    O espacamento tambem voltou para perto de zero: o -.055em foi calibrado
    para a Plus Jakarta Sans 800, que e estreita e pede aperto. A Velta tem
    metrica propria e ja vem com o espacamento que o desenhista quis. */
-.in-pal{font-family:var(--FM);font-weight:400;color:#fff;
+/* A PALAVRA E VERDE E CONTINUA INVERTENDO. Sob difference o resultado e
+   |fundo - cor|: sobre preto sai a propria cor, e quanto mais claro o
+   fundo, mais ela se afasta dela. Com o verde da casa, acima de ~120 de
+   luminancia o resultado vira roxo — a marca fora da cor.
+
+   Medido no mosaico real, com o cinza e o contraste que o CSS aplica: no
+   brilho original a palavra sairia roxa em 24% dos pontos. Por isso o
+   fluxo escurece (ver .in-fluxo): a 0.6 o roxo ZERA e sobram 79.6% de
+   verde limpo mais 20.4% de verde escurecido. */
+.in-pal{font-family:var(--FM);font-weight:400;color:var(--acc);
   font-size:clamp(88px,22vw,320px);letter-spacing:-.01em;line-height:.82}
 @media(max-width:820px){
   /* TRES COLUNAS TAMBEM AQUI. Com duas, as nove viravam quatro fileiras e
@@ -1257,12 +1263,7 @@ void main(){
      por tras dela e inverte as letras. Faz a ponte do hero para o resto. -->
 <div class="in-tr"><section class="in-st" id="abertura" aria-label="SOMA Produtora">
   <div class="in-fluxo" id="inFluxo" aria-hidden="true"></div>
-  <div class="in-marca">
-    <div class="in-bloco">
-      <span class="in-pal">SOMA</span>
-      <i class="in-risco" aria-hidden="true"></i>
-    </div>
-  </div>
+  <div class="in-marca"><span class="in-pal">SOMA</span></div>
 </section></div>
 
 <div class="morf" data-cima="#0D0F13" data-baixo="#050609" aria-hidden="true"></div>
