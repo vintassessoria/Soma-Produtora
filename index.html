@@ -636,11 +636,15 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
        70svh      0.75          75%        0.80x
        94svh      0.56         100%        1.31x   (o "rapido demais")
 
-     62 e o ponto em que a rolagem continua mais calma que os 0.85 de antes
-     e ainda sobram dois tercos da foto. Subir a linha para preservar mais
-     imagem custa velocidade na mesma medida — sao a mesma escolha vista de
-     dois lados. */
-  .in-fluxo{grid-auto-rows:62svh}
+     62svh achatava: proporcao 0.85 numa foto que e 0.56 deixa a celula
+     quase quadrada, e o assunto — gente de corpo inteiro, em pe — fica
+     espremido entre dois cortes. 78svh devolve 0.68, que ainda e retrato,
+     e guarda 83% da imagem.
+
+     Custa velocidade, como a tabela mostra: vai a 0.97x. Continua ABAIXO
+     de 1, ou seja o fundo segue mais devagar que a pagina — longe dos
+     1.31x que a secao ja teve e que soaram disparados. */
+  .in-fluxo{grid-auto-rows:78svh}
   /* O CORTE PUXA PARA O ALTO, e nao para o centro. A celula e mais larga
      que a fonte 9:16, entao sobra altura e o navegador descarta 14.6% —
      metade em cima, metade embaixo, se ninguem disser o contrario. Nestas
