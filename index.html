@@ -56,6 +56,7 @@
   --line:rgba(245,247,245,.15);
   --acc:#6BF019;        /* verde SOMA (era #F94137 no template) */
   --FD:'Plus Jakarta Sans',system-ui,-apple-system,Segoe UI,sans-serif;
+  --FM:'Velta',var(--FD);   /* fonte da marca; cai na do site se falhar */
   /* MARGENS LATERAIS de todo o site (14 usos: secoes, nav, rodape,
      galeria, legendas). Nao basta subir o teto: com 4.4vw no meio, um teto
      de 120px so seria alcancado numa tela de 2727px. A taxa subiu junto —
@@ -488,6 +489,21 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .grao{position:fixed;inset:0;z-index:600;pointer-events:none;
   opacity:.062;background-repeat:repeat}
 
+/* A VELTA vem do arquivo do cliente, um TTF de 47KB com um unico estilo.
+   font-display:swap para a abertura nao ficar em branco esperando: entra
+   na fonte do site e troca quando a Velta chega. Nao dou preload porque a
+   secao esta abaixo da dobra e o hero tem prioridade na banda.
+
+   Um woff2 cortaria isso pela metade, mas nao ha conversor nesta maquina.
+   Fica anotado como melhoria, nao como pendencia: 47KB nao atrapalha. */
+@font-face{
+  font-family:'Velta';
+  src:url('velta.ttf') format('truetype');
+  font-weight:400;
+  font-style:normal;
+  font-display:swap;
+}
+
 /* ── ABERTURA: A MARCA SOBRE O TRABALHO ──────────────────────────────
    Medido no rodape de orkan.framer.website. La as letras sao texto branco
    COMUM — sem mascara, sem recorte de fundo, sem gradiente. Quem faz o
@@ -514,8 +530,16 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
    fundo o que ja foi desenhado. Antes dele, inverteria so o preto. */
 .in-marca{position:absolute;inset:0;display:grid;place-items:center;
   mix-blend-mode:difference;pointer-events:none;padding:0 var(--gut)}
-.in-marca span{font-family:var(--FD);font-weight:800;color:#fff;
-  font-size:clamp(88px,22vw,320px);letter-spacing:-.055em;line-height:.78}
+/* PESO 400, e nao 800: a Velta tem um estilo so. Pedir um peso que o
+   arquivo nao tem faz o navegador ENGROSSAR o desenho por conta propria, e
+   negrito sintetico numa fonte de display engorda as hastes e fecha os
+   contornos. O peso da letra ja e o que a fonte propoe.
+
+   O espacamento tambem voltou para perto de zero: o -.055em foi calibrado
+   para a Plus Jakarta Sans 800, que e estreita e pede aperto. A Velta tem
+   metrica propria e ja vem com o espacamento que o desenhista quis. */
+.in-marca span{font-family:var(--FM);font-weight:400;color:#fff;
+  font-size:clamp(88px,22vw,320px);letter-spacing:-.01em;line-height:.82}
 @media(max-width:820px){
   .in-tr{height:170svh}
   .in-fluxo{grid-template-columns:repeat(2,1fr)}
