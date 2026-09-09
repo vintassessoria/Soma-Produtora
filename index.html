@@ -522,7 +522,11 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
    os mesmos arquivos que a galeria precisa mais abaixo, entao isto adianta
    o download em vez de somar. E dizem, antes de qualquer texto, do que a
    casa vive. */
-.in-tr{position:relative;height:200svh}
+/* 240svh, e nao 200: a marca passou a nascer fora da tela, e isso custa
+   uma tela inteira a mais de percurso. No trilho de 200 ela subiria de
+   0.95x para 1.31x a rolagem; com 240 fica em 0.94x, a mesma de antes. A
+   secao cresce 20% em altura — e o preco de entrar de fora sem acelerar. */
+.in-tr{position:relative;height:240svh}
 .in-st{position:sticky;top:0;height:100svh;overflow:hidden;background:var(--dark)}
 .in-fluxo{position:absolute;left:0;right:0;top:0;
   display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
@@ -600,7 +604,10 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
      o que sairia a 2.63x a rolagem, disparado. Com 160 sao 487px de curso
      e a descida cai para 1.32x. Custa 23% de altura na secao; foi o menor
      trilho em que o movimento nao fica violento. */
-  .in-tr{height:160svh}
+  /* 185svh pelo mesmo motivo do desktop: com 160 a entrada de fora
+     levaria a marca a 1.86x. Assim ela fica em 1.31x, perto da velocidade
+     que ja tinha. */
+  .in-tr{height:185svh}
   .in-fluxo{grid-template-columns:repeat(3,1fr)}
 }
 
@@ -3191,19 +3198,22 @@ function moveAbertura(vh){
   if(curso<=0)return;
   var p=(-r.top)/curso; p=p<0?0:(p>1?1:p);
   /* ── A DESCIDA DA MARCA ───────────────────────────────────────────
-     Do centro ate sumir embaixo sao meia tela mais meia palavra; ela ainda
-     comeca 45% disso ACIMA do centro, para ja estar em quadro quando a
-     secao abre e nao aparecer do nada no meio.
+     Ela NASCE FORA, acima da borda, entra, atravessa e sai por baixo.
 
-     Desce enquanto a secao esta aberta e o recorte do painel a engole no
-     fim. Medido: 0.93x a rolagem no desktop, 1.32x no celular — abaixo do
-     limiar em que um movimento contrario a rolagem comeca a incomodar. */
+     "meia" e a distancia do centro ate ficar inteiramente fora de um lado:
+     meia tela mais meia palavra. Comecando em -meia e terminando em +meia,
+     o percurso e o dobro disso — uma tela inteira mais uma palavra.
+
+     O +10 e folga contra arredondamento de subpixel: sem ele o percurso
+     para com a palavra RENTE a borda e sobra um fio dela aparecendo.
+
+     Antes ela partia de 45% de meia, ou seja ja em quadro. Entrar de fora
+     custa uma tela a mais de percurso, e foi por isso que os dois trilhos
+     cresceram no CSS: sem isso a marca aceleraria de 0.95x para 1.31x no
+     desktop, justamente o contrario do que se pediu. */
   if(inPal){
-    /* +10 de folga: sem ela o percurso para com a palavra RENTE a borda, e
-       um arredondamento de subpixel deixa um fio dela aparecendo. */
     var meia=(vh+inPal.offsetHeight)/2+10;
-    var acima=meia*0.45;
-    inPal.style.transform='translate3d(0,'+(-acima+p*(meia+acima)).toFixed(1)+'px,0)';
+    inPal.style.transform='translate3d(0,'+(-meia+p*2*meia).toFixed(1)+'px,0)';
   }
 
   var alturaFluxo=inFluxo.offsetHeight, sobra=alturaFluxo-vh;
