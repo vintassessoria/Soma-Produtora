@@ -3145,7 +3145,23 @@ function moveAbertura(vh){
   var p=(-r.top)/curso; p=p<0?0:(p>1?1:p);
   var alturaFluxo=inFluxo.offsetHeight, sobra=alturaFluxo-vh;
   if(sobra>0){
-    inFluxo.style.transform='translate3d(0,'+(-p*sobra).toFixed(1)+'px,0)';
+    /* VELOCIDADE PRESA A DA ROLAGEM. Antes o fluxo percorria a sobra
+       INTEIRA no curso do trilho, e a sobra e maior que o curso: no
+       desktop dava 1621px de imagem para 900px de rolagem, ou seja o fundo
+       corria a 1.8x o dedo. Fundo mais rapido que a pagina nao existe na
+       natureza — o que esta longe anda MENOS, nao mais. Era isso que dava
+       a impressao de disparado.
+
+       Agora o percurso e derivado do curso, e nao da altura do conteudo:
+       0.85 do que a pessoa rola. Abaixo de 1 porque um fundo na mesma
+       velocidade da pagina parece colado nela; um pouco mais devagar e o
+       que cria a distancia. Este numero e o botao de ajuste. */
+    var percurso=curso*0.85;
+    if(percurso>sobra)percurso=sobra;      /* coluna curta: nao inventa curso */
+    /* a janela percorrida e centrada na sobra, senao o corte sairia todo
+       do pe da coluna e a ultima fileira nunca apareceria */
+    var base=-(sobra-percurso)/2;
+    inFluxo.style.transform='translate3d(0,'+(base-p*percurso).toFixed(1)+'px,0)';
   }else{
     /* CABE INTEIRO NA TELA — o caso das tres colunas no celular. Sem isto
        o deslocamento daria zero e o fundo ficaria PARADO enquanto a
