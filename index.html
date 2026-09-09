@@ -141,7 +141,6 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   display:block;width:100%;height:100%;background:var(--dark)}
 #burn.fim{display:none}
 
-
 /* ── PROJETOS: galeria WebGL ─────────────────────────────────────────
    Reconstrucao nativa do componente three.js da referencia. O original
    carrega three.js r128 do cdnjs (~600KB) so para desenhar planos com
@@ -183,7 +182,6 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   border:1px solid rgba(255,255,255,.22);display:grid;place-items:center;
   transition:background .3s var(--E),border-color .3s var(--E),color .3s var(--E)}
 .pj-b:hover{background:var(--acc);border-color:var(--acc);color:#000}
-
 
 /* lightbox do video */
 .pj-lb{position:fixed;inset:0;z-index:950;background:rgba(3,4,6,.94);
@@ -230,7 +228,6 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   .pjw{display:none}
   .pj-grade{display:grid}
 }
-
 
 /* ── SOBRE ───────────────────────────────────────────────────────────
    Registro deliberadamente DIFERENTE do resto do site. As outras secoes
@@ -468,7 +465,6 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
      mais longo pede menos quadro por volta. */
   .bl.onda>i{animation-duration:26s}
 }
-
 
 /* ── GRAO E CURSOR ───────────────────────────────────────────────────
    Duas camadas medidas em neiden.framer.media e refeitas para este site.
@@ -767,7 +763,6 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .nb-i .d{margin-top:10px;font-size:14.5px;color:var(--mut);line-height:1.6;max-width:34ch}
 @media(max-width:900px){.nb{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:520px){.nb{grid-template-columns:1fr}}
-
 
 /* ── PROCESSO (numerado com prazo) ───────────────────────────────────── */
 .pc{border-top:1px solid var(--line)}
@@ -1241,8 +1236,31 @@ html.lenis{scroll-behavior:auto!important}
 
    Fica no fim da folha de proposito: precisa vencer os fundos chapados
    declarados la em cima (#raiz e o rodape tem a mesma especificidade). */
-#raiz{background:linear-gradient(var(--soft),var(--dark) 150px,
-  var(--dark) calc(100% - 150px),var(--soft))}
+/* O raiz subiu para logo depois das logos, entao trocaram os vizinhos:
+   agora e o #clientes em cima (transparente, herda --bg) e o divisor
+   embaixo, cuja cor de cima e --bg. As duas pontas passam a sair de --bg,
+   nao mais de --soft. */
+#raiz{background:linear-gradient(var(--bg),var(--dark) 150px,
+  var(--dark) calc(100% - 150px),var(--bg))}
+/* COSTURA QUE EU TINHA DEIXADO PASSAR: numeros termina encostando no
+   showreel, que e preto. Minha verificacao anterior testou
+   "#raiz -> #processo", mas eles NAO sao vizinhos — o trilho do showreel e
+   a secao do Davi ficam no meio. Verifiquei uma adjacencia inexistente e
+   nao vi o degrau de 14.9 que sobrava aqui. */
+#numeros{background:linear-gradient(var(--soft),
+  var(--soft) calc(100% - 150px),var(--dark))}
+/* Achadas so agora, caminhando pelos IRMAOS REAIS do documento. Antes eu
+   escolhia os pares na mao e cheguei a testar "#raiz -> #processo", que nem
+   sao vizinhos — o showreel e o Davi ficam no meio. Escolher par na mao
+   esconde justamente a emenda que existe.
+     #servicos -> #projetos   -6   (projetos e preto entre vizinhos --bg)
+     #projetos -> #clientes   +6
+     #davi     -> #processo   +8.9
+   Uma regra resolve as duas do projetos, porque as duas pontas dele
+   encostam na mesma cor. */
+#projetos{background:linear-gradient(var(--bg),var(--dark) 150px,
+  var(--dark) calc(100% - 150px),var(--bg))}
+#processo{background:linear-gradient(var(--bg),var(--soft) 150px,var(--soft))}
 #faq{background:linear-gradient(var(--bg),var(--soft) 150px,var(--soft))}
 #sobre{background:linear-gradient(var(--soft),
   var(--soft) calc(100% - 150px),var(--bg))}
@@ -1251,7 +1269,6 @@ footer{background:linear-gradient(var(--bg),var(--dark) 160px,var(--dark))}
 </style>
 </head>
 <body>
-
 
 <nav id="nav">
   <a href="#" class="nv-logo" aria-label="SOMA Produtora"><img src="logotipo.png" alt="SOMA Produtora" fetchpriority="high" width="1031" height="362"></a>
@@ -1501,6 +1518,22 @@ void main(){
   </ul>
 </section>
 
+<!-- ══════ NO CHAO DO EVENTO — janela para o fundo do site ══════ -->
+<section id="raiz">
+  <div class="rz-janela">
+    <img class="rz-foto" src="raiz-equipe.webp"
+         srcset="raiz-equipe-m.webp 1000w, raiz-equipe.webp 1800w"
+         sizes="100vw" alt="Equipe SOMA reunida no chão do evento, durante o Expomix"
+         loading="lazy" decoding="async" width="1800" height="2700">
+    <div class="rz-veu"></div>
+    <div class="rz-txt">
+      <p class="rz-a" data-fatia><span>Ninguém dirige</span><span>de longe.</span></p>
+      <p class="rz-b">O plano a gente fecha no local,<br>
+        junto de quem vai <em>segurar a câmera</em>.</p>
+    </div>
+  </div>
+</section>
+
 <div class="morf" data-cima="#050609" data-baixo="#0D0F13" aria-hidden="true"></div>
 <!-- ══════ NÚMEROS ══════ -->
 <section class="sec wrap soft" id="numeros">
@@ -1525,22 +1558,6 @@ void main(){
   </div>
 </section>
 
-<!-- ══════ NO CHAO DO EVENTO — janela para o fundo do site ══════ -->
-<section id="raiz">
-  <div class="rz-janela">
-    <img class="rz-foto" src="raiz-equipe.webp"
-         srcset="raiz-equipe-m.webp 1000w, raiz-equipe.webp 1800w"
-         sizes="100vw" alt="Equipe SOMA reunida no chão do evento, durante o Expomix"
-         loading="lazy" decoding="async" width="1800" height="2700">
-    <div class="rz-veu"></div>
-    <div class="rz-txt">
-      <p class="rz-a" data-fatia><span>Ninguém dirige</span><span>de longe.</span></p>
-      <p class="rz-b">O plano a gente fecha no local,<br>
-        junto de quem vai <em>segurar a câmera</em>.</p>
-    </div>
-  </div>
-</section>
-
 <!-- ══════ SHOWREEL ══════
      Comeca com o filme preenchendo a tela. Descendo, a camera recua e o
      que era tela cheia se revela uma celula de um mosaico de trabalhos. -->
@@ -1555,7 +1572,6 @@ void main(){
     <p class="rl-leg" id="rlLeg">Showreel 2025 &nbsp;·&nbsp; 4K · LOG3 · 24fps</p>
   </div>
 </section></div>
-
 
 <!-- ══════ DAVI ══════ -->
 <section class="sec wrap" id="davi">
@@ -1700,8 +1716,6 @@ void main(){
   </div>
 </section>
 
-
-
 <footer>
   <div class="ft-g">
     <div>
@@ -1762,7 +1776,6 @@ if(typeof Lenis!=='undefined' && !toqueSemRoda){
     });
   });
 }
-
 
 /* ── ABERTURA: QUEIMA (shader) ─────────────────────────────────────────
    Massas pretas de borda muito mole cobrem o hero e recuam, abrindo a
@@ -1855,7 +1868,6 @@ var heroLiberado=false;   /* as linhas do titulo esperam a mascara abrir */
   /* rede de seguranca: se o laco travar, a camada sai e o hero aparece */
   setTimeout(desiste,5000);
 })();
-
 
 /* ── PROJETOS: galeria WebGL ──────────────────────────────────────────
    Reconstrucao do componente three.js da referencia, em WebGL cru.
@@ -2602,7 +2614,6 @@ addEventListener('keydown',function(e){
   }
 });
 
-
 })();
 
 /* ── nav ──────────────────────────────────────────────────────────── */
@@ -3050,7 +3061,6 @@ function moveMorf(vh,dt){
   }
 }
 
-
 /* ── TRILHOS DO CELULAR: CORREM SOZINHOS ATE ALGUEM TOCAR ─────────────
    Os tres trilhos horizontais (processo, equipe, numeros) andam devagar
    por conta propria: e o movimento que avisa que ha mais coisa ao lado.
@@ -3199,8 +3209,6 @@ var VEL_TRILHO=16;
   requestAnimationFrame(anda);
 })();
 
-
-
 /* ── MASCARAS ONDULADAS DA RAMPA ──────────────────────────────────────
    Uma por camada, desenhada em canvas. Para cada coluna x, o limite sobe
    ou desce conforme a soma de tres senos; para cada linha y, o alfa e a
@@ -3248,7 +3256,6 @@ var VEL_TRILHO=16;
   }
   if(pronto===cams.length)bl.classList.add('onda');
 })();
-
 
 /* ── ABERTURA: o trabalho corre atras da marca ────────────────────────
    O fluxo e mais alto que a tela; o scroll o desloca de cima ate o fim.
@@ -3525,7 +3532,6 @@ if('IntersectionObserver' in window){
   vids.forEach(ligaVideo);
 }
 
-
 /* ── SHOWREEL PRESO: cresce enquanto voce atravessa ──────────────────── */
 var pinTr=document.querySelector('.pin-tr');
 /* ── SHOWREEL: o recuo da camera ──────────────────────────────────────
@@ -3571,7 +3577,6 @@ function movePin(){
      o que aquilo e sobre o mosaico. */
   if(rlLeg)rlLeg.style.opacity=(p<0.12?1:Math.max(0,1-(p-0.12)/0.2)).toFixed(3);
 }
-
 
 /* ── BOTOES MAGNETICOS: puxam de leve na direcao do cursor ───────────── */
 [].forEach.call(document.querySelectorAll('.mag'),function(b){
