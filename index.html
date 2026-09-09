@@ -530,9 +530,26 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .in-fluxo img{width:100%;aspect-ratio:9/16;object-fit:cover;display:block;
   filter:grayscale(1) contrast(1.08)}
 /* A MARCA E IRMA DO FLUXO E VEM DEPOIS DELE: a mistura so enxerga como
-   fundo o que ja foi desenhado. Antes dele, inverteria so o preto. */
+   fundo o que ja foi desenhado. Antes dele, inverteria so o preto.
+
+   A MISTURA SAIU DA CAIXA E FOI PARA A PALAVRA. Precisou: sob difference o
+   verde da marca nao fica verde — diferenca de verde com branco da ROXO, e
+   sobre as areas claras das fotos o filete viraria roxo. Com a mistura so
+   na palavra, o filete fica fora dela e sai na cor certa.
+
+   A caixa nao pode criar camada isolada, senao a palavra passaria a
+   inverter o fundo dela em vez do mosaico. position:absolute sem z-index
+   nao cria — por isso nao ha z-index aqui. */
 .in-marca{position:absolute;inset:0;display:grid;place-items:center;
-  mix-blend-mode:difference;pointer-events:none;padding:0 var(--gut)}
+  pointer-events:none;padding:0 var(--gut)}
+/* encolhe ate a largura da palavra, e e isso que da a medida do filete */
+.in-bloco{display:inline-block}
+.in-pal{display:block;mix-blend-mode:difference}
+/* O VERDE DA CASA, na largura exata da palavra. Fica embaixo dela como
+   assinatura, nao atravessando: linha cortando texto e ruido, linha
+   apoiando texto e marca. */
+.in-risco{display:block;width:100%;height:3px;background:var(--acc);
+  margin-top:clamp(14px,2.2vh,30px)}
 /* PESO 400, e nao 800: a Velta tem um estilo so. Pedir um peso que o
    arquivo nao tem faz o navegador ENGROSSAR o desenho por conta propria, e
    negrito sintetico numa fonte de display engorda as hastes e fecha os
@@ -541,7 +558,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
    O espacamento tambem voltou para perto de zero: o -.055em foi calibrado
    para a Plus Jakarta Sans 800, que e estreita e pede aperto. A Velta tem
    metrica propria e ja vem com o espacamento que o desenhista quis. */
-.in-marca span{font-family:var(--FM);font-weight:400;color:#fff;
+.in-pal{font-family:var(--FM);font-weight:400;color:#fff;
   font-size:clamp(88px,22vw,320px);letter-spacing:-.01em;line-height:.82}
 @media(max-width:820px){
   /* TRES COLUNAS TAMBEM AQUI. Com duas, as nove viravam quatro fileiras e
@@ -1240,7 +1257,12 @@ void main(){
      por tras dela e inverte as letras. Faz a ponte do hero para o resto. -->
 <div class="in-tr"><section class="in-st" id="abertura" aria-label="SOMA Produtora">
   <div class="in-fluxo" id="inFluxo" aria-hidden="true"></div>
-  <div class="in-marca"><span>SOMA</span></div>
+  <div class="in-marca">
+    <div class="in-bloco">
+      <span class="in-pal">SOMA</span>
+      <i class="in-risco" aria-hidden="true"></i>
+    </div>
+  </div>
 </section></div>
 
 <div class="morf" data-cima="#0D0F13" data-baixo="#050609" aria-hidden="true"></div>
