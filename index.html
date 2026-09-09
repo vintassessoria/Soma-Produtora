@@ -3097,10 +3097,26 @@ var VEL_TRILHO=16;
    da tela, entao qualquer valor cravado erraria em algum tamanho. */
 var inFluxo=document.getElementById('inFluxo'),
     inTr=document.querySelector('.in-tr');
-if(inFluxo&&typeof PJ!=='undefined'){
-  PJ.forEach(function(p){
+/* LISTA PROPRIA, e nao mais a PJ. A abertura e uma vitrine de imagem; a PJ
+   e o indice dos projetos, onde cada poster e a capa de UM trabalho.
+   Sobrescrever pj-expomix.webp por outra foto faria o card do Expomix na
+   galeria mostrar imagem de outro projeto. Separando as duas listas, cada
+   uma muda sem estragar a outra.
+
+   Tres vieram da PJ por escolha do cliente (o mapa tatil, a moca do Funn
+   Arena e as criancas das bicicletas); as outras seis sao fotos novas.
+   Intercaladas nas posicoes 2, 5 e 8 para que as conhecidas nao caiam
+   todas na mesma faixa — vale para as tres colunas do desktop e para as
+   duas do celular. */
+var AB=[
+  'ab-expomix.webp',    'pj-praia.webp',      'ab-historias-1.webp',
+  'ab-soma-1.webp',     'pj-dia2.webp',       'ab-historias-2.webp',
+  'ab-soma-2.webp',     'pj-bike-after.webp', 'ab-soma-3.webp'
+];
+if(inFluxo){
+  AB.forEach(function(src){
     var im=document.createElement('img');
-    im.src=p.p; im.alt=''; im.loading='lazy'; im.decoding='async';
+    im.src=src; im.alt=''; im.loading='lazy'; im.decoding='async';
     inFluxo.appendChild(im);
   });
 }
