@@ -650,6 +650,63 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
   .in-fluxo img{aspect-ratio:auto;height:100%;object-position:center 15%}
 }
 
+/* ── INTERNACIONAL ───────────────────────────────────────────────────
+   Secao recuperada do modelo antigo e refeita na linguagem atual. La era
+   foto do CEO mais abas de bandeira; aqui e o filme ocupando a largura e
+   os destinos listados como ficha tecnica — que e como o resto do site
+   fala.
+
+   Fundo --dark de proposito: o #numeros acima ja termina em --dark e o
+   showreel abaixo e preto, entao a secao entra sem abrir costura nova. */
+#internacional{background:var(--dark)}
+.it-corpo{max-width:52ch;margin-bottom:clamp(34px,4.4vw,64px)}
+
+.it-filme{position:relative;aspect-ratio:16/9;overflow:hidden;
+  border-radius:12px;background:var(--soft);
+  margin-bottom:clamp(30px,3.6vw,54px)}
+.it-filme video,.it-filme img{position:absolute;inset:0;
+  width:100%;height:100%;object-fit:cover;display:block}
+
+/* os destinos entram como ficha: filete em cima, nome grande, regiao
+   pequena. Mesma familia das linhas de servicos e do FAQ. */
+.it-lista{list-style:none;display:grid;gap:0;
+  grid-template-columns:repeat(3,1fr)}
+.it-lista li{border-top:1px solid var(--line);
+  padding:clamp(16px,1.8vw,26px) 0 clamp(20px,2.2vw,30px);
+  padding-right:clamp(14px,2vw,30px)}
+.it-pais{display:block;font-weight:700;letter-spacing:-.02em;
+  font-size:clamp(19px,1.7vw,26px);color:#fff;line-height:1.15}
+.it-reg{display:block;margin-top:7px;font-size:13px;color:var(--mut)}
+.it-base .it-pais .acc{color:var(--acc)}
+@media(max-width:900px){.it-lista{grid-template-columns:repeat(2,1fr)}}
+@media(max-width:560px){.it-lista{grid-template-columns:1fr}}
+
+/* ── HERO: a chamada que desce para as novidades ─────────────────────
+   Fica depois do titulo, no mesmo bloco de baixo do hero. A seta nao e
+   enfeite: ela diz a direcao do movimento que o clique provoca. */
+/* z-index 550, e nao 2: a rampa de blur do rodape vive em 500 e ocupa os
+   ultimos 120px da tela, enquanto este botao nasce a ~58px do pe — caia
+   bem dentro dela. backdrop-filter borra o que esta ATRAS, entao a saida
+   nao e tirar o botao do caminho, e sim tira-lo de tras da rampa. Fica
+   abaixo do grao (600) e do nav (900), que podem passar por cima. */
+.hr-cta{position:relative;z-index:550;align-self:flex-start;
+  margin-top:clamp(18px,2.2vw,30px);
+  display:inline-flex;align-items:center;gap:13px;
+  text-decoration:none;color:#fff;
+  font-size:clamp(14px,1.05vw,16px);font-weight:500;
+  transition:color .3s var(--E)}
+.hr-cta:hover{color:var(--acc)}
+.hr-cta i{display:grid;place-items:center;flex:0 0 auto;
+  width:34px;height:34px;border-radius:50%;
+  border:1px solid rgba(245,247,245,.3);
+  transition:border-color .3s var(--E),background .3s var(--E)}
+.hr-cta:hover i{border-color:var(--acc);background:rgba(107,240,25,.12)}
+.hr-cta svg{width:13px;height:13px;stroke:currentColor;fill:none;
+  stroke-width:2;stroke-linecap:round;stroke-linejoin:round;
+  animation:ctaDesce 2.4s var(--E) infinite}
+@keyframes ctaDesce{0%,62%,100%{transform:translateY(0)}
+  78%{transform:translateY(3px)}}
+
 /* ── NAV ────────────────────────────────────────────────────────────── */
 #nav{position:fixed;top:0;left:0;right:0;z-index:900;
   display:flex;align-items:center;justify-content:space-between;
@@ -1384,6 +1441,10 @@ void main(){
       <span class="ln"><span class="acc">despercebidas</span></span>
     </h1>
   </div>
+  <a class="hr-cta" href="#internacional">
+    Confira as novidades
+    <i aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 5v14M5 12l7 7 7-7"/></svg></i>
+  </a>
 </section>
 
 <!-- ══════ FITA ══════ -->
@@ -1556,6 +1617,36 @@ void main(){
       <span class="k">Anos de mercado</span>
       <p class="d">Tempo suficiente para saber o que funciona, e curto para não acomodar.</p></div>
   </div>
+</section>
+
+<!-- ══════ INTERNACIONAL ══════
+     Vem logo depois dos numeros de proposito: la se diz "6 paises", aqui
+     se mostra quais. -->
+<section class="sec wrap" id="internacional">
+  <div class="sh" data-r="up">
+    <span class="sub">Passaporte é ferramenta de trabalho.</span>
+  </div>
+  <p class="st st-2" data-r="up" data-d="1" style="max-width:16ch;margin-bottom:clamp(26px,3vw,44px)">
+    Da capital do Brasil <span class="acc">para o mundo.</span></p>
+  <p class="bd it-corpo" data-r="up" data-d="2">
+    Boa parte da agenda acontece fora do Brasil. A equipe embarca com o
+    equipamento, fecha o plano no destino e entrega no mesmo padrão de
+    sempre: muda o fuso, não muda a régua.</p>
+
+  <div class="it-filme" data-r="up" data-d="2">
+    <video id="intVid" muted loop playsinline preload="none"
+      poster="int-poster.webp"
+      data-src="video-internacional.mp4"></video>
+  </div>
+
+  <ul class="it-lista">
+    <li data-r="up"><span class="it-pais">Londres</span><span class="it-reg">Reino Unido</span></li>
+    <li data-r="up" data-d="1"><span class="it-pais">Cardiff</span><span class="it-reg">País de Gales</span></li>
+    <li data-r="up" data-d="2"><span class="it-pais">Edimburgo</span><span class="it-reg">Escócia</span></li>
+    <li data-r="up"><span class="it-pais">Paris</span><span class="it-reg">França</span></li>
+    <li data-r="up" data-d="1"><span class="it-pais">Nova York</span><span class="it-reg">Estados Unidos</span></li>
+    <li class="it-base" data-r="up" data-d="2"><span class="it-pais"><span class="acc">Brasília</span></span><span class="it-reg">Brasil &mdash; a casa</span></li>
+  </ul>
 </section>
 
 <!-- ══════ SHOWREEL ══════
