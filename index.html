@@ -522,7 +522,7 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
    uma tela inteira a mais de percurso. No trilho de 200 ela subiria de
    0.95x para 1.31x a rolagem; com 240 fica em 0.94x, a mesma de antes. A
    secao cresce 20% em altura — e o preco de entrar de fora sem acelerar. */
-.in-tr{position:relative;height:240svh}
+.in-tr{position:relative;height:240svh;background:var(--dark)}
 .in-st{position:sticky;top:0;height:100svh;overflow:hidden;background:var(--dark)}
 .in-fluxo{position:absolute;left:0;right:0;top:0;
   display:grid;grid-template-columns:repeat(3,1fr);gap:8px;
@@ -667,8 +667,10 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .it-filme video,.it-filme img{position:absolute;inset:0;
   width:100%;height:100%;object-fit:cover;display:block}
 
-/* os destinos entram como ficha: filete em cima, nome grande, regiao
-   pequena. Mesma familia das linhas de servicos e do FAQ. */
+/* os destinos entram como ficha: filete em cima, bandeira e o PAIS, sem
+   cidade. A casa atende em qualquer lugar do pais — cravar uma cidade
+   faria parecer que so vai la. Mesma familia das linhas de servicos e do
+   FAQ. */
 .it-lista{list-style:none;display:grid;gap:0;
   grid-template-columns:repeat(3,1fr)}
 .it-lista li{border-top:1px solid var(--line);
@@ -684,7 +686,6 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .it-band svg{display:block;width:100%;height:100%}
 .it-pais{display:block;font-weight:700;letter-spacing:-.02em;
   font-size:clamp(19px,1.7vw,26px);color:#fff;line-height:1.15}
-.it-reg{display:block;margin-top:7px;font-size:13px;color:var(--mut)}
 .it-base .it-pais .acc{color:var(--acc)}
 @media(max-width:900px){.it-lista{grid-template-columns:repeat(2,1fr)}}
 @media(max-width:560px){.it-lista{grid-template-columns:1fr}}
@@ -1194,7 +1195,10 @@ footer{background:var(--dark);color:#fff;padding:clamp(50px,7vw,100px) var(--gut
 /* 260svh dao 160svh de percurso preso (~1370px). Com os 190svh antigos
    sobravam 774px: o zoom inteiro cabia em menos de uma tela de rolagem e
    passava como um piscar. */
-.pin-tr{position:relative;height:260svh}
+/* fundo preto no trilho: com a barra do celular recolhida a janela fica
+   maior que o painel de 100svh, e a faixa que sobra embaixo dele mostrava
+   o --bg, um tom diferente do preto da cena. */
+.pin-tr{position:relative;height:260svh;background:#000}
 .pin-st{position:sticky;top:0;height:100svh;padding:0}
 @media(max-width:820px){
   /* O pin CONTINUA no celular. Ele estava desligado aqui (height:auto),
@@ -1481,9 +1485,10 @@ void main(){
   <p class="st st-2" data-r="up" data-d="1" style="max-width:16ch;margin-bottom:clamp(26px,3vw,44px)">
     Da capital do Brasil <span class="acc">para o mundo.</span></p>
   <p class="bd it-corpo" data-r="up" data-d="2">
-    Boa parte da agenda acontece fora do Brasil. A equipe embarca com o
-    equipamento, fecha o plano no destino e entrega no mesmo padrão de
-    sempre: muda o fuso, não muda a régua.</p>
+    Agora a SOMA atende também fora do Brasil, em qualquer país onde o
+    projeto precisar acontecer. A equipe viaja com o próprio equipamento,
+    monta a produção no destino e entrega no mesmo padrão de casa. Muda o
+    fuso, não muda a régua.</p>
 
   <div class="it-filme" data-r="up" data-d="2">
     <video id="intVid" muted loop playsinline preload="none"
@@ -1492,12 +1497,12 @@ void main(){
   </div>
 
   <ul class="it-lista">
-    <li data-r="up"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#012169"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.8"/><path d="M15 0V20M0 10H30" stroke="#fff" stroke-width="5.5"/><path d="M15 0V20M0 10H30" stroke="#C8102E" stroke-width="3"/></svg></span><span class="it-pais">Londres</span><span class="it-reg">Reino Unido</span></li>
-    <li data-r="up" data-d="1"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="10" fill="#fff"/><rect y="10" width="30" height="10" fill="#00703C"/><path d="M9 10.5C9 9.5 10.2 8 12 8L13.8 7L15 8L16.5 8.5L18 7.8L19.5 8.2C20.8 8.5 21.5 9.3 21.5 10.2L21 11.3L19.2 11.8L17 12.2L15 13L13 12.2L11 11.9L9.6 11.5Z" fill="#D30731"/></svg></span><span class="it-pais">Cardiff</span><span class="it-reg">País de Gales</span></li>
-    <li data-r="up" data-d="2"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#0065BD"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="3.5"/></svg></span><span class="it-pais">Edimburgo</span><span class="it-reg">Escócia</span></li>
-    <li data-r="up"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="10" height="20" fill="#002395"/><rect x="10" width="10" height="20" fill="#fff"/><rect x="20" width="10" height="20" fill="#ED2939"/></svg></span><span class="it-pais">Paris</span><span class="it-reg">França</span></li>
-    <li data-r="up" data-d="1"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#BF0A30"/><g fill="#fff"><rect y="1.54" width="30" height="1.54"/><rect y="4.62" width="30" height="1.54"/><rect y="7.69" width="30" height="1.54"/><rect y="10.77" width="30" height="1.54"/><rect y="13.85" width="30" height="1.54"/><rect y="16.92" width="30" height="1.54"/></g><rect width="12" height="10.77" fill="#002868"/></svg></span><span class="it-pais">Nova York</span><span class="it-reg">Estados Unidos</span></li>
-    <li class="it-base" data-r="up" data-d="2"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#009c3b"/><polygon points="15,3.5 26.5,10 15,16.5 3.5,10" fill="#ffdf00"/><circle cx="15" cy="10" r="3.5" fill="#002776"/></svg></span><span class="it-pais"><span class="acc">Brasília</span></span><span class="it-reg">Brasil &mdash; a casa</span></li>
+    <li data-r="up"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#012169"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.8"/><path d="M15 0V20M0 10H30" stroke="#fff" stroke-width="5.5"/><path d="M15 0V20M0 10H30" stroke="#C8102E" stroke-width="3"/></svg></span><span class="it-pais">Reino Unido</span></li>
+    <li data-r="up" data-d="1"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="10" fill="#fff"/><rect y="10" width="30" height="10" fill="#00703C"/><path d="M9 10.5C9 9.5 10.2 8 12 8L13.8 7L15 8L16.5 8.5L18 7.8L19.5 8.2C20.8 8.5 21.5 9.3 21.5 10.2L21 11.3L19.2 11.8L17 12.2L15 13L13 12.2L11 11.9L9.6 11.5Z" fill="#D30731"/></svg></span><span class="it-pais">País de Gales</span></li>
+    <li data-r="up" data-d="2"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#0065BD"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="3.5"/></svg></span><span class="it-pais">Escócia</span></li>
+    <li data-r="up"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="10" height="20" fill="#002395"/><rect x="10" width="10" height="20" fill="#fff"/><rect x="20" width="10" height="20" fill="#ED2939"/></svg></span><span class="it-pais">França</span></li>
+    <li data-r="up" data-d="1"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#BF0A30"/><g fill="#fff"><rect y="1.54" width="30" height="1.54"/><rect y="4.62" width="30" height="1.54"/><rect y="7.69" width="30" height="1.54"/><rect y="10.77" width="30" height="1.54"/><rect y="13.85" width="30" height="1.54"/><rect y="16.92" width="30" height="1.54"/></g><rect width="12" height="10.77" fill="#002868"/></svg></span><span class="it-pais">Estados Unidos</span></li>
+    <li class="it-base" data-r="up" data-d="2"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#009c3b"/><polygon points="15,3.5 26.5,10 15,16.5 3.5,10" fill="#ffdf00"/><circle cx="15" cy="10" r="3.5" fill="#002776"/></svg></span><span class="it-pais"><span class="acc">Brasil</span></span></li>
   </ul>
 </section>
 
@@ -3364,6 +3369,7 @@ var VEL_TRILHO=16;
    da tela, entao qualquer valor cravado erraria em algum tamanho. */
 var inFluxo=document.getElementById('inFluxo'),
     inTr=document.querySelector('.in-tr'),
+    inSt=document.querySelector('.in-st'),
     inPal=document.querySelector('.in-pal');
 /* LISTA PROPRIA, e nao mais a PJ. A abertura e uma vitrine de imagem; a PJ
    e o indice dos projetos, onde cada poster e a capa de UM trabalho.
@@ -3392,7 +3398,14 @@ function moveAbertura(vh){
   if(!inTr||!inFluxo)return;
   var r=inTr.getBoundingClientRect();
   if(r.bottom<0||r.top>vh)return;          /* fora de quadro: nao gasta */
-  var curso=inTr.offsetHeight-vh;
+  /* A ALTURA E A DO PAINEL, NAO A DA JANELA. No celular a barra de
+     endereco recolhe quando se rola para baixo e o innerHeight cresce
+     ~80px de uma vez; o painel e 100svh e nao muda. Com a janela na conta,
+     a mesma posicao de rolagem dava outro p — medido: a palavra saltava
+     65px e o mosaico 37px no instante em que a barra sumia. O painel e
+     quem de fato prende e recorta, entao e a medida certa. */
+  var tela=inSt?inSt.clientHeight:vh;
+  var curso=inTr.offsetHeight-tela;
   if(curso<=0)return;
   var p=(-r.top)/curso; p=p<0?0:(p>1?1:p);
   /* ── A DESCIDA DA MARCA ───────────────────────────────────────────
@@ -3410,44 +3423,19 @@ function moveAbertura(vh){
      cresceram no CSS: sem isso a marca aceleraria de 0.95x para 1.31x no
      desktop, justamente o contrario do que se pediu. */
   if(inPal){
-    var meia=(vh+inPal.offsetHeight)/2+10;
+    var meia=(tela+inPal.offsetHeight)/2+10;
     inPal.style.transform='translate3d(0,'+(-meia+p*2*meia).toFixed(1)+'px,0)';
   }
 
-  var alturaFluxo=inFluxo.offsetHeight, sobra=alturaFluxo-vh;
-  if(sobra>0){
-    /* VELOCIDADE PRESA A DA ROLAGEM. Antes o fluxo percorria a sobra
-       INTEIRA no curso do trilho, e a sobra e maior que o curso: no
-       desktop dava 1621px de imagem para 900px de rolagem, ou seja o fundo
-       corria a 1.8x o dedo. Fundo mais rapido que a pagina nao existe na
-       natureza — o que esta longe anda MENOS, nao mais. Era isso que dava
-       a impressao de disparado.
-
-       Agora o percurso e derivado do curso, e nao da altura do conteudo:
-       0.85 do que a pessoa rola. Abaixo de 1 porque um fundo na mesma
-       velocidade da pagina parece colado nela; um pouco mais devagar e o
-       que cria a distancia. Este numero e o botao de ajuste. */
-    /* PERCORRE A COLUNA INTEIRA. Antes o percurso era uma fracao do curso,
-       e por isso sobravam fotos que nunca entravam em quadro. Agora ele e
-       a propria sobra: a coluna passa do topo ao pe e as nove aparecem.
-
-       Quem controla a VELOCIDADE deixou de ser este numero e passou a ser
-       a altura da coluna, definida no CSS — e por isso ela encolheu para
-       70vw x 55svh. Medido: 0.48x a rolagem, mais calmo que os 0.85 de
-       antes, com todas as fotos passando. */
-    inFluxo.style.transform='translate3d(0,'+(-p*sobra).toFixed(1)+'px,0)';
-  }else{
-    /* CABE INTEIRO NA TELA — o caso das tres colunas no celular. Sem isto
-       o deslocamento daria zero e o fundo ficaria PARADO enquanto a
-       palavra segura, que e o oposto do efeito: e o movimento atras que
-       faz as letras mudarem de cor.
-
-       Entao o mosaico e centrado na sobra vertical e ganha um passeio
-       curto em torno desse centro. 44px chegam: a palavra ocupa a faixa do
-       meio, e basta a imagem escorregar um pouco para a inversao mudar. */
-    var centro=(vh-alturaFluxo)/2;
-    inFluxo.style.transform='translate3d(0,'+(centro+(0.5-p)*44).toFixed(1)+'px,0)';
-  }
+  var alturaFluxo=inFluxo.offsetHeight, sobra=alturaFluxo-tela;
+  /* UMA FORMULA SO, CONTINUA. Antes eram dois ramos (sobra>0 ou nao) que
+     nao se encontravam: na fronteira um dava 0 e o outro ±22px. Num
+     celular em que o mosaico tem quase a altura da tela, cruzar essa
+     fronteira era um salto. Agora o mosaico gira em torno do proprio
+     centro com amplitude max(sobra,44): acima de 44 e exatamente o -p*sobra
+     de antes (o desktop nao muda); abaixo, o passeio curto do celular. */
+  var amp=sobra>44?sobra:44;
+  inFluxo.style.transform='translate3d(0,'+(-sobra/2+(0.5-p)*amp).toFixed(1)+'px,0)';
 }
 
 /* ── GRAO: ladrilho desenhado na hora ─────────────────────────────────
@@ -3633,7 +3621,8 @@ if('IntersectionObserver' in window){
 }
 
 /* ── SHOWREEL PRESO: cresce enquanto voce atravessa ──────────────────── */
-var pinTr=document.querySelector('.pin-tr');
+var pinTr=document.querySelector('.pin-tr'),
+    pinSt=document.querySelector('.pin-st');
 /* ── SHOWREEL: o recuo da camera ──────────────────────────────────────
    A escala vai de 1 (celula central preenchendo a tela) a 1/3 (as nove
    visiveis). Uso a curva de saida do site em vez de linear: o recuo comeca
@@ -3655,7 +3644,9 @@ function escondeRampa(vh){
 }
 function movePin(){
   if(!pinTr||!rlGrade)return;
-  var curso=pinTr.offsetHeight-innerHeight;
+  /* altura do painel preso, e nao innerHeight: a barra do celular muda a
+     janela no meio da rolagem e o p saltava (ver moveAbertura). */
+  var curso=pinTr.offsetHeight-(pinSt?pinSt.clientHeight:innerHeight);
   if(curso<=0)return;
   var p=(-pinTr.getBoundingClientRect().top)/curso;
   p=p<0?0:(p>1?1:p);
