@@ -674,6 +674,14 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .it-lista li{border-top:1px solid var(--line);
   padding:clamp(16px,1.8vw,26px) 0 clamp(20px,2.2vw,30px);
   padding-right:clamp(14px,2vw,30px)}
+/* As bandeiras voltam do modelo antigo, nos mesmos desenhos. Ficam acima
+   do nome, pequenas: sao marca de origem, nao ilustracao. O contorno de
+   1px existe porque Franca e Gales tem faixa branca — sem ele a bandeira
+   sangra no fundo escuro e perde a forma. */
+.it-band{display:block;width:28px;height:19px;border-radius:3px;
+  overflow:hidden;margin-bottom:13px;
+  box-shadow:0 0 0 1px rgba(245,247,245,.18)}
+.it-band svg{display:block;width:100%;height:100%}
 .it-pais{display:block;font-weight:700;letter-spacing:-.02em;
   font-size:clamp(19px,1.7vw,26px);color:#fff;line-height:1.15}
 .it-reg{display:block;margin-top:7px;font-size:13px;color:var(--mut)}
@@ -763,7 +771,6 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .hr-id .jp img{height:15px;width:auto}
 .hr-id .nome{font-size:clamp(22px,2.4vw,34px);font-weight:800;letter-spacing:-.035em;
   line-height:1.05;color:#fff;margin-bottom:16px}
-.hr-adr{font-size:13px;line-height:1.7;color:rgba(255,255,255,.58)}
 .hr-svc{text-align:right}
 .hr-svc .yr{font-size:13px;color:var(--acc);
   margin-bottom:14px;display:block}
@@ -1425,7 +1432,6 @@ void main(){
   <div class="hr-top">
     <div class="hr-id">
       <div class="jp"><img class="mk" src="logomarca.png" alt="" aria-hidden="true" width="592" height="549">Produtora Criativa</div>
-      <div class="hr-adr">Brasília, DF</div>
     </div>
     <div class="hr-svc">
       <span class="yr">EST. 2019</span>
@@ -1465,7 +1471,40 @@ void main(){
   <div class="in-marca"><span class="in-pal">SOMA</span></div>
 </section></div>
 
-<div class="morf" data-cima="#0D0F13" data-baixo="#050609" aria-hidden="true"></div>
+<!-- ══════ INTERNACIONAL ══════
+     Vem logo depois dos numeros de proposito: la se diz "6 paises", aqui
+     se mostra quais. -->
+<section class="sec wrap" id="internacional">
+  <div class="sh" data-r="up">
+    <span class="sub">Passaporte é ferramenta de trabalho.</span>
+  </div>
+  <p class="st st-2" data-r="up" data-d="1" style="max-width:16ch;margin-bottom:clamp(26px,3vw,44px)">
+    Da capital do Brasil <span class="acc">para o mundo.</span></p>
+  <p class="bd it-corpo" data-r="up" data-d="2">
+    Boa parte da agenda acontece fora do Brasil. A equipe embarca com o
+    equipamento, fecha o plano no destino e entrega no mesmo padrão de
+    sempre: muda o fuso, não muda a régua.</p>
+
+  <div class="it-filme" data-r="up" data-d="2">
+    <video id="intVid" muted loop playsinline preload="none"
+      poster="int-poster.webp"
+      data-src="video-internacional.mp4"></video>
+  </div>
+
+  <ul class="it-lista">
+    <li data-r="up"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#012169"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.8"/><path d="M15 0V20M0 10H30" stroke="#fff" stroke-width="5.5"/><path d="M15 0V20M0 10H30" stroke="#C8102E" stroke-width="3"/></svg></span><span class="it-pais">Londres</span><span class="it-reg">Reino Unido</span></li>
+    <li data-r="up" data-d="1"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="10" fill="#fff"/><rect y="10" width="30" height="10" fill="#00703C"/><path d="M9 10.5C9 9.5 10.2 8 12 8L13.8 7L15 8L16.5 8.5L18 7.8L19.5 8.2C20.8 8.5 21.5 9.3 21.5 10.2L21 11.3L19.2 11.8L17 12.2L15 13L13 12.2L11 11.9L9.6 11.5Z" fill="#D30731"/></svg></span><span class="it-pais">Cardiff</span><span class="it-reg">País de Gales</span></li>
+    <li data-r="up" data-d="2"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#0065BD"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="3.5"/></svg></span><span class="it-pais">Edimburgo</span><span class="it-reg">Escócia</span></li>
+    <li data-r="up"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="10" height="20" fill="#002395"/><rect x="10" width="10" height="20" fill="#fff"/><rect x="20" width="10" height="20" fill="#ED2939"/></svg></span><span class="it-pais">Paris</span><span class="it-reg">França</span></li>
+    <li data-r="up" data-d="1"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#BF0A30"/><g fill="#fff"><rect y="1.54" width="30" height="1.54"/><rect y="4.62" width="30" height="1.54"/><rect y="7.69" width="30" height="1.54"/><rect y="10.77" width="30" height="1.54"/><rect y="13.85" width="30" height="1.54"/><rect y="16.92" width="30" height="1.54"/></g><rect width="12" height="10.77" fill="#002868"/></svg></span><span class="it-pais">Nova York</span><span class="it-reg">Estados Unidos</span></li>
+    <li class="it-base" data-r="up" data-d="2"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#009c3b"/><polygon points="15,3.5 26.5,10 15,16.5 3.5,10" fill="#ffdf00"/><circle cx="15" cy="10" r="3.5" fill="#002776"/></svg></span><span class="it-pais"><span class="acc">Brasília</span></span><span class="it-reg">Brasil &mdash; a casa</span></li>
+  </ul>
+</section>
+
+<!-- cor de cima #000, e nao #0D0F13: quem fica acima deste divisor agora
+     e o internacional, que e preto. Com a cor antiga o divisor pintava
+     uma faixa mais clara que a secao e a emenda aparecia. -->
+<div class="morf" data-cima="#000" data-baixo="#050609" aria-hidden="true"></div>
 <!-- ══════ SERVIÇOS ══════ -->
 <section class="sec wrap" id="servicos">
   <div class="sh" data-r="up">
@@ -1558,7 +1597,7 @@ void main(){
 <!-- ══════ CLIENTES ══════ -->
 <section class="sec wrap" id="clientes">
   <div class="sh" data-r="up">
-    <span class="sub">Marcas que já sentaram do nosso lado.</span>
+    <span class="sub">Marcas que já fecharam com a SOMA.</span>
   </div>
   <ul class="cli" id="cliGrade">
       <li style="--n:0"><img src="cli-arena.webp" alt="Arena Mané Garrincha" loading="lazy" decoding="async" width="591" height="240"></li>
@@ -1617,36 +1656,6 @@ void main(){
       <span class="k">Anos de mercado</span>
       <p class="d">Tempo suficiente para saber o que funciona, e curto para não acomodar.</p></div>
   </div>
-</section>
-
-<!-- ══════ INTERNACIONAL ══════
-     Vem logo depois dos numeros de proposito: la se diz "6 paises", aqui
-     se mostra quais. -->
-<section class="sec wrap" id="internacional">
-  <div class="sh" data-r="up">
-    <span class="sub">Passaporte é ferramenta de trabalho.</span>
-  </div>
-  <p class="st st-2" data-r="up" data-d="1" style="max-width:16ch;margin-bottom:clamp(26px,3vw,44px)">
-    Da capital do Brasil <span class="acc">para o mundo.</span></p>
-  <p class="bd it-corpo" data-r="up" data-d="2">
-    Boa parte da agenda acontece fora do Brasil. A equipe embarca com o
-    equipamento, fecha o plano no destino e entrega no mesmo padrão de
-    sempre: muda o fuso, não muda a régua.</p>
-
-  <div class="it-filme" data-r="up" data-d="2">
-    <video id="intVid" muted loop playsinline preload="none"
-      poster="int-poster.webp"
-      data-src="video-internacional.mp4"></video>
-  </div>
-
-  <ul class="it-lista">
-    <li data-r="up"><span class="it-pais">Londres</span><span class="it-reg">Reino Unido</span></li>
-    <li data-r="up" data-d="1"><span class="it-pais">Cardiff</span><span class="it-reg">País de Gales</span></li>
-    <li data-r="up" data-d="2"><span class="it-pais">Edimburgo</span><span class="it-reg">Escócia</span></li>
-    <li data-r="up"><span class="it-pais">Paris</span><span class="it-reg">França</span></li>
-    <li data-r="up" data-d="1"><span class="it-pais">Nova York</span><span class="it-reg">Estados Unidos</span></li>
-    <li class="it-base" data-r="up" data-d="2"><span class="it-pais"><span class="acc">Brasília</span></span><span class="it-reg">Brasil &mdash; a casa</span></li>
-  </ul>
 </section>
 
 <!-- ══════ SHOWREEL ══════
