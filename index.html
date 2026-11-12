@@ -667,55 +667,58 @@ button{font:inherit;color:inherit;background:none;border:none;cursor:pointer}
 .it-filme video,.it-filme img{position:absolute;inset:0;
   width:100%;height:100%;object-fit:cover;display:block}
 
-/* os destinos entram como ficha: filete em cima, bandeira e o PAIS, sem
-   cidade. A casa atende em qualquer lugar do pais — cravar uma cidade
-   faria parecer que so vai la. Mesma familia das linhas de servicos e do
-   FAQ. */
-.it-lista{list-style:none;display:grid;gap:0;
-  grid-template-columns:repeat(3,1fr)}
-.it-lista li{border-top:1px solid var(--line);
-  padding:clamp(16px,1.8vw,26px) 0 clamp(20px,2.2vw,30px);
-  padding-right:clamp(14px,2vw,30px)}
-/* As bandeiras voltam do modelo antigo, nos mesmos desenhos. Ficam acima
-   do nome, pequenas: sao marca de origem, nao ilustracao. O contorno de
-   1px existe porque Franca e Gales tem faixa branca — sem ele a bandeira
-   sangra no fundo escuro e perde a forma. */
-.it-band{display:block;width:28px;height:19px;border-radius:3px;
-  overflow:hidden;margin-bottom:13px;
-  box-shadow:0 0 0 1px rgba(245,247,245,.18)}
+/* ── A ROTA: os paises numa linha, o destaque passa de um ao outro ─────
+   Volta do modelo antigo, onde as bandeiras ficavam lado a lado sobre um
+   trilho e o destaque andava sozinho de uma para a outra. Aqui sai do
+   Brasil, que e de onde a casa parte, e o trilho enche em verde ate o
+   destino da vez. No antigo cada pais tinha uma cor; aqui o verde e o
+   unico acento do site, entao fica so ele.
+
+   Uma linha so em qualquer tela: seis bandeiras cabem ate em 320px. O
+   nome nao cabe num sexto da tela, por isso vai embaixo, grande, um de
+   cada vez, e e ele que troca a cada passo. */
+.it-rota{--prog:0;border-top:1px solid var(--line);
+  padding-top:clamp(26px,3vw,40px)}
+.it-paises{position:relative;display:flex}
+/* o trilho vai do centro da primeira ao centro da ultima bandeira: cada
+   uma ocupa um sexto, entao os centros caem em 1/12 e 11/12 */
+.it-paises::before,.it-paises::after{content:'';position:absolute;top:4px;
+  height:1px;left:calc(100%/12);pointer-events:none}
+.it-paises::before{right:calc(100%/12);background:rgba(245,247,245,.16)}
+.it-paises::after{width:calc((100% - 100%/6)*var(--prog));
+  background:var(--acc);transition:width .7s var(--Ef)}
+.it-p{flex:1;display:flex;flex-direction:column;align-items:center;gap:18px;
+  background:none;border:0;padding:0;margin:0;cursor:pointer;
+  -webkit-tap-highlight-color:transparent}
+.it-p::before{content:'';position:relative;z-index:1;width:9px;height:9px;
+  border-radius:50%;background:#2a2d31;
+  transition:background .4s,box-shadow .4s,transform .4s}
+.it-p.foi::before{background:var(--acc)}
+/* o Brasil e a origem da rota, nao um destino: o ponto fica sempre aceso,
+   a bandeira meio acesa, e ele nao responde ao toque */
+.it-casa{cursor:default}
+.it-casa::before{background:var(--acc)}
+.it-casa .it-band{opacity:.7}
+.it-p.on::before{background:var(--acc);transform:scale(1.4);
+  box-shadow:0 0 0 5px rgba(107,240,25,.16),0 0 18px rgba(107,240,25,.55)}
+/* bandeiras nos desenhos do modelo antigo. O contorno de 1px existe
+   porque Franca e Gales tem faixa branca: sem ele a bandeira sangra no
+   fundo escuro e perde a forma. */
+.it-band{display:block;width:34px;height:23px;border-radius:3px;
+  overflow:hidden;box-shadow:0 0 0 1px rgba(245,247,245,.18);
+  opacity:.38;transition:opacity .4s,transform .5s var(--Ef)}
 .it-band svg{display:block;width:100%;height:100%}
-.it-pais{display:block;font-weight:700;letter-spacing:-.02em;
-  font-size:clamp(19px,1.7vw,26px);color:#fff;line-height:1.15}
-.it-base .it-pais .acc{color:var(--acc)}
-/* a copia que fecha a volta da fita (ver JS) so existe no celular */
-.it-lista li[aria-hidden]{display:none}
-/* ── NO CELULAR A LISTA VIRA FITA ────────────────────────────────────
-   Em uma coluna eram seis fichas empilhadas, quase uma tela inteira de
-   bandeira e nome. Em fita os paises passam de um para o outro numa
-   linha so, e a secao termina no filme em vez de numa lista comprida.
-
-   Sem gap no flex DE PROPOSITO: a volta anda -50%, que precisa ser
-   exatamente uma copia. Com gap a lista teria 11 vaos para 12 itens e a
-   metade cairia meio vao fora — um tranco a cada volta. O respiro vai no
-   padding de cada item, que se repete igual nas duas copias.
-
-   Sangra ate a borda da tela (margem negativa do --gut) e esmaece nas
-   pontas: os nomes entram e saem, nao sao cortados por uma parede. */
-@media(max-width:900px){
-  .it-trilho{overflow:hidden;margin:0 calc(-1*var(--gut));
-    border-top:1px solid var(--line);border-bottom:1px solid var(--line);
-    -webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);
-            mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
-  .it-lista{display:flex;width:max-content;animation:itCorre 24s linear infinite}
-  .it-lista li,.it-lista li[data-r],.it-lista li[aria-hidden]{
-    display:flex;align-items:center;flex:0 0 auto;
-    opacity:1;transform:none;filter:none;
-    border-top:0;border-right:1px solid var(--line);
-    padding:22px 30px}
-  .it-band{margin:0 12px 0 0}
-  .it-pais{font-size:22px;white-space:nowrap}
-}
-@keyframes itCorre{to{transform:translateX(-50%)}}
+.it-p:hover .it-band{opacity:.75}
+.it-p.on .it-band{opacity:1;transform:scale(1.18)}
+.it-nome{display:flex;align-items:baseline;justify-content:space-between;
+  gap:16px;margin-top:clamp(26px,3vw,40px)}
+#itNome{display:block;font-weight:700;letter-spacing:-.025em;line-height:1;
+  color:#fff;font-size:clamp(28px,3.4vw,52px)}
+#itNome.troca{animation:itTroca .55s var(--Ef)}
+@keyframes itTroca{from{opacity:0;transform:translateY(12px)}}
+.it-cont{font-size:13px;color:var(--mut);letter-spacing:.06em;
+  font-variant-numeric:tabular-nums;white-space:nowrap}
+@media(max-width:560px){.it-band{width:30px;height:20px}.it-p{gap:16px}}
 
 /* ── HERO: a chamada que desce para as novidades ─────────────────────
    Fica depois do titulo, no mesmo bloco de baixo do hero. A seta nao e
@@ -1523,14 +1526,17 @@ void main(){
       data-src="video-internacional.mp4"></video>
   </div>
 
-  <div class="it-trilho"><ul class="it-lista">
-    <li data-r="up"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#012169"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.8"/><path d="M15 0V20M0 10H30" stroke="#fff" stroke-width="5.5"/><path d="M15 0V20M0 10H30" stroke="#C8102E" stroke-width="3"/></svg></span><span class="it-pais">Reino Unido</span></li>
-    <li data-r="up" data-d="1"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="10" fill="#fff"/><rect y="10" width="30" height="10" fill="#00703C"/><path d="M9 10.5C9 9.5 10.2 8 12 8L13.8 7L15 8L16.5 8.5L18 7.8L19.5 8.2C20.8 8.5 21.5 9.3 21.5 10.2L21 11.3L19.2 11.8L17 12.2L15 13L13 12.2L11 11.9L9.6 11.5Z" fill="#D30731"/></svg></span><span class="it-pais">País de Gales</span></li>
-    <li data-r="up" data-d="2"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#0065BD"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="3.5"/></svg></span><span class="it-pais">Escócia</span></li>
-    <li data-r="up"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="10" height="20" fill="#002395"/><rect x="10" width="10" height="20" fill="#fff"/><rect x="20" width="10" height="20" fill="#ED2939"/></svg></span><span class="it-pais">França</span></li>
-    <li data-r="up" data-d="1"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#BF0A30"/><g fill="#fff"><rect y="1.54" width="30" height="1.54"/><rect y="4.62" width="30" height="1.54"/><rect y="7.69" width="30" height="1.54"/><rect y="10.77" width="30" height="1.54"/><rect y="13.85" width="30" height="1.54"/><rect y="16.92" width="30" height="1.54"/></g><rect width="12" height="10.77" fill="#002868"/></svg></span><span class="it-pais">Estados Unidos</span></li>
-    <li class="it-base" data-r="up" data-d="2"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#009c3b"/><polygon points="15,3.5 26.5,10 15,16.5 3.5,10" fill="#ffdf00"/><circle cx="15" cy="10" r="3.5" fill="#002776"/></svg></span><span class="it-pais"><span class="acc">Brasil</span></span></li>
-  </ul></div>
+  <div class="it-rota" id="itRota" data-r="up">
+    <div class="it-paises">
+      <span class="it-p it-casa" title="Brasil, a casa"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#009c3b"/><polygon points="15,3.5 26.5,10 15,16.5 3.5,10" fill="#ffdf00"/><circle cx="15" cy="10" r="3.5" fill="#002776"/></svg></span></span>
+      <button class="it-p" type="button" data-nome="Reino Unido" aria-label="Reino Unido"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#012169"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="4"/><path d="M0 0L30 20M30 0L0 20" stroke="#C8102E" stroke-width="1.8"/><path d="M15 0V20M0 10H30" stroke="#fff" stroke-width="5.5"/><path d="M15 0V20M0 10H30" stroke="#C8102E" stroke-width="3"/></svg></span></button>
+      <button class="it-p" type="button" data-nome="País de Gales" aria-label="País de Gales"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="10" fill="#fff"/><rect y="10" width="30" height="10" fill="#00703C"/><path d="M9 10.5C9 9.5 10.2 8 12 8L13.8 7L15 8L16.5 8.5L18 7.8L19.5 8.2C20.8 8.5 21.5 9.3 21.5 10.2L21 11.3L19.2 11.8L17 12.2L15 13L13 12.2L11 11.9L9.6 11.5Z" fill="#D30731"/></svg></span></button>
+      <button class="it-p" type="button" data-nome="Escócia" aria-label="Escócia"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#0065BD"/><path d="M0 0L30 20M30 0L0 20" stroke="#fff" stroke-width="3.5"/></svg></span></button>
+      <button class="it-p" type="button" data-nome="França" aria-label="França"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="10" height="20" fill="#002395"/><rect x="10" width="10" height="20" fill="#fff"/><rect x="20" width="10" height="20" fill="#ED2939"/></svg></span></button>
+      <button class="it-p" type="button" data-nome="Estados Unidos" aria-label="Estados Unidos"><span class="it-band" aria-hidden="true"><svg viewBox="0 0 30 20" xmlns="http://www.w3.org/2000/svg"><rect width="30" height="20" fill="#BF0A30"/><g fill="#fff"><rect y="1.54" width="30" height="1.54"/><rect y="4.62" width="30" height="1.54"/><rect y="7.69" width="30" height="1.54"/><rect y="10.77" width="30" height="1.54"/><rect y="13.85" width="30" height="1.54"/><rect y="16.92" width="30" height="1.54"/></g><rect width="12" height="10.77" fill="#002868"/></svg></span></button>
+    </div>
+    <p class="it-nome"><span id="itNome">Reino Unido</span><span class="it-cont" id="itCont">01 / 05</span></p>
+  </div>
 </section>
 
 <!-- cor de cima #000, e nao #0D0F13: quem fica acima deste divisor agora
@@ -3389,20 +3395,56 @@ var VEL_TRILHO=16;
   if(pronto===cams.length)bl.classList.add('onda');
 })();
 
-/* ── INTERNACIONAL: a copia que fecha a volta da fita ────────────────
-   Os itens se repetem uma vez no fim da lista: a animacao anda -50%, ou
-   seja exatamente uma copia, e recomeca no mesmo quadro sem emenda.
-   aria-hidden para o leitor de tela ler os paises uma vez so; sem data-r
-   porque ninguem observa o elemento novo e ele ficaria invisivel
-   esperando um reveal que nunca vem. No desktop o CSS a esconde. */
+/* ── INTERNACIONAL: o destaque segue o filme ─────────────────────────
+   O filme ja traz o nome de cada pais gravado na imagem, na ordem
+   Londres, Gales, Escocia, Franca, EUA. Se o destaque andasse num relogio
+   proprio, diria "Franca" com Gales na tela. Entao, com o filme tocando,
+   quem manda e o tempo dele: CORTES sao os inicios de cada trecho,
+   medidos quadro a quadro (7.9, 13.7, 18.9 e 25.9s). Tocar numa bandeira
+   leva o filme ao trecho daquele pais.
+
+   Sem filme (ainda carregando, ou autoplay recusado) o destaque anda
+   sozinho a cada 2.6s, como no modelo antigo, e o toque segura o passeio
+   por 8s. O Brasil e a origem da rota, nao um destino: fica fora da
+   contagem e do trecho. */
 (function(){
-  var ul=document.querySelector(".it-lista");if(!ul)return;
-  [].slice.call(ul.children).forEach(function(li){
-    var c=li.cloneNode(true);
-    c.setAttribute("aria-hidden","true");
-    c.removeAttribute("data-r");c.removeAttribute("data-d");
-    ul.appendChild(c);
-  });
+  var rota=document.getElementById("itRota");if(!rota)return;
+  var bt=[].slice.call(rota.querySelectorAll("button.it-p")),
+      nome=document.getElementById("itNome"),cont=document.getElementById("itCont"),
+      vid=document.getElementById("intVid"),
+      CORTES=[0,7.9,13.7,18.9,25.9],
+      at=-1,pausa=0,visivel=false,n=bt.length;
+  function dois(x){return ("0"+x).slice(-2)}
+  function vai(i){
+    if(i===at)return; at=i;
+    bt.forEach(function(b,k){
+      b.classList.toggle("on",k===i);b.classList.toggle("foi",k<i);
+      b.setAttribute("aria-pressed",k===i?"true":"false");
+    });
+    /* a posicao 0 do trilho e o Brasil; o destino i fica na i+1 */
+    rota.style.setProperty("--prog",((i+1)/n).toFixed(4));
+    nome.textContent=bt[i].getAttribute("data-nome");
+    cont.textContent=dois(i+1)+" / "+dois(n);
+    nome.classList.remove("troca");void nome.offsetWidth;nome.classList.add("troca");
+  }
+  function trecho(t){for(var k=CORTES.length-1;k>0;k--)if(t>=CORTES[k])return k;return 0}
+  function filmeTocando(){return vid&&vid.currentSrc&&!vid.paused&&vid.readyState>=2}
+  if(vid)vid.addEventListener("timeupdate",function(){vai(trecho(vid.currentTime))});
+  bt.forEach(function(b,k){b.addEventListener("click",function(){
+    if(vid&&vid.currentSrc&&vid.readyState>=1){
+      try{vid.currentTime=CORTES[k]+0.1}catch(_){}
+      var q=vid.play();if(q&&q.catch)q.catch(function(){});
+    }
+    pausa=Date.now()+8000; vai(k);
+  })});
+  if("IntersectionObserver" in window){
+    new IntersectionObserver(function(es){visivel=es[0].isIntersecting}).observe(rota);
+  }else visivel=true;
+  setInterval(function(){
+    if(filmeTocando()||!visivel||document.hidden||Date.now()<pausa)return;
+    vai((at+1)%n);
+  },2600);
+  vai(0);
 })();
 
 /* ── ABERTURA: o trabalho corre atras da marca ────────────────────────
