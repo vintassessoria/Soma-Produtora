@@ -1400,7 +1400,7 @@ footer{background:linear-gradient(var(--bg),var(--dark) 160px,var(--dark))}
          degrade e o titulo — nao uma composicao para se ler. -->
     <video id="heroVid" muted loop playsinline preload="auto"
       poster="showreel-v-poster.webp"
-      data-src="showreel-v.mp4" data-src-m="showreel-v-m.mp4"></video>
+      data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel-v.mp4" data-src-m="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel-v-m.mp4"></video>
   </div>
   <!-- abertura: a camada queima e revela o hero (shader) -->
   <canvas id="burn" aria-hidden="true"></canvas>
@@ -1523,7 +1523,7 @@ void main(){
   <div class="it-filme" data-r="up" data-d="2">
     <video id="intVid" muted loop playsinline preload="none"
       poster="int-poster.webp"
-      data-src="video-internacional.mp4"></video>
+      data-src="https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/video-internacional.mp4"></video>
   </div>
 
   <div class="it-rota" id="itRota" data-r="up">
@@ -2056,13 +2056,13 @@ var PJ=[
     de 2026), nao de chute. */
  {id:'leo',t:'LEO FOGUETE',c:'2026 · Show',p:'pj-leo.webp',
   d:'Do foco no palco ao plano aereo: a arena cheia em um mesmo corte.',
-  v:'pj-leo.mp4'},
+  v:'https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/pj-leo.mp4'},
  {id:'dia2',t:'FUNN ARENA — DIA 2',c:'2026 · Festival',p:'pj-dia2.webp',
   d:'Segundo dia de arena: o registro que continua depois que a festa vira rotina.',
-  v:'pj-dia2.mp4'},
+  v:'https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/pj-dia2.mp4'},
  {id:'zevaqueiro',t:'ZÉ VAQUEIRO',c:'2026 · Campanha',p:'pj-zevaqueiro.webp',
   d:'Chamada vertical do Funn Arena, cortada para viver no feed.',
-  v:'pj-zevaqueiro.mp4'}
+  v:'https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/pj-zevaqueiro.mp4'}
 ];
 
 (function(){
@@ -3632,7 +3632,7 @@ if(rlGrade&&typeof PJ!=='undefined'){
       v.id='reelVid'; v.muted=true; v.loop=true; v.playsInline=true;
       v.setAttribute('preload','none'); v.poster='hero-reel-poster.webp';
       v.setAttribute('data-src','https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel.mp4');
-      v.setAttribute('data-src-m','showreel-v-m.mp4');
+      v.setAttribute('data-src-m','https://pub-dfd14236a91140a5a1e41c79f0a83fe4.r2.dev/showreel-v-m.mp4');
       cel.appendChild(v);
     }else{
       var p=fora[f++]; if(!p)continue;
